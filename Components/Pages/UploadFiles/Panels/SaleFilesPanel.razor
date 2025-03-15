@@ -1,0 +1,196 @@
+﻿@rendermode InteractiveServer
+@inject IFileOrderResposity db
+@inject IWebHostEnvironment _webHost;
+@inject IDialogService DialogService
+@inject IJSRuntime JS
+
+<FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+    <FluentLabel Typo="Typography.H5" Color="Color.Warning">@ErrorMessage</FluentLabel>
+    @if(ShowUpload==true){
+        <FluentStack Orientation="Orientation.Horizontal">
+            <FluentInputFile Id="my-file-uploader1"
+            Mode="InputFileMode.SaveToTemporaryFolder"
+            Multiple="true"
+            MaximumFileCount="1"
+            MaximumFileSize="@(100*1024*1024)"
+            Accept="pdf/*"
+            @bind-ProgressPercent="@ProgressPercent"
+            OnCompleted="@OnUploadFileCompleted"
+            Style="height: 30px;width:50px">
+                <ChildContent>
+                    <label for="my-file-uploader1">
+                        <FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
+                    </label>
+
+                </ChildContent>
+            </FluentInputFile>
+            <FluentLabel Typo="Typography.H5" Color="Color.Info">Max file size(100MB)</FluentLabel>
+        </FluentStack>
+
+    }
+
+    <FluentDataGrid Items="@fileitems"
+    style="height: 100%;width:100%"
+    TGridItem="OrderFile"
+    RowSize="DataGridRowSize.Medium"
+    ResizableColumns=true>
+
+        <TemplateColumn Title="File Name" Width="50%">
+
+            <FluentStack Orientation="Orientation.Horizontal">
+                <FluentIcon Value="@(new Icons.Regular.Size24.DocumentBulletList())" />
+                <nobr>
+                    @context.FilePath
+                </nobr>
+            </FluentStack>
+        </TemplateColumn>
+
+        <TemplateColumn Align="@Align.Start" Width="20%">
+
+            <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowCircleDown())" OnClick="@(() => DownloadItem(context))" />
+            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteFile(context))" Disabled="@((ShowUpload==true)?false:true)" />
+
+        </TemplateColumn>
+
+    </FluentDataGrid>
+</FluentStack>
+
+@code {
+
+    private string ErrorMessage = "";
+    [Parameter]
+    public bool ShowUpload { get; set; } = true;
+
+    [Parameter]
+    public string SalesID { get; set; } = "";
+
+    [Parameter]
+    public string UserName { get; set; } = "";
+    public string UserPath { get; set; } = "";
+
+    int ProgressPercent = 0;
+    IQueryable<OrderFile>? fileitems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (SalesID != ""){
+
+            UserPath = @"files/" + UserName;
+            string uploadsPath = Path.Combine(_webHost.WebRootPath, UserPath);
+            if (!Directory.Exists(uploadsPath)) Directory.CreateDirectory(uploadsPath);
+
+            await LoadFiles(SalesID);
+        }
+        else
+        {
+            fileitems = default!;
+        }
+
+    }
+
+    private async Task LoadFiles(string OrderID)
+    {
+        fileitems = (await db.GetFiles(OrderID, 1)).AsQueryable();
+    }
+
+    FluentInputFileEventArgs[] Files = Array.Empty<FluentInputFileEventArgs>();
+
+    private async Task OnUploadFileCompleted(IEnumerable<FluentInputFileEventArgs> files)
+    {
+        if(SalesID=="")
+        {
+            ErrorMessage = "No Sales Order Selected";
+            return;
+        }
+
+        Files = files.ToArray();
+
+        // For the demo, delete these files.
+        foreach (var file in Files)
+        {
+
+            string uniqueFileName = null;
+
+            var path = UserPath + @"/" + DateTime.Now.ToString("yyyyMMdd");          
+            string uploadsFolder = Path.Combine(_webHost.WebRootPath, path);
+
+            if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
+
+            uniqueFileName = Path.GetFileName(file.Name);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            // using (var fileStream = new FileStream(filePath, FileMode.Create))
+            // {
+            
+            if (File.Exists(filePath) == true)
+            {
+                try
+                {
+                    File.Delete(filePath);
+                }
+                catch
+                {
+
+                }
+            }
+
+            file.LocalFile?.CopyTo(filePath);
+
+            if (File.Exists(filePath)==true){
+
+                await db.AddFile(SalesID, uniqueFileName, 1, UserName);
+                await LoadFiles(SalesID);
+
+            }
+            else
+            {
+                ErrorMessage = "The maximum size allowed is reached";
+            }
+
+            file.LocalFile?.Delete();
+            //}
+            
+        }
+        // Wait 3 seconds before to reset the progress bar.
+        //await Task.Delay(3000);
+        ProgressPercent = 0;
+    }
+
+    private async Task DownloadItem(OrderFile item)
+    {
+        var path = @"files/" + item.UserID + "/" + item.UploadDate.ToString("yyyyMMdd") + "/";
+        await JS.InvokeVoidAsync("urlFileDownload", item.FilePath, path + item.FilePath);
+    }
+
+    private async Task DeleteFile(OrderFile item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this file?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await db.DeleteFile(item.RecID);
+
+            if (res > 0)
+            {
+                var path = @"files/" + item.UserID + "/" + item.UploadDate.ToString("yyyyMMdd");
+
+                string uploadsFolder = Path.Combine(_webHost.WebRootPath, path);
+                string filePath = Path.Combine(uploadsFolder, item.FilePath);
+
+                try
+                {
+                    File.Delete(filePath);
+                }
+                catch
+                {
+
+                }
+
+                await LoadFiles(SalesID);
+            }
+        }
+    }
+
+
+
+}

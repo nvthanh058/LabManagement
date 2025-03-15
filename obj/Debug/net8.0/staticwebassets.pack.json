@@ -1,0 +1,165 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
+      "PackagePath": "staticwebassets\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\app.min.css",
+      "PackagePath": "staticwebassets\\css\\app.min.css"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\icons.min.css",
+      "PackagePath": "staticwebassets\\css\\icons.min.css"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
+      "PackagePath": "staticwebassets\\files\\Guest\\20250310\\Book2.xlsx"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
+      "PackagePath": "staticwebassets\\files\\Guest\\20250310\\Canvas-master (1).zip"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
+      "PackagePath": "staticwebassets\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
+      "PackagePath": "staticwebassets\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
+      "PackagePath": "staticwebassets\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
+      "PackagePath": "staticwebassets\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
+      "PackagePath": "staticwebassets\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
+      "PackagePath": "staticwebassets\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
+      "PackagePath": "staticwebassets\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
+      "PackagePath": "staticwebassets\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
+      "PackagePath": "staticwebassets\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
+      "PackagePath": "staticwebassets\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
+      "PackagePath": "staticwebassets\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
+      "PackagePath": "staticwebassets\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\barcode.png",
+      "PackagePath": "staticwebassets\\images\\barcode.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\beachogo.png",
+      "PackagePath": "staticwebassets\\images\\beachogo.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
+      "PackagePath": "staticwebassets\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
+      "PackagePath": "staticwebassets\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
+      "PackagePath": "staticwebassets\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
+      "PackagePath": "staticwebassets\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
+      "PackagePath": "staticwebassets\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo ztech.png",
+      "PackagePath": "staticwebassets\\images\\logo ztech.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo.png",
+      "PackagePath": "staticwebassets\\images\\logo.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo1.png",
+      "PackagePath": "staticwebassets\\images\\logo1.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logodadl.png",
+      "PackagePath": "staticwebassets\\images\\logodadl.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\no-picture.png",
+      "PackagePath": "staticwebassets\\images\\no-picture.png"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\teethinfo.svg",
+      "PackagePath": "staticwebassets\\images\\teethinfo.svg"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\js\\myscript.js",
+      "PackagePath": "staticwebassets\\js\\myscript.js"
+    },
+    {
+      "Id": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\print-template.html",
+      "PackagePath": "staticwebassets\\print-template.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.LabManagement.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.LabManagement.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.LabManagement.props",
+      "PackagePath": "build\\LabManagement.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.LabManagement.props",
+      "PackagePath": "buildMultiTargeting\\LabManagement.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.LabManagement.props",
+      "PackagePath": "buildTransitive\\LabManagement.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,37 @@
+﻿@implements IDialogContentComponent<OrderFile>
+@inject ISalesOrderResposity context
+
+
+<FluentStack Orientation="Orientation.Vertical">
+
+    <img src="/caseimages/@Content.FilePath" width="750" height="500" />
+
+</FluentStack>
+
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">OK</FluentButton>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+</FluentDialogFooter>
+@code {
+    [Parameter]
+    public OrderFile Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    private async Task SaveAsync()
+    {
+        await Dialog.CloseAsync(Content);
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+}

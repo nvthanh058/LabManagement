@@ -1,0 +1,116 @@
+﻿@implements IDialogContentComponent<SalesTable>
+
+@inject ISalesOrderResposity db
+@rendermode InteractiveServer
+
+<table style="border:0.5px solid;width:100%;height: 97%">
+        <tr style="height:70px;">
+        <td style="width:15%;border-bottom:0.5px solid;border-right:0.5px solid;padding:5px">
+                <FluentStack Orientation="Orientation.Vertical">
+                    <FluentLabel>No</FluentLabel>
+                    <FluentLabel Typo="Typography.H1">@Content.LabpanNum</FluentLabel>
+                </FluentStack>
+            </td>
+
+        <td style="width:30%;border-bottom:0.5px solid;border-right:0.5px solid;padding:5px">
+                <FluentStack Orientation="Orientation.Vertical">
+                    <img src="@Content.Image64" width="150" height="40" />
+                <FluentLabel Typo="Typography.H3"> @Content.CaseNo</FluentLabel>
+            </FluentStack>
+            </td>
+        <td style="width:30%;border-bottom:0.5px solid;border-right:0.5px solid;padding:5px">
+            <table style="width:100%">
+                <tr>
+                    <td style="text-align:center;width:50%">
+                        <FluentStack Orientation="Orientation.Vertical">
+                            <FluentLabel>Doc Account</FluentLabel>
+                            <FluentLabel Typo="Typography.H5">@Content.DocAccount</FluentLabel>
+                        </FluentStack>
+                    </td>
+                    <td style="text-align:center;width:50%">
+                        <FluentStack Orientation="Orientation.Vertical">
+                            <FluentLabel>Date In</FluentLabel>
+                            <FluentLabel Typo="Typography.H5">@String.Format("{0:MM/dd/yy}", @Content.CaseDate)</FluentLabel>
+                        </FluentStack>
+                    </td>
+                </tr>
+            </table>
+                                          
+        </td>
+        <td style="width:25%;border-bottom:0.5px solid;padding:5px">
+                <FluentStack Orientation="Orientation.Vertical">
+                    <FluentLabel>SHIP DATE</FluentLabel>                            
+                    <FluentLabel Typo="Typography.H1">@String.Format("{0:ddd}", @Content.ShipDate).ToUpper() @String.Format("{0:dd/MMM}", @Content.ShipDate)</FluentLabel>
+                </FluentStack>
+
+            </td>
+        </tr>
+        <tr style="height:100px;">
+        <td colspan="4" style="border-bottom:0.5px solid;vertical-align:top;padding:2px;">
+                <table style="width:100%">
+                    <tr>
+                        <td colspan="4">
+                             <span>Patient Name:</span> <span style="font-weight:bold;"> @Content.PatientName</span>
+                        </td>
+                    </tr>
+                    <tr style="height:30px">
+                        <td style="width:70%">ItemName</td>
+                        <td style="width:10%">Teeth</td>
+                        <td style="width:10%">Shade</td>
+                        <td style="width:10%">Qty</td>
+                    </tr>
+                    @foreach(var item in lineitems)
+                    {
+                        <tr>
+                            <td>@item.ItemName</td>
+                            <td>@item.UsTeeth</td>
+                            <td>@item.Shade</td>
+                            <td>@item.SalesQty</td>
+                        </tr>
+
+                    }
+                </table>
+            </td>
+        </tr>
+    <tr style="height:400px;">
+        <td colspan="4" style="border-bottom:0.5px solid;vertical-align:top;padding:5px">
+            @Content.
+                <FluentStack Orientation="Orientation.Vertical">
+                    <FluentLabel Typo="Typography.H5" Style="text-underline-position">Work Notes:</FluentLabel>
+                    <FluentLabel> @Content.TranslateNotes</FluentLabel>
+                </FluentStack>
+
+            </td>
+        </tr>
+    <tr style="height:100%;">
+        <td colspan="4" style="vertical-align:top;padding:5px">
+
+                <FluentStack Orientation="Orientation.Vertical">
+                    <FluentLabel>Notes:</FluentLabel>
+                    <FluentLabel> @Content.WorkTicketNotes</FluentLabel>
+                </FluentStack>
+
+            </td>
+        </tr>
+
+    </table>
+
+
+@code {
+        
+    [Parameter]
+    public SalesTable Content { get; set; } = default!;
+   
+    IQueryable<SalesLine>? lineitems;
+
+    protected override async Task OnInitializedAsync()
+    {                
+        Content!.Image64 = await Helper.GenerateBarcode(Content!.CaseNo, ZXing.BarcodeFormat.CODE_128, 150, 40);
+        await LoadLineItems(Content.SalesID);
+    }
+      
+    private async Task LoadLineItems(string SalesID)
+    {
+        lineitems = (await db.GetOrderLines(SalesID)).AsQueryable();
+    }   
+}

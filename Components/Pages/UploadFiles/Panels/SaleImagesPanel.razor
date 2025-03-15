@@ -1,0 +1,160 @@
+﻿@rendermode InteractiveServer
+@inject IFileOrderResposity db
+@inject IWebHostEnvironment _webHost;
+@inject IDialogService DialogService
+
+<FluentLabel Typo="Typography.H5" Color="Color.Warning">@ErrorMessage</FluentLabel>
+    <FluentStack>
+   
+        @if(ShowUpload==true){
+
+      
+            <FluentInputFile Id="my-file-uploader"
+                             Mode="InputFileMode.SaveToTemporaryFolder"
+                             Multiple="true"
+                             MaximumFileCount="1"
+                             MaximumFileSize="@(10*1024*1024)"
+                             Accept="image/*"
+                             @bind-ProgressPercent="@ProgressPercent"
+                             OnCompleted="@OnCompletedAsync"
+                             Style="height: 30px;width:50px">
+                <ChildContent>
+                    <label for="my-file-uploader">
+                        <FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
+                    </label>
+
+                </ChildContent>
+            </FluentInputFile>
+        }
+        @if (imageitems != null)
+        {
+            @foreach (var f in imageitems)
+            {
+                <FluentCard Width="300px" Height="300px">
+                    <FluentStack Orientation="Orientation.Vertical">
+                        <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End">
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.ContentView())" OnClick="@(() => ShowPicture(f))"></FluentButton>
+                        <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteImage(f.RecID,f.FilePath))" Disabled="@((ShowUpload==true)?false:true)"></FluentButton>
+                        </FluentStack>
+
+                        <img src="/caseimages/@f.FilePath" width="250" height="200" />
+
+                    </FluentStack>
+
+                </FluentCard>
+            }
+        }
+
+
+    </FluentStack>
+ 
+
+@code {
+    private string ErrorMessage = "";
+
+    [Parameter]
+    public bool ShowUpload { get; set; } = true;
+    
+    [Parameter]
+    public string SalesID { get; set; } = "";
+
+    [Parameter]
+    public string UserName { get; set; } = "";
+    int ProgressPercent = 0;
+
+    IQueryable<OrderFile>? imageitems;
+        
+
+    protected override async Task OnInitializedAsync()
+    {
+       if(SalesID !="")
+         await LoadImages(SalesID);
+        
+    }
+
+    private async Task LoadImages(string OrderID)
+    {
+        imageitems = (await db.GetFiles(OrderID, 0)).AsQueryable();
+    }
+
+
+    FluentInputFileEventArgs[] Files = Array.Empty<FluentInputFileEventArgs>();
+
+    private async Task ShowPicture(OrderFile item)
+    {
+    var parameters = new DialogParameters
+        {
+            Title = "",
+            PrimaryAction = "Yes",
+            PrimaryActionEnabled = true,
+            Width = "800px",
+            Height = "600px",
+            Modal = false,
+        };
+
+    var dialog = await DialogService.ShowDialogAsync<PictureViewPanel>(item, parameters);
+    }
+
+    private async Task DeleteImage(int RecID, string FilePath)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this image?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await db.DeleteFile(RecID);
+
+            if (res > 0)
+            {
+                string uploadsFolder = Path.Combine(_webHost.WebRootPath, "caseimages");
+                string filePath = Path.Combine(uploadsFolder, FilePath);
+
+                try
+                {
+                    File.Delete(filePath);
+                }
+                catch
+                {
+
+                }
+                await LoadImages(SalesID);
+            }
+        }
+    }
+    private async Task OnCompletedAsync(IEnumerable<FluentInputFileEventArgs> files)
+    {
+
+        if (SalesID == "")
+        {
+            ErrorMessage = "No Sales Order Selected";
+            return;
+        }
+
+
+        Files = files.ToArray();
+
+        // For the demo, delete these files.
+        foreach (var file in Files)
+        {
+
+            string uniqueFileName = null;
+
+            string uploadsFolder = Path.Combine(_webHost.WebRootPath, "caseimages");
+            uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetExtension(file.Name);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            // using (var fileStream = new FileStream(filePath, FileMode.Create))
+            // {
+            file.LocalFile?.CopyTo(filePath);
+            //}
+            var PhotoUrl = uniqueFileName;
+
+            await db.AddFile(SalesID, uniqueFileName, 0, UserName);
+            await LoadImages(SalesID);
+            file.LocalFile?.Delete();
+        }
+
+        // Wait 3 seconds before to reset the progress bar.
+        await Task.Delay(3000);
+        ProgressPercent = 0;
+    }
+}

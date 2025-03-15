@@ -1,0 +1,350 @@
+﻿@page "/tableprice"
+@using LabManagement.Components.Pages.AccountReceivable.Panels
+@using LabManagement.Components.Pages.Categories
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+@inject IDialogService DialogService
+@inject IProductResposity productdb
+@inject IUserInfoResposity userdb
+
+<FluentSplitter Style="height:100%" Orientation="Orientation.Horizontal" BarSize="6" Panel1Size="30%" Panel2Size="auto">
+        <Panel1>
+
+<FluentStack Orientation="Orientation.Vertical" Width="100%">
+
+            @if (ShowList == true)
+            {
+                <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+                    <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>                    
+
+                </FluentStack>
+
+                @if (items == null)
+                {
+                    <div style="width:200px;height:200px;margin-top:100px;margin-left:100px;">
+                        <FluentProgressRing></FluentProgressRing>
+                    </div>
+                }
+                else
+                {
+                    <FluentDataGrid Items="@items"
+                    style="height: 100%;"
+                    TGridItem="TablePriceMaster"
+                    ShowHover="true"
+                                    RowSize="DataGridRowSize.Medium"
+                    HeaderCellAsButtonWithMenu="true"
+                    >
+                        <SelectColumn TGridItem="TablePriceMaster"
+                        SelectMode="DataGridSelectMode.Single"
+                        SelectFromEntireRow="true"
+                        Property="@(e => e.Selected)"
+                        OnSelect="@((e) =>OnMasterSelect(e.Item,e.Selected))">
+                        </SelectColumn>
+
+                        <PropertyColumn Title="Price Name" Property="@(p => p.PriceName)" Sortable="true" Width="180px" />
+
+                        <TemplateColumn Title="Actions" Align="@Align.End">
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+
+                        </TemplateColumn>
+
+                    </FluentDataGrid>
+
+                }
+            }
+            else
+            {
+
+
+                <div style="margin-left:10px;">
+
+
+                    <FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+                        <FluentLabel Typo="Typography.H6">Table Price</FluentLabel>
+
+                        <FluentTextField Label="Table Price Name" @bind-Value="@Content.PriceName" />
+                        <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                            <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save</FluentButton>
+                            <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+                        </FluentStack>
+                    </FluentStack>
+
+
+
+                </div>
+            }
+
+
+        </FluentStack>
+
+    </Panel1>
+    <Panel2>
+
+        <div style="margin-left:10px;">
+
+            <FluentLabel Typo="Typography.H5" Color="Color.Warning">@ErrorMessage</FluentLabel>
+            <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%" Style="margin-top:5px">
+
+                <FluentButton IconStart="@(new Icons.Regular.Size16.AddCircle())" Appearance="Appearance.Accent" OnClick="@AddItem"></FluentButton>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.SubtractCircle())"></FluentButton>
+                <FluentSearch @bind-Value="@Search" Style="width:200px" @bind-Value:after="@LoadSearchItem"></FluentSearch>
+
+            </FluentStack>
+
+
+            <FluentDataGrid Items="@priceitems"
+            style="height: 100%;"
+            TGridItem="TablePrice"
+            ShowHover="true"
+                            RowSize="DataGridRowSize.Medium"
+            HeaderCellAsButtonWithMenu="true" Pagination="@pagination">
+
+                <PropertyColumn Title="Item Code" Property="@(p => p.ItemCode)" Sortable="true" Width="100px" />
+                <PropertyColumn Title="Name" Property="@(p => p.ItemName)" Sortable="true" Width="280px" />
+                <PropertyColumn Title="Unit Price" Property="@(p => p.UnitPrice)" Align="Align.End" Format="0.00" Sortable="true" Width="100px" />
+                <PropertyColumn Title="From Date" Property="@(p => p.FromDate)" Format="MM/dd/yyyy" Sortable="true" Width="120px" />
+
+                <TemplateColumn Title="Actions" Align="@Align.End">
+
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditPriceAsync(context))" />
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeletePriceAsync(context))" />
+
+                </TemplateColumn>
+
+            </FluentDataGrid>
+            <FluentPaginator State="@pagination" />
+        </div>
+    </Panel2>
+</FluentSplitter>
+
+@code {
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authStateTask { get; set; }
+
+    UserInfo? CurrentUser { get; set; } = new();
+
+    [Parameter]
+    public TablePriceMaster Content { get; set; } = default!;
+
+    string Search = "";
+    bool ShowList = true;
+    string CurrentPriceID = "";
+    string ErrorMessage = "";
+
+    IQueryable<TablePriceMaster>? items;
+    IQueryable<TablePrice>? priceitems;
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 15 };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+        var authState = await authStateTask;
+        var UserID = authState.User.Identity!.Name;
+
+        CurrentUser = await userdb.GetUser(UserID!);
+
+        LoadData();        
+    }
+    private async void LoadData()
+    {
+        items = (await productdb.GetPriceListMaster(0, "", "")).AsQueryable();
+
+    } 
+
+    private async Task LoadSearchItem()
+    {
+       await LoadPrices(CurrentPriceID);
+
+    }
+
+    private async Task CancelAsync()
+    {
+        //navigationManager.NavigateTo($"/fixedpaycodepage");
+        ShowList = true;
+    }
+    private async Task AddAsync()
+    {
+        await Task.Delay(500);
+        Content = new TablePriceMaster();
+        ShowList = false;
+    }
+
+    private async Task SaveAsync()
+    {        
+
+        await productdb.SavePriceListMaster(Content);
+
+
+        ShowList = true;
+        LoadData();
+    }
+
+
+    private async Task EditAsync(TablePriceMaster item)
+    {
+        await Task.Delay(500);
+        Content = item;
+        ShowList = false;
+
+    }  
+
+    private async Task DeleteAsync(TablePriceMaster item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this item?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await productdb.DeletePriceListMaster(item.RecID);
+
+            if (res > 0)
+            {
+                LoadData();
+            }
+        }
+    }
+
+    private async Task EditPriceAsync(TablePrice item)
+    {
+        await Task.Delay(500);
+        var parameters = new DialogParameters
+            {
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = false,
+                SecondaryAction = "No",
+                Width = "500px",
+                Height = "450px",
+                TrapFocus = true,
+                Modal = true,
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<TablePricePanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await HandleUpdateData(dialogResult, item);
+    }
+
+    private async Task HandleUpdateData(DialogResult result, TablePrice item)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var UpdateItem = result.Data as TablePrice;
+            if (UpdateItem is null)
+            {
+                return;
+            }
+
+            UpdateItem.RecID = item.RecID;
+            await productdb.SavePrice(UpdateItem);
+            await LoadPrices(CurrentPriceID);
+        }
+    }
+
+
+    private async Task DeletePriceAsync(TablePrice item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this item?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await productdb.DeletePrice(item.RecID);
+
+            if (res > 0)
+            {
+                await LoadPrices(CurrentPriceID);
+            }
+        }
+    }
+
+    private async Task LoadPrices(string TablePriceID)
+    {
+        priceitems = (await productdb.GetAllPrice(0, TablePriceID, "", Search)).AsQueryable();
+
+    }
+
+    private async Task OnMasterSelect(TablePriceMaster item, bool Selected)
+    {
+        CurrentPriceID = "";
+        if (item != null)
+        {
+            item.Selected = Selected;
+            CurrentPriceID = item.PriceID;
+            await LoadPrices(item.PriceID);
+        }
+
+    }
+
+    private async Task AddItem()
+    {
+        ErrorMessage = "";
+        if(CurrentPriceID=="")
+        {
+            ErrorMessage = "You should select a table price";
+            return;
+        }
+
+        var item = new Product();
+
+        var parameters = new DialogParameters
+            {
+                Title = "Select Products",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,
+                Width = "700px",
+                Height = "600px",
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<ProductPanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await AddItemResult(dialogResult);
+
+    }
+
+    private async Task AddItemResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var itemRes = result.Data as List<Product>;
+
+            if (itemRes is not null)
+            {
+                foreach (Product product in itemRes)
+                {
+                    var item = new TablePrice();
+                    item.ItemID = product.ItemID;
+                    item.ItemCode = product.ItemCode;
+                    item.ItemName = product.ItemName;
+                    item.PriceID = CurrentPriceID;
+                    item.UnitPrice = 0;
+                    item.FromDate = DateTime.Now;
+                    item.UserRef = CurrentUser!.EmplRefID;
+
+                    await productdb.SavePrice(item);
+                }
+
+                await LoadPrices(CurrentPriceID);
+            }
+
+        }
+    }
+}

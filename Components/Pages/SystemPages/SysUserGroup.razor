@@ -1,0 +1,150 @@
+﻿@page "/sysusergroup"
+@rendermode InteractiveServer
+
+@inject IDialogService DialogService
+@inject IUserInfoResposity context
+
+<FluentSplitter Orientation="@orientation" Panel1Size="150px" Panel1MinSize="100px" Panel2MinSize="500px">
+   <Panel1>
+    <FluentCard>
+        <FluentStack Orientation="Orientation.Horizontal">
+
+            <FluentSpacer Width="10"></FluentSpacer>
+
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentStack Orientation="Orientation.Horizontal">
+
+                    <input type="hidden" @bind-value="GroupID" />
+                    <FluentLabel Style="margin-bottom:-10"> Group Name</FluentLabel>
+                    <FluentTextField AriaLabel="" @bind-Value="GroupName" Style="width:200px"></FluentTextField>
+
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal">
+
+                    <FluentButton IconEnd="@(new Icons.Regular.Size24.FormNew())" OnClick="NewAsync">New</FluentButton>
+                    <FluentButton IconEnd="@(new Icons.Regular.Size24.Save())" OnClick="SaveAsync">Save</FluentButton>
+                    <FluentButton IconEnd="@(new Icons.Regular.Size24.Delete())" OnClick="DeleteButtonAsync">Delete</FluentButton>
+
+                </FluentStack>
+            </FluentStack>
+
+
+        </FluentStack>
+    </FluentCard>
+       
+    </Panel1>
+    <Panel2>
+  
+        <FluentDataGrid Items="@items" style="height: 100%;" TGridItem="UserGroupInfo" RowSize="DataGridRowSize.Medium">
+            <PropertyColumn Width="200px" Property="@(p => p.GroupName)" Sortable="true" />
+
+            <TemplateColumn Title="Actions" Align="@Align.End">
+
+                <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
+                <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+            </TemplateColumn>
+
+        </FluentDataGrid>
+    </Panel2>
+
+    
+</FluentSplitter>
+
+@code {
+    string GroupName = "";
+    string GroupID = "";
+
+
+    IQueryable<UserGroupInfo>? items;
+    private UserGroupInfo groupitem;
+    Orientation orientation = Orientation.Vertical;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = (await context.GetAllGroup("", "")).AsQueryable();
+    }
+
+    private void OnResizedHandler(SplitterResizedEventArgs args)
+    {
+
+    }
+    private async Task NewAsync()
+    {
+        GroupID = "";
+        GroupName = "";
+    }
+    private async Task SaveAsync()
+    {
+        if(GroupID.Equals("")){
+            groupitem = new UserGroupInfo();
+            groupitem.RecID = 0;
+            groupitem.GroupID = GroupID;
+            groupitem.GroupName = GroupName;
+        }
+        else
+        {
+            groupitem.GroupName = GroupName;
+        }
+       
+        var res = await context.SaveGroup(groupitem);
+
+        if(res > 0 ){
+
+            items = (await context.GetAllGroup("", "")).AsQueryable();
+            GroupID = "";
+            GroupName = "";
+        }
+    }
+    private async Task EditAsync(UserGroupInfo item)
+    {
+        groupitem = item;
+        GroupID = groupitem.GroupID;
+        GroupName = groupitem.GroupName;
+
+    }
+
+    private async Task DeleteButtonAsync()
+    {
+        if(GroupID != ""){
+            var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this group?");
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                var res = await context.DeleteGroup(GroupID);
+                if (res > 0)
+                {
+                    items = (await context.GetAllGroup("", "")).AsQueryable();
+                    GroupID = "";
+                    GroupName = "";
+                }
+            }
+        }
+    }
+
+    private async Task DeleteAsync(UserGroupInfo item)
+    {
+       
+        groupitem = item;
+
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this group?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await context.DeleteGroup(item.GroupID);
+
+            if (res > 0)
+            {
+                items = (await context.GetAllGroup("", "")).AsQueryable();
+                GroupID = "";
+                GroupName = "";
+            }
+        }
+
+
+    }
+
+
+}

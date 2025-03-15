@@ -1,0 +1,50 @@
+﻿@page "/casesorderadmin"
+@attribute [Authorize]
+@inject IUserInfoResposity userdb
+@rendermode InteractiveServer
+@inject NavigationManager navigationManager
+<FluentStack Orientation="Orientation.Horizontal" Wrap="true">
+
+    <FluentDataGrid Items="@items"
+                    style="height: 100%;"
+                    TGridItem="UserInfo"
+        RowSize="DataGridRowSize.Large">
+        <TemplateColumn Width="100px">
+
+            <FluentButton aria-label="View Order" Appearance="Appearance.Outline" IconEnd="@(new Icons.Regular.Size24.FolderPeople())" OnClick="@(() => ViewOrderAsync(context))" />
+
+        </TemplateColumn>
+
+        <PropertyColumn Title="ID" Property="@(p => p.UserID)" Sortable="true" Width="200px"/>
+        <PropertyColumn Title="User Name" Property="@(c => c.UserName)" Sortable="true" Width="300px"></PropertyColumn>
+        <PropertyColumn Title="Total Orders" Property="@(c => c.TotalOrders)" Format="#,##0" Sortable="true" Width="300px"></PropertyColumn>
+
+    </FluentDataGrid>
+
+</FluentStack>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authStateTask { get; set; }
+
+    UserInfo? CurrentUser { get; set; } = new();
+
+    IQueryable<UserInfo>? items;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var authState = await authStateTask;
+        var UserID = authState.User.Identity.Name;
+
+        CurrentUser = await userdb.GetUser(UserID);
+
+        items = (await userdb.GetAll("", "", "")).AsQueryable();
+
+    }
+
+    private async Task ViewOrderAsync(UserInfo item)
+    {
+        navigationManager.NavigateTo("/viewcasesorder?id=" + item.EmplRefID);
+    }
+}

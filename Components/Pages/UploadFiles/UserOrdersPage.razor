@@ -1,0 +1,423 @@
+﻿@page "/casesorder"
+@attribute [Authorize]
+
+
+@using ClosedXML.Excel
+@using LabManagement.Components.Pages.UploadFiles.Panels
+@using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
+
+@rendermode InteractiveServer
+@inject IWebHostEnvironment _webHost;
+@inject IJSRuntime JS
+
+@inject IDialogService DialogService
+@inject IFileOrderResposity db
+@inject IUserInfoResposity userdb
+
+@inject IToastService ToastService
+@inject NavigationManager navigationManager
+
+@if (ShowList == true)
+{
+
+    <FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+
+
+        <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">           
+            <FluentButton IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddAsync">New</FluentButton>
+
+            <FluentButton IconStart="@(new Icons.Regular.Size20.TableArrowUp())" OnClick="@ExportData">Export</FluentButton>            
+
+            <FluentDatePicker Label="From Date" Style="width:120px" @bind-Value="@fromDate"></FluentDatePicker>
+            <FluentDatePicker Label="To Date" Style="width:120px" @bind-Value="@toDate"></FluentDatePicker>
+            <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
+            <FluentButton IconStart="@(new Icons.Regular.Size20.Search())" OnClick="@LoadData">LoadData</FluentButton>
+
+        </FluentStack>
+
+        @if (items == null)
+        {
+            <div style="width:200px;height:200px;margin-top:100px;margin-left:100px;">
+                <FluentProgressRing></FluentProgressRing>
+            </div>
+
+        }
+        else
+        {
+            <div style="display: table; table-layout: fixed; width: 100%;">
+                <div style="overflow-x: auto;">   
+                    <FluentDataGrid Id="grid" Items="@items"
+                    style="height: 100%;"
+                    TGridItem="CaseOrder"
+                    ResizableColumns=true               
+                    ShowHover="true"       
+                    RowSize="DataGridRowSize.Medium"
+                    HeaderCellAsButtonWithMenu="true"
+                    Pagination="@pagination">
+
+                        <TemplateColumn Title="" Align="@Align.End" Width="150px">
+                            <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.EyeTracking())" OnClick="@(() => EditAsync(context))" />
+
+                            <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+
+
+                            <FluentButton aria-label="Download files" IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())" OnClick="@(() => DownloadAsync(context))" />
+
+
+                        </TemplateColumn>
+                        @* <SelectColumn TGridItem="CaseOrder"
+                                      SelectMode="@Mode"
+                                      SelectFromEntireRow="true"
+                                      Property="@(e => e.Selected)"
+                                      SelectAll="@(items.All(e => e.Selected))"
+                                      SelectAllChanged="@(all => items.ToList().ForEach(p => p.Selected = (all == true)))"
+                                      OnSelect="@((e) =>OnSelectOrder(e.Item,e.Selected))">
+                        </SelectColumn> *@
+
+                        <PropertyColumn Title="Order No" Property="@(p => p.OrderNo)" Sortable="true" Width="120px"></PropertyColumn>
+                        <PropertyColumn Title="Patient Name" Property="@(p => p.PatientName)" Sortable="true" Width="200px" />
+                        <PropertyColumn Title="Doctor Name" Property="@(p => p.DoctorName)" Sortable="true" Width="220px" />
+                        <PropertyColumn Title="Work Notes" Property="@(p => p.WorkNotes)" Sortable="true" Width="200px" />
+                        <PropertyColumn Title="Order Date" Property="@(p => p.OrderDate)" Format="MM/dd/yyyy" Sortable="true" Width="120px" />
+                        <PropertyColumn Title="Status" Property="@(p => p.DownloadStatus)" Sortable="true" Width="220px" />
+
+                    </FluentDataGrid>
+
+
+                </div>
+            </div>
+            <FluentPaginator State="@pagination" />
+
+
+        }
+
+    </FluentStack>
+
+}
+else
+{
+
+    <CasesOrderInputPanel Content="@Content" CurrentUser="@CurrentUser" OnBackToList="@(e =>OnBackToList(true))" OnNewOrder="@(e =>OnNewOrderCallBack(true))"></CasesOrderInputPanel>
+
+}
+
+<div id="componentId" style="display:none">
+    @foreach (var item in items.Where(p => p.Selected))
+    {
+        <PrintCasesOrderPanel Content="@item"></PrintCasesOrderPanel>
+        <p class="breakhere"></p>
+    }
+</div>
+
+@code {
+
+
+    bool showPrint = false;
+
+    bool openActionMenu = false;
+
+    DateTime ? fromDate;
+    DateTime ? toDate;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authStateTask { get; set; }
+
+    UserInfo? CurrentUser { get; set; } = new();
+    UserInfo? folderUser { get; set; } = new();
+
+    static List<Option<int>> salesStatusOptions = new()
+    {
+        { new Option<int> { Value = 0, Text = "Open Order"} },
+        { new Option<int> { Value = 1, Text = "Invoiced" } },
+        { new Option<int> { Value =2, Text = "Cancelled" } }
+
+    };
+
+    FluentTextField txtCaseNo;
+
+
+    string? SaleStatus = "0";
+
+    string ErrorMessage ="";
+
+    bool openContextMenu = false;
+    string Search = "";
+    bool ShowList = true;
+    bool AutoHeight = false;
+
+    CaseOrder? SO { get; set; } = new();
+
+    bool SelectFromEntireRow = true;
+
+    DataGridSelectMode Mode = DataGridSelectMode.Multiple;
+
+    int ProgressPercent = 0;
+    FluentInputFileEventArgs[] Files = Array.Empty<FluentInputFileEventArgs>();
+
+    private string currentID = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        fromDate = DateTime.Now.AddDays(-1);
+        toDate = DateTime.Now;
+
+        var authState = await authStateTask;
+        var UserID = authState.User.Identity.Name;
+
+        CurrentUser = await userdb.GetUser(UserID);
+
+        await LoadData();
+
+    }
+
+
+
+    private async Task LoadData()
+    {
+        var loginUserUD = CurrentUser.EmplRefID;
+
+        items = (await db.GetOrders(0, "", CurrentUser!.EmplRefID, Search, fromDate, toDate, loginUserUD)).AsQueryable();
+    }
+
+    [Parameter]
+    public CaseOrder Content { get; set; } = default!;
+
+    IQueryable<CaseOrder>? items;    
+    PaginationState pagination = new PaginationState { ItemsPerPage = 15 };
+
+    private async Task AddAsync()
+    {
+        Content = new CaseOrder();
+        Content.UserID = CurrentUser.EmplRefID;
+        Content.ShowImages = true;
+        Content.ShowFiles = true;
+
+        ShowList = false;
+    }
+
+    private async Task ViewOrderAsync()
+    {
+        await Task.Delay(500);
+        IEnumerable<CaseOrder> SelectedItems = items.Where(p => p.Selected);
+        if (SelectedItems.FirstOrDefault() == null)
+        {
+            ToastService.ShowWarning("Please select an Order");
+            return;
+        }
+
+        Content = SelectedItems.FirstOrDefault();
+        Content.UserID = CurrentUser.EmplRefID;
+        Content.ShowImages = true;
+        Content.ShowFiles = true;
+        Content.ReadOnly = true;
+        ShowList = false;
+
+        openActionMenu = false;
+
+    }
+
+    private async Task EditAsync(CaseOrder item)
+    {
+
+        Content = item;       
+        Content.ShowImages = true;
+        Content.ShowFiles = true;
+        ShowList = false;
+
+    }
+
+    private async Task DeleteAsync(CaseOrder item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this order?");
+        var result = await dialog.Result;
+
+        if(!result.Cancelled){
+            var res = await db.DeleteOrder(item.RecID);
+
+            if (res > 0)
+            {
+                await LoadData();                
+            }
+        }
+
+    }
+
+    IQueryable<OrderFile>? fileitems;
+    private async Task DownloadAsync(CaseOrder item)
+    {
+
+        fileitems = (await db.GetFiles(item.OrderID, 1)).AsQueryable();
+
+        if(fileitems.ToList().Count==0)
+        {
+            ToastService.ShowWarning("No files in this order");
+            return;
+        }
+
+        if(fileitems.ToList().Count == 1){
+            foreach (var fItem in fileitems)
+            {
+                var path = @"files/" + fItem!.UserID + @"/" + fItem.UploadDate.ToString("yyyyMMdd") + "/";
+                await JS.InvokeVoidAsync("urlFileDownload", fItem.FilePath, path + fItem.FilePath);
+
+                await db.SaveDownloadStatus(fItem.OrderID, CurrentUser!.EmplRefID, fItem.RecID, 1);
+
+            }
+        }
+
+        else{
+            var dialog = await DialogService.ShowDialogAsync<DownloadFilesPanel>(item, new DialogParameters()
+                {
+                    Height = "400px",
+                    Width = "700px",
+                    Title = "Order Files",
+                    PreventDismissOnOverlayClick = true,
+                    PreventScroll = true,
+                });
+
+            var result = await dialog.Result;
+        }
+
+
+
+
+    }
+
+    private async Task EditOrderAsync()
+    {
+        IEnumerable<CaseOrder> SelectedItems = items.Where(p => p.Selected);
+        if (SelectedItems.FirstOrDefault()==null)
+        {
+            ToastService.ShowWarning("Please select an Order");
+            return;
+        }      
+
+        Content = SelectedItems.FirstOrDefault();
+        Content.UserID = CurrentUser.EmplRefID;
+        Content.ShowImages = true;
+        Content.ShowFiles = true;
+        ShowList = false;
+
+        openActionMenu = false;
+
+    }
+
+    private async Task DeleteOrderAsync()
+    {
+        IEnumerable<CaseOrder> SelectedItems = items.Where(p => p.Selected);
+        if (SelectedItems.FirstOrDefault() == null)
+        {
+            ToastService.ShowWarning("Please select Orders");
+            return;
+        }
+
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete selected orders?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            foreach(var delItem in SelectedItems)
+            {
+                var item = delItem;                       
+                var res = await db.DeleteOrder(item.RecID);                  
+            }
+
+            LoadData();
+        }
+
+    }
+
+    private async Task ClearSelectAsync()
+    {
+        await Task.Delay(500);     
+        await LoadData();
+    }
+
+
+    private async Task OnSelectOrder(CaseOrder item, bool Selected)
+    {
+
+        if (item != null)
+        {            
+            item.Selected = Selected;            
+        }
+
+
+    }
+
+
+    public async Task PrintOrder()
+    {
+
+        IEnumerable<CaseOrder> SelectedItems = items.Where(p => p.Selected);
+        if (SelectedItems.FirstOrDefault() == null)
+        {
+            ToastService.ShowWarning("Please select Orders");
+            return;
+        }
+
+
+        await JS.InvokeVoidAsync("printComponent", "#componentId");
+
+
+
+    }
+
+    public async Task ExportData()
+    {
+        var exportItems = items!.ToList();
+
+        using var workbook = new XLWorkbook();
+        var worksheet = workbook.Worksheets.Add("Data");
+
+        worksheet.Cell(1, 1).Value = "No";
+        worksheet.Cell(1, 2).Value = "Order No";
+        worksheet.Cell(1, 3).Value = "Order Date";
+        worksheet.Cell(1, 4).Value = "Patient Name";
+        worksheet.Cell(1, 5).Value = "Doctor Name";
+
+        worksheet.Range("A1:H1").Style.Font.Bold = true;
+        var startRow = 2;
+        foreach (var item in exportItems)
+        {
+            worksheet.Cell(startRow, 1).Value = startRow - 1;
+            worksheet.Cell(startRow, 2).Value = item.OrderNo;
+            worksheet.Cell(startRow, 3).Value = item.OrderDate?.ToString("MM/dd/yyyy");
+            worksheet.Cell(startRow, 4).Value = item.PatientName;
+            worksheet.Cell(startRow, 5).Value = item.DoctorName;
+            startRow += 1;
+            // Add more properties as needed
+        }
+
+        worksheet.Columns().AdjustToContents();
+
+        using var stream = new MemoryStream();
+        workbook.SaveAs(stream);
+        stream.Seek(0, SeekOrigin.Begin);
+
+        var content = new byte[stream.Length];
+        await stream.ReadAsync(content, 0, (int)stream.Length);
+
+        await JS.InvokeVoidAsync("saveAsFile", "UserData.xlsx", Convert.ToBase64String(content));
+    }
+
+    private async Task OnBackToList(bool b)
+    {
+        ShowList = b;
+        await LoadData();
+        await Task.Yield();
+        StateHasChanged();
+    }
+    private async Task OnNewOrderCallBack(bool b)
+    {
+        ShowList = true;
+        await LoadData();                
+        await Task.Yield();
+        StateHasChanged();
+
+        Task.Delay(1000);
+        await AddAsync();
+        await Task.Yield();
+        StateHasChanged();
+    }
+    
+}

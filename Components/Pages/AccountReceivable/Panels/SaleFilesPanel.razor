@@ -1,0 +1,142 @@
+﻿@rendermode InteractiveServer
+@inject ISalesOrderResposity db
+@inject IWebHostEnvironment _webHost;
+@inject IDialogService DialogService
+@inject IJSRuntime JS
+
+<FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+    <FluentLabel Typo="Typography.H5" Color="Color.Warning">@ErrorMessage</FluentLabel>
+    @if(ShowUpload==true){
+        <FluentInputFile Id="my-file-uploader1"
+                         Mode="InputFileMode.SaveToTemporaryFolder"
+                         Multiple="true"
+                         MaximumFileCount="1"
+                         MaximumFileSize="@(10*1024*1024)"
+                         Accept="pdf/*"
+                         @bind-ProgressPercent="@ProgressPercent"
+                         OnCompleted="@OnUploadFileCompleted"
+                         Style="height: 50px;width:50px">
+            <ChildContent>
+                <label for="my-file-uploader1">
+                    <FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
+                </label>
+
+            </ChildContent>
+        </FluentInputFile>
+    }
+   
+    <FluentDataGrid Items="@fileitems"
+    style="height: 100%;"
+    TGridItem="OrderFile"
+    ResizableColumns=true>
+
+        <PropertyColumn Title="File Path" Property="@(p => p.FilePath)" Width="420px" />
+
+        <TemplateColumn Title="Actions" Align="@Align.End">
+
+            <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowCircleDown())" OnClick="@(() => DownloadItem(context))" />
+            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteFile(context.RecID,context.FilePath))" Disabled="@((ShowUpload==true)?false:true)" />
+
+        </TemplateColumn>
+
+    </FluentDataGrid>
+</FluentStack>
+
+@code {
+
+    private string ErrorMessage = "";
+    [Parameter]
+    public bool ShowUpload { get; set; } = true;
+
+    [Parameter]
+    public string SalesID { get; set; } = "";
+
+    int ProgressPercent = 0;
+    IQueryable<OrderFile>? fileitems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (SalesID != "")
+            await LoadFiles(SalesID);
+
+    }
+
+    private async Task LoadFiles(string OrderID)
+    {
+        fileitems = (await db.GetFiles(OrderID, 1)).AsQueryable();
+    }
+
+    FluentInputFileEventArgs[] Files = Array.Empty<FluentInputFileEventArgs>();
+
+    private async Task OnUploadFileCompleted(IEnumerable<FluentInputFileEventArgs> files)
+    {
+        if(SalesID=="")
+        {
+            ErrorMessage = "No Sales Order Selected";
+            return;
+        }
+
+        Files = files.ToArray();
+
+        // For the demo, delete these files.
+        foreach (var file in Files)
+        {
+
+            string uniqueFileName = null;
+
+            string uploadsFolder = Path.Combine(_webHost.WebRootPath, "files");
+            uniqueFileName = Path.GetFileName(file.Name);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            // using (var fileStream = new FileStream(filePath, FileMode.Create))
+            // {
+            file.LocalFile?.CopyTo(filePath);
+            //}
+            var PhotoUrl = uniqueFileName;
+
+            await db.AddFile(SalesID, uniqueFileName, 1);
+            await LoadFiles(SalesID);
+            file.LocalFile?.Delete();
+        }
+        // Wait 3 seconds before to reset the progress bar.
+        await Task.Delay(3000);
+        ProgressPercent = 0;
+    }
+
+    private async Task DownloadItem(OrderFile item)
+    {
+        await JS.InvokeVoidAsync("urlFileDownload", item.FilePath, "files/" + item.FilePath);
+
+
+    }
+
+    private async Task DeleteFile(int RecID, string FilePath)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this file?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await db.DeleteFile(RecID);
+
+            if (res > 0)
+            {
+                string uploadsFolder = Path.Combine(_webHost.WebRootPath, "files");
+                string filePath = Path.Combine(uploadsFolder, FilePath);
+
+                try
+                {
+                    File.Delete(filePath);
+                }
+                catch
+                {
+
+                }
+
+                await LoadFiles(SalesID);
+            }
+        }
+    }
+
+
+
+}

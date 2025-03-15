@@ -1,0 +1,63 @@
+﻿@using LabManagement.Helpers
+@implements IDialogContentComponent<CaseOrder>
+
+@inject ISalesOrderResposity db
+@rendermode InteractiveServer
+
+<table style="border:0.5px solid;width:100%;height: 97%">
+    <tr style="height:70px;">
+        <td style="width:15%;border-bottom:0.5px solid;border-right:0.5px solid;padding:5px">
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentLabel>No</FluentLabel>
+                <FluentLabel Typo="Typography.H1">@Content.OrderNo</FluentLabel>
+            </FluentStack>
+        </td>
+
+        <td style="width:30%;border-bottom:0.5px solid;border-right:0.5px solid;padding:5px">
+            <FluentStack Orientation="Orientation.Vertical">
+                <img src="@Image64" width="150" height="40" />
+                <FluentLabel Typo="Typography.H3"> @Content.DoctorName</FluentLabel>
+            </FluentStack>
+        </td>
+        <td style="width:30%;border-bottom:0.5px solid;border-right:0.5px solid;padding:5px">
+            <table style="width:100%">
+                <tr>
+                    <td style="text-align:center;width:50%">
+
+                    </td>
+                    <td style="text-align:center;width:50%">
+                        <FluentStack Orientation="Orientation.Vertical">
+                            <FluentLabel>Order Date</FluentLabel>
+                            <FluentLabel Typo="Typography.H5">@String.Format("{0:MM/dd/yy}", @Content.OrderDate)</FluentLabel>
+                        </FluentStack>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+        
+    </tr>
+    <tr style="height:100px;">
+        <td colspan="3" style="border-bottom:0.5px solid;vertical-align:top;padding:2px;">
+                        <span>Patient Name:</span> <span style="font-weight:bold;"> @Content.PatientName</span>
+        </td>
+    </tr>
+
+</table>
+
+
+@code {
+
+    [Parameter]
+    public CaseOrder Content { get; set; } = default!;
+
+    string Image64;
+
+    protected override async Task OnInitializedAsync()
+    {                
+        Image64 = await Helper.GenerateBarcode(Content!.OrderNo, ZXing.BarcodeFormat.CODE_128, 150, 40);
+        
+    }
+      
+    
+}

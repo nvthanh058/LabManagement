@@ -1,0 +1,92 @@
+﻿@implements IDisposable
+@inject IDialogService DialogService
+@inject IMessageService MessageService
+@inject IProductionResposity productionDB
+
+@rendermode InteractiveServer
+
+<FluentButton BackgroundColor="var(--neutral-layer-4)" OnClick="OpenNotificationCenterAsync" Title="Notification center">
+    @if (counter > 0)
+    {
+        <FluentCounterBadge Count="@counter"
+        Max="100"
+        ShowOverflow="true"
+        BackgroundColor="@Color.Error"
+        Color="Color.Fill"
+        Appearance="Appearance.Accent"
+        ShowZero=true>
+            <ChildContent>
+                @NotificationIcon()
+            </ChildContent>
+        </FluentCounterBadge>
+    }
+    else
+    {
+        @NotificationIcon()
+    }
+</FluentButton>
+
+@code {
+
+    private IDialogReference? _dialog;
+
+    [Parameter]
+    public UserInfo CurrentUser { get; set; } = new();
+   
+    IQueryable<TaskMessage>? items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = (await productionDB.GetTaskMessagesNotify(CurrentUser.EmplRefID)).AsQueryable();
+        counter = items.Count();
+    }
+     
+    int counter = 0;
+
+
+    private RenderFragment NotificationIcon() =>
+        @<FluentIcon Value="@(new Icons.Regular.Size20.Mail())" Color="Color.Neutral" Title="Notification center" />;
+
+    private async Task OpenNotificationCenterAsync()
+    {
+
+        var contentView = new TaskMessageView();
+        contentView.CurrentUser = CurrentUser!;
+
+        DialogParameters<TaskMessageView> parameters = new()
+            {
+                Title = $"New Message",
+                Alignment = HorizontalAlignment.Right,
+                Width = "600px",
+                PrimaryAction = "Ok",
+                SecondaryAction = "Cancel"
+            };
+
+        var dialog = await DialogService.ShowPanelAsync<NotificationMessagePanel>(contentView, parameters);
+        var dialogResult = await dialog.Result;
+        HandlePanel(dialogResult, contentView);
+    
+
+    }
+
+    private static void HandlePanel(DialogResult result, TaskMessageView contentView)
+    {
+        if (result.Cancelled)
+        {
+
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+
+            return;
+        }
+    }
+
+    public void Dispose()
+    {
+       
+    }
+
+}

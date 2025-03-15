@@ -1,0 +1,249 @@
+﻿@page "/customer"
+@using LabManagement.Components.Pages.CommonForms.Panels
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject ICustomerResposity context
+@inject IJSRuntime JSRuntime
+@inject IMessageService MessageService
+
+<FluentMenuProvider @rendermode="RenderMode.InteractiveServer" />
+
+@if (ShowList == true)
+{
+
+    <FluentStack Orientation="Orientation.Vertical" Width="100%">
+
+        <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+            <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowSquareDown())">Import</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.Print())" OnClick="PrintOrder">Print</FluentButton>
+            <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
+
+        </FluentStack>
+
+        @if (FilteredItems == null)
+        {
+            <FluentProgressRing></FluentProgressRing>
+        }
+        else
+        {
+            <FluentDataGrid Items="@FilteredItems"
+            TGridItem="Customer"
+            ResizableColumns=true
+            ShowHover="true"        
+            RowSize="DataGridRowSize.Medium"
+            Pagination="@pagination">
+                <SelectColumn TGridItem="Customer"
+                SelectMode="@Mode"
+                SelectFromEntireRow="@SelectFromEntireRow"
+                Property="@(e => e.Selected)"
+                OnSelect="@(e => e.Item.Selected = e.Selected)">
+                </SelectColumn>
+                <PropertyColumn Width="120px" Property="@(p => p.CustomerCode)" Sortable="true" />
+                <PropertyColumn Width="250px" Property="@(c => c.CustomerName)" Sortable="true" Comparer="@StringLengthComparer.Instance" Filtered="!string.IsNullOrWhiteSpace(nameFilter)">
+                    <ColumnOptions>
+                        <div class="search-box">
+                            <FluentSearch type="search" Autofocus=true @bind-Value=nameFilter @oninput="HandleUserNameFilter" AfterBindValue="HandleClear" Placeholder="User name..." />
+                        </div>
+                    </ColumnOptions>
+                </PropertyColumn>
+                
+                <PropertyColumn Title="NameAlias" Property="@(p => p.NameAlias)" Sortable="true" />
+                <PropertyColumn Title="Address" Property="@(p => p.Address)"  Sortable="true" />
+                <PropertyColumn Title="Email Address" Property="@(p => p.EmailAddress)" Sortable="true" />
+                <TemplateColumn Title="Actions" Align="@Align.End">
+                    <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
+                    <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+                </TemplateColumn>
+
+            </FluentDataGrid>
+
+            <FluentPaginator State="@pagination" />
+        }
+
+
+    </FluentStack>
+
+}
+
+else{
+    <div style="margin-left:20px;width:600px;">
+        <h5>Customer Information</h5>
+        <FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+            <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save</FluentButton>
+                <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+                
+            </FluentStack>
+            <FluentStack Orientation="Orientation.Horizontal">
+
+                <FluentStack Orientation="Orientation.Vertical">
+                    <FluentTextField Label="Customer Code" @bind-Value="@Content.CustomerCode" ReadOnly="@((Content.RecID>0)?true:false)" />
+                    <FluentTextField Label="Customer Name" @bind-Value="@Content.CustomerName" Style="width:250px" />
+                    <FluentTextField Label="Name Alias" @bind-Value="@Content.NameAlias" Style="width:250px" />
+                    
+                </FluentStack>
+
+                <FluentStack Orientation="Orientation.Vertical">
+                                      
+                    <FluentTextField Label="Address" @bind-Value="@Content.Address" />
+                    <FluentTextField Label="Phone" @bind-Value="@Content.Phone"></FluentTextField>
+                    <FluentTextField Label="Email Address" @bind-Value="@Content.EmailAddress"></FluentTextField>
+                    
+                </FluentStack>
+            </FluentStack>
+
+          
+
+        </FluentStack>
+    </div>
+}
+
+<div id="printing" name="printing" class="printing">
+    @*  <SalesPrintViewPanel Content="@SO"></SalesPrintViewPanel>
+ *@
+    <PrintViewSample></PrintViewSample>
+</div>
+
+
+
+@code {
+    bool ShowList = true;
+    private IQueryable<Customer>? items;
+    string Search = "";
+
+
+    bool SelectFromEntireRow = true;
+    DataGridSelectMode Mode = DataGridSelectMode.Single;
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
+
+    public Customer Content { get; set; } = default!;
+ 
+    string nameFilter = string.Empty;
+   
+    protected override async Task OnInitializedAsync()
+    {
+        items = null;
+        await Task.Delay(500);
+        LoadData();
+       
+    }
+    private async void LoadData()
+    {        
+
+        items = (await context.GetAll("", Search)).AsQueryable();
+      
+    }
+
+    IQueryable<Customer>? FilteredItems => items?.Where(x => x.CustomerName.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));    
+   
+    private void HandleUserNameFilter(ChangeEventArgs args)
+    {
+        if (args.Value is string value)
+        {
+            nameFilter = value;
+        }
+    }
+    private void HandleClear()
+    {
+        if (string.IsNullOrWhiteSpace(nameFilter))
+        {
+            nameFilter = string.Empty;
+        }
+    }
+
+    private async Task CancelAsync()
+    {
+        ShowList = true;
+    }
+    private async Task AddAsync()
+    {
+        Content = new Customer();
+        ShowList = false;
+    }
+    private async Task SaveAsync()
+    {
+        await Task.Delay(500);
+        if (Content.RecID != 0)
+        {
+            await context.Update(Content);
+        }
+        else
+        {
+            await context.Add(Content);
+        }
+
+        ShowList = true;
+        LoadData();
+    }
+
+
+    private async Task EditAsync(Customer item)
+    {
+        Content = item;
+        ShowList = false;
+
+    }
+
+
+    private async Task DeleteAsync(Customer item)
+    {        
+        if (item is null)
+        {
+            return;
+        }
+
+        var dialogParameters = new DialogParameters
+            {
+                Title = "Delete Customer",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true
+            };
+
+        // var dialog = await dialogService.ShowDialogAsync<ConfirmationPanel>(dialogParameters);
+        var dialog = await DialogService.ShowConfirmationAsync(
+            "Are you sure you want to delete this Customer?",
+            "Yes",
+            "No",
+            "Delete Customer?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            //var res = await context.DeleteCustomer(item.UserID);            
+            LoadData();
+        }
+
+    }
+
+    private async Task PrintOrder()
+    {
+
+        await Task.Delay(500);
+        await JSRuntime.InvokeVoidAsync("printComponent", "#printing","");
+
+       
+    }
+
+    public class StringLengthComparer : IComparer<string>
+    {
+        public static readonly StringLengthComparer Instance = new StringLengthComparer();
+
+        public int Compare(string? x, string? y)
+        {
+            if (x is null)
+            {
+                return y is null ? 0 : -1;
+            }
+
+            if (y is null)
+            {
+                return 1;
+            }
+
+            return x.Length.CompareTo(y.Length);
+        }
+    }
+}

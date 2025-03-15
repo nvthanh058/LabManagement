@@ -1,0 +1,157 @@
+﻿@page "/productline"
+@using LabManagement.Components.Pages.PayrollSetup.Panels
+
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject IProductionResposity context
+
+
+<FluentStack Orientation="Orientation.Vertical" Width="100%">
+
+            @if (ShowList == true)
+            {
+
+                <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+                    <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>                    
+
+                </FluentStack>
+
+                @if (items == null)
+                {
+                    <div style="width:200px;height:200px;margin-top:100px;margin-left:100px;">
+                        <FluentProgressRing></FluentProgressRing>
+                    </div>
+                }
+                else
+                {
+                    <FluentDataGrid Items="@items"
+                                    style="height: 100%;"
+                                    TGridItem="ProductLine"
+                                    ShowHover="true"
+                            RowSize="DataGridRowSize.Medium"
+                                    HeaderCellAsButtonWithMenu="true"
+                                    Pagination="@pagination">
+                        <TemplateColumn Width="30px">
+                            <FluentIcon Icon="Icons.Regular.Size16.CodeBlock" Color="@Color.Accent" />
+                        </TemplateColumn>
+                        <PropertyColumn Title="Line Name" Property="@(p => p.LineName)" Sortable="true" Width="180px" />
+                             <PropertyColumn Title="Order No" Property="@(p => p.OrderNo)" Sortable="true" Width="80px" />
+                       
+                        <TemplateColumn Title="Actions" Align="@Align.End">
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+
+                        </TemplateColumn>
+
+                    </FluentDataGrid>
+                    <FluentPaginator State="@pagination" />
+                }
+            }
+            else
+            {
+
+
+                <div style="margin-left:20px;">
+                    <FluentLabel Typo="Typography.H6">Production Line</FluentLabel>
+
+                    <FluentStack Orientation="Orientation.Horizontal" Width="600px">
+                        <FluentStack Orientation="Orientation.Vertical">
+
+                            <FluentTextField Label="LineName" @bind-Value="@Content.LineName" />
+                            <FluentNumberField Label="OrderNo" @bind-Value="@Content.OrderNo" />
+                        
+                        </FluentStack>
+                    
+                    </FluentStack>
+                    <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                        <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save</FluentButton>
+                        <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+                    </FluentStack>
+                </div>
+            }
+
+     
+</FluentStack>
+
+
+@code {
+    
+    string Search = "";
+    bool ShowList = true;
+
+    [Parameter]
+    public ProductLine Content { get; set; } = default!;    
+    IQueryable<ProductLine>? items;
+    
+    PaginationState pagination = new PaginationState { ItemsPerPage = 15 };
+   
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+        LoadData();        
+    }
+    private async void LoadData()
+    {
+        items = (await context.GetAllProdLine(0,"", "")).AsQueryable();
+       
+    }
+
+ 
+    private async Task CancelAsync()
+    {
+        //navigationManager.NavigateTo($"/fixedpaycodepage");
+        ShowList = true;
+    }
+    private async Task AddAsync()
+    {
+        await Task.Delay(500);
+        Content = new ProductLine();     
+        ShowList = false;
+    }
+
+
+    private async Task SaveAsync()
+    {        
+        if (Content.RecID != 0)
+        {
+            await context.UpdateProdLine(Content);
+        }
+        else
+        {
+            await context.AddProdLine(Content);
+        }
+      
+        ShowList = true;
+        LoadData();
+    }
+
+
+    private async Task EditAsync(ProductLine item)
+    {
+        await Task.Delay(500);
+        Content = item;
+        ShowList = false;
+
+    }  
+
+    private async Task DeleteAsync(ProductLine item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this item?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await context.DeleteProdLine(item.RecID);
+
+            if (res > 0)
+            {
+                LoadData();
+            }
+        }
+    }
+
+   
+
+
+}

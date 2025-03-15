@@ -1,0 +1,26 @@
+﻿@page "/"
+@attribute [Authorize]
+@inject IUserInfoResposity userdb
+
+
+@if(CurrentUser!.GroupID=="customer")
+{
+    <LabManagement.Components.Pages.UploadFiles.UserOrdersPage></LabManagement.Components.Pages.UploadFiles.UserOrdersPage>
+}
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authStateTask { get; set; } = default!;
+
+    UserInfo? CurrentUser { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+       
+        var authState = await authStateTask;
+        var UserID = authState.User.Identity!.Name;
+
+        CurrentUser = await userdb.GetUser(UserID!);       
+
+    }
+}

@@ -1,0 +1,45 @@
+﻿<path onclick="@SelectTeeth"
+style="@ToothInfo.ToothStyle"
+d="@ToothInfo.dValue"
+id="@ToothInfo.ToothID"
+inkscape:connector-curvature="0" />
+
+@code {
+
+    [Parameter]
+    public ToothModel ToothInfo { get; set; } = new();
+    
+    [Parameter] public Func<int, Task>? OnToothClick { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ToothInfo.ToothStyle = UnSelectStyle;
+    }
+
+    private string SelectedStyle = "fill:#33c7ff;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none";
+    private string UnSelectStyle = "fill:white;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none";
+
+    private async Task SelectTeeth()
+    {        
+        if (ToothInfo.Selected == true)
+        {
+            ToothInfo.Selected = false;
+            ToothInfo.ToothStyle = UnSelectStyle;
+        }
+        else
+        {
+            ToothInfo.Selected = true;
+            ToothInfo.ToothStyle = SelectedStyle;
+        }
+
+        if (this.OnToothClick is not null)
+        {
+            // unless you're an async expert keep the await clean and simple
+            await this.OnToothClick.Invoke(ToothInfo.ToothNumber);          
+            await Task.Delay(1000);
+        }
+
+       
+    }
+}
+

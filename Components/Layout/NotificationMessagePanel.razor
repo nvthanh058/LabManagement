@@ -1,0 +1,61 @@
+﻿@implements IDialogContentComponent<TaskMessageView>
+@inject IMessageService MessageService
+@inject IProductionResposity productionDB
+@inject NavigationManager navigationManager
+
+<FluentDialogHeader ShowDismiss="false">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size20.Mail())" />
+        <FluentLabel Typo="Typography.H6">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+@foreach(var item in Content.TaskMessages!){
+    <FluentStack Style="width:100%;height:100px;padding:5px;" Orientation="Orientation.Vertical">
+
+        <FluentPersona Name="@item.FromUserName"
+                       Status="PresenceStatus.Available"
+                       StatusSize="PresenceBadgeSize.Small"
+                       StatusTitle=""
+                       Image="@item.GetPhotoUrl"
+                       ImageSize="32px">
+        </FluentPersona>
+
+        <FluentLabel Color="Color.Success">@item.MessageContent</FluentLabel>
+        <FluentButton IconStart="@(new Icons.Regular.Size16.Send())" OnClick="@(() => ShowDetail(item))" />
+    </FluentStack>
+}
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+</FluentDialogFooter>
+
+@code {
+
+    [Parameter]
+    public TaskMessageView Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+    
+    protected override async Task OnInitializedAsync()
+    {
+       Content.TaskMessages = (await productionDB.GetTaskMessagesNotify(Content.CurrentUser.EmplRefID)).AsQueryable();
+    }
+
+    private async Task ShowDetail(TaskMessage task)
+    {
+        navigationManager.NavigateTo("/workorder?taskid=" + task.TaskID);
+    }
+
+    private async Task SaveAsync()
+    {
+        await Dialog.CloseAsync(Content);
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+
+}

@@ -1,0 +1,426 @@
+﻿@page "/salesorder"
+@attribute [Authorize]
+
+@using LabManagement.Components.Pages.AccountReceivable.Panels
+@using LabManagement.Components.Pages.Categories
+@using LabManagement.Components.Pages.CommonForms.Panels
+@using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
+
+@rendermode InteractiveServer
+@inject IJSRuntime JS
+
+@inject IDialogService DialogService
+@inject ISalesOrderResposity db
+@inject ICustomerResposity customerdb
+@inject IUserInfoResposity userdb
+@inject IToastService ToastService
+@inject NavigationManager navigationManager
+
+@if (ShowList == true)
+{
+    <FluentSplitter Style="height:100%" Orientation="Orientation.Vertical" BarSize="6" Panel1Size="80%" Panel2Size="auto">
+        <Panel1>
+            <div style="height: 600px; overflow:auto;" tabindex="-1">
+                <FluentStack  Orientation="Orientation.Horizontal" Style="height:48px" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                    <FluentDatePicker Label="From Date" Style="width:120px" @bind-Value="@orderView!.fromDate"></FluentDatePicker>
+                    <FluentDatePicker Label="To Date" Style="width:120px" @bind-Value="@orderView!.toDate"></FluentDatePicker>
+                    <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
+                    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Search())" OnClick="@LoadData">Load</FluentButton>
+
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+                    <FluentButton IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddAsync">New</FluentButton>
+                    <FluentButton IconStart="@(new Icons.Regular.Size20.ArrowSquareDown())">Import</FluentButton>
+
+                    <FluentButton @ref="ref1" IconStart="@(new Icons.Regular.Size20.ArrowCircleDown())" id="btnActionMenu" Appearance="Appearance.Outline" @onclick="@(() => openActionMenu = !openActionMenu)">
+                    </FluentButton>
+
+                    <FluentMenu Anchor="btnActionMenu" @bind-Open="openActionMenu" VerticalThreshold="170" UseMenuService="false">
+
+                        <FluentMenuItem OnClick="() => ViewOrderAsync()">
+                            <span slot="start"><FluentIcon Value="@(new Icons.Regular.Size16.Eye())" Color="Color.Neutral" Slot="start" /></span>
+                            View
+                        </FluentMenuItem>
+                        <FluentMenuItem OnClick="() => DeleteMultiOrderAsync()">
+                            <span slot="start"><FluentIcon Value="@(new Icons.Regular.Size16.Delete())" Color="Color.Neutral" Slot="start" /></span>
+                            Delete selected orders
+                        </FluentMenuItem>
+
+                        <FluentMenuItem OnClick="() => ShowProductionAsync()">
+                            <span slot="start"><FluentIcon Value="@(new Icons.Regular.Size16.Settings())" Color="Color.Neutral" Slot="start" /></span>
+                            Show Product Order
+                        </FluentMenuItem>
+
+                    </FluentMenu>
+                    <FluentButton IconStart="@(new Icons.Regular.Size20.Print())" OnClick="@PrintRXOrder">Print RX</FluentButton>
+
+                </FluentStack>
+
+                @if (orderView!.items == null)
+                {
+                    <div style="width:200px;height:200px;margin-top:100px;margin-left:100px;">
+                        <FluentProgressRing></FluentProgressRing>
+                    </div>
+
+                }
+                else
+                {
+                    <FluentStack Orientation="Orientation.Vertical" Width="100%">
+
+                        <FluentDataGrid RowSize="DataGridRowSize.Medium" Id="grid" Items="@orderView!.items"
+                        style="height: 100%;"
+                        TGridItem="SalesTable"                                    
+                        ResizableColumns=true
+
+                        ShowHover="true"            
+                        HeaderCellAsButtonWithMenu="true"
+                        Pagination="@pagination">
+
+                            <SelectColumn TGridItem="SalesTable"
+                            SelectMode="@Mode"
+                            SelectFromEntireRow="true"
+                            Property="@(e => e.Selected)"
+                                          SelectAll="@(orderView!.items.All(e => e.Selected))"
+                                          SelectAllChanged="@(all => orderView!.items.ToList().ForEach(p => p.Selected = (all == true)))"
+                            OnSelect="@((e) =>OnSelectOrder(e.Item,e.Selected))">
+                            </SelectColumn>
+
+                            <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Sortable="true" Width="120px" />
+                            <PropertyColumn Title="PatientName" Property="@(p => p.PatientName)" Sortable="true" Width="100px" />
+                            <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Sortable="true" Width="120px" />
+                            <PropertyColumn Title="PanNo" Property="@(p => p.LabpanNum)" Sortable="true" Width="100px" />                            
+                            <PropertyColumn Title="ShipDate" Property="@(p => p.ShipDate)" Format="dd/MM/yyyy" Sortable="true" Width="100px" />
+                            <PropertyColumn Title="Cust Req ShipDAte" Property="@(p => p.CustReqShipDate)" Format="dd/MM/yyyy" Sortable="true" Width="100px" />
+                            <PropertyColumn Title="Customer" Property="@(p => p.SalesName)" Sortable="true" Width="80px" />
+                            <PropertyColumn Title="Doctor Name" Property="@(p => p.DoctorName)" Align="Align.End" Sortable="true" Width="120px" />
+                            <PropertyColumn Title="Doctor Account" Property="@(p => p.DocAccount)" Align="Align.End" Sortable="true" Width="120px" />
+                            <PropertyColumn Title="Sales Status" Property="@(p => p.SalesStatusName)" Align="Align.End" Sortable="true" Width="120px" />
+                            <TemplateColumn Title="" Align="@Align.End">
+
+                                <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditOrderAsync(context))" />
+                                <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteOrderAsync(context))" />
+
+                            </TemplateColumn>
+
+                        </FluentDataGrid>
+                        <FluentPaginator State="@pagination" />
+
+                    </FluentStack>
+
+
+                }
+            </div>
+        </Panel1>
+        <Panel2>
+
+            <FluentDataGrid RowSize="DataGridRowSize.Medium" Items="@orderView!.lineitems"
+                            TGridItem="SalesLine"
+            ResizableColumns=true>
+
+                <PropertyColumn Title="Item Code" Property="@(p => p.ItemCode)" Width="120px" />
+                <PropertyColumn Title="Name" Property="@(p => p.ItemName)" Width="220px" />
+                <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Width="120px" />
+                <PropertyColumn Title="Us Teeth" Property="@(p => p.UsTeeth)" Width="150px" />
+                <PropertyColumn Title="EurTeeth" Property="@(p => p.EurTeeth)" Sortable="true" Width="150px" />
+                <PropertyColumn Title="Shade" Property="@(p => p.Shade)" Sortable="true" Width="150px" />
+                <PropertyColumn Title="SalesQty" Property="@(p => p.SalesQty)" Sortable="true" Width="150px" />
+                <PropertyColumn Title="SalesPrice" Property="@(p => p.SalesPrice)" Sortable="true" Width="150px" />
+                <PropertyColumn Title="LineAmount" Property="@(p => p.SalesPrice)" Sortable="true" Width="150px" />
+                <TemplateColumn Title="Actions" Align="@Align.End">
+
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineItem(context))" />
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineItem(context))" />
+
+                </TemplateColumn>
+
+            </FluentDataGrid>
+
+        </Panel2>
+    </FluentSplitter>
+
+}
+else
+{
+
+
+    <SalesOrderInputPanel Content="@Content" OnBackToList="@(e =>CancelAsync(true))" OnNewOrder="@(e =>OnNewOrderCallBack(true))"></SalesOrderInputPanel>
+
+}
+
+<div id="componentId" style="display:none">
+    @foreach (var item in orderView!.SelectedItems)
+    {        
+        <SalesPrintViewPanel Content="@item"></SalesPrintViewPanel>
+        <p class="breakhere"></p>
+    }
+</div>
+
+@code {
+
+    bool ShowList = true;
+    bool openActionMenu = false;
+    DataGridSelectMode Mode = DataGridSelectMode.Multiple;
+
+    SalesOrderView? orderView = new();
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authStateTask { get; set; }
+
+    UserInfo? CurrentUser { get; set; } = new();
+     
+    string Search = "";   
+   
+    [Parameter]
+    public SalesTable Content { get; set; } = default!;
+
+    Customer SelectedCustomer { get; set; } = new Customer();
+    PaginationState pagination = new PaginationState { ItemsPerPage = 15 };
+             
+    protected override async Task OnInitializedAsync()
+    {
+       
+        var authState = await authStateTask;
+        var UserID = authState.User.Identity.Name;
+
+        CurrentUser = await userdb.GetUser(UserID);
+        LoadData();
+
+    }
+
+    private async void LoadData()
+    {
+        orderView.items = (await db.GetOrders(0, "", "", Search, orderView.fromDate, orderView.toDate)).AsQueryable();
+    }
+    
+    private async void LoadLineItems()
+    {        
+        if (orderView!.FirstOrder == null)
+        {
+            ToastService.ShowWarning("Please select an Order");
+            return;
+        }
+
+        orderView.lineitems = (await db.GetOrderLines(orderView!.FirstOrder.SalesID)).AsQueryable();
+    }
+
+
+    private async Task CancelAsync(bool b)
+    {        
+        ShowList = true;
+        LoadData();
+        await Task.Yield();
+        StateHasChanged();
+    }
+
+        private async Task OnNewOrderCallBack(bool b)
+    {
+        ShowList = true;
+        LoadData();                
+        await Task.Yield();
+        StateHasChanged();
+
+        Task.Delay(1000);
+        await AddAsync();
+        await Task.Yield();
+        StateHasChanged();
+    }
+
+
+    private async Task AddAsync()
+    {
+        Content = new SalesTable();
+        Content.UserID = CurrentUser.EmplRefID;
+        Content.ShowImages = true;
+        Content.ShowFiles = true;
+
+        ShowList = false;
+    }
+
+    private async Task ShowProductionAsync()
+    {
+        await Task.Delay(500);   
+
+        if (orderView!.FirstOrder == null)
+        {
+            ToastService.ShowWarning("Please select an Order");
+            return;
+        }
+
+        navigationManager.NavigateTo("/ProductOrder");
+
+        ShowList = false;
+
+        openActionMenu = false;
+
+    }
+
+    private async Task ViewOrderAsync()
+    {
+        await Task.Delay(500);
+
+        if (orderView!.FirstOrder == null)
+        {
+            ToastService.ShowWarning("Please select an Order");
+            return;
+        }
+
+        Content = orderView!.FirstOrder;
+        Content.UserID = CurrentUser.EmplRefID;
+        Content.ShowImages = true;
+        Content.ShowFiles = true;
+        Content.ReadOnly = true;
+        ShowList = false;
+
+        openActionMenu = false;
+
+    }
+
+    private async Task EditOrderAsync(SalesTable item)
+    {
+      
+        Content = item;
+        Content.UserID = CurrentUser.EmplRefID;
+        Content.ShowImages = true;
+        Content.ShowFiles = true;
+
+        ShowList = false;
+
+        openActionMenu = false;
+
+    }
+
+    private async Task DeleteOrderAsync(SalesTable item)
+    {
+
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete selected orders?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            var res = await db.DeleteOrder(item.RecID);
+
+
+            LoadData();
+        }
+
+    }
+
+    private async Task DeleteMultiOrderAsync()
+    {       
+        if (orderView.SelectedItems == null)
+        {
+            ToastService.ShowWarning("Please select Orders");
+            return;
+        }
+
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete selected orders?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            foreach (var delItem in orderView.SelectedItems)
+            {
+                var item = delItem;
+                var res = await db.DeleteOrder(item.RecID);
+            }
+
+            LoadData();
+        }
+
+    }
+
+    private async Task ClearSelectAsync()
+    {
+        await Task.Delay(500);     
+        LoadData();
+    }
+
+    private async Task EditLineItem(SalesLine item)
+    {       
+        var parameters = new DialogParameters
+            {
+                Title = "Select Products",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,    
+                Width = "700px",
+                Height = "600px",               
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<SalesLinePanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await UpdateLineItem(dialogResult);
+    }
+
+    private async Task UpdateLineItem(DialogResult result)
+    {        
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var itemRes = result.Data as SalesLine;
+            await db.SaveOrderLine(itemRes);
+        }
+    }
+
+
+
+    private async Task DeleteLineItem(SalesLine item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this item?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await db.DeleteOrderLine(item.RecID);
+
+            if (res > 0)
+            {
+                LoadLineItems();
+            }
+        }
+    }
+    private async Task OnSelectOrder(SalesTable item, bool Selected)
+    {       
+        if (item != null)
+        {
+            item.Selected = Selected;
+            orderView.lineitems = (await db.GetOrderLines(item.SalesID)).AsQueryable();
+        }
+
+    }
+
+    [Inject]
+    private ControlCornerRadius ControlCornerRadius { get; set; } = default!;
+    private FluentButton? ref1;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            await ControlCornerRadius.SetValueFor(ref1!.Element, 0);            
+            StateHasChanged();
+        }
+    }
+
+    public async Task PrintRXOrder()
+    {
+        
+        if (orderView.SelectedItems == null)
+        {
+            ToastService.ShowWarning("Please select Orders");
+            return;
+        }
+
+        await JS.InvokeVoidAsync("printComponent", "#componentId");
+        
+      
+
+    }
+
+
+
+}

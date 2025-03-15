@@ -1,0 +1,622 @@
+﻿@implements IDialogContentComponent<SalesTable>
+@using LabManagement.Components.Pages.Categories
+@using LabManagement.Components.Pages.CommonForms.Panels
+
+
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject ISalesOrderResposity db
+@inject ICustomerResposity customerdb
+@inject IProductResposity productdb
+@inject IUserInfoResposity userdb
+@inject IToastService ToastService
+@inject NavigationManager navigationManager
+@inject IWebHostEnvironment _webHost;
+
+<FluentSplitter Style="height:100%" Orientation="Orientation.Vertical" BarSize="6" Panel1Size="50%" Panel2Size="auto">
+    <Panel1>
+        @if(Content.ReadOnly==false){
+            <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%" HorizontalAlignment="HorizontalAlignment.Start">
+
+                <FluentButton Appearance="Appearance.Outline" IconStart="@(new Icons.Regular.Size20.ArrowStepBack())" OnClick="@CancelAsync">Back</FluentButton>
+                <FluentButton Appearance="Appearance.Outline" IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddAsync">New</FluentButton>
+
+                <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save Order</FluentButton>
+                <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.SendCopy())" OnClick="@CreateProduct">Create Work Order</FluentButton>
+
+            </FluentStack>
+        }
+
+        <FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+            <FluentTabs Style="width:100%" @bind-ActiveTabId="@activeid" OnTabChange="HandleOnTabChange">
+                <FluentTab Id="tab-general" >
+                    <Header>
+
+                        @if (activeid == "tab-general")
+                        {
+                            tabStyle = "border: 1px solid var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;background-color:#EEEEEE";
+                        }
+                        else
+                        {
+                            tabStyle = "border: 1px dotted var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;";
+                        }
+                        <FluentStack Orientation="Orientation.Horizontal" Style="@tabStyle">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.Album())" />
+                            <FluentLabel Typo="Typography.H6">General</FluentLabel>
+                        </FluentStack>
+                    </Header>
+                    <Content>
+
+                        <FluentLabel Color="Color.Warning" Typo="Typography.H5">@ErrorMessage</FluentLabel>
+
+                        <FluentStack Orientation="Orientation.Horizontal" Style="width:100%;margin-top:10px;" HorizontalAlignment="HorizontalAlignment.Start">
+
+                            <FluentStack Orientation="Orientation.Vertical" VerticalGap="10" Style="width:300px">
+
+
+                                <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                                    <FluentLabel Style="width:100px">Customer</FluentLabel>
+                                    <FluentTextField Style="width:130px"  AutoComplete="off" @bind-Value="@Content.SalesName" />
+                                    <FluentButton Appearance="Appearance.Neutral" OnClick="@SelectCustomer" IconStart="@(new Icons.Regular.Size20.Add())"></FluentButton>
+                                </FluentStack>
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Case No</FluentLabel>
+                                    <FluentTextField Style="width:180px" @ref="txtCaseNo" @bind-Value="@Content.CaseNo" />
+                                </FluentStack>                             
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Labpan Num</FluentLabel>
+                                    <FluentNumberField Style="width:100px" @bind-Value="@Content.LabpanNum" />
+                                </FluentStack>
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Patient Name</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@Content.PatientName" />
+                                </FluentStack>
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Doctor Name</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@Content.DoctorName" />
+                                </FluentStack>
+                            </FluentStack>
+                            <FluentStack Orientation="Orientation.Vertical" VerticalGap="10" Style="width:300px">
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Doctor Acccount</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@Content.DocAccount" />
+                                </FluentStack>
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Box Reference</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@Content.BoxRef" />
+                                </FluentStack>
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Status</FluentLabel>
+                                    <FluentSelect Items=@salesStatusOptions
+                                    Disabled="true"
+                                    Width="180px"                                                  
+                                    TOption="Option<int>"
+                                    OptionText="@(i => i.Text)"
+                                    OptionValue="@(i => i.Value.ToString())"
+                                    OptionSelected="@(i => i.Selected)"
+                                    @bind-Value="@SaleStatus">
+                                    </FluentSelect>
+                                </FluentStack>
+
+
+
+
+                            </FluentStack>
+
+                            <FluentStack Orientation="Orientation.Vertical" Style="width:300px">
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Case Date</FluentLabel>
+                                    <FluentDatePicker @bind-Value="@Content.CaseDate"></FluentDatePicker>
+                                </FluentStack>
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Ship Date</FluentLabel>
+                                    <FluentDatePicker @bind-Value="@Content.ShipDate"></FluentDatePicker>
+                                </FluentStack>
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Cust Req ShipDate</FluentLabel>
+                                    <FluentDatePicker @bind-Value="@Content.CustReqShipDate"></FluentDatePicker>
+                                </FluentStack>
+
+                            </FluentStack>
+                        </FluentStack>
+
+                    </Content>
+
+                </FluentTab>
+                <FluentTab Id="tab-translate">
+                    <Header>
+                        @if (activeid == "tab-translate")
+                        {
+                            tabStyle = "border: 1px solid var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;background-color:#EEEEEE";
+                        }
+                        else
+                        {
+                            tabStyle = "border: 1px dotted var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;";
+                        }
+                        <FluentStack Orientation="Orientation.Horizontal" Style="@tabStyle">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.Translate())" />
+                            <FluentLabel Typo="Typography.H6">Workticket Notes</FluentLabel>
+                        </FluentStack>
+                    </Header>
+                    <Content>
+                        <FluentStack Orientation="Orientation.Vertical">
+                            <FluentTextArea Label="Customer Notes" @bind-Value="@Content.WorkTicketNotes" Cols="80" Resize="TextAreaResize.Both" />
+
+                            <FluentTextArea Label="Work Notes" @bind-Value="@Content.TranslateNotes" Cols="80" Resize="TextAreaResize.Both" />
+
+                        </FluentStack>
+                    </Content>
+
+                </FluentTab>
+                @if(Content.ShowImages==true){
+                    <FluentTab Id="tab-pictures">
+                        <Header>
+                            @if (activeid == "tab-pictures")
+                            {
+                                tabStyle = "border: 1px solid var(--accent-fill-rest);padding:2px;border-width: 1px 1px 0 1px;background-color:#EEEEEE";
+                            }
+                            else
+                            {
+                                tabStyle = "border: 1px dotted var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;";
+                            }
+                            <FluentStack Orientation="Orientation.Horizontal" Style="@tabStyle">
+                                <FluentIcon Value="@(new Icons.Regular.Size20.ImageAdd())" />
+                                <FluentLabel Typo="Typography.H6">Pictures</FluentLabel>
+                            </FluentStack>
+                        </Header>
+                        <Content>
+                            <SaleImagesPanel SalesID="@Content.SalesID" ShowUpload="true"></SaleImagesPanel>
+                        </Content>
+                    </FluentTab>
+                }
+                @if(Content.ShowFiles==true){
+                    <FluentTab Id="tab-files">
+                        <Header>
+                            @if (activeid == "tab-files")
+                            {
+                                tabStyle = "border: 1px solid var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;background-color:#EEEEEE";
+                            }
+                            else
+                            {
+                                tabStyle = "border-width: 1px 1px 0 1px;border: 1px dotted var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;";
+                            }
+
+                            <FluentStack Orientation="Orientation.Horizontal" Style="@tabStyle">
+                                <FluentIcon Value="@(new Icons.Regular.Size20.DocumentAdd())" />
+                                <FluentLabel Typo="Typography.H6">Other Files</FluentLabel>
+                            </FluentStack>
+
+
+                        </Header>
+                        <Content>
+                            <SaleFilesPanel SalesID="@Content.SalesID" ShowUpload="true"></SaleFilesPanel>
+                        </Content>
+                    </FluentTab>
+                }
+
+            </FluentTabs>
+
+
+        </FluentStack>
+    </Panel1>
+    <Panel2>
+        @if (Content.ReadOnly == false)
+        {
+            <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%" Style="margin-top:5px">
+
+                <FluentButton IconStart="@(new Icons.Regular.Size16.AddCircle())" Appearance="Appearance.Accent" OnClick="@AddItemDetail"></FluentButton>
+
+            </FluentStack>
+        }
+
+        <FluentDataGrid Items="@lineitems"
+        RowSize="DataGridRowSize.Medium"        
+        TGridItem="SalesLine"
+        ResizableColumns=true>
+            <TemplateColumn Title="Actions" Align="@Align.Start" Width="120">
+                <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineItem(context))" />
+                <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineItem(context))" />
+
+            </TemplateColumn>
+
+            <PropertyColumn Title="Item Code" Property="@(p => p.ItemCode)" Width="100px" />
+            <PropertyColumn Title="Name" Property="@(p => p.ItemName)" Width="220px" />
+            <PropertyColumn Title="US Teeth" Property="@(p => p.UsTeeth)" Width="150px" />    
+            <PropertyColumn Title="Shade" Property="@(p => p.Shade)" Sortable="true" Width="150px" />
+            <PropertyColumn Title="SalesQty" Property="@(p => p.SalesQty)" Sortable="true" Width="150px" />
+            <PropertyColumn Title="SalesPrice" Property="@(p => p.SalesPrice)" Sortable="true" Width="150px" />
+            <PropertyColumn Title="LineAmount" Property="@(p => p.SalesPrice)" Sortable="true" Width="150px" />
+
+           
+        </FluentDataGrid>
+    </Panel2>
+</FluentSplitter>
+
+
+
+@code {
+
+    [Parameter]
+    public SalesTable Content { get; set; } = default!;
+
+    static List<Option<int>> salesStatusOptions = new()
+    {
+        { new Option<int> { Value = 0, Text = "Open Order"} },
+        { new Option<int> { Value = 1, Text = "Invoiced" } },
+        { new Option<int> { Value =2, Text = "Cancelled" } }
+
+    };
+
+    [Parameter] public Func<bool, Task>? OnBackToList { get; set; }
+    [Parameter] public Func<bool, Task>? OnNewOrder { get; set; }
+
+    bool openActionMenu = false;
+    string? activeid = "tab-general";
+    string tabStyle = "";
+    FluentTab? changedto;
+    private void HandleOnTabChange(FluentTab tab)
+    {
+        changedto = tab;
+
+
+    }
+
+    FluentTextField txtCaseNo;
+
+    string? SaleStatus = "0";
+    string ErrorMessage ="";
+    SalesTable? SO { get; set; } = new();
+
+    IQueryable<SalesLine>? lineitems;    
+
+    IQueryable<TablePrice>? priceitems;
+
+    Customer SelectedCustomer { get; set; } = new Customer();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(Content.RecID==0){
+
+        }
+        else{
+
+            Content.SalesStatus = Int32.Parse(SaleStatus!);
+
+            SO = Content as SalesTable;
+
+            LoadLineItems();
+
+            Content.Image64 = await Helper.GenerateBarcode(Content.CaseNo, ZXing.BarcodeFormat.QR_CODE, 250, 250);
+
+        }
+
+    }
+
+    private async Task AddAsync()
+    {
+        if (this.OnNewOrder is not null)
+        {
+            // unless you're an async expert keep the await clean and simple
+            await this.OnNewOrder.Invoke(true);
+            await Task.Delay(1000);
+        }
+    }
+    private async Task SaveAsync()
+    {
+        Content.SalesStatus = Int32.Parse(SaleStatus!);
+
+        if (Content.SalesName.Equals(""))
+        {
+            ErrorMessage = "You should choose a Customer Account";
+            return;
+        }
+        if (Content.CaseNo.Equals(""))
+        {
+            ErrorMessage = "You should input case number";
+            txtCaseNo.FocusAsync();
+            return;
+        }
+
+
+        var res = await db.SaveOrder(Content);
+
+        Content = await db.GetOrderByRecID(res.RecID);
+
+        if (Content.SalesID != "")
+        {
+            await AddItemDetail();
+        }
+
+        ToastService.ShowSuccess("Save Order Success");       
+
+        LoadLineItems();
+
+    }
+
+    private async Task AddItemDetail()
+    {
+
+        if (Content.SalesID == "")
+        {
+            var dlg = await DialogService.ShowWarningAsync("You should save Order first");
+            var result = await dlg.Result;
+            return;
+        }
+
+        var item = new SalesLine();
+        item.SalesID = Content.SalesID;
+        item.CaseNo = Content.CaseNo;
+
+        var parameters = new DialogParameters
+            {
+                Title = "Select Products",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,
+                Width = "700px",
+                Height = "600px",
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<InputSaleLinesPanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await AddItemResult(dialogResult);
+
+    }
+
+    private async Task AddItemResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var orderLine = result.Data as SalesLine;
+
+            if (orderLine is not null)
+            {
+                await db.SaveOrderLine(orderLine);
+                LoadLineItems();
+            }
+
+        }
+    }
+
+    private async Task CreateProduct()
+    {
+
+        if (lineitems!.ToList().Count > 0)
+        {
+
+            var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this item?");
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                var iCount = 0;
+                foreach(SalesLine item in lineitems)
+                {
+                    item.UserID = Content.UserID;
+                    item.WorkNotes = SO.TranslateNotes;
+
+                    var res = await db.SaveProdOrder(item);
+                    iCount += res.RecID;
+                }              
+
+                if(iCount>0)
+                {
+                    navigationManager.NavigateTo("/ProductOrder");
+                }
+                else
+                {
+                    dialog = await DialogService.ShowInfoAsync("This order have been in Production");
+                    result = await dialog.Result;
+                }
+            }
+
+        }
+
+    }
+    private async Task SelectCustomer()
+    {
+        var item = new Customer();
+
+        var parameters = new DialogParameters
+            {
+                Title = "Select Customer",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,                
+                Width = "700px",
+                Height = "600px",                
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<CustomerPanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await SelectCustomerResult(dialogResult);
+    }
+    private async Task SelectCustomerResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            SelectedCustomer = result.Data as Customer;
+            Content.CustomerID = SelectedCustomer.CustomerID;
+            Content.SalesName = SelectedCustomer.CustomerName;
+        }
+    }
+
+
+
+
+    private async void LoadLineItems()
+    {
+        lineitems = (await db.GetOrderLines(SO!.SalesID)).AsQueryable();
+    }
+
+
+    private async Task EditLineItem(SalesLine item)
+    {       
+        var parameters = new DialogParameters
+            {
+                Title = "Order Detail",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,
+                Width = "800px",
+                Height = "600px",
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<InputSaleLinesPanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await UpdateLineItem(dialogResult);
+    }
+
+    private async Task UpdateLineItem(DialogResult result)
+    {        
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var itemRes = result.Data as SalesLine;
+                    
+            await db.SaveOrderLine(itemRes);
+        }
+    }
+
+    private async Task DeleteLineItem(SalesLine item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this item?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await db.DeleteOrderLine(item.RecID);
+
+            if (res > 0)
+            {
+                LoadLineItems();
+            }
+        }
+    }
+
+    int ProgressPercent = 0;
+
+
+    private async Task ShowPicture(OrderFile item)
+    {
+        var parameters = new DialogParameters
+            {
+                Title = "",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,
+                Width = "800px",
+                Height = "600px",
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<PictureViewPanel>(item, parameters);
+    }
+
+
+
+
+    // private async Task AddItem()
+    // {
+    //     priceitems = (await productdb.GetAllPrice(0, "", "", "")).AsQueryable();
+
+    //     if(SO!.SalesID=="")
+    //     {
+    //         ErrorMessage = "You should save the order first";
+    //         return;
+    //     }
+
+    //     var item = new Product();
+
+    //     var parameters = new DialogParameters
+    //         {
+    //             Title = "Select Products",
+    //             PrimaryAction = "Yes",
+    //             PrimaryActionEnabled = true,                
+    //             Width = "700px",
+    //             Height = "600px",                
+    //             Modal = false,
+    //         };
+
+    //     var dialog = await DialogService.ShowDialogAsync<ProductPanel>(item,parameters);
+    //     var dialogResult = await dialog.Result;
+    //     await AddItemResult(dialogResult);
+
+    // }
+
+    // private async Task AddItemResult(DialogResult result)
+    // {
+    //     await Task.Delay(500);
+    //     if (result.Cancelled)
+    //     {
+    //         return;
+    //     }
+
+    //     if (result.Data is not null)
+    //     {
+    //         var itemRes = result.Data as List<Product>;
+
+    //         if (itemRes is not null)
+    //         {
+    //             foreach(Product product in itemRes)
+    //             {
+    //                 var tablePrice = priceitems.Where(x => x.ItemID == product.ItemID).FirstOrDefault();
+
+    //                 var SL = new SalesLine();
+    //                 SL.ItemID = product.ItemID;
+    //                 SL.ItemCode = product.ItemCode;
+    //                 SL.ItemName = product.ItemName;
+    //                 SL.SalesID=SO.SalesID;                    
+    //                 SL.CaseNo = Content.CaseNo;
+    //                 SL.PatientName = Content.PatientName;
+    //                 SL.SalesPrice=0;
+
+    //                 if(tablePrice!=null){
+    //                     SL.SalesPrice = tablePrice.UnitPrice;
+    //                 }
+
+    //                 await db.SaveOrderLine(SL);
+    //             }
+
+    //             LoadLineItems();
+    //         }
+
+    //     }
+    // }
+
+      private async Task CancelAsync()
+    {
+        if (this.OnBackToList is not null)
+        {
+            // unless you're an async expert keep the await clean and simple
+            await this.OnBackToList.Invoke(true);
+            await Task.Delay(1000);
+        }
+    }
+
+
+}

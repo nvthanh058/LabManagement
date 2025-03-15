@@ -1,0 +1,28 @@
+﻿@using LabManagement.Helpers
+@inject ISalesOrderResposity db
+@rendermode InteractiveServer
+
+<table style="width:100%;height:90%;border:0px solid;">
+    <tr style="height:60%;">
+        <td style="text-align:center;vertical-align:top">
+            <img src="@Content.Image64" style="width:70%;margin-top:10px" />
+        </td>
+    </tr>
+    <tr style="height:40%;">
+        <td style="text-align:center;vertical-align:top;font-size:10pt;font-weight:bold">
+            <span>@Content.BarcodeContent</span>
+        </td></tr>
+</table>
+
+@code {
+
+    [Parameter]
+    public BarcodeLabel Content { get; set; } = default!;
+   
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+       
+    }
+}

@@ -1,0 +1,339 @@
+﻿@implements IDialogContentComponent<CaseOrder>
+@using LabManagement.Components.Pages.UploadFiles.Panels
+
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject IFileOrderResposity db
+@inject IUserInfoResposity userdb
+@inject IToastService ToastService
+@inject NavigationManager navigationManager
+@inject IWebHostEnvironment _webHost;
+
+<FluentStack Style="height:100%" Orientation="Orientation.Vertical">
+
+    <FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+
+        <FluentStack Orientation="Orientation.Horizontal" Style="width:50%">
+            <FluentStack Orientation="Orientation.Vertical">
+
+                <FluentLabel Color="Color.Warning" Typo="Typography.H5">@ErrorMessage</FluentLabel>
+                <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                    <FluentTextField Label="Order No" Disabled=true AutoComplete="off" @bind-Value="@Content.OrderNo" />
+                </FluentStack>
+
+                <FluentStack Orientation="Orientation.Horizontal">
+                    <FluentTextField Label="Patient Name" @bind-Value="@Content.PatientName" />
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal">
+                    <FluentTextField Label="Doctor Name" @bind-Value="@Content.DoctorName" />
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal">
+                    <FluentDatePicker Label="Order Date" @bind-Value="@Content.OrderDate"></FluentDatePicker>
+                </FluentStack>
+
+            </FluentStack>
+
+            <FluentStack>
+                <FluentTextArea Label="Work Notes" @bind-Value="@Content.WorkNotes" Rows="7" Cols="100" Resize="TextAreaResize.Vertical" />
+            </FluentStack>
+
+        </FluentStack>
+
+        @if (Content.ReadOnly == false)
+        {
+            <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%" HorizontalAlignment="HorizontalAlignment.Start">                
+                <FluentButton Appearance="Appearance.Outline" IconStart="@(new Icons.Regular.Size20.ArrowStepBack())" OnClick="@CancelAsync">Back</FluentButton>
+                <FluentButton Appearance="Appearance.Outline" IconStart="@(new Icons.Regular.Size20.New())" OnClick="@AddAsync">New</FluentButton>
+                <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save Order</FluentButton>
+            </FluentStack>
+        }
+
+    </FluentStack>
+
+    <FluentTabs Style="width:100%">
+        <FluentTab Id="tab-details">
+            <Header>
+                <FluentStack Orientation="Orientation.Horizontal">
+                    <FluentIcon Value="@(new Icons.Regular.Size20.AppsList())" />
+                    <FluentLabel Typo="Typography.H6">Other Detail</FluentLabel>
+                </FluentStack>
+            </Header>
+            <Content>
+
+                @if (Content.ReadOnly == false)
+                {
+
+                    <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%" Style="margin-top:5px">
+
+                        <FluentButton IconStart="@(new Icons.Regular.Size16.AddCircle())" Disabled="@(Content.OrderID==""?true:false)" Appearance="Appearance.Outline" OnClick="@AddItemDetail"></FluentButton>
+
+                    </FluentStack>
+                }
+
+
+                <FluentDataGrid Items="@lineitems"
+                RowSize="DataGridRowSize.Medium"
+                TGridItem="CaseOrderLine"
+                ResizableColumns=true>
+                    <TemplateColumn Title="Actions" Align="@Align.Start" Width="120px">
+                        <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineItem(context))" />
+                        <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineItem(context))" />
+
+                    </TemplateColumn>
+
+                    <PropertyColumn Title="Name" Property="@(p => p.ItemName)" Width="220px" />
+                    <PropertyColumn Title="US Teeth" Property="@(p => p.UsTeeth)" Width="150px" />
+                    <PropertyColumn Title="Shade" Property="@(p => p.Shade)" Sortable="true" Width="100px" />
+                    <PropertyColumn Title="Quantity" Property="@(p => p.Quantity)" Sortable="true" Width="100px" />
+                    <PropertyColumn Title="Other Notes" Property="@(p => p.OtherNotes)" Sortable="true" Width="150px" />
+
+
+                </FluentDataGrid>
+
+
+            </Content>
+        </FluentTab>
+
+        @if (Content.ShowFiles == true)
+        {
+            <FluentTab Id="tab-files">
+                <Header>
+                    <FluentStack Orientation="Orientation.Horizontal">
+                        <FluentIcon Value="@(new Icons.Regular.Size20.DocumentAdd())" />
+                        <FluentLabel Typo="Typography.H6">Other Files</FluentLabel>
+                    </FluentStack>
+                </Header>
+                <Content>
+                    <SaleFilesPanel SalesID="@Content.OrderID" UserName="@CurrentUser.UserID" ShowUpload="ShowUpload"></SaleFilesPanel>
+                </Content>
+            </FluentTab>
+        }
+
+        @if (Content.ShowImages == true)
+        {
+            <FluentTab Id="tab-pictures">
+                <Header>
+                    <FluentStack Orientation="Orientation.Horizontal">
+                        <FluentIcon Value="@(new Icons.Regular.Size20.ImageAdd())" />
+                        <FluentLabel Typo="Typography.H6">Pictures</FluentLabel>
+                    </FluentStack>
+                </Header>
+                <Content>
+                    <SaleImagesPanel SalesID="@Content.OrderID" UserName="@CurrentUser.UserID" ShowUpload="@ShowUpload"></SaleImagesPanel>
+                </Content>
+            </FluentTab>
+        }
+
+    </FluentTabs>
+
+</FluentStack>
+
+@code {
+
+    bool openActionMenu = false;
+
+    [Parameter]
+    public CaseOrder Content { get; set; } = default!;
+
+    [Parameter]
+    public bool ShowUpload { get; set; } = true;
+
+    [Parameter]
+    public UserInfo CurrentUser { get; set; } = default!;
+
+    [Parameter] public Func<bool, Task>? OnBackToList { get; set; }
+    [Parameter] public Func<bool, Task>? OnNewOrder { get; set; }
+
+    static List<Option<int>> salesStatusOptions = new()
+    {
+        { new Option<int> { Value = 0, Text = "Open Order"} },
+        { new Option<int> { Value = 1, Text = "Invoiced" } },
+        { new Option<int> { Value =2, Text = "Cancelled" } }
+
+    };
+
+    FluentTextField txtCaseNo;
+
+    string? SaleStatus = "0";
+    string ErrorMessage ="";
+    SalesTable? SO { get; set; } = new();
+    IQueryable<CaseOrderLine>? lineitems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(Content.RecID==0){
+
+        }
+        else{
+
+            LoadLineItems();  
+
+        }
+
+    }
+
+    private async Task AddAsync()
+    {
+        if (this.OnNewOrder is not null)
+        {
+            // unless you're an async expert keep the await clean and simple
+            await this.OnNewOrder.Invoke(true);
+            await Task.Delay(1000);
+        }      
+    }
+
+    private async Task SaveAsync()
+    {
+
+        if (Content.OrderNo.Equals(""))
+        {
+            ErrorMessage = "You should input Order No";
+            return;
+        }
+
+        var res = await db.SaveOrder(Content);
+
+        Content = await db.GetOrder(res.RecID);
+
+        if (Content.OrderID != "")
+        {
+            await AddItemDetail();
+        }
+
+        ToastService.ShowSuccess("Save Order Success");        
+
+
+    }
+
+    private async void LoadLineItems()
+    {
+        lineitems = (await db.GetOrderLines(Content.OrderID)).AsQueryable();
+    }
+
+    private async Task EditLineItem(CaseOrderLine item)
+    {
+        var parameters = new DialogParameters
+            {
+                Title = "Order Detail",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,
+                Width = "800px",
+                Height = "600px",
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<InputOrderLinePanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await UpdateLineItem(dialogResult);
+    }
+
+    private async Task UpdateLineItem(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var itemRes = result.Data as CaseOrderLine;
+
+            await db.SaveOrderLine(itemRes);
+        }
+    }
+
+    private async Task DeleteLineItem(CaseOrderLine item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this item?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await db.DeleteOrderLine(item.RecID);
+
+            if (res > 0)
+            {
+                LoadLineItems();
+            }
+        }
+    }
+
+    private async Task AddItemDetail()
+    {
+
+        if (Content.OrderID == "")
+        {
+            var dlg = await DialogService.ShowWarningAsync("You should save Order first");
+            var result = await dlg.Result;
+            return;
+        }
+
+        var item = new CaseOrderLine();
+        item.OrderID = Content.OrderID;
+
+        var parameters = new DialogParameters
+            {
+                Title = "Select Products",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,
+                Width = "700px",
+                Height = "600px",
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<InputOrderLinePanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await AddItemResult(dialogResult);
+
+    }
+
+    private async Task AddItemResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var orderLine = result.Data as CaseOrderLine;
+
+            if (orderLine is not null)
+            {
+                await db.SaveOrderLine(orderLine);
+                LoadLineItems();
+            }
+
+        }
+    }
+
+
+    private async Task ShowPicture(OrderFile item)
+    {
+        var parameters = new DialogParameters
+            {
+                Title = "",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,
+                Width = "800px",
+                Height = "600px",
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<PictureViewPanel>(item, parameters);
+    }
+
+    private async Task CancelAsync()
+    {
+        if (this.OnBackToList is not null)
+        {
+            // unless you're an async expert keep the await clean and simple
+            await this.OnBackToList.Invoke(true);
+            await Task.Delay(1000);
+        }
+    }
+
+}
+

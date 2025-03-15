@@ -1,0 +1,27 @@
+﻿@inject IDialogService DialogService
+@rendermode InteractiveServer
+
+<FluentButton BackgroundColor="var(--neutral-layer-4)" OnClick="OpenSiteSettingsAsync" Title="Site settings">
+    <FluentIcon Value="@(new Icons.Regular.Size20.Settings())" Color="Color.Neutral" Title="Site settings" />
+</FluentButton>
+
+@code {
+
+    //private IDialogReference? _dialog;
+
+    private async Task OpenSiteSettingsAsync()
+    {
+        var item = new Employee();
+        DialogParameters<Employee> parameters = new()
+            {
+                Title = "Site settings",
+                Alignment = HorizontalAlignment.Right,
+                PrimaryAction = "Ok",
+                SecondaryAction = "Cancel"
+            };
+
+        var dialog = await DialogService.ShowPanelAsync<SiteSettingsPanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+      
+    }
+}

@@ -1,0 +1,200 @@
+﻿@implements IDialogContentComponent<ProductionTask>
+@inject IEmployeeResposity employeeDB
+@inject IProductionResposity productionDB
+
+<FluentDialogHeader ShowDismiss="false">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size24.AlbumAdd())" />
+        <FluentLabel Typo="Typography.H5">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+
+<FluentStack Orientation="Orientation.Vertical">
+    <FluentLabel Color="Color.Warning">@Messages</FluentLabel>
+
+    <FluentAutocomplete Id="my-customized"
+    @ref="EmployeeList"
+    TOption="Employee"
+    Width="100%"
+    Disabled="@(Content.RecID>0?true:false)"
+    Placeholder="search"
+    OnOptionsSearch="@OnSearchAsync"
+    MaximumSelectedOptions="1"
+    AutoComplete="off"
+    KeepOpen="true"
+    OptionText="@(item => item.FullName)"
+    OptionStyle="min-height: 40px;"
+    @bind-SelectedOptions="@SelectedEmpl">
+
+        <LabelTemplate>        
+            Select a Employee
+            <FluentIcon Value="@(new Icons.Regular.Size20.Person())" Style="margin: 0 4px;" />
+        </LabelTemplate>
+
+        @* Template used with each Selected items *@
+        <SelectedOptionTemplate>
+            <FluentPersona ImageSize="24px"
+            Image="@context.GetPhotoUrl"
+            Name="@($"{context.EmplID} {context.FullName}")"
+            Style="height: 26px; background: var(--neutral-fill-secondary-hover)"
+            DismissTitle="Remove"
+            Status="PresenceStatus.Available"
+            OnDismissClick="@(async () => await EmployeeList.RemoveSelectedItemAsync(context))">
+            </FluentPersona>
+        </SelectedOptionTemplate>
+
+        @* Template used with each Option items *@
+        <OptionTemplate>
+            <FluentPersona ImageSize="32px"
+            Image="@context.GetPhotoUrl"
+            Status="PresenceStatus.Available"
+            StatusSize="PresenceBadgeSize.Small"
+            Name="@($"{context.EmplID} {context.FullName}")" />
+        </OptionTemplate>
+
+        @* Template used when the maximum number of selected items (MaximumSelectedOptions) has been reached *@
+        <MaximumSelectedOptionsMessage>
+            The maximum number of selected items has been reached.
+        </MaximumSelectedOptionsMessage>
+
+        @* Content display at the top of the Popup area *@
+        <HeaderContent>
+            <FluentLabel Color="Color.Accent"
+            Style="padding: 8px; font-size: 11px; border-bottom: 1px solid var(--neutral-fill-stealth-hover);">
+                Suggested technicians
+            </FluentLabel>
+        </HeaderContent>
+
+        @* Content display at the bottom of the Popup area *@
+        <FooterContent>
+            @if (!context.Any())
+            {
+                <FluentLabel Style="font-size: 11px; text-align: center; width: 200px;">
+                    No results found
+                </FluentLabel>
+            }
+        </FooterContent>
+    </FluentAutocomplete>
+
+
+    <FluentSelect TOption="ProductLine" Label="Production Line"
+    Placeholder="Select a Production Line" Items="@prodlineItems"
+     Width="200px" Height="250px" OptionValue="@(i => i.LineID)" OptionText="@(i => i.LineName)" @bind-Value="@LineID">
+
+    </FluentSelect>
+
+    <FluentTextArea Label="Notes" @bind-Value="@Notes" Cols="80" Resize="TextAreaResize.Both"></FluentTextArea>
+
+    <FluentRadioGroup Name="JobType" @bind-Value=JobType Label="Job Type">
+        <FluentRadio Value="0" Checked="true">New Job</FluentRadio>
+        <FluentRadio Value="1">Correction</FluentRadio>
+        <FluentRadio Value="2">Redo</FluentRadio>
+    </FluentRadioGroup>
+
+</FluentStack>
+
+<FluentDialogFooter>
+    <FluentPaginator State="@pagination" />
+    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Checkmark())" OnClick="@SaveAsync">OK</FluentButton>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+</FluentDialogFooter>
+
+@code {
+    public string LineID { get; set; } = "";
+    public string Notes { get; set; } = "";
+    public string Messages { get; set; } = "";
+    public int JobType { get; set; } = 0;
+
+    [Parameter]
+    public ProductionTask Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    string Search = "";
+    static IQueryable<Employee>? items;
+    static IQueryable<ProductLine>? prodlineItems;
+
+    bool SelectFromEntireRow = true;
+    DataGridSelectMode Mode = DataGridSelectMode.Single;
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    protected async Task LoadData()
+    {        
+        prodlineItems = (await productionDB.GetAllProdLine(0,"", "")).AsQueryable();
+    }
+
+    private async Task SaveAsync()
+    {
+        var employee = SelectedEmpl.FirstOrDefault();
+        if(employee!=null)
+        {
+
+            var prodTask = await productionDB.GetProductionTaskStatus(Content.TaskRefID,"");
+            if(prodTask!=null){
+
+                if (prodTask.ProdStatus == 0){
+                    if (prodTask.EmplRefID == employee.EmplRefID)
+                    {
+                        Messages = "This order have been assign to selected Technician";
+                        return;
+                    }
+                    else
+                    {
+                        Content.RecID = prodTask.RecID;
+                    }
+                }
+
+                if (prodTask.ProdStatus == 1)
+                {
+                    Messages = "This order in processed can not assign";
+                    return;
+                }              
+            }
+
+            Content.EmplRefID = employee.EmplRefID;
+            Content.LineID = LineID;
+            Content.Notes = Notes;
+            Content.JobType = JobType;
+
+            if(LineID=="")
+            {
+                Messages = "Please select a product line";
+                return;
+            }
+
+            await Dialog.CloseAsync(Content);
+        }
+        else{
+            Messages = "Please select a technician";
+        }
+       
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+
+    FluentAutocomplete<Employee> EmployeeList = default!;
+    IEnumerable<Employee> SelectedEmpl = Array.Empty<Employee>();
+
+
+
+    private async Task OnSearchAsync(OptionsSearchEventArgs<Employee> e)
+    {
+        var items = (await employeeDB.GetAll("", "")).AsQueryable();
+        e.Items = items.Where(i => i.FullName.StartsWith(e.Text, StringComparison.OrdinalIgnoreCase))
+                             .OrderBy(i => i.FullName);
+    }
+
+}

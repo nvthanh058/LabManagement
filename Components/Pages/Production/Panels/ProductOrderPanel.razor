@@ -1,0 +1,131 @@
+﻿@using LabManagement.Components.Pages.AccountReceivable.Panels
+
+@rendermode InteractiveServer
+@inject ISalesOrderResposity context
+@inject IProductionResposity productionDB
+@inject IToastService ToastService
+@inject IMessageService MessageService
+
+<FluentTabs Style="width:100%">
+                <FluentTab Id="tab-General">
+                    <Header>
+                        <FluentStack Orientation="Orientation.Horizontal" >
+                            <FluentIcon Value="@(new Icons.Regular.Size20.Album())" />
+                            <FluentLabel Typo="Typography.H6">General</FluentLabel>
+                        </FluentStack>
+                    </Header>
+                    <Content>
+                        @if(Content.ReadOnly==false){
+                            <FluentStack style="margin-top:10px;" VerticalAlignment="VerticalAlignment.Center" Width="100%" HorizontalAlignment="HorizontalAlignment.End">
+                                <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveProductionAsync">Save</FluentButton>
+
+                            </FluentStack>
+                        }
+                       
+                        <FluentStack Orientation="Orientation.Horizontal" Width="100%">
+
+                            <FluentStack Orientation="Orientation.Vertical" Width="300px">
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Case No</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@Content.CaseNo" ReadOnly=true />
+                                </FluentStack>
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Item Code</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@Content.ItemCode" ReadOnly=true />
+                                </FluentStack>
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Item Name</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@Content.ItemName" ReadOnly=true />
+                                </FluentStack>
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Us Teeth</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@Content.UsTeeth" ReadOnly=true />
+                                </FluentStack>
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Eur Teeth</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@Content.EurTeeth" ReadOnly=true />
+                                </FluentStack>
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Qty</FluentLabel>
+                                    <FluentNumberField Style="width:180px" @bind-Value="@Content.Quantity" ReadOnly=true />
+                                </FluentStack>
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Shade</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@Content.Shade" ReadOnly=true />
+                                </FluentStack>
+                               
+                                
+                              
+                            </FluentStack>
+
+                            <FluentStack Orientation="Orientation.Vertical" Width="100%">
+
+                            <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                <FluentLabel Style="width:100px">Patient Name</FluentLabel>
+                                <FluentTextField Style="width:180px" @bind-Value="@Content.PatientName" ReadOnly=true />
+                            </FluentStack>
+                            <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                <FluentLabel Style="width:100px">Doctor Name</FluentLabel>
+                                <FluentTextField Style="width:180px" @bind-Value="@Content.DoctorName" ReadOnly=true />
+                            </FluentStack>
+                            <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                <FluentLabel Style="width:100px">Labpan Num</FluentLabel>
+                                <FluentTextField Style="width:180px" @bind-Value="@Content.LabpanNum" ReadOnly=true />
+                            </FluentStack>
+                            <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                <FluentLabel Style="width:100px">Work Notes</FluentLabel>
+                             <FluentTextArea @bind-Value="@Content.WTNotes" Cols="100" />
+                            </FluentStack>
+
+                               
+                            </FluentStack>
+
+                        </FluentStack>
+                    </Content>
+                </FluentTab>
+                <FluentTab Id="tab-pictures">
+                    <Header>
+                        <FluentStack Orientation="Orientation.Horizontal">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.ImageAdd())" />
+                            <FluentLabel Typo="Typography.H6">Pictures</FluentLabel>
+                        </FluentStack>
+                    </Header>
+                    <Content>
+                        <SaleImagesPanel SalesID="@Content.SalesID" ShowUpload="false"></SaleImagesPanel>
+                    </Content>
+                </FluentTab>
+               
+                <FluentTab Id="tab-files">
+                    <Header>
+                        <FluentStack Orientation="Orientation.Horizontal">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.DocumentAdd())" />
+                            <FluentLabel Typo="Typography.H6">Other Files</FluentLabel>
+                        </FluentStack>
+                    </Header>
+                    <Content>
+                        <SaleFilesPanel SalesID="@Content.SalesID" ShowUpload="false"></SaleFilesPanel>
+                    </Content>
+
+                </FluentTab>
+            </FluentTabs>
+
+
+@code {
+
+    [Parameter]
+    public ProdTable Content { get; set; } = default!;
+
+    private async Task SaveProductionAsync()
+    {
+        ProdTable item = Content as ProdTable;
+
+        await context.UpdateProdOrder(item);
+        ToastService.ShowSuccess("Save Order Success");
+    }
+
+}

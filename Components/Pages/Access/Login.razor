@@ -1,0 +1,86 @@
+﻿@page "/login"
+@inject IUserInfoResposity _db
+@inject NavigationManager navigationManager
+
+
+<FluentEditForm Model="@Model" OnValidSubmit="LoginSubmit" FormName="LoginForm">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+    <FluentStack VerticalAlignment="VerticalAlignment.Center" HorizontalAlignment="HorizontalAlignment.Center" Width="100%" >
+
+        <FluentStack Orientation="Orientation.Vertical" Style="width:400px" VerticalGap="20">
+            <img src="images/beachogo.png" width="200" height="72" />
+            <FluentLabel Typo="Typography.H4">Login</FluentLabel>
+
+            <FluentLabel Typo="Typography.H5" Color="Color.Warning">@Message</FluentLabel>
+            <FluentTextField Name="Model.UserName" @bind-Value="Model.UserName" Style="width:200px" AriaLabel="User ID" Placeholder="User Name"></FluentTextField>
+            <ValidationMessage For="()=>Model.UserName"></ValidationMessage>
+            <FluentTextField Name="Model.Password" @bind-Value="@Model.Password" Style="width:200px" TextFieldType="TextFieldType.Password" Placeholder="Password">Password</FluentTextField>
+
+            <FluentStack VerticalAlignment="VerticalAlignment.Center">
+                <FluentButton Type="ButtonType.Submit" Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Key())">Login</FluentButton>
+
+            </FluentStack> 
+
+
+        </FluentStack>
+
+    </FluentStack>
+
+</FluentEditForm>
+
+@code {
+
+    [SupplyParameterFromForm]
+    public LoginViewModel Model { get; set; } = new LoginViewModel();
+
+    [CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+
+    //public AuthenticationStateProvider AuthenticationState { get; set; }
+
+    string Message = "";
+
+
+
+    private async Task CancelAsync()
+    {
+
+    }
+
+    public async Task LoginSubmit()
+    {
+
+        var userDB = (await _db.GetAll(Model.UserName, "", "")).AsQueryable().FirstOrDefault();
+        if(userDB is null){
+            Message = "Invalid User";
+
+        }
+        else{
+
+            var pass = userDB.Password;
+            var inputPass = Helpers.Helper.EncodePassword(Model.Password);
+
+            if(pass!=inputPass)
+            {
+                Message = "Wrong User Password";
+                return;
+            }
+
+                var claims = new List<Claim>{
+                new Claim(ClaimTypes.Name,userDB.UserID),
+                new Claim(ClaimTypes.Role,userDB.RoleID.ToString())
+                };
+
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync(principal);
+            navigationManager.NavigateTo($"/casesorder");
+        }
+       
+
+    }
+
+
+}

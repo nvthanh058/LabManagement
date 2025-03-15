@@ -1,0 +1,323 @@
+﻿@using LabManagement.Components.Infrastructure.IRespository
+@attribute [Authorize]
+@rendermode InteractiveServer
+@inject IProductionResposity productionDB
+@inject IDashboardResposity db
+
+<FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End">
+        <FluentLabel Typo="Typography.H1">TODAY:</FluentLabel>
+        <FluentLabel Typo="Typography.H1" Style="color:#31a36c">@reportPeriod.ToDate?.ToString("ddd MM/dd/yyyy")</FluentLabel>
+        <FluentNavLink Icon="@(new Icons.Regular.Size24.ArrowCircleDown())" Href="/import">Import Data</FluentNavLink>
+
+    </FluentStack>
+
+<FluentGrid Spacing="@Spacing" AdaptiveRendering="true" 
+Justify="JustifyContent.FlexStart" Style="background-color: var(--neutral-layer-3); padding: 4px; ">
+
+    <FluentGridItem xs="6" sm="6">
+        <FluentCard>
+            <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" 
+            VerticalGap="50">                
+                <FluentLabel Typo="Typography.H1">Total Incoming Cases</FluentLabel>
+                <FluentLabel Typo="Typography.H1" Style="font-size:70pt;color:#5cb85c" Color="Color.Info">
+                    @IncomingData.OrderByDescending(x=>x.TransDate).FirstOrDefault().TotalCases
+                </FluentLabel>
+                <ApexCharts.ApexChart Width="800" Height="200" TItem="IncomingModel"
+                Title="">
+
+                    <ApexCharts.ApexPointSeries TItem="IncomingModel"
+                    Items="IncomingData"
+                    Name="Incoming"
+                    ShowDataLabels
+                    SeriesType="ApexCharts.SeriesType.Bar"
+                    XValue="e => e.DayName"
+                    YValue="e=> e.TotalCases" Color="#5cb85c" />
+
+                </ApexCharts.ApexChart>
+            </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="6" sm="6">
+        <FluentCard>
+            <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center"
+            VerticalGap="50">
+
+                <FluentLabel Typo="Typography.H1">Total Ship Cases</FluentLabel>
+                <FluentLabel Typo="Typography.H1" Style="font-size:70pt;color:#FF5733">
+                    @OutgoingData.OrderByDescending(x => x.TransDate).FirstOrDefault().ShippedCases
+                </FluentLabel>
+
+                <ApexCharts.ApexChart Width="800" Height="180" TItem="OutgoingModel"
+                Title="" Options="OutgoingChartOptions">
+                    <ApexCharts.ApexPointSeries TItem="OutgoingModel"
+                    Items="OutgoingData"
+                    Name="Ship Cases"
+                    ShowDataLabels
+                    SeriesType="ApexCharts.SeriesType.Line"
+                    XValue="@(e => e.DayName)"
+                    YValue="e=> e.ShippedCases" Color="#FF5733" />
+                </ApexCharts.ApexChart>
+            </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="6" sm="6">
+        <FluentCard Style="height:400px;">
+            <FluentStack Orientation="Orientation.Horizontal">
+
+                <FluentStack Orientation="Orientation.Vertical"  
+                HorizontalAlignment="HorizontalAlignment.Center" VerticalGap="50">
+                    <FluentLabel Typo="Typography.H1">Total Cases Due In 2 Days</FluentLabel>
+                    <FluentLabel Typo="Typography.H1" Style="font-size:70pt;color:#3181a3">
+                        @DueCasesData.Where(x => x.Category == "Due In 2Days Cases").FirstOrDefault().DueDaysCases
+                    </FluentLabel>
+
+                </FluentStack>                                     
+
+                <ApexCharts.ApexChart Width="400" Height="400" TItem="DueIn2DaysCases"
+                Title="" Options=DueCasesOptions>
+
+                    <ApexCharts.ApexPointSeries TItem="DueIn2DaysCases"
+                    Items="DueCasesData"
+                    Name="Due In 2 Days Cases"
+                    SeriesType="ApexCharts.SeriesType.Pie"
+                    XValue="@(e => e.Category)"
+                    YAggregate="@(e => e.Sum(e => e.DueDaysCases))"
+                    ShowDataLabels />
+                </ApexCharts.ApexChart>
+            </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="6" sm="6">
+        <FluentCard Style="height:400px;">
+            <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center"
+            VerticalGap="50">
+
+                <FluentLabel Typo="Typography.H1">Total Late Cases</FluentLabel>
+                <FluentLabel Typo="Typography.H1" Style="font-size:70pt;color:#a33331">
+                    @LateCasesData.OrderByDescending(x => x.TransDate).FirstOrDefault().LateCases
+                </FluentLabel>
+
+                <ApexCharts.ApexChart Width="800" Height="180" TItem="LateCasesModel"
+                Title="">
+
+                    <ApexCharts.ApexPointSeries TItem="LateCasesModel"
+                    Items="LateCasesData"
+                    Name="Late Cases"
+                    ShowDataLabels
+                    SeriesType="ApexCharts.SeriesType.Line"
+                    XValue="@(e => e.DayName)"
+                    YValue="e=> e.LateCases" Color="#a33331" />
+                </ApexCharts.ApexChart>
+            </FluentStack>
+        </FluentCard>
+
+    </FluentGridItem>
+    @*  <FluentGridItem xs="12">
+        <FluentCard>
+            <FluentDataGrid Items="@taskitems"
+                            TGridItem="ProductionTask" style="width: 600px;" RowSize="@DataGridRowSize.Medium">
+                <TemplateColumn Title="" Width="50px">
+                    @if (context.ProdStatus == 0 && context.EmplRefID != "")
+                    {
+                        <FluentIcon Value="@(new Icons.Regular.Size20.AccessibilityCheckmark())" />
+                    }
+                    @if (context.ProdStatus == 1)
+                    {
+                        <FluentProgressRing Width="16px"></FluentProgressRing>
+                    }
+                    @if (context.ProdStatus == 2)
+                    {
+                        <FluentIcon Value="@(new Icons.Regular.Size20.Checkmark())" />
+                    }
+                    @if (context.ProdStatus == 3)
+                    {
+                        <FluentIcon Value="@(new Icons.Regular.Size20.CalendarCancel())" />
+                    }
+                </TemplateColumn>
+
+                <TemplateColumn Title="" Width="46px">
+                    @if (context.EmplRefID != "")
+                    {
+                        <FluentPersona Status="PresenceStatus.Available"
+                                       StatusSize="PresenceBadgeSize.Small"
+                                       StatusTitle=""
+                                       Image="@context.GetPhotoUrl"
+                                       ImageSize="32px">
+                        </FluentPersona>
+                    }
+
+                </TemplateColumn>
+                <PropertyColumn Title="Case No" Width="120px" Property="@(p => p.CaseNo)" Sortable="true" />
+                <PropertyColumn Title="Tech" Width="200px" Property="@(p => p.DisplayName)" Sortable="true" />
+                <PropertyColumn Title="Line" Width="100px" Property="@(p => p.LineName)" Sortable="true" />
+                <PropertyColumn Title="Date" Width="150px" Property="@(p => p.TransDate)" Format="MM/dd/yy" Sortable="true" />
+                <PropertyColumn Title="Time" Width="150px" Property="@(p => p.CreatedDateTime)" Format="HH:mm" Sortable="true" />
+
+                <PropertyColumn Title="Item Name" Width="100px" Property="@(p => p.ItemName)" Sortable="true" />
+                <PropertyColumn Title="Us Teeth" Width="100px" Property="@(p => p.UsTeeth)" Sortable="true" />
+                <PropertyColumn Title="Shade" Width="100px" Property="@(p => p.Shade)" Sortable="true" />
+                <PropertyColumn Title="Quantity" Width="100px" Property="@(p => p.Quantity)" Sortable="true" />
+
+            </FluentDataGrid>
+        </FluentCard>
+
+    </FluentGridItem> *@
+    @*  <FluentGridItem xs="12" sm="6" HiddenWhen="GridItemHidden.SmAndDown">
+        <FluentCard>
+
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="12" sm="6">
+        <FluentCard>
+
+        </FluentCard>
+    </FluentGridItem> *@
+</FluentGrid>
+
+
+@code{
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authStateTask { get; set; }
+
+    public UserInfo CurrentUser { get; set; } = new();
+    private ReportPeriod reportPeriod = new();
+
+    int Spacing = 1;
+    private IQueryable<IncomingModel>? IncomingData { get; set; }=default!;
+    private IQueryable<OutgoingModel>? OutgoingData { get; set; } = default!;
+    private IQueryable<LateCasesModel>? LateCasesData { get; set; } = default!;
+    private IQueryable<DueIn2DaysCases>? DueCasesData { get; set; } = default!;
+
+    IQueryable<ProductionTask>? taskitems;
+
+
+    private ApexCharts.ApexChartOptions<IncomingModel> IncomingChartOptions { get; set; } = new();
+    private ApexCharts.ApexChartOptions<OutgoingModel> OutgoingChartOptions { get; set; } = new();
+    private ApexCharts.ApexChartOptions<LateCasesModel> LateCasesChartOptions { get; set; } = new();
+    private ApexCharts.ApexChartOptions<DueIn2DaysCases> DueCasesOptions { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        reportPeriod = await db.GetReportPeriod();
+        var ToDate = reportPeriod.ToDate?.ToString("yyyy-MM-dd");
+        var FromDate = reportPeriod.FromDate?.ToString("yyyy-MM-dd");
+
+        IncomingData = (await db.GetIncomingCases(FromDate, ToDate)).AsQueryable();
+        OutgoingData = (await db.GetShipCases(FromDate, ToDate)).AsQueryable();
+        LateCasesData = (await db.GetLateCases(FromDate, ToDate)).AsQueryable();
+        DueCasesData = (await db.GetDueDayCases(FromDate, ToDate)).AsQueryable();
+       
+        var authState = await authStateTask;
+        var username = authState.User.Identity!.Name;
+        
+        IncomingChartOptions.DataLabels = new ApexCharts.DataLabels
+            {
+                Formatter = @"function(value, { seriesIndex, w }) {
+            return w.config.series[seriesIndex];}"
+            };
+
+        taskitems = (await productionDB.GetLatestProductTasks()).AsQueryable();
+
+        // OutgoingChartOptions.PlotOptions = new ApexCharts.PlotOptions
+        //     {
+        //         Pie = new ApexCharts.PlotOptionsPie
+        //         {
+        //             Donut = new ApexCharts.PlotOptionsDonut
+        //             {
+        //                 Labels = new ApexCharts.DonutLabels
+        //                 {
+        //                     Total = new ApexCharts.DonutLabelTotal { FontSize = "24px", Color = "#D807B8", Formatter = @"function (w) {return w.globals.seriesTotals.reduce((a, b) => { return (a + b) }, 0)}" }
+        //                 }
+        //             }
+        //     }
+        // };
+
+        OutgoingChartOptions = new ApexCharts.ApexChartOptions<OutgoingModel>
+            {
+                Chart = new ApexCharts.Chart
+                {
+                    Toolbar = new ApexCharts.Toolbar
+                    {
+                        Show = false
+                    },
+                    DropShadow = new ApexCharts.DropShadow
+                    {
+                        Enabled = true,
+                        Color = "",
+                        Top = 18,
+                        Left = 7,
+                        Blur = 10,
+                        Opacity = 0.2d
+                    }
+                },
+                DataLabels = new ApexCharts.DataLabels
+                {
+                    OffsetY = -6d,
+                    // Style = new ApexCharts.AxisTitleStyle
+                    // {
+                    //     FontSize = "14px"
+                    // }
+                },
+                Grid = new ApexCharts.Grid
+                {
+                    BorderColor = "#e7e7e7",
+                    Row = new ApexCharts.GridRow
+                    {
+                        Colors = new List<string> { "#f3f3f3", "transparent" },
+                        Opacity = 0.5d
+                    }
+                },
+
+                Colors = new List<string> { "#77B6EA", "#545454" },
+                Markers = new ApexCharts.Markers { Shape = ApexCharts.ShapeEnum.Circle, Size = 5, FillOpacity = new ApexCharts.Opacity(0.8d) },
+                Stroke = new ApexCharts.Stroke { Curve = ApexCharts.Curve.Smooth },
+                Legend = new ApexCharts.Legend
+                {
+                    Position = ApexCharts.LegendPosition.Top,
+                    HorizontalAlign = ApexCharts.Align.Right,
+                    Floating = true,
+                    OffsetX = -5,
+                    OffsetY = -25
+                },
+
+                Xaxis = new ApexCharts.XAxis
+                {
+                    Title = new ApexCharts.AxisTitle
+                    {                        
+                        Style = new ApexCharts.AxisTitleStyle
+                        {
+                            FontSize = "14px",
+                            
+                        }
+                    },
+                    Labels = new ApexCharts.XAxisLabels
+                    {
+                        Style = new ApexCharts.AxisLabelStyle
+                        {
+                            FontSize = "16px",
+                            FontWeight = "Bold"
+                        }
+                    }
+                },
+                // Yaxis = new List<ApexCharts.YAxis> { new ApexCharts.YAxis
+                // {
+                //      Title = new ApexCharts.AxisTitle
+                //     {
+                //         Text = "Country",
+                //         Style = new ApexCharts.AxisTitleStyle {
+                //             FontSize = "14px"
+                //         }
+                //     },
+                //     Labels = new ApexCharts.YAxisLabels {
+                //         Style = new ApexCharts.AxisLabelStyle {
+                //             FontSize = "14px"
+                //         } }
+
+                // }},
+
+            };
+    }
+   
+
+}

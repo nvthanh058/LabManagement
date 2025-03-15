@@ -1,0 +1,90 @@
+﻿@implements IDialogContentComponent<PayCodeInfo>
+@inject IPayCodeResposity context
+
+<FluentDialogHeader ShowDismiss="false">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size24.Code())" />
+        <FluentLabel Typo="Typography.PaneHeader">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<FluentStack Orientation="Orientation.Horizontal">
+    <FluentStack Orientation="Orientation.Vertical">
+
+        <FluentTextField Label="PayCode" @bind-Value="@Content.PayCode" ReadOnly="@(Content.RecID>0 ?true:false)" />
+        <FluentTextField Label="Description" @bind-Value="@Content.Description" Style="width:350px" />
+        <FluentSelect TOption="PayTypeInfo" Label="Pay Type" Placeholder="--"
+        Items="@PayTypeItems" Width="200px" Height="250px" OptionValue="@(i => i.PayType.ToString())"
+        OptionText="@(i => i.PayTypeName)"
+        @bind-Value="@PayTypeString">
+        </FluentSelect>
+        <FluentTextField Label="LedgerAccount" @bind-Value="@Content.LedgerAccount" ReadOnly="@(Content.RecID>0 ?true:false)" />
+
+        <FluentSelect Label="Units" Width="200px" TOption="string" @bind-Value="@Units">
+            <FluentOption Value="0">Months</FluentOption>
+            <FluentOption Value="1">Days</FluentOption>
+            <FluentOption Value="2">Hours</FluentOption>
+        </FluentSelect>
+
+    </FluentStack>
+
+    <FluentStack Orientation="Orientation.Vertical">
+
+        <FluentCheckbox Label="Nontaxable" @bind-Value="@Content.Nontaxable"></FluentCheckbox>
+        <FluentCheckbox Label="NonCash Allowance" @bind-Value="@Content.NonCashAllowance"></FluentCheckbox>
+        <FluentCheckbox Label="Nett Calculation" @bind-Value="@Content.NettCalculation"></FluentCheckbox>
+
+    </FluentStack>
+
+</FluentStack>
+
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save</FluentButton>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+</FluentDialogFooter>
+@code {
+
+    string? PayTypeString = "0";
+    string? Units = "0";
+
+    List<PayTypeInfo> PayTypeItems = new()
+        {
+            { new PayTypeInfo { PayType = 0, PayTypeName = "Allowance" } },
+            { new PayTypeInfo { PayType = 1, PayTypeName = "Deduction" } },
+            { new PayTypeInfo { PayType = 2, PayTypeName = "Basic Salary" } },
+            { new PayTypeInfo { PayType = 3, PayTypeName = "Tax" }}
+
+        };
+
+
+
+    [Parameter]
+    public PayCodeInfo Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        //customerGroups = (await context.GetAllGroup()).AsQueryable();
+        PayTypeString = Content.PayType.ToString();
+        Units = Content.PayCodeUnit.ToString();
+    }
+
+    private async Task SaveAsync()
+    {
+        Content.PayCodeUnit = Int32.Parse(Units);
+        Content.PayType = Int32.Parse(PayTypeString);
+
+        await Dialog.CloseAsync(Content);
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+}

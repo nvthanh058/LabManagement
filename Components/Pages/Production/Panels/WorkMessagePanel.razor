@@ -1,0 +1,174 @@
+﻿@inject IUserInfoResposity userDB
+@inject IProductionResposity productionDB
+
+<FluentAccordion>
+    <FluentAccordionItem Heading="Communicate messages" Expanded="true" Style="height:600px">
+        <FluentIcon Value="@(new Icons.Regular.Size20.Globe())" Color="@Color.Neutral" Slot="start" />
+        <FluentLabel Typo="Typography.H5" Color="Color.Warning">@ErrorMessage</FluentLabel>
+        <FluentStack Orientation="Orientation.Vertical" Width="100%" Style="height:100%"> 
+
+            <FluentAutocomplete Id="my-customized"
+            @ref="EmployeeList"
+            TOption="UserInfo"
+            Width="100%"                            
+            Placeholder="search"
+            OnOptionsSearch="@OnSearchAsync"
+            MaximumSelectedOptions="1"
+            KeepOpen="true"
+            AutoComplete="off"
+            OptionText="@(item => item.UserName)"
+            OptionStyle="min-height: 40px;"
+            @bind-SelectedOptions="@SelectedEmpl">
+
+                <LabelTemplate>
+                    Select a Employee
+                    <FluentIcon Value="@(new Icons.Regular.Size20.Person())" Style="margin: 0 4px;" />
+                </LabelTemplate>
+
+                @* Template used with each Selected items *@
+                <SelectedOptionTemplate>
+                    <FluentPersona ImageSize="24px"
+                    Image="@context.GetPhotoUrl"
+                    Name="@($"{context.UserID} {context.UserName}")"
+                    Style="height: 26px; background: var(--neutral-fill-secondary-hover)"
+                    DismissTitle="Remove"
+                    Status="PresenceStatus.Available"
+                    OnDismissClick="@(async () => await EmployeeList.RemoveSelectedItemAsync(context))">
+                    </FluentPersona>
+                </SelectedOptionTemplate>
+
+                <OptionTemplate>
+                    <FluentPersona ImageSize="32px"
+                    Image="@context.GetPhotoUrl"
+                    Status="PresenceStatus.Available"
+                    StatusSize="PresenceBadgeSize.Small"
+                    Name="@($"{context.UserID} {context.UserName}")" />
+                </OptionTemplate>
+
+                <MaximumSelectedOptionsMessage>
+                    The maximum number of selected items has been reached.
+                </MaximumSelectedOptionsMessage>
+
+                <HeaderContent>
+                    <FluentLabel Color="Color.Accent"
+                    Style="padding: 8px; font-size: 11px; border-bottom: 1px solid var(--neutral-fill-stealth-hover);">
+                        Suggested contacts
+                    </FluentLabel>
+                </HeaderContent>                
+
+                <FooterContent>
+                    @if (!context.Any())
+                    {
+                        <FluentLabel Style="font-size: 11px; text-align: center; width: 200px;">
+                            No results found
+                        </FluentLabel>
+                    }
+                </FooterContent>
+            </FluentAutocomplete>
+
+            <div style="height: 434px; overflow:auto;width:100%" tabindex="-1">
+                @foreach(var context in TaskMessages!)
+                {
+                    @if(context.FromUserID==UserID)
+                    {
+
+                        <FluentStack Style="width:100%;height:100px;padding:5px;" HorizontalAlignment="HorizontalAlignment.End" Orientation="Orientation.Vertical">
+
+                            <FluentPersona Name="@context.FromUserName"
+                            Status="PresenceStatus.Available"
+                            StatusSize="PresenceBadgeSize.Small"
+                            StatusTitle=""
+                            Image="@context.GetPhotoUrl"
+                            ImageSize="32px">
+                            </FluentPersona>
+
+                            <FluentLabel Color="Color.Success">@context.MessageContent</FluentLabel>
+
+
+                        </FluentStack>
+
+
+
+
+                    }
+                    else{
+
+
+                        <FluentStack Style="width:100%;height:100px;padding:5px;" HorizontalAlignment="HorizontalAlignment.Start" Orientation="Orientation.Vertical">
+
+                            <FluentPersona Name="@context.FromUserName" TextPosition="TextPosition.End"
+                            Status="PresenceStatus.Available"
+                            StatusSize="PresenceBadgeSize.Small"
+                            StatusTitle=""
+                            Image="@context.GetPhotoUrl"
+                            ImageSize="32px">
+                            </FluentPersona>
+                            <FluentLabel Color="Color.Success">@context.MessageContent</FluentLabel>
+
+                        </FluentStack>
+
+
+                    }
+
+                }
+            </div>
+            <FluentStack Orientation="Orientation.Vertical" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                <FluentTextArea Style="width:100%;" @bind-Value="@MessageContent"></FluentTextArea>
+
+                <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+                    <FluentButton IconStart="@(new Icons.Regular.Size24.Send())" OnClick="@SendMessageAsync">Send</FluentButton>
+
+                </FluentStack>
+            </FluentStack>
+
+
+        </FluentStack>
+
+    </FluentAccordionItem>
+
+</FluentAccordion>
+@code {
+
+    [Parameter]
+    public string TaskID { get; set; } = "";
+
+    [Parameter]
+    public string UserID { get; set; } = "";
+
+    string? MessageContent = "";
+
+    string? ErrorMessage = "";
+
+    IQueryable<TaskMessage>? TaskMessages;
+
+
+    FluentAutocomplete<UserInfo> EmployeeList = default!;
+    IEnumerable<UserInfo> SelectedEmpl = Array.Empty<UserInfo>();
+
+    private async Task OnSearchAsync(OptionsSearchEventArgs<UserInfo> e)
+    {
+        var items = (await userDB.GetAll("", "","")).AsQueryable();
+        e.Items = items.Where(i => i.UserID.StartsWith(e.Text, StringComparison.OrdinalIgnoreCase))
+                             .OrderBy(i => i.UserID);
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        LoadData();
+    }
+    private async Task LoadData(){
+        TaskMessages = (await productionDB.GetTaskMessages(0, TaskID)).AsQueryable();
+    }
+
+    private async Task SendMessageAsync()
+    {
+        if(SelectedEmpl.FirstOrDefault()==null)
+        {
+            ErrorMessage = "Please select a user to send message";
+            return;
+        }
+        var res = await productionDB.SaveTaskMessage(TaskID, UserID, SelectedEmpl.FirstOrDefault().EmplRefID, MessageContent, "");
+        await LoadData();
+    }
+
+}

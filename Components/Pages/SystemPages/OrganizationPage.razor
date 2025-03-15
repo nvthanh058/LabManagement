@@ -1,0 +1,56 @@
+﻿@page "/organization"
+
+@inject IUserInfoResposity context
+
+
+<FluentTreeView Items="@Items" @bind-SelectedItem="@SelectedItem" LazyLoadItems="true">
+    <ItemTemplate>
+        @context.Text
+        <span style="color: var(--accent-fill-rest); margin: 0 4px;">
+            @(context.Items == null ? "" : $"[{context.Items.Count()}]")
+        </span>
+    </ItemTemplate>
+</FluentTreeView>
+
+
+@code {
+
+    private ITreeViewItem? SelectedItem;
+    private Icon IconCollapsed = new Icons.Regular.Size20.Folder();
+    private Icon IconExpanded = new Icons.Regular.Size20.FolderOpen();
+
+    private IEnumerable<ITreeViewItem>? Items = new List<ITreeViewItem>();
+
+    protected override async Task OnInitializedAsync()
+    {       
+        Items = await CreateTree(0);
+    }
+
+    private async Task<List<TreeViewItem>> CreateTree(int ParentID = 0)
+    {
+        var items = (await context.GetOrganization(0, ParentID)).AsEnumerable();
+
+        List<TreeViewItem> treeViewItems = new();
+
+        if(items.ToList().Count>0)
+        {
+            foreach(var item in items)
+            {
+                var treeItem = new TreeViewItem
+                    {
+                        Text = $"" + item.OrganizationName,
+                        IconCollapsed = IconCollapsed,
+                        IconExpanded = IconExpanded,
+                        Expanded = true,                                  
+                    };
+
+                treeViewItems.Add(treeItem);
+                treeItem.Items = await CreateTree(item.RecID);
+            }
+                      
+        }
+        
+        return treeViewItems;
+    }
+
+}

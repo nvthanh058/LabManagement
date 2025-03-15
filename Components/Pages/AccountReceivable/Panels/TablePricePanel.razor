@@ -1,0 +1,54 @@
+﻿@implements IDialogContentComponent<TablePrice>
+@inject IProductResposity context
+
+<FluentDialogHeader ShowDismiss="false">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size24.Code())" />
+        <FluentLabel Typo="Typography.PaneHeader">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<FluentStack Orientation="Orientation.Horizontal">
+    <FluentStack Orientation="Orientation.Vertical">
+
+        <FluentTextField Label="Item Code" @bind-Value="@Content.ItemCode" Disabled="true" />
+        <FluentTextField Label="Item Name" @bind-Value="@Content.ItemName" Disabled="true" Style="width:300px" />
+        <FluentNumberField Label="Unit Price" @bind-Value="@Content.UnitPrice" Style="width:100px" />
+       
+        <FluentDatePicker Label="From Date" @bind-Value="@Content.FromDate"></FluentDatePicker>
+      
+    </FluentStack>
+  
+</FluentStack>
+
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save</FluentButton>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+</FluentDialogFooter>
+@code {
+
+   
+
+    [Parameter]
+    public TablePrice Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+    }
+
+    private async Task SaveAsync()
+    {       
+        await Dialog.CloseAsync(Content);
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+}

@@ -1,0 +1,35 @@
+wwwroot\app.css
+wwwroot\caseimages\63b62b43-5136-4afa-898f-41684db5022f_.jpg
+wwwroot\css\app.min.css
+wwwroot\css\bootstrap.min.css
+wwwroot\css\icons.min.css
+wwwroot\favicon.ico
+wwwroot\files\Guest\20250310\Book2.xlsx
+wwwroot\files\Guest\20250310\Canvas-master (1).zip
+wwwroot\files\Skill Bonus - new proposal - to anh Thành (1).xlsx
+wwwroot\images\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png
+wwwroot\images\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg
+wwwroot\images\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg
+wwwroot\images\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png
+wwwroot\images\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg
+wwwroot\images\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico
+wwwroot\images\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png
+wwwroot\images\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png
+wwwroot\images\76447bb9-2296-40ca-a93b-71219dacc579_img1.png
+wwwroot\images\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png
+wwwroot\images\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg
+wwwroot\images\barcode.png
+wwwroot\images\beachogo.png
+wwwroot\images\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg
+wwwroot\images\cd51994f-b800-412a-8c69-d7e29e229704_.jpg
+wwwroot\images\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png
+wwwroot\images\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png
+wwwroot\images\f579e975-17eb-482d-bee9-90a458eb962c_.jpg
+wwwroot\images\logo ztech.png
+wwwroot\images\logo.png
+wwwroot\images\logo1.png
+wwwroot\images\logodadl.png
+wwwroot\images\no-picture.png
+wwwroot\images\teethinfo.svg
+wwwroot\js\myscript.js
+wwwroot\print-template.html

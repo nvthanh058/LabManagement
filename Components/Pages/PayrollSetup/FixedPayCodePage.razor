@@ -1,0 +1,284 @@
+﻿@page "/fixedpaycodepage"
+@using LabManagement.Components.Pages.PayrollSetup.Panels
+
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject IFixedPayCodeResposity context
+@inject IPayCodeResposity paycodeContext
+@inject IEmployeeResposity empContext
+@inject IJSRuntime JSRuntime
+@inject NavigationManager navigationManager
+@attribute [StreamRendering]
+
+<FluentStack Orientation="Orientation.Vertical" Width="100%">
+
+
+    <FluentSplitter Style="width:100%" Orientation="Orientation.Horizontal" BarSize="6" Panel1Size="30%" Panel2Size="auto">
+        <Panel1>
+             <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadEmployees></FluentSearch>
+                <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowReply())" OnClick="@(() => ClearSelectAsync())"></FluentButton>
+             </FluentStack>
+
+            @if (employees == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <FluentDataGrid Pagination="@pagination1" Items="@employees" ShowHover="true" TGridItem="Employee">
+                    <PropertyColumn Width="80px" Property="@(p => p.EmplID)" Title="ID" />
+                    <PropertyColumn Width="200px" Property="@(p => p.FullName)" />
+                    <PropertyColumn Width="150px" Property="@(p => p.DeptName)"Sortable="true" />
+                    <TemplateColumn Title="" Align="@Align.End">
+                        <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" OnClick="@(() => SelectAsync(context))" />
+
+                    </TemplateColumn>
+                </FluentDataGrid>
+                <FluentPaginator State="@pagination1" />
+            }
+        </Panel1>
+        <Panel2>
+
+            @if (ShowList == true)
+            {
+
+                <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+                    <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
+                    <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowSquareDown())">Import</FluentButton>
+
+                </FluentStack>
+
+                @if (items == null)
+                {
+                    <p><em>Loading...</em></p>
+                }
+                else
+                {
+                    <FluentDataGrid Items="@items"
+                    style="height: 100%;"
+                    TGridItem="FixedPayCode"
+                    ShowHover="true"
+                    HeaderCellAsButtonWithMenu="true"
+                    Pagination="@pagination">
+                        <TemplateColumn Width="30px">
+                            <FluentIcon Icon="Icons.Regular.Size16.CodeBlock" Color="@Color.Accent" />
+                        </TemplateColumn>
+                        <PropertyColumn Property="@(p => p.EmplID)" Sortable="true" Width="80px" />
+                        <PropertyColumn Title="Full Name" Property="@(p => p.FullName)" Sortable="true" Width="220px" />
+                        <PropertyColumn Property="@(p => p.PayCode)" Sortable="true" Width="120px" />
+                        <PropertyColumn Property="@(p => p.Description)" Sortable="true" Width="120px" />
+                        <PropertyColumn Title="From Date" Property="@(p => p.FromDate)" Format="dd/MM/yyyy" Sortable="true" Width="120px" />
+                        <PropertyColumn Title="To Date" Property="@(p => p.ToDate)" Format="dd/MM/yyyy" Sortable="true" Width="120px" />
+                        <PropertyColumn Title="Currency Code" Property="@(p => p.CurrencyCode)" Sortable="true" Width="70px" />
+                        <PropertyColumn Title="Amount" Format="#,###,##0" Property="@(p => p.AmountCur)" Align="Align.End" Sortable="true" Width="120px" />
+
+                        <TemplateColumn Title="Actions" Align="@Align.End">
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+
+                        </TemplateColumn>
+
+                    </FluentDataGrid>
+                    <FluentPaginator State="@pagination" />
+                }
+            }
+            else{
+
+
+                <div style="margin-left:20px;">
+                    <h5>Fixed PayCode</h5>
+                    <FluentStack Orientation="Orientation.Horizontal" Width="600px"> 
+                        <FluentStack Orientation="Orientation.Vertical">
+
+                            <FluentTextField Label="Empl ID" @bind-Value="@Content.EmplID" />
+
+                            <FluentTextField Label="Full Name" @bind-Value="@Content.FullName" />
+                            @* <FluentTextField Label="PayCode" @bind-Value="@Content.PayCode" ReadOnly="@(Content.RecID>0 ?true:false)" />  *@              
+
+
+                            <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                                <FluentSelect TOption="PayCodeInfo" Label="Pay Code" Placeholder="--"
+                                Items="@PayCodeItems" Width="300px" Height="350px" OptionValue="@(i => i.PayCode)"
+                                OptionText="@(i => i.PayCode + " - "  + i.Description)"
+                                @bind-Value="@Content.PayCode">
+
+                                </FluentSelect>
+
+                                <FluentButton Appearance="Appearance.Neutral" OnClick="@AddPayCodeAsync" IconStart="@(new Icons.Regular.Size20.Add())"></FluentButton>
+                            </FluentStack>
+
+                        </FluentStack>
+                        <FluentStack Orientation="Orientation.Vertical">
+                            <FluentDatePicker Label="From Date" @bind-Value="@Content.FromDate"></FluentDatePicker>
+                            <FluentDatePicker Label="To Date" @bind-Value="@Content.ToDate"></FluentDatePicker>
+                            <FluentTextField Label="Currency" @bind-Value="@Content.CurrencyCode" />
+                            <FluentNumberField Label="Amount" Format @bind-Value="@Content.AmountCur" />
+                        </FluentStack>
+                    </FluentStack>
+                    <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                        <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save</FluentButton>
+                        <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+                    </FluentStack>
+                </div>
+            }
+
+        </Panel2>
+    </FluentSplitter>
+
+
+</FluentStack>
+
+
+@code {
+    string SelectedEmplID = "";
+    string Search = "";
+    bool ShowList = true;
+
+    [Parameter]
+    public FixedPayCode Content { get; set; } = default!;
+
+    IQueryable<Employee>? employees;
+    IQueryable<FixedPayCode>? items;
+    IQueryable<PayCodeInfo>? PayCodeItems;
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 15 };
+    PaginationState pagination1 = new PaginationState { ItemsPerPage = 15 };
+
+    protected override async Task OnInitializedAsync()
+    {       
+        await Task.Delay(500);
+        LoadData();
+        LoadEmployees();
+    }
+    private async void LoadData()
+    {       
+        items = (await context.GetAll("","")).AsQueryable();
+        PayCodeItems = (await paycodeContext.GetAll(0, "", 2)).AsQueryable();
+    }
+
+    private async void LoadEmployees()
+    {
+        employees = (await empContext.GetAll("", Search)).AsQueryable();
+
+    }
+
+    private async Task CancelAsync()
+    {
+        //navigationManager.NavigateTo($"/fixedpaycodepage");
+        ShowList = true;
+    }
+    private async Task AddAsync()
+    {
+        Content = new FixedPayCode();
+        
+        Employee? SelectEmp = (await empContext.GetAll(SelectedEmplID,"")).First();
+
+        Content.EmplID = SelectEmp.EmplID;
+        Content.FullName = SelectEmp.FullName;
+
+        ShowList = false;
+    }
+
+
+    private async Task SaveAsync()
+    {
+        await Task.Delay(500);
+        if (Content.RecID != 0)
+        {            
+            await context.Update(Content);
+        }
+        else
+        {
+            await context.Add(Content);
+        }
+        ShowList = true;
+        LoadData();
+    }
+
+   
+    private async Task EditAsync(FixedPayCode item)
+    {       
+        Content = item;
+        ShowList = false;
+
+    } 
+    private async Task SelectAsync(Employee item)
+    {
+        await Task.Delay(500);
+        items = (await context.GetAll(item.EmplID, "")).AsQueryable();
+        SelectedEmplID = item.EmplID;
+    }
+
+    private async Task ClearSelectAsync()
+    {
+        await Task.Delay(500);
+        SelectedEmplID = "";
+        Search = "";
+        LoadEmployees();
+        LoadData();
+    }
+
+    private async Task DeleteAsync(FixedPayCode item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this item?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await context.Delete(item.RecID);
+
+            if (res > 0)
+            {
+                LoadData();
+            }
+        }
+    }
+
+     private async Task AddPayCodeAsync()
+    {
+        PayCodeInfo paycodeItem = new();
+        paycodeItem.PayType = 2;
+
+        var parameters = new DialogParameters
+            {
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,
+                //SecondaryAction = "No",
+                Width = "500px",
+                Height = "500px",
+                //TrapFocus = true,
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<PayCodePanel>(paycodeItem, parameters);
+        var dialogResult = await dialog.Result;
+        await AddPayCodeResult(dialogResult);
+
+    }
+
+    private async Task AddPayCodeResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var itemRes = result.Data as PayCodeInfo;
+            if (itemRes is null)
+            {
+                return;
+            }
+            await paycodeContext.Add(itemRes);
+
+            PayCodeItems = (await paycodeContext.GetAll(0, "", 2)).AsQueryable();
+            Content.PayCode = itemRes.PayCode;
+        }
+    }
+
+
+}

@@ -1,0 +1,69 @@
+﻿@implements IDialogContentComponent<AssignTaskView>
+@inject IMessageService MessageService
+@inject IProductionResposity productionDB
+@inject NavigationManager navigationManager
+
+<FluentDialogHeader ShowDismiss="false">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size20.TaskListSquareLtr())" />
+        <FluentLabel Typo="Typography.H6">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<FluentStack>
+    <FluentDataGrid Items="@items"
+                    TGridItem="ProductionTask"
+                    ResizableColumns=true
+                    RowSize="DataGridRowSize.Medium"
+                    ShowHover="true">
+
+
+        <PropertyColumn Width="120px" Property="@(p => p.CaseNo)" Sortable="true" />
+        <PropertyColumn Width="120px" Title="Time" Property="@(p => p.CreatedDateTime)" Format="MM/dd HH:mm" Sortable="true" />
+        <PropertyColumn Width="180px" Property="@(p => p.Notes)" Sortable="true" />
+        <PropertyColumn Width="80px" Title="Job Type" Property="@(p => p.JobTypeName)" Sortable="true" />
+
+        <TemplateColumn Align="@Align.End">
+            <FluentButton IconStart="@(new Icons.Regular.Size16.Eye())" OnClick="@(() => ShowDetail(context))" />
+        </TemplateColumn>
+
+    </FluentDataGrid>
+</FluentStack>
+
+    
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+</FluentDialogFooter>
+
+@code {
+
+    [Parameter]
+    public AssignTaskView Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    IQueryable<ProductionTask>? items;
+
+    protected override async Task OnInitializedAsync()
+    {               
+        items = (await productionDB.GetNotifyProductTasks(Content.CurrentUser.EmplRefID)).AsQueryable();
+    }
+
+    private async Task ShowDetail(ProductionTask task)
+    {
+        navigationManager.NavigateTo("/workorder?taskid="+ task.TaskID);
+    }
+    private async Task SaveAsync()
+    {
+        await Dialog.CloseAsync(Content);
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+
+}

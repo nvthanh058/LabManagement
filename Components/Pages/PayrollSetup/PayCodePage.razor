@@ -1,0 +1,186 @@
+﻿@page "/payrollsetup/paycodepage"
+@using LabManagement.Components.Pages.PayrollSetup.Panels
+
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject IPayCodeResposity context
+@inject IJSRuntime JSRuntime
+@attribute [StreamRendering]
+
+<FluentStack Orientation="Orientation.Vertical" Width="100%">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+        <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
+        <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowSquareDown())">Import</FluentButton>        
+
+    </FluentStack>
+
+  @if (items == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <FluentDataGrid Items="@items"
+        style="height: 100%;"
+    TGridItem="PayCodeInfo"
+  
+    ShowHover="true"
+    HeaderCellAsButtonWithMenu="true"
+    Pagination="@pagination">
+        <TemplateColumn Width="30px">
+            <FluentIcon Icon="Icons.Regular.Size16.CodeBlock" Color="@Color.Accent" />
+        </TemplateColumn>
+
+        <PropertyColumn Property="@(p => p.PayCode)" Sortable="true" Width="120px" />
+        <PropertyColumn Property="@(p => p.Description)" Sortable="true" Width="220px" />
+        <PropertyColumn Property="@(p => p.PayTypeName)" Sortable="true" Width="200px" />
+        <PropertyColumn Property="@(p => p.LedgerAccount)" Sortable="true" />
+        <PropertyColumn Property="@(p => p.Units)" Sortable="true" />
+        <TemplateColumn Title="Nontaxable" Width="160px" Align="Align.Center">
+            <FluentCheckbox @bind-Value="context.Nontaxable"></FluentCheckbox>
+        </TemplateColumn>
+
+        <TemplateColumn Title="NonCash Allowance" Width="160px" Align="Align.Center" Style="word-wrap: break-word;">
+            <FluentCheckbox @bind-Value="context.NonCashAllowance"></FluentCheckbox>
+        </TemplateColumn>
+        
+        <TemplateColumn Title="Nett Calculation" Width="160px" Align="Align.Center" Style="word-wrap: break-word;">
+            <FluentCheckbox @bind-Value="context.NettCalculation"></FluentCheckbox>
+        </TemplateColumn>
+
+        <TemplateColumn Title="Actions" Align="@Align.End">
+            <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
+            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+        </TemplateColumn>
+
+    </FluentDataGrid>
+    <FluentPaginator State="@pagination" />
+    }
+</FluentStack>
+
+
+@code {
+
+   
+
+
+    IQueryable<PayCodeInfo>? items;
+    PaginationState pagination = new PaginationState { ItemsPerPage = 15 };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+        LoadData();
+    }
+  
+    private async void LoadData()
+    {
+        items = (await context.GetAll(0,"",1000)).AsQueryable();
+    }
+
+    private async Task AddAsync()
+    {
+        PayCodeInfo item = new();
+
+        var parameters = new DialogParameters
+            {
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = false,
+                SecondaryAction = "No",
+                Width = "700px",
+                Height = "600px",
+                TrapFocus = true,
+                Modal = false,
+
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<PayCodePanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await HandleAddDialogResult(dialogResult);
+
+    }
+
+    private async Task HandleAddDialogResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var item = result.Data as PayCodeInfo;
+            if (item is null)
+            {
+                return;
+            }
+
+            await context.Add(item);
+            LoadData();
+        }
+    }
+
+    private async Task EditAsync(PayCodeInfo item)
+    {
+        var parameters = new DialogParameters
+            {
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = false,
+                SecondaryAction = "No",
+                Width = "700px",
+                Height = "600px",
+                TrapFocus = true,
+                Modal = true,
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<PayCodePanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await HandleUpdateData(dialogResult, item);
+
+    }
+
+    private async Task HandleUpdateData(DialogResult result, PayCodeInfo item)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var UpdateItem = result.Data as PayCodeInfo;
+            if (UpdateItem is null)
+            {
+                return;
+            }
+
+            UpdateItem.RecID = item.RecID;
+            await context.Update(UpdateItem);
+            LoadData();
+        }
+    }
+
+
+    private async Task DeleteAsync(PayCodeInfo item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this item?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await context.Delete(item.RecID);
+
+            if (res > 0)
+            {
+                LoadData();
+            }
+        }
+
+
+    }
+}

@@ -1,0 +1,142 @@
+﻿@page "/printbarcode"
+
+@using LabManagement.Components.Pages.CommonForms.Panels
+
+@rendermode InteractiveServer
+@inject IToastService ToastService
+@inject IJSRuntime JS
+
+<FluentStack Orientation="Orientation.Vertical" VerticalGap="30">
+
+
+    <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+        <FluentLabel Style="width:100px">Year</FluentLabel>
+        <FluentDatePicker Style="width:100px" @bind-Value="@SelectedYear" View="CalendarViews.Years" PopupHorizontalPosition="HorizontalPosition.Left" />
+    </FluentStack>
+
+
+    <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start" Width="300px">
+
+        <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+            <FluentLabel Style="width:100px">Start Number</FluentLabel>
+            <FluentNumberField Style="width:80px" @bind-Value="startNum" @onchange="@(e =>ChangeStartValue(e))"></FluentNumberField>
+        </FluentStack>
+
+        <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+            <FluentLabel Style="width:100px">End Number</FluentLabel>
+            <FluentNumberField Style="width:80px" @bind-Value="endNum" @onchange="@(e =>ChangeEndValue(e))"></FluentNumberField>
+        </FluentStack>
+
+
+    </FluentStack>
+    <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+        <FluentLabel Style="width:100px">Barcode Type</FluentLabel>
+
+        <FluentRadioGroup Name="BarcodeType" @bind-Value=BarcodeType @onchange="ChangeBarcodeType">
+
+            <FluentRadio Value="1">QR</FluentRadio>
+            <FluentRadio Value="2">DATA MATRIX</FluentRadio>
+            <FluentRadio Value="3">CODE 39</FluentRadio>
+            <FluentRadio Value="4">CODE 128</FluentRadio>
+
+        </FluentRadioGroup>
+
+    </FluentStack>
+
+    <FluentCard Width="300" Style="align-content:center">
+        @if(items != null)
+        {
+            @if (items.FirstOrDefault() != null)
+            {
+                <PrintBarcodeDesign Content="@items.FirstOrDefault()"></PrintBarcodeDesign>
+            }
+        }
+       
+    </FluentCard>
+    
+
+    <FluentButton IconStart="@(new Icons.Regular.Size20.Print())" Appearance="Appearance.Accent" OnClick="@PrintOrder">Print</FluentButton>
+
+</FluentStack>
+
+
+<div id="componentId" style="display:none;width:100%;height:100%;background-color:#545455">
+    @foreach (var item in items)
+    {
+        <PrintBarcodeDesign Content="@item"></PrintBarcodeDesign>
+        <p class="breakhere"></p>
+    }
+</div>
+
+
+@code {
+    List<BarcodeLabel> items = new();
+
+    DateTime ?SelectedYear = DateTime.Now;
+
+    int startNum = 1;
+    int endNum = 1;
+
+    public int BarcodeType { get; set;}=1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);        
+        endNum = startNum + 5;
+
+    }
+
+    public async Task ChangeStartValue(ChangeEventArgs e)
+    {
+        startNum = int.Parse(e.Value.ToString());
+        endNum = startNum + 5;
+    }
+
+    public async Task ChangeEndValue(ChangeEventArgs e)
+    {
+        endNum = int.Parse(e.Value.ToString());
+        await UpdateItems();
+    }
+
+    public async Task ChangeBarcodeType(ChangeEventArgs e)
+    {
+        BarcodeType = int.Parse(e.Value.ToString());
+        await UpdateItems();
+    }
+
+    public async Task UpdateItems()
+    {
+        items.Clear();
+        for (var i = startNum; i <= endNum; i++)
+        {
+            var item = new BarcodeLabel();
+            item.BarcodeType = BarcodeType;
+            item.BarcodeContent = SelectedYear.Value.ToString("yy") + "-" + i;   
+            
+            if (BarcodeType == 1)
+            {
+                item.Image64 = await Helper.GenerateBarcode(item!.BarcodeContent, ZXing.BarcodeFormat.QR_CODE, 150, 150);
+            }
+            if (BarcodeType == 2)
+            {
+                item.Image64 = await Helper.GenerateBarcode(item!.BarcodeContent, ZXing.BarcodeFormat.DATA_MATRIX, 150, 150);
+            }
+            if (BarcodeType == 3)
+            {
+                item.Image64 = await Helper.GenerateBarcode(item!.BarcodeContent, ZXing.BarcodeFormat.CODE_39, 150, 50);
+            }
+            if (BarcodeType == 4)
+            {
+                item.Image64 = await Helper.GenerateBarcode(item!.BarcodeContent, ZXing.BarcodeFormat.CODE_128, 150, 50);
+            }
+
+
+            items.Add(item);
+        }
+    }
+
+    public async Task PrintOrder()
+    {
+        await JS.InvokeVoidAsync("printComponent", "#componentId");
+    }
+}

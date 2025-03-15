@@ -1,0 +1,327 @@
+﻿@page "/scantask"
+@attribute [Authorize]
+@rendermode InteractiveServer
+@inject IProductionResposity productionDB
+@inject IEmployeeResposity employeeDB
+@inject IUserInfoResposity userDB
+@inject IDialogService DialogService
+@inject IToastService ToastService
+
+<FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%" HorizontalAlignment="HorizontalAlignment.Start">
+
+        <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>
+
+    </FluentStack>
+
+    <FluentSplitter Style="width:100%;height:100%" Orientation="Orientation.Horizontal" BarSize="6" Panel1Size="10%" Panel2Size="auto">
+        <Panel1>
+           
+                <FluentListbox Style="padding:5px;" Items="@lineitems"
+                               OptionValue="@(i => i.LineID)"
+                               @bind-SelectedOption=@selectedLine>
+                    <OptionTemplate>
+                    <FluentIcon Icon="Icons.Regular.Size20.FolderList" Slot="start" OnClick="@(() => LoadTask(@context.LineID))" />
+                        <FluentLabel @onclick="@(() => LoadTask(@context.LineID))">@context.LineName</FluentLabel>
+                    </OptionTemplate>
+                </FluentListbox>
+          
+                           
+           
+        </Panel1>
+        <Panel2 >
+            <FluentStack Orientation="Orientation.Vertical" VerticalGap="10" style="overflow:hidden">
+
+                <FluentStack Style="margin-left:10px" HorizontalGap="10" Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%" HorizontalAlignment="HorizontalAlignment.Start">
+
+                    <FluentTextField Label="Case No" @ref="txtCaseNo" @bind-Value="@CaseNo" @onkeydown="@ProcessCaseNo" AutoComplete="Off"></FluentTextField>
+                    <FluentTextField Label="TechID" @ref="txtTechID" @bind-Value="@TechID" @onkeydown="@ProcessTech" AutoComplete="Off"></FluentTextField>
+                    <FluentAutocomplete Id="my-customized"
+                    @ref="EmployeeList"
+                    TOption="Employee"
+                    Width="300px"                                        
+                    Placeholder="Select a technician"
+                    OnOptionsSearch="@OnSearchAsync"
+                    MaximumSelectedOptions="1"
+                    AutoComplete="off"
+                    KeepOpen="true"
+                    OptionText="@(item => item.FullName)"
+                    OptionStyle="min-height: 40px;"
+                    @bind-SelectedOptions="@SelectedEmpl"
+                                        @bind-SelectedOptions:after="@AddTech">
+
+
+                        @* Template used with each Selected items *@
+                        <SelectedOptionTemplate>
+                            <FluentPersona ImageSize="24px"
+                            Image="@context.GetPhotoUrl"
+                            Name="@($"{context.EmplID} {context.FullName}")"
+                            Style="height: 26px; background: var(--neutral-fill-secondary-hover)"
+                            DismissTitle="Remove"
+                            Status="PresenceStatus.Available"
+                            OnDismissClick="@(async () => await EmployeeList.RemoveSelectedItemAsync(context))">
+                            </FluentPersona>
+                        </SelectedOptionTemplate>
+
+                        @* Template used with each Option items *@
+                        <OptionTemplate>
+                            <FluentPersona ImageSize="32px"
+                            Image="@context.GetPhotoUrl"
+                            Status="PresenceStatus.Available"
+                            StatusSize="PresenceBadgeSize.Small"
+                            Name="@($"{context.EmplID} {context.FullName}")" />
+                        </OptionTemplate>
+
+                        @* Template used when the maximum number of selected items (MaximumSelectedOptions) has been reached *@
+                        <MaximumSelectedOptionsMessage>
+                            The maximum number of selected items has been reached.
+                        </MaximumSelectedOptionsMessage>
+
+                        @* Content display at the top of the Popup area *@
+                        <HeaderContent>
+                            <FluentLabel Color="Color.Accent"
+                            Style="padding: 8px; font-size: 11px; border-bottom: 1px solid var(--neutral-fill-stealth-hover);">
+                                Suggested technicians
+                            </FluentLabel>
+                        </HeaderContent>
+
+                        @* Content display at the bottom of the Popup area *@
+                        <FooterContent>
+                            @if (!context.Any())
+                            {
+                                <FluentLabel Style="font-size: 11px; text-align: center; width: 200px;">
+                                    No results found
+                                </FluentLabel>
+                            }
+                        </FooterContent>
+                    </FluentAutocomplete>
+                </FluentStack>
+
+                <FluentDataGrid Items="@taskitems"
+                    ResizableColumns="true"
+                                RowSize="DataGridRowSize.Medium"
+                TGridItem="ProductionTask">
+                    <TemplateColumn Title="" Width="60px">
+                        @if (context.ProdStatus == 0 && context.EmplRefID != "")
+                        {
+                            <FluentIcon Value="@(new Icons.Regular.Size20.AccessibilityCheckmark())" />
+                        }
+                        @if (context.ProdStatus == 1)
+                        {
+                            <FluentProgressRing Width="16px"></FluentProgressRing>
+                        }
+                        @if (context.ProdStatus == 2)
+                        {
+                            <FluentIcon Value="@(new Icons.Regular.Size20.Checkmark())" />
+                        }
+                        @if (context.ProdStatus == 3)
+                        {
+                            <FluentIcon Value="@(new Icons.Regular.Size20.CalendarCancel())" />
+                        }
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="" Width="65px">
+                        @if (context.EmplRefID != "")
+                        {
+                            <FluentPersona Status="PresenceStatus.Available"
+                            StatusSize="PresenceBadgeSize.Small"
+                            StatusTitle=""
+                            Image="@context.GetPhotoUrl"
+                            ImageSize="32px">
+                            </FluentPersona>
+                        }
+
+                    </TemplateColumn>
+                    <PropertyColumn Title="Case No" Width="120px" Property="@(p => p.CaseNo)" Sortable="true" />
+                    <PropertyColumn Title="Tech" Width="200px" Property="@(p => p.DisplayName)" Sortable="true" />
+                    <PropertyColumn Title="Line" Width="100px" Property="@(p => p.LineName)" Sortable="true" />                    
+                    <PropertyColumn Title="Date" Width="150px" Property="@(p => p.TransDate)" Format="MM/dd/yy" Sortable="true" />
+                    <PropertyColumn Title="Time" Width="150px" Property="@(p => p.CreatedDateTime)" Format="HH:mm" Sortable="true" />
+
+                    <PropertyColumn Title="Item Name" Width="100px" Property="@(p => p.ItemName)" Sortable="true" />
+                    <PropertyColumn Title="Us Teeth" Width="100px" Property="@(p => p.UsTeeth)" Sortable="true" />
+                    <PropertyColumn Title="Shade" Width="100px" Property="@(p => p.Shade)" Sortable="true" />
+                    <PropertyColumn Title="Quantity" Width="60px" Property="@(p => p.Quantity)" Sortable="true" />
+                    <TemplateColumn Title="" Align="@Align.End">                        
+                        <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteTask(context))" />
+                    </TemplateColumn>
+                </FluentDataGrid>
+            </FluentStack>
+        </Panel2>
+
+    </FluentSplitter>
+
+</FluentStack>
+
+@code {
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    UserInfo? CurrentUser { get; set; } = new();
+    string CaseNo = "";
+    string TechID = "";
+    string TechRefID = "";
+
+    FluentTextField txtCaseNo;
+    FluentTextField txtTechID;
+
+    IQueryable<ProductionTask>? taskitems;
+    IQueryable<ProductLine>? lineitems;
+
+    ProductLine selectedLine = default;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+
+        var authState = await authenticationStateTask;
+        var userName = authState.User.Identity.Name;
+
+        CurrentUser = await userDB.GetUser(userName);
+
+
+        lineitems = (await productionDB.GetAllProdLine(0,"","")).AsQueryable();
+        await LoadTask("");
+    }
+
+    private async Task LoadTask(string LineID)
+    {
+
+        taskitems = (await productionDB.GetProductTasks(0, "", "", "", LineID)).AsQueryable();
+    }
+
+    private ProdTable ScanProduct = default!;
+
+    private async Task ProcessCaseNo(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {           
+            if (selectedLine == null)
+            {
+                //var dialog = await DialogService.ShowWarningAsync("You should select a production line");
+
+                ToastService.ShowWarning("You should select a production line");
+                txtCaseNo.FocusAsync();
+                return;
+            }
+
+            ScanProduct = await productionDB.GetProductOrder("", CaseNo);
+
+            if (ScanProduct == null)
+            {
+                //var dialog = await DialogService.ShowWarningAsync("This case number not in system");
+                ToastService.ShowWarning("This case number not in system");
+                txtCaseNo.FocusAsync();
+                return;
+            }
+
+            if (SelectedEmpl.ToList().Count == 0)
+            {
+                //var dialog = await DialogService.ShowWarningAsync("You should select a technician");
+                ToastService.ShowWarning("You should select a technician");
+                txtTechID.FocusAsync();
+                return;
+            }
+
+            await InsertTask();
+        }
+    }
+
+    private async Task AddTech()
+    {
+        await Task.Delay(500);
+        if (SelectedEmpl.ToList().Count > 0)
+        {
+            TechID = SelectedEmpl.FirstOrDefault().EmplID;
+            TechRefID = SelectedEmpl.FirstOrDefault().EmplRefID;
+            await InsertTask();
+        }
+    }
+
+    private async Task ProcessTech(KeyboardEventArgs e)
+    {
+        await Task.Delay(500);
+        var empl = (await employeeDB.GetAll(TechID, "")).AsQueryable().FirstOrDefault();
+
+        if(TechID==""){
+            ToastService.ShowWarning("You should select a valid technician");
+            txtTechID.FocusAsync();
+            return;
+        }
+
+        if(empl==null){
+            ToastService.ShowWarning("You should select a valid technician");
+            txtTechID.FocusAsync();
+            return;
+        }
+        TechID = empl.EmplID;
+        TechRefID = empl.EmplRefID;
+
+        await InsertTask();
+    }
+
+    private async Task InsertTask()
+    {
+
+        if (selectedLine != null)
+        {
+
+            var task = new ProductionTask();
+            task.TaskRefID = ScanProduct.INVENTTRANSID;
+            task.CaseNo = CaseNo;
+            task.EmplRefID = TechRefID;
+            task.LineID = selectedLine.LineID;
+            task.JobType = 0;
+            task.UserRefID = CurrentUser.EmplRefID;
+
+            var res = await productionDB.SaveAssignProductTask(task);
+            await LoadTask(selectedLine.LineID);
+            CaseNo = "";
+            TechID = "";
+            TechRefID = "";
+            txtCaseNo.FocusAsync();
+            SelectedEmpl = default!;
+        }
+
+    }
+
+    FluentAutocomplete<Employee> EmployeeList = default!;
+    IEnumerable<Employee> SelectedEmpl = Array.Empty<Employee>();
+
+    private async Task OnSearchAsync(OptionsSearchEventArgs<Employee> e)
+    {
+        var items = (await employeeDB.GetAll("", "")).AsQueryable();
+        e.Items = items.Where(i => i.FullName.StartsWith(e.Text, StringComparison.OrdinalIgnoreCase))
+                             .OrderBy(i => i.FullName);
+    }
+
+
+    private async Task EditTask(ProductionTask item)
+    {
+
+    }
+    private async Task DeleteTask(ProductionTask item)
+    {
+        var dialogParameters = new DialogParameters
+            {
+                Title = "Delete Task",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true
+            };
+
+        // var dialog = await dialogService.ShowDialogAsync<ConfirmationPanel>(dialogParameters);
+        var dialog = await DialogService.ShowConfirmationAsync(
+            "Are you sure you want to delete this Task?",
+            "Yes",
+            "No",
+            "Delete Task?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            var res = await productionDB.DeleteProductTask(item);
+            await LoadTask(selectedLine.LineID);
+        }
+    }
+
+   
+}

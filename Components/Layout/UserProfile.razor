@@ -1,0 +1,76 @@
+﻿@using LabManagement.Components.Pages.SystemPages
+@rendermode InteractiveServer
+@inject IUserInfoResposity userDB
+@inject IDialogService DialogService
+@inject NavigationManager navigationManager
+
+
+<FluentMenuProvider @rendermode="RenderMode.InteractiveServer" />
+<FluentPersona Id="btnUserProfile" Name="@CurrentUser.UserID"
+Status="PresenceStatus.Available"
+StatusSize="PresenceBadgeSize.Small"
+StatusTitle=""
+Style="color:#000000"
+Image="@CurrentUser.GetPhotoUrl"
+ImageSize="32px" OnClick="@(() => openMenu = !openMenu)">
+</FluentPersona>
+
+<FluentMenu UseMenuService="true"
+Anchor="btnUserProfile"
+@bind-Open="openMenu"
+VerticalThreshold="170">
+    <FluentMenuItem OnClick="@ShowProfile">
+        <span slot="start"><FluentIcon Value="@(new Icons.Regular.Size20.PersonInfo())" Color="Color.Neutral" Slot="start" /></span>
+        Show Profile</FluentMenuItem>
+    <FluentMenuItem OnClick="@ShowChangePass">
+        <span slot="start"><FluentIcon Value="@(new Icons.Regular.Size20.Key())" Color="Color.Neutral" Slot="start" /></span>
+        Change Password</FluentMenuItem>
+
+    <FluentMenuItem OnClick="LogOut">
+
+        <span slot="start"><FluentIcon Value="@(new Icons.Regular.Size20.SignOut())" Color="Color.Neutral" Slot="start" /></span>
+        Logout
+    </FluentMenuItem>
+
+</FluentMenu>
+
+@code {
+    bool openMenu = false;
+
+    [Parameter]
+    public UserInfo CurrentUser { get; set; } = new();
+
+    public async Task ShowProfile()
+    {
+        var dialog = await DialogService.ShowDialogAsync<SysUsersDialog>(CurrentUser, new DialogParameters()
+            {
+                Height = "400px",
+                Title = "Change Password",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true,
+            });
+
+        var result = await dialog.Result;
+    }
+
+    public async Task ShowChangePass()
+    {
+
+        var item = new ChangePassModel();
+        item.CurrentUser = CurrentUser!;
+        
+        var dialog = await DialogService.ShowDialogAsync<SysChangePass>(item, new DialogParameters()
+            {
+                Height = "350px",
+                Title = "",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true,
+            });
+
+        var result = await dialog.Result;
+    }
+    public async Task LogOut()
+    {
+        navigationManager.NavigateTo("/logout");
+    }
+}

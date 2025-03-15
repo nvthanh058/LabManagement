@@ -1,0 +1,108 @@
+﻿@page "/workorder"
+@using LabManagement.Components.Pages.Production.Panels
+@attribute [Authorize]
+@rendermode InteractiveServer
+@inject IProductionResposity productionDB
+@inject IUserInfoResposity userDB
+@inject ISalesOrderResposity salesDB
+@inject IDialogService DialogService
+@inject NavigationManager navigationManager
+
+   <FluentSplitter Style="width:100%;height:100%" Orientation="Orientation.Horizontal" BarSize="6" Panel1Size="70%" Panel2Size="auto">
+        <Panel1>
+
+<FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%" HorizontalAlignment="HorizontalAlignment.Start">
+            <FluentButton Disabled="bStartDisabled" Appearance="Appearance.Accent" BackgroundColor="#20bd46" IconStart="@(new Icons.Regular.Size20.ArrowSyncCircle())" OnClick="@StartJobAsync">Start Job</FluentButton>
+            <FluentButton Disabled="bEndDisabled" Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.RecordStop())" OnClick="@EndJobAsync">End Job</FluentButton>
+            <FluentButton Appearance="Appearance.Accent" BackgroundColor="#C70039" IconStart="@(new Icons.Regular.Size20.CalendarCancel())" OnClick="@EndJobAsync">Cancel Job</FluentButton>
+            <FluentButton Appearance="Appearance.Outline" IconStart="@(new Icons.Regular.Size20.Backspace())" OnClick="@BackToListAsync">Back To List</FluentButton>
+        </FluentStack>
+<FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+    <ProductOrderPanel Content="@prodInfo"></ProductOrderPanel>
+</FluentStack>
+
+</Panel1>
+
+<Panel2>
+        <WorkMessagePanel TaskID="@TaskID" UserID="@CurrentUser!.EmplRefID"></WorkMessagePanel>
+</Panel2>
+
+</FluentSplitter>
+
+@code {
+
+    [Parameter, SupplyParameterFromQuery] public string TaskID { get; set; } = "";
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    UserInfo? CurrentUser { get; set; } = new();
+
+    ProductionTask? CurrentTask;
+    ProdTable? prodInfo;
+
+    bool bStartDisabled = false;
+    bool bEndDisabled = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var authState = await authenticationStateTask;
+        var username = authState.User.Identity.Name;
+
+        CurrentUser = await userDB.GetUser(username);
+        CurrentTask = (await productionDB.GetProductTasks(0, "", "", TaskID,"")).AsQueryable().FirstOrDefault();
+
+        prodInfo = (await productionDB.GetProductOrder(CurrentTask!.TaskRefID,""));
+        prodInfo.ReadOnly = true;
+
+        if(CurrentTask.ProdStatus==1){
+            bStartDisabled = true;
+            bEndDisabled = false;
+        }
+        if (CurrentTask.ProdStatus == 2)
+        {
+            bStartDisabled = true;
+            bEndDisabled = true;
+        }
+    }
+   
+    public async Task StartJobAsync()
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to start job?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+
+            var res = await productionDB.SaveProductTaskTrans(CurrentTask.TaskID, 1);
+            if (res > 0)
+            {
+                bStartDisabled = true;
+                bEndDisabled = false;
+            }
+        }
+
+    }
+    public async Task EndJobAsync()
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to end job?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+
+            var res = await productionDB.SaveProductTaskTrans(CurrentTask.TaskID, 2);
+            if (res > 0)
+            {
+                bEndDisabled = true;
+            }
+        }        
+    }
+    public async Task BackToListAsync()
+    {
+        await Task.Delay(500);
+        navigationManager.NavigateTo("/workorderlist");
+    }
+}
+}

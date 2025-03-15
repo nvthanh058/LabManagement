@@ -1,0 +1,263 @@
+﻿@page "/product"
+
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject IProductResposity context
+@inject ExportService exportService
+@inject IJSRuntime JSRuntime
+@inject IWebHostEnvironment _webHost;
+
+<FluentMenuProvider @rendermode="RenderMode.InteractiveServer" />
+
+@if (ShowList == true)
+{
+    <FluentStack Orientation="Orientation.Vertical" Width="100%">
+
+        <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+            <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowSquareDown())">Import</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.Print())">Print</FluentButton>
+            <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
+
+        </FluentStack>
+
+        @if (items == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <div style="height: 600px; overflow:auto;" tabindex="-1">
+
+                <FluentDataGrid Items="@FilteredItems"
+                TGridItem="Product"
+                ResizableColumns=true
+                ShowHover="true"
+                HeaderCellAsButtonWithMenu="true"
+                                RowSize="DataGridRowSize.Medium"
+                Pagination="@pagination">
+
+
+                    <PropertyColumn Width="80px" Property="@(p => p.ItemCode)" Sortable="true" />
+
+                    <PropertyColumn Width="250px" Property="@(c => c.ItemName)" InitialSortDirection=SortDirection.Descending Sortable="true" Comparer="@StringLengthComparer.Instance" Filtered="!string.IsNullOrWhiteSpace(nameFilter)">
+                        <ColumnOptions>
+                            <div class="search-box">
+                                <FluentSearch type="search" Autofocus=true @bind-Value=nameFilter @oninput="HandleUserNameFilter" AfterBindValue="HandleClear" Placeholder="employee name..." />
+                            </div>
+                        </ColumnOptions>
+                    </PropertyColumn>
+
+                    <PropertyColumn Width="120px" Property="@(p => p.NameAlias)" Sortable="true" />
+                    <PropertyColumn Width="120px" Property="@(p => p.UnitID)" Sortable="true" />
+
+                    <PropertyColumn Width="120px" Property="@(p => p.PackagingGroup)" Sortable="true" />
+                    <PropertyColumn Width="120px" Property="@(p => p.BomCode)" Sortable="true" />
+                    <PropertyColumn Width="120px" Property="@(p => p.BomItemName)" Sortable="true" />
+                    <TemplateColumn Title="Actions" Align="@Align.End">
+                        <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
+                        <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+                    </TemplateColumn>
+
+                </FluentDataGrid>
+
+
+            </div>
+            <FluentPaginator State="@pagination" />
+        }
+    </FluentStack>
+}
+else
+{
+    <div style="margin-left:20px;width:600px;">
+
+        <FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+
+
+            <FluentStack Orientation="Orientation.Horizontal">
+
+                <FluentStack Orientation="Orientation.Vertical">
+                    <FluentTextField Label="Item Code" @bind-Value="@Content.ItemCode" />
+                    <FluentTextField Label="Item Name" @bind-Value="@Content.ItemName" />
+                    <FluentTextField Label="Name Alias" @bind-Value="@Content.NameAlias" Style="width:250px" />
+
+                    @*  <FluentSelect TOption="Department"
+                                              Label="Department"
+                                              Placeholder="Select a Department"
+                                              Items="@departmentItems"
+                                              Width="200px"
+                                              Height="250px"
+                                              OptionValue="@(i => i.DeptID)"
+                                              OptionText="@(i => i.DeptName)"
+                                              @bind-Value="@Content.DeptID">
+
+                                </FluentSelect> *@
+
+                </FluentStack>
+
+                <FluentStack Orientation="Orientation.Vertical">
+
+
+                    <FluentSelect Label="Gender" @bind-Value="@Content.UnitID" TOption="string">
+                        <FluentOption Value="pcs">
+                            pcs
+                            <FluentIcon Value="@(new Icons.Regular.Size16.Person())" Color="@Color.Neutral" Slot="start" />
+                        </FluentOption>
+                        <FluentOption Value="box" Selected="true">
+                            box
+                            <FluentIcon Value="@(new Icons.Regular.Size16.Person())" Color="@Color.Neutral" Slot="start" />
+                        </FluentOption>
+
+                    </FluentSelect>
+
+                    <FluentTextField Label="PackagingGroup" @bind-Value="@Content.PackagingGroup" />
+                    <FluentTextField Label="BomCode" @bind-Value="@Content.BomCode" />
+                    <FluentTextField Label="BomItemName" @bind-Value="@Content.BomItemName" />
+
+                </FluentStack>
+            </FluentStack>
+
+
+            <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save</FluentButton>
+                <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+            </FluentStack>
+
+        </FluentStack>
+
+
+
+    </div>
+
+}
+
+@code {
+
+    bool ShowList = true;
+
+    IQueryable<Product>? items;
+    // IQueryable<Department>? departmentItems;
+
+    string Search = "";
+
+    bool SelectFromEntireRow = true;
+    DataGridSelectMode Mode = DataGridSelectMode.Single;
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+
+    [Parameter]
+    public Product Content { get; set; } = default!;
+
+    string nameFilter = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+        LoadData();
+    }
+    private async void LoadData()
+    {
+        //departmentItems = (await context.GetAllDepartment("", "")).AsQueryable();
+        items = (await context.GetAll(0,"", Search)).AsQueryable();
+    }
+
+    IQueryable<Product>? FilteredItems => items?.Where(x => x.ItemName.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
+
+    private void HandleUserNameFilter(ChangeEventArgs args)
+    {
+        if (args.Value is string value)
+        {
+            nameFilter = value;
+        }
+    }
+    private void HandleClear()
+    {
+        if (string.IsNullOrWhiteSpace(nameFilter))
+        {
+            nameFilter = string.Empty;
+        }
+    }
+
+    private async Task CancelAsync()
+    {
+        ShowList = true;
+    }
+    private async Task AddAsync()
+    {
+        Content = new Product();
+        ShowList = false;
+    }
+    private async Task SaveAsync()
+    {        
+        await context.Save(Content);
+        ShowList = true;
+        LoadData();
+    }
+
+
+    private async Task EditAsync(Product item)
+    {
+        Content = item;
+        ShowList = false;
+
+    }
+
+
+    private async Task DeleteAsync(Product item)
+    {
+
+        if (item is null)
+        {
+            return;
+        }
+
+        var dialogParameters = new DialogParameters
+            {
+                Title = "Delete Item",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true
+            };
+
+        // var dialog = await dialogService.ShowDialogAsync<ConfirmationPanel>(dialogParameters);
+        var dialog = await DialogService.ShowConfirmationAsync(
+            "Are you sure you want to delete selected item?",
+            "Yes",
+            "No",
+            "Delete Item?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            var res = await context.Delete(item.RecID);
+            LoadData();
+        }
+
+    }
+
+
+
+    public class StringLengthComparer : IComparer<string>
+    {
+        public static readonly StringLengthComparer Instance = new StringLengthComparer();
+
+        public int Compare(string? x, string? y)
+        {
+            if (x is null)
+            {
+                return y is null ? 0 : -1;
+            }
+
+            if (y is null)
+            {
+                return 1;
+            }
+
+            return x.Length.CompareTo(y.Length);
+        }
+    }
+
+
+
+}
+

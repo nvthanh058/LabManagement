@@ -1,0 +1,165 @@
+﻿@page "/sysusers"
+
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject IUserInfoResposity context
+@inject ExportService exportService
+@inject IJSRuntime JSRuntime
+
+<FluentStack Orientation="Orientation.Vertical" Width="100%">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center"  Width="100%">
+
+        <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
+        <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowSquareDown())">Import</FluentButton>
+        <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())" OnClick="@ExportData">Export</FluentButton>
+        <FluentButton IconStart="@(new Icons.Regular.Size24.Print())">Print</FluentButton>
+
+        <FluentButton IconEnd="@(new Icons.Regular.Size24.ArrowCircleRight().WithColor(Color.Success))">
+            Next
+        </FluentButton>
+
+        <FluentButton IconEnd="@(new Icons.Regular.Size24.DismissCircle().WithColor("red"))">
+            Exit
+        </FluentButton>
+
+    </FluentStack>
+
+
+    <FluentDataGrid Items="@FilteredItems" 
+    style="height: 100%;" 
+    TGridItem="UserInfo"
+                    RowSize="DataGridRowSize.Medium"
+    Pagination="@pagination">
+        <TemplateColumn Title="Status">
+            <FluentIcon Icon="Icons.Regular.Size24.FolderPeople" Color="@Color.Accent" />
+        </TemplateColumn>
+        <PropertyColumn Property="@(p => p.UserID)" Sortable="true" />
+        <PropertyColumn Property="@(c => c.UserName)" InitialSortDirection=SortDirection.Descending Sortable="true" IsDefaultSortColumn=true Comparer="@StringLengthComparer.Instance" Filtered="!string.IsNullOrWhiteSpace(nameFilter)">
+            <ColumnOptions>
+                <div class="search-box">
+                    <FluentSearch type="search" Autofocus=true @bind-Value=nameFilter @oninput="HandleUserNameFilter" AfterBindValue="HandleClear" Placeholder="User name..." />
+                </div>
+            </ColumnOptions>
+        </PropertyColumn>
+
+        <PropertyColumn Property="@(p => p.GroupName)" Sortable="true" />            
+
+        <TemplateColumn Title="Actions" Align="@Align.End">
+            <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
+            <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+        </TemplateColumn>
+
+    </FluentDataGrid>
+    <FluentPaginator State="@pagination" />
+</FluentStack>    
+
+
+@code {
+
+    IQueryable<UserInfo>? items;
+    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+
+    string nameFilter = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {        
+        items = (await context.GetAll("","","")).AsQueryable();
+    }
+
+    IQueryable<UserInfo>? FilteredItems => items?.Where(x => x.UserName.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
+
+    private void HandleUserNameFilter(ChangeEventArgs args)
+    {
+        if (args.Value is string value)
+        {
+            nameFilter = value;
+        }
+    }
+    private void HandleClear()
+    {
+        if (string.IsNullOrWhiteSpace(nameFilter))
+        {
+            nameFilter = string.Empty;
+        }
+    }
+
+
+    private async Task AddAsync()
+    {
+        var item = new UserInfo();
+        var dialog = await DialogService.ShowDialogAsync<SysUsersDialog>(item, new DialogParameters()
+            {
+                Height = "400px",
+                Title = "Add New User",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true,
+            });
+
+        var result = await dialog.Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            items = (await context.GetAll("", "", "")).AsQueryable();
+        }
+
+    }
+
+    private async Task EditAsync(UserInfo item)
+    {
+        
+        var dialog = await DialogService.ShowDialogAsync<SysUsersDialog>(item, new DialogParameters()
+            {
+                Height = "400px",
+                Title = "Update User",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true,
+            });
+
+        var result = await dialog.Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            items = (await context.GetAll("", "", "")).AsQueryable();
+        }
+
+    }
+
+    private async Task DeleteAsync(UserInfo item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this user?");
+        var result = await dialog.Result;
+
+        if(!result.Cancelled){
+            var res = await context.DeleteUser(item.UserID);
+
+            if (res > 0)
+            {
+                items = (await context.GetAll("", "", "")).AsQueryable();
+            }
+        }
+
+
+    }
+
+    private async Task ExportData() => await exportService.ExportToExcelAsync(items.ToList());
+
+    public class StringLengthComparer : IComparer<string>
+    {
+        public static readonly StringLengthComparer Instance = new StringLengthComparer();
+
+        public int Compare(string? x, string? y)
+        {
+            if (x is null)
+            {
+                return y is null ? 0 : -1;
+            }
+
+            if (y is null)
+            {
+                return 1;
+            }
+
+            return x.Length.CompareTo(y.Length);
+        }
+    }
+
+
+}

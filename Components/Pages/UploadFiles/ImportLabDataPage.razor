@@ -1,0 +1,197 @@
+﻿@page "/import"
+@using LabManagement.Components.Infrastructure.IRespository
+@using LabManagement.Helpers
+@inject IDialogService DialogService
+@rendermode InteractiveServer
+@inject IKeyCodeService KeyCodeService
+@implements IAsyncDisposable
+@inject ClipboardService ClipboardService
+@inject IDashboardResposity db
+
+
+<FluentBreadcrumb Style="margin-top:20px;margin-bottom:10px">
+    <FluentBreadcrumbItem Href="/dashboard">
+        Dashboard
+        <FluentIcon Value="@(new Icons.Regular.Size16.Home())" Color="@Color.Neutral" Slot="start" />
+    </FluentBreadcrumbItem>
+
+    <FluentBreadcrumbItem Href="#">
+        Import Data       
+    </FluentBreadcrumbItem>
+    
+</FluentBreadcrumb>
+
+
+<FluentStack Orientation="Orientation.Vertical">
+    <FluentCard Height="200">
+        
+            <div>Copy data from Excel and paste here</div>
+        
+        @if (items!=null){
+            @if (items.ToList().Count > 0)
+            {
+                <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowCircleDown())" OnClick="@ImportDataAsync">Import</FluentButton>
+
+                <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowReset())" OnClick="@ResetDataAsync">Reset</FluentButton>
+            }
+        }
+
+    </FluentCard>
+
+
+    <FluentDataGrid Items="@items"
+    style="height: 100%;"
+    TGridItem="ReportCasesInfo"
+    RowSize="DataGridRowSize.Medium"
+    Pagination="@pagination" AutoFit="true">
+
+        <PropertyColumn Title="Invoice" Property="@(p => p.Invoice)" Sortable="true"  />
+        <PropertyColumn Title="Company" Property="@(c => c.Company)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="Doctor" Property="@(c => c.Doctor)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="Patient" Property="@(c => c.Patient)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="Pan" Property="@(c => c.Pan)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="Products" Property="@(c => c.Products)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="Units" Property="@(c => c.Units)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="OrderedDate" Property="@(c => c.OrderedDate)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="DueDate" Property="@(c => c.DueDate)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="Appt" Property="@(c => c.Appt)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="Dept" Property="@(c => c.Dept)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="User" Property="@(c => c.UserID)" Sortable="true" ></PropertyColumn>
+        <PropertyColumn Title="Status" Property="@(c => c.Status)" Sortable="true" ></PropertyColumn>
+
+
+    </FluentDataGrid>
+
+    <FluentPaginator State="@pagination" />
+</FluentStack>
+
+
+
+@code {
+
+    private bool IncludeKeyUp = false;
+    private bool StopRepeat = false;
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
+
+    private List<(string Key, string Event)> KeyPressed = new();
+
+    IQueryable<ReportCasesInfo>? items = default;
+
+    protected override void OnInitialized()
+    {
+
+        // FluentKeyCode.PreventMultipleKeyDown = true;
+        KeyCodeService.RegisterListener(OnKeyHandleAsync, OnKeyHandleAsync);
+    }
+
+    private async Task OnKeyHandleAsync(FluentKeyCodeEventArgs args)
+    {       
+
+        if (StopRepeat && args.Repeat)
+        {
+
+        }
+        else
+        {
+            KeyPressed.Add((args.ToString(), args.Name));
+
+            var keyStr = "";
+            @foreach (var key in KeyPressed)
+            {
+                keyStr = key.Key;
+                if (keyStr == "Ctrl + V")
+                {
+                    var a = key.Key;
+
+                    string s = await ClipboardService.ReadTextAsync();
+
+                    string[] lines = s.Split('\n');
+
+                    List<ReportCasesInfo> data = new List<ReportCasesInfo>();
+
+                    foreach (string line in lines)
+                    {
+
+                        string[] sCells = line.Split('\t');
+
+                        if(sCells.Length > 10)
+                        {
+                            var item = new ReportCasesInfo();
+                            item.RecID = 0;
+                            item.Invoice = sCells[0].Trim();
+                            item.Company = sCells[1].Trim();
+                            item.Doctor = sCells[2].Trim();
+                            item.Patient = sCells[3].Trim();
+                            item.Pan = sCells[4].Trim();
+                            item.Products = sCells[5].Trim();
+                            try
+                            {
+                                item.Units = Int32.Parse(sCells[6].Trim());
+                            }
+                            catch
+                            {
+                                item.Units = 1;
+                            }
+
+                            item.OrderedDate =DateTime.Parse(sCells[7].Trim()).ToString("yyyy-MM-dd");
+                            item.DueDate = DateTime.Parse(sCells[8].Trim()).ToString("yyyy-MM-dd");
+
+                            var appt = sCells[9].Trim();
+                            if (appt != "")
+                            {
+                                item.Appt = DateTime.Parse(appt).ToString("yyyy-MM-dd");
+                            }
+                            else
+                            {
+                                item.Appt = "";
+                            }
+
+                            item.Dept = sCells[10].Trim();
+                            item.UserID = sCells[11].Trim();
+                            item.Status = sCells[12].Trim();
+
+                            data.Add(item);
+                        }
+
+
+                    }
+
+                    items = data.AsQueryable();
+
+                }
+            }
+
+            StateHasChanged();
+        }
+
+
+    }
+
+    public async Task ImportDataAsync()
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to import this data?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            foreach(var item in items)
+            {
+                var res = db.ImportReportCase(item);
+            }
+
+            dialog = await DialogService.ShowInfoAsync("Import completed");
+            result = await dialog.Result;
+        }
+
+    }
+    public async Task ResetDataAsync()
+    {
+        items = null;
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        KeyCodeService.UnregisterListener(OnKeyHandleAsync, OnKeyHandleAsync);
+        return ValueTask.CompletedTask;
+    }
+}
