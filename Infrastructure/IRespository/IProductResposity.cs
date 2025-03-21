@@ -17,5 +17,9 @@ namespace LabManagement.Infrastructure.IRespository
         Task<List<TablePriceMaster>> GetPriceListMaster(int RecID, string PriceID, string Search);        
         Task<TablePriceMaster> SavePriceListMaster(TablePriceMaster model);
         Task<int> DeletePriceListMaster(int RecID);
+
+        Task<List<ProductUnit>> GetAllUnits(int RecID, string UnitID, string Search);
+        Task<ProductUnit> SaveUnit(ProductUnit model);
+        Task<int> DeleteUnit(int RecID);
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ASPCore\\LabManagement\\LabManagement\\LabManagement.csproj": {}
+    "D:\\GitLab\\LabManagement\\LabManagement.csproj": {}
   },
   "projects": {
-    "D:\\ASPCore\\LabManagement\\LabManagement\\LabManagement.csproj": {
+    "D:\\GitLab\\LabManagement\\LabManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ASPCore\\LabManagement\\LabManagement\\LabManagement.csproj",
+        "projectUniqueName": "D:\\GitLab\\LabManagement\\LabManagement.csproj",
         "projectName": "LabManagement",
-        "projectPath": "D:\\ASPCore\\LabManagement\\LabManagement\\LabManagement.csproj",
+        "projectPath": "D:\\GitLab\\LabManagement\\LabManagement.csproj",
         "packagesPath": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\",
-        "outputPath": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\",
+        "outputPath": "D:\\GitLab\\LabManagement\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -72,15 +72,15 @@
             },
             "Microsoft.FluentUI.AspNetCore.Components": {
               "target": "Package",
-              "version": "[4.11.6, )"
+              "version": "[4.11.7, )"
             },
             "Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter": {
               "target": "Package",
-              "version": "[4.11.6, )"
+              "version": "[4.11.7, )"
             },
             "Microsoft.FluentUI.AspNetCore.Components.Icons": {
               "target": "Package",
-              "version": "[4.11.6, )"
+              "version": "[4.11.7, )"
             },
             "System.Drawing.Common": {
               "target": "Package",

@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <Routes  />
+    <Routes />
 
     <script src="js/myscript.js" type="text/javascript"></script>
     <script src="_framework/blazor.web.js"></script>
@@ -24,3 +24,17 @@
 </html>
 
 
+@code {
+    // [CascadingParameter]
+    // private HttpContext HttpContext { get; set; } = default!;
+
+    // private IComponentRenderMode? RenderModeForPage => HttpContext.Request.Path switch
+    // {
+    //     var x when x.StartsWithSegments("/login") => null,
+    //     _ => InteractiveServer
+    // };
+
+    // private IComponentRenderMode? RenderModeForPage => HttpContext.Request.Path.StartsWithSegments("/Account")
+    //     ? null
+    //     : InteractiveServer;
+}

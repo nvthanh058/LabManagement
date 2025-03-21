@@ -27,5 +27,8 @@
         [ModelAttribute("NotTableField")]
         public bool Selected { get; set; } = false;
 
+        [ModelAttribute("NotTableField")]
+        public bool IsUpdate { get; set; } = false;
+
     }
 }

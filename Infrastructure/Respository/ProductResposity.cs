@@ -55,7 +55,7 @@ namespace LabManagement.Infrastructure.Respository
         }
 
         public async Task<Product> Save(Product model)
-        {
+        {            
             try
             {
                 model.DATAAREAID = _services!.DATAAREAID();
@@ -250,6 +250,68 @@ namespace LabManagement.Infrastructure.Respository
                 dbParams.Add("@DATAAREAID", _services!.DATAAREAID());
 
                 res = Task.FromResult(_services.ExcuteScaler<TablePriceMaster>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return res;
+        }
+
+        public async Task<List<ProductUnit>> GetAllUnits(int RecID, string UnitID, string Search)
+        {
+            var query = @"Select * FROM LAB_ProductUnit WHERE 1=1";
+            query += " AND (@RecID=0 OR RecID=@RecID)";
+            query += " AND (@UnitID='' OR UnitID=@UnitID)";
+            query += " AND (@Search='' OR UnitEn LIKE '%@Search%')";
+            var lst = new List<ProductUnit>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@RecID", RecID);
+                dbParams.Add("@UnitID", UnitID);
+                dbParams.Add("@Search", Search);
+                
+                lst = Task.FromResult(_services.GetAll<ProductUnit>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<ProductUnit> SaveUnit(ProductUnit model)
+        {
+            var query="";
+            if (model.RecID == 0){
+                query = "IF NOT EXISTS(Select UnitID FROM LAB_ProductUnit WHERE UnitID=@UnitID)";
+                query += " INSERT INTO LAB_ProductUnit(UnitID,UnitEn,UnitVn,DATAAREAID) OUTPUT INSERTED.RecID VALUES(@UnitID,@UnitEn,@UnitVn,@DATAAREAID)";
+            }
+            else{
+                query = "UPDATE LAB_ProductUnit SET UnitEn=@UnitEn,UnitVn=@UnitVn WHERE RecID=@RecID";
+            }
+
+             var dbParams = new DynamicParameters();
+            dbParams.Add("@RecID", model.RecID);
+            dbParams.Add("@UnitID", model.UnitID);
+            dbParams.Add("@UnitEn", model.UnitEn);
+            dbParams.Add("@UnitVn", model.UnitVn);
+            dbParams.Add("@DATAAREAID", _services.DATAAREAID());
+
+            var RecID = Task.FromResult(_services.ExcuteScalerObject<ProductUnit>(query, dbParams, commandType: CommandType.Text)).Result;
+            if(RecID !=null){
+                model.RecID = int.Parse(RecID.ToString()!);
+            }
+            return model;
+        }
+
+        public async Task<int> DeleteUnit(int RecID)
+        {
+            var res = 0;
+            try
+            {
+                var dbParams = new DynamicParameters();
+                var query = "DELETE FROM LAB_ProductUnit WHERE RecID=@RecID";
+                
+                dbParams.Add("@RecID", RecID);
+               
+                res = Task.FromResult(_services.ExcuteScaler<ProductUnit>(query, dbParams, commandType: CommandType.Text)).Result;
             }
             catch (Exception ex) { }
             return res;

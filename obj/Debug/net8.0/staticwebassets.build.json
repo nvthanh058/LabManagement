@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pKfsYlS80lNVArHS732ZwvVChXtV27Sk16d3aV0+sys=",
+  "Hash": "hxUIIHjkFwnVDbE/5Y7+KC7KSz/27Has6E6aAlyZOIU=",
   "Source": "LabManagement",
   "BasePath": "_content/LabManagement",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "LabManagement\\wwwroot",
       "Source": "LabManagement",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "Pattern": "**"
     }
@@ -1025,10 +1025,10 @@
       "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\zh-tw.json"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Anchor\\FluentAnchor.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Anchor\\FluentAnchor.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Anchor/FluentAnchor.razor.js",
       "AssetKind": "All",
@@ -1043,13 +1043,13 @@
       "Integrity": "b9RSPukLvSHekr3kftcukF9Hbr4g1a5l0/cfyJ61XMA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Anchor\\FluentAnchor.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Anchor\\FluentAnchor.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\AnchoredRegion\\FluentAnchoredRegion.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\AnchoredRegion\\FluentAnchoredRegion.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/AnchoredRegion/FluentAnchoredRegion.razor.js",
       "AssetKind": "All",
@@ -1064,13 +1064,13 @@
       "Integrity": "RC8P8iQcUu/cx7osATv0xSw2X8G3utkMtThwigsND5g=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\AnchoredRegion\\FluentAnchoredRegion.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\AnchoredRegion\\FluentAnchoredRegion.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Button\\FluentButton.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Button\\FluentButton.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Button/FluentButton.razor.js",
       "AssetKind": "All",
@@ -1085,13 +1085,13 @@
       "Integrity": "8QTQtCTbbHkwqt3rAy8ZPjez2lZ6PGmR5Il+7Q3g/rs=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Button\\FluentButton.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Button\\FluentButton.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Checkbox\\FluentCheckbox.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Checkbox\\FluentCheckbox.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Checkbox/FluentCheckbox.razor.js",
       "AssetKind": "All",
@@ -1106,13 +1106,13 @@
       "Integrity": "gVrV4WI8finQdUGG7EIZIAh2tTbFW0GF7Hl73l/1JnE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Checkbox\\FluentCheckbox.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Checkbox\\FluentCheckbox.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\DataGrid\\FluentDataGrid.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\DataGrid\\FluentDataGrid.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/DataGrid/FluentDataGrid.razor.js",
       "AssetKind": "All",
@@ -1127,13 +1127,13 @@
       "Integrity": "PbscDKK1vxqZeEv6a+4x9gKVhqxHVYgy9iE0fMp2iDY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\DataGrid\\FluentDataGrid.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\DataGrid\\FluentDataGrid.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\DesignSystemProvider\\FluentDesignTheme.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\DesignSystemProvider\\FluentDesignTheme.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/DesignSystemProvider/FluentDesignTheme.razor.js",
       "AssetKind": "All",
@@ -1148,13 +1148,13 @@
       "Integrity": "abaSp2xCB2qa0FHuc/9VKt39+MybEnIoOItPufNTSr4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\DesignSystemProvider\\FluentDesignTheme.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\DesignSystemProvider\\FluentDesignTheme.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Divider\\FluentDivider.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Divider\\FluentDivider.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Divider/FluentDivider.razor.js",
       "AssetKind": "All",
@@ -1169,13 +1169,13 @@
       "Integrity": "CndcCP/YVXs68LoE68COc38ypIJenMbJyu+fR0/ZIPc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Divider\\FluentDivider.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Divider\\FluentDivider.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Grid\\FluentGrid.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Grid\\FluentGrid.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Grid/FluentGrid.razor.js",
       "AssetKind": "All",
@@ -1190,13 +1190,13 @@
       "Integrity": "V4iZz/kay7SoC/eRuDViVZkhxiL1oNW1gzMAFC6k/wY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Grid\\FluentGrid.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Grid\\FluentGrid.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\HorizontalScroll\\FluentHorizontalScroll.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\HorizontalScroll\\FluentHorizontalScroll.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/HorizontalScroll/FluentHorizontalScroll.razor.js",
       "AssetKind": "All",
@@ -1211,13 +1211,13 @@
       "Integrity": "yf+15AR63QV4X8XvrAMxrEP5sX3Ea0tuh+Tsinb6yXU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\HorizontalScroll\\FluentHorizontalScroll.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\HorizontalScroll\\FluentHorizontalScroll.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\InputFile\\FluentInputFile.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\InputFile\\FluentInputFile.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/InputFile/FluentInputFile.razor.js",
       "AssetKind": "All",
@@ -1232,13 +1232,13 @@
       "Integrity": "m9D6O5smUPMQWbjax0bH03XYtdI3RD5geOwhizeT+gE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\InputFile\\FluentInputFile.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\InputFile\\FluentInputFile.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\KeyCode\\FluentKeyCode.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\KeyCode\\FluentKeyCode.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/KeyCode/FluentKeyCode.razor.js",
       "AssetKind": "All",
@@ -1253,13 +1253,13 @@
       "Integrity": "3+jF/yOfwYyQhLujhQlSrvp3NBll+oEUF7v13pin53A=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\KeyCode\\FluentKeyCode.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\KeyCode\\FluentKeyCode.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Label\\FluentInputLabel.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Label\\FluentInputLabel.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Label/FluentInputLabel.razor.js",
       "AssetKind": "All",
@@ -1274,13 +1274,13 @@
       "Integrity": "hXPNDHD1hTdz/sH1cD60f/ehIklf8zQAEE73UZNGtu8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Label\\FluentInputLabel.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Label\\FluentInputLabel.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\List\\FluentAutocomplete.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\List\\FluentAutocomplete.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/List/FluentAutocomplete.razor.js",
       "AssetKind": "All",
@@ -1295,13 +1295,13 @@
       "Integrity": "2bhET+uXWbAao2aJyUqqscx9PObMTXmpUAkDQOQBGI8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\List\\FluentAutocomplete.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\List\\FluentAutocomplete.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\List\\FluentCombobox.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\List\\FluentCombobox.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/List/FluentCombobox.razor.js",
       "AssetKind": "All",
@@ -1316,13 +1316,13 @@
       "Integrity": "OqLCO17dCq/aFFg8O0mXN/fF4czXAd6R+vgnYjtdPwc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\List\\FluentCombobox.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\List\\FluentCombobox.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\List\\ListComponentBase.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\List\\ListComponentBase.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/List/ListComponentBase.razor.js",
       "AssetKind": "All",
@@ -1337,13 +1337,13 @@
       "Integrity": "/lFyXHGb/lh02BDFUuMzwbfU+zNOdnw2s2zKSrTtW00=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\List\\ListComponentBase.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\List\\ListComponentBase.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Menu\\FluentMenu.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Menu\\FluentMenu.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Menu/FluentMenu.razor.js",
       "AssetKind": "All",
@@ -1358,13 +1358,13 @@
       "Integrity": "Mk1lTcD78XksEtaKl7XPkf49EhqU6tZBgrDjXi51wDI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Menu\\FluentMenu.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Menu\\FluentMenu.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\NavMenu\\FluentNavMenu.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\NavMenu\\FluentNavMenu.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/NavMenu/FluentNavMenu.razor.js",
       "AssetKind": "All",
@@ -1379,13 +1379,13 @@
       "Integrity": "u3HANg4jObqKg1Jso4ovjOp2lKuYeAN0+zlRIfKuHhw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\NavMenu\\FluentNavMenu.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\NavMenu\\FluentNavMenu.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Overflow\\FluentOverflow.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Overflow\\FluentOverflow.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Overflow/FluentOverflow.razor.js",
       "AssetKind": "All",
@@ -1400,13 +1400,13 @@
       "Integrity": "hVi+eZ1AhYzWA2HILBTSjl5xstub4DMGzUxGJIQgjVo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Overflow\\FluentOverflow.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Overflow\\FluentOverflow.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Overlay\\FluentOverlay.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Overlay\\FluentOverlay.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Overlay/FluentOverlay.razor.js",
       "AssetKind": "All",
@@ -1421,13 +1421,13 @@
       "Integrity": "IDySDi264SKaXFu1nL+hU2NeFhEMrX6Zv7ubUPR88VI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Overlay\\FluentOverlay.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Overlay\\FluentOverlay.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\PullToRefresh\\FluentPullToRefresh.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\PullToRefresh\\FluentPullToRefresh.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/PullToRefresh/FluentPullToRefresh.razor.js",
       "AssetKind": "All",
@@ -1442,13 +1442,13 @@
       "Integrity": "xlA5fSAkA6TiFUznwHP835N8kAxJ7YJ5MTizYCGeOfo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\PullToRefresh\\FluentPullToRefresh.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\PullToRefresh\\FluentPullToRefresh.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Search\\FluentSearch.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Search\\FluentSearch.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Search/FluentSearch.razor.js",
       "AssetKind": "All",
@@ -1463,13 +1463,13 @@
       "Integrity": "FpN8ZcuZyVhdYb+cHNB4VZ5bLM+yi3gDaTZbWsahaYE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Search\\FluentSearch.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Search\\FluentSearch.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Slider\\FluentSlider.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Slider\\FluentSlider.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Slider/FluentSlider.razor.js",
       "AssetKind": "All",
@@ -1484,13 +1484,13 @@
       "Integrity": "TAnVg0aJviMtvE8pWYaaZahF5suJcjonGCC7accq76k=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Slider\\FluentSlider.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Slider\\FluentSlider.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Slider\\FluentSliderLabel.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Slider\\FluentSliderLabel.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Slider/FluentSliderLabel.razor.js",
       "AssetKind": "All",
@@ -1505,13 +1505,13 @@
       "Integrity": "Em8bsrj69skLLR4IHVJ8lIJTR1EcY/U9nvcfn9t1rzo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Slider\\FluentSliderLabel.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Slider\\FluentSliderLabel.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\SortableList\\FluentSortableList.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\SortableList\\FluentSortableList.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/SortableList/FluentSortableList.razor.js",
       "AssetKind": "All",
@@ -1526,13 +1526,13 @@
       "Integrity": "rBxLYd0QGHwfD9IZljh74Lf+ZC+zqoRLqwikRKcRgpg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\SortableList\\FluentSortableList.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\SortableList\\FluentSortableList.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Splitter\\FluentMultiSplitter.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Splitter\\FluentMultiSplitter.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Splitter/FluentMultiSplitter.razor.js",
       "AssetKind": "All",
@@ -1547,13 +1547,13 @@
       "Integrity": "kExJSsKpmByqtTJ/TOwptCU5yawR+13aqkZxoVN+a1A=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Splitter\\FluentMultiSplitter.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Splitter\\FluentMultiSplitter.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Tabs\\FluentTab.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Tabs\\FluentTab.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Tabs/FluentTab.razor.js",
       "AssetKind": "All",
@@ -1568,13 +1568,13 @@
       "Integrity": "Kh0YI9vhH0m+YJJvQVdOvtm0zuIIGEdRv3aH6iv7Gcg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Tabs\\FluentTab.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Tabs\\FluentTab.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\TextField\\FluentTextField.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\TextField\\FluentTextField.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/TextField/FluentTextField.razor.js",
       "AssetKind": "All",
@@ -1589,13 +1589,13 @@
       "Integrity": "YXiMRc9QPIiDSy+mlSF6DtYiSYb3X+1xlsCmrMrE2IU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\TextField\\FluentTextField.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\TextField\\FluentTextField.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Toolbar\\FluentToolbar.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Toolbar\\FluentToolbar.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Toolbar/FluentToolbar.razor.js",
       "AssetKind": "All",
@@ -1610,13 +1610,13 @@
       "Integrity": "s2w5uif33eV2OeQRoRzZYM1ANZXb6He68mkQ3IZw9Bc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Toolbar\\FluentToolbar.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Toolbar\\FluentToolbar.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Tooltip\\FluentTooltip.razor.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Tooltip\\FluentTooltip.razor.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Components/Tooltip/FluentTooltip.razor.js",
       "AssetKind": "All",
@@ -1631,13 +1631,13 @@
       "Integrity": "pWY0aUTl5SagZBQwX/+DOHxke3fHSPoZdTQXbRQSFTU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Tooltip\\FluentTooltip.razor.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Tooltip\\FluentTooltip.razor.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\css\\reboot.css",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\css\\reboot.css",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "css/reboot.css",
       "AssetKind": "All",
@@ -1652,13 +1652,13 @@
       "Integrity": "2wyFQ9++b6uYwv3gv265xtRV2OWnPQMN68NpUHffScU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\css\\reboot.css"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\css\\reboot.css"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\js\\initializersLoader.webview.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\js\\initializersLoader.webview.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "js/initializersLoader.webview.js",
       "AssetKind": "All",
@@ -1673,13 +1673,13 @@
       "Integrity": "L9w4Nw5htE5XBWcy0I11eRfWwkTxtN8VSJWnitKu30Q=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\js\\initializersLoader.webview.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\js\\initializersLoader.webview.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\js\\loading-theme.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\js\\loading-theme.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "js/loading-theme.js",
       "AssetKind": "All",
@@ -1690,17 +1690,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "t5s4sbrbsi",
-      "Integrity": "kX+9ky61TMxar94Z7+S8myontpvgH4571DVehjxVvM4=",
+      "Fingerprint": "sc1npuf73a",
+      "Integrity": "nAfxgNZU9YZJHIhvgTrKnZuE3e+Nm6C4aEFLwA+NTUk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\js\\loading-theme.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\js\\loading-theme.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Microsoft.FluentUI.AspNetCore.Components.lib.module.js",
       "AssetKind": "All",
@@ -1711,17 +1711,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "JSModule",
       "AssetTraitValue": "JSLibraryModule",
-      "Fingerprint": "kelqfbbytz",
-      "Integrity": "JGbEZgwUiRfxuno2U54VaJSjm3nannoHtcA2x7MtT8E=",
+      "Fingerprint": "8yjyo2iwy5",
+      "Integrity": "gOYd3AXRpOOVDrRAB4rG6NG8UxOjbSPrM8Tg/UydMJg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.LEGAL.txt",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.LEGAL.txt",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Microsoft.FluentUI.AspNetCore.Components.lib.module.js.LEGAL.txt",
       "AssetKind": "All",
@@ -1736,13 +1736,13 @@
       "Integrity": "gD29yOMICDIiYM16Dl8m2EwS2lyds8DoFkgTy29qko4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.LEGAL.txt"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.LEGAL.txt"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.map",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.map",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
       "RelativePath": "Microsoft.FluentUI.AspNetCore.Components.lib.module.js.map",
       "AssetKind": "All",
@@ -1753,19 +1753,19 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "e0ci5jkfkz",
-      "Integrity": "sqH1OthaTueVtmItq0jnWJQi6x3nJ1KSyY+IQ5kyWQ4=",
+      "Fingerprint": "hbcth32j7c",
+      "Integrity": "nWCM5K+t4ltgx+ENk/lwTuQSFKcwlWEfNMCldw9GwjA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.map"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.map"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.n2s0c9bbw5.bundle.scp.css",
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.ouw50eeq2n.bundle.scp.css",
       "SourceId": "Microsoft.FluentUI.AspNetCore.Components",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\",
       "BasePath": "_content/Microsoft.FluentUI.AspNetCore.Components",
-      "RelativePath": "Microsoft.FluentUI.AspNetCore.Components.n2s0c9bbw5.bundle.scp.css",
+      "RelativePath": "Microsoft.FluentUI.AspNetCore.Components.ouw50eeq2n.bundle.scp.css",
       "AssetKind": "All",
       "AssetMode": "Reference",
       "AssetRole": "Primary",
@@ -1774,17 +1774,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ProjectBundle",
-      "Fingerprint": "n2s0c9bbw5",
-      "Integrity": "4bF1YfPYqfPbHaqh6+RtCMmnSSnJmGZhQ1BfOtX/+4k=",
+      "Fingerprint": "ouw50eeq2n",
+      "Integrity": "cHLzSKswjAKkIEi9vRM3Ty8hcvacB5SuI0/8RmfWbBU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.n2s0c9bbw5.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.ouw50eeq2n.bundle.scp.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Debug\\net8.0\\jsmodules\\jsmodules.build.manifest.json",
+      "Identity": "D:\\GitLab\\LabManagement\\obj\\Debug\\net8.0\\jsmodules\\jsmodules.build.manifest.json",
       "SourceId": "LabManagement",
       "SourceType": "Computed",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Debug\\net8.0\\jsmodules\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\obj\\Debug\\net8.0\\jsmodules\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "LabManagement.modules.json",
       "AssetKind": "Build",
@@ -1802,10 +1802,10 @@
       "OriginalItemSpec": "obj\\Debug\\net8.0\\jsmodules\\jsmodules.build.manifest.json"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Debug\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
+      "Identity": "D:\\GitLab\\LabManagement\\obj\\Debug\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
       "SourceId": "LabManagement",
       "SourceType": "Computed",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "LabManagement#[.{fingerprint}]?.styles.css",
       "AssetKind": "All",
@@ -1816,17 +1816,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ApplicationBundle",
-      "Fingerprint": "g0qfchuf62",
-      "Integrity": "kL60HFzLkJznqZYkWQ+3Ogdlq3wnsSdSIp34xb6PMq0=",
+      "Fingerprint": "hkwj0if56h",
+      "Integrity": "oeMAEiiTtrpe4cDVaQ4pPo3gghBxW4HYg6hkk5VFrII=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Debug\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css"
+      "OriginalItemSpec": "D:\\GitLab\\LabManagement\\obj\\Debug\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\app.css",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\app.css",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "app#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -1844,10 +1844,10 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "caseimages/63b62b43-5136-4afa-898f-41684db5022f_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -1865,10 +1865,10 @@
       "OriginalItemSpec": "wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\app.min.css",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\css\\app.min.css",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "css/app.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -1886,10 +1886,10 @@
       "OriginalItemSpec": "wwwroot\\css\\app.min.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "css/bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -1907,10 +1907,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap.min.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\icons.min.css",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\css\\icons.min.css",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "css/icons.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -1928,10 +1928,10 @@
       "OriginalItemSpec": "wwwroot\\css\\icons.min.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\favicon.ico",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\favicon.ico",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "favicon#[.{fingerprint}]?.ico",
       "AssetKind": "All",
@@ -1949,10 +1949,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "files/Guest/20250310/Book2#[.{fingerprint}]?.xlsx",
       "AssetKind": "All",
@@ -1970,10 +1970,10 @@
       "OriginalItemSpec": "wwwroot\\files\\Guest\\20250310\\Book2.xlsx"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "files/Guest/20250310/Canvas-master (1)#[.{fingerprint}]?.zip",
       "AssetKind": "All",
@@ -1991,10 +1991,10 @@
       "OriginalItemSpec": "wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "files/Skill Bonus - new proposal - to anh Thành (1)#[.{fingerprint}]?.xlsx",
       "AssetKind": "All",
@@ -2012,10 +2012,10 @@
       "OriginalItemSpec": "wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/019f64c2-b319-4d23-931b-cf5a408e7c2b_img1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2033,10 +2033,10 @@
       "OriginalItemSpec": "wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/04d471b6-28d6-4981-8565-a1ef74d47a97_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2054,10 +2054,10 @@
       "OriginalItemSpec": "wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/061f30b3-d497-4cbb-be6a-e47c581590bf_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2075,10 +2075,10 @@
       "OriginalItemSpec": "wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/0e5e9868-ca31-4cb0-b113-90034cf59f27_#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2096,10 +2096,10 @@
       "OriginalItemSpec": "wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/2b8ed0c2-87b6-4505-9beb-4090ceb08042_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2117,10 +2117,10 @@
       "OriginalItemSpec": "wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/2f10066f-881a-443e-96e8-e29eacde7646_purchase#[.{fingerprint}]?.ico",
       "AssetKind": "All",
@@ -2138,10 +2138,10 @@
       "OriginalItemSpec": "wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2159,10 +2159,10 @@
       "OriginalItemSpec": "wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/760b1bbe-afe6-4421-b8fd-61c328ec7902_img1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2180,10 +2180,10 @@
       "OriginalItemSpec": "wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/76447bb9-2296-40ca-a93b-71219dacc579_img1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2201,10 +2201,10 @@
       "OriginalItemSpec": "wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/7a74d4ca-c108-4198-be60-fd3311b78aba_img1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2222,10 +2222,10 @@
       "OriginalItemSpec": "wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/7b710a64-8744-4d01-8f99-7c86180e1baf_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2243,10 +2243,10 @@
       "OriginalItemSpec": "wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\barcode.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\barcode.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/barcode#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2264,10 +2264,10 @@
       "OriginalItemSpec": "wwwroot\\images\\barcode.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\beachogo.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\beachogo.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/beachogo#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2285,10 +2285,10 @@
       "OriginalItemSpec": "wwwroot\\images\\beachogo.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/c063f545-6e72-48d3-ab46-45644a7a939e_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2306,10 +2306,10 @@
       "OriginalItemSpec": "wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/cd51994f-b800-412a-8c69-d7e29e229704_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2327,10 +2327,10 @@
       "OriginalItemSpec": "wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2348,10 +2348,10 @@
       "OriginalItemSpec": "wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/d13659c0-66c3-4aff-890e-3155a5777890_doctor#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2369,10 +2369,10 @@
       "OriginalItemSpec": "wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/f579e975-17eb-482d-bee9-90a458eb962c_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2390,10 +2390,10 @@
       "OriginalItemSpec": "wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo ztech.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo ztech.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/logo ztech#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2411,10 +2411,10 @@
       "OriginalItemSpec": "wwwroot\\images\\logo ztech.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/logo#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2432,10 +2432,10 @@
       "OriginalItemSpec": "wwwroot\\images\\logo.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/logo1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2453,10 +2453,10 @@
       "OriginalItemSpec": "wwwroot\\images\\logo1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logodadl.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logodadl.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/logodadl#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2474,10 +2474,10 @@
       "OriginalItemSpec": "wwwroot\\images\\logodadl.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\no-picture.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\no-picture.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/no-picture#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2495,10 +2495,10 @@
       "OriginalItemSpec": "wwwroot\\images\\no-picture.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\teethinfo.svg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\teethinfo.svg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/teethinfo#[.{fingerprint}]?.svg",
       "AssetKind": "All",
@@ -2516,10 +2516,10 @@
       "OriginalItemSpec": "wwwroot\\images\\teethinfo.svg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\js\\myscript.js",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\js\\myscript.js",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "js/myscript#[.{fingerprint}]?.js",
       "AssetKind": "All",
@@ -2537,10 +2537,10 @@
       "OriginalItemSpec": "wwwroot\\js\\myscript.js"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\print-template.html",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\print-template.html",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "print-template#[.{fingerprint}]?.html",
       "AssetKind": "All",
@@ -6452,7 +6452,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Anchor/FluentAnchor.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Anchor\\FluentAnchor.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Anchor\\FluentAnchor.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6477,7 +6477,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6493,7 +6493,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/AnchoredRegion/FluentAnchoredRegion.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\AnchoredRegion\\FluentAnchoredRegion.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\AnchoredRegion\\FluentAnchoredRegion.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6518,7 +6518,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6534,7 +6534,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Button/FluentButton.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Button\\FluentButton.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Button\\FluentButton.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6559,7 +6559,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6575,7 +6575,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Checkbox/FluentCheckbox.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Checkbox\\FluentCheckbox.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Checkbox\\FluentCheckbox.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6600,7 +6600,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6616,7 +6616,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/DataGrid/FluentDataGrid.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\DataGrid\\FluentDataGrid.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\DataGrid\\FluentDataGrid.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6641,7 +6641,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6657,7 +6657,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/DesignSystemProvider/FluentDesignTheme.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\DesignSystemProvider\\FluentDesignTheme.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\DesignSystemProvider\\FluentDesignTheme.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6682,7 +6682,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6698,7 +6698,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Divider/FluentDivider.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Divider\\FluentDivider.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Divider\\FluentDivider.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6723,7 +6723,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6739,7 +6739,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Grid/FluentGrid.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Grid\\FluentGrid.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Grid\\FluentGrid.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6764,7 +6764,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6780,7 +6780,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/HorizontalScroll/FluentHorizontalScroll.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\HorizontalScroll\\FluentHorizontalScroll.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\HorizontalScroll\\FluentHorizontalScroll.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6805,7 +6805,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6821,7 +6821,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/InputFile/FluentInputFile.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\InputFile\\FluentInputFile.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\InputFile\\FluentInputFile.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6846,7 +6846,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6862,7 +6862,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/KeyCode/FluentKeyCode.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\KeyCode\\FluentKeyCode.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\KeyCode\\FluentKeyCode.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6887,7 +6887,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6903,7 +6903,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Label/FluentInputLabel.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Label\\FluentInputLabel.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Label\\FluentInputLabel.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6928,7 +6928,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6944,7 +6944,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/List/FluentAutocomplete.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\List\\FluentAutocomplete.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\List\\FluentAutocomplete.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6969,7 +6969,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -6985,7 +6985,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/List/FluentCombobox.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\List\\FluentCombobox.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\List\\FluentCombobox.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7010,7 +7010,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7026,7 +7026,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/List/ListComponentBase.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\List\\ListComponentBase.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\List\\ListComponentBase.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7051,7 +7051,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7067,7 +7067,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Menu/FluentMenu.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Menu\\FluentMenu.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Menu\\FluentMenu.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7092,7 +7092,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7108,7 +7108,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/NavMenu/FluentNavMenu.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\NavMenu\\FluentNavMenu.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\NavMenu\\FluentNavMenu.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7133,7 +7133,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7149,7 +7149,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Overflow/FluentOverflow.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Overflow\\FluentOverflow.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Overflow\\FluentOverflow.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7174,7 +7174,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7190,7 +7190,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Overlay/FluentOverlay.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Overlay\\FluentOverlay.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Overlay\\FluentOverlay.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7215,7 +7215,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7231,7 +7231,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/PullToRefresh/FluentPullToRefresh.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\PullToRefresh\\FluentPullToRefresh.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\PullToRefresh\\FluentPullToRefresh.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7256,7 +7256,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7272,7 +7272,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Search/FluentSearch.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Search\\FluentSearch.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Search\\FluentSearch.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7297,7 +7297,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7313,7 +7313,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Slider/FluentSlider.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Slider\\FluentSlider.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Slider\\FluentSlider.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7338,7 +7338,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7354,7 +7354,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Slider/FluentSliderLabel.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Slider\\FluentSliderLabel.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Slider\\FluentSliderLabel.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7379,7 +7379,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7395,7 +7395,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/SortableList/FluentSortableList.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\SortableList\\FluentSortableList.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\SortableList\\FluentSortableList.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7420,7 +7420,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7436,7 +7436,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Splitter/FluentMultiSplitter.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Splitter\\FluentMultiSplitter.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Splitter\\FluentMultiSplitter.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7461,7 +7461,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7477,7 +7477,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Tabs/FluentTab.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Tabs\\FluentTab.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Tabs\\FluentTab.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7502,7 +7502,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7518,7 +7518,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/TextField/FluentTextField.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\TextField\\FluentTextField.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\TextField\\FluentTextField.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7543,7 +7543,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7559,7 +7559,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Toolbar/FluentToolbar.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Toolbar\\FluentToolbar.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Toolbar\\FluentToolbar.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7584,7 +7584,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7600,7 +7600,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Components/Tooltip/FluentTooltip.razor.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Components\\Tooltip\\FluentTooltip.razor.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Components\\Tooltip\\FluentTooltip.razor.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7625,7 +7625,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7641,7 +7641,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/css/reboot.1dlotxxwer.css",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\css\\reboot.css",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\css\\reboot.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7666,7 +7666,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:55 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7686,7 +7686,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/css/reboot.css",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\css\\reboot.css",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\css\\reboot.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7711,7 +7711,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:55 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7723,7 +7723,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/js/initializersLoader.webview.f8c5bd5212.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\js\\initializersLoader.webview.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\js\\initializersLoader.webview.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7748,7 +7748,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:55 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7768,7 +7768,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/js/initializersLoader.webview.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\js\\initializersLoader.webview.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\js\\initializersLoader.webview.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7793,7 +7793,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:55 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7805,7 +7805,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/js/loading-theme.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\js\\loading-theme.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\js\\loading-theme.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7818,7 +7818,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3190"
+          "Value": "3439"
         },
         {
           "Name": "Content-Type",
@@ -7826,23 +7826,23 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"kX+9ky61TMxar94Z7+S8myontpvgH4571DVehjxVvM4=\""
+          "Value": "\"nAfxgNZU9YZJHIhvgTrKnZuE3e+Nm6C4aEFLwA+NTUk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:55 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-kX+9ky61TMxar94Z7+S8myontpvgH4571DVehjxVvM4="
+          "Value": "sha256-nAfxgNZU9YZJHIhvgTrKnZuE3e+Nm6C4aEFLwA+NTUk="
         }
       ]
     },
     {
-      "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/js/loading-theme.t5s4sbrbsi.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\js\\loading-theme.js",
+      "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/js/loading-theme.sc1npuf73a.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\js\\loading-theme.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7855,7 +7855,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3190"
+          "Value": "3439"
         },
         {
           "Name": "Content-Type",
@@ -7863,21 +7863,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"kX+9ky61TMxar94Z7+S8myontpvgH4571DVehjxVvM4=\""
+          "Value": "\"nAfxgNZU9YZJHIhvgTrKnZuE3e+Nm6C4aEFLwA+NTUk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:48:14 GMT"
+          "Value": "Wed, 19 Mar 2025 20:54:55 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "t5s4sbrbsi"
+          "Value": "sc1npuf73a"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-kX+9ky61TMxar94Z7+S8myontpvgH4571DVehjxVvM4="
+          "Value": "sha256-nAfxgNZU9YZJHIhvgTrKnZuE3e+Nm6C4aEFLwA+NTUk="
         },
         {
           "Name": "label",
@@ -7887,7 +7887,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.bundle.scp.css",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.n2s0c9bbw5.bundle.scp.css",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.ouw50eeq2n.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7900,7 +7900,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "101309"
+          "Value": "101516"
         },
         {
           "Name": "Content-Type",
@@ -7908,23 +7908,23 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"4bF1YfPYqfPbHaqh6+RtCMmnSSnJmGZhQ1BfOtX/+4k=\""
+          "Value": "\"cHLzSKswjAKkIEi9vRM3Ty8hcvacB5SuI0/8RmfWbBU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:55:46 GMT"
+          "Value": "Wed, 19 Mar 2025 21:09:24 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-4bF1YfPYqfPbHaqh6+RtCMmnSSnJmGZhQ1BfOtX/+4k="
+          "Value": "sha256-cHLzSKswjAKkIEi9vRM3Ty8hcvacB5SuI0/8RmfWbBU="
         }
       ]
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.lib.module.js",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7937,7 +7937,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "392937"
+          "Value": "393557"
         },
         {
           "Name": "Content-Type",
@@ -7945,11 +7945,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"JGbEZgwUiRfxuno2U54VaJSjm3nannoHtcA2x7MtT8E=\""
+          "Value": "\"gOYd3AXRpOOVDrRAB4rG6NG8UxOjbSPrM8Tg/UydMJg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:55:37 GMT"
+          "Value": "Wed, 19 Mar 2025 21:08:43 GMT"
         }
       ],
       "EndpointProperties": [
@@ -7959,7 +7959,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-JGbEZgwUiRfxuno2U54VaJSjm3nannoHtcA2x7MtT8E="
+          "Value": "sha256-gOYd3AXRpOOVDrRAB4rG6NG8UxOjbSPrM8Tg/UydMJg="
         },
         {
           "Name": "script-type",
@@ -7969,7 +7969,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.lib.module.js.LEGAL.txt",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.LEGAL.txt",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.LEGAL.txt",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -7994,7 +7994,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:55:37 GMT"
+          "Value": "Wed, 19 Mar 2025 21:08:43 GMT"
         }
       ],
       "EndpointProperties": [
@@ -8006,7 +8006,7 @@
     },
     {
       "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.lib.module.js.map",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.map",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.lib.module.js.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8019,7 +8019,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1313163"
+          "Value": "1314743"
         },
         {
           "Name": "Content-Type",
@@ -8027,23 +8027,23 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"sqH1OthaTueVtmItq0jnWJQi6x3nJ1KSyY+IQ5kyWQ4=\""
+          "Value": "\"nWCM5K+t4ltgx+ENk/lwTuQSFKcwlWEfNMCldw9GwjA=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:55:37 GMT"
+          "Value": "Wed, 19 Mar 2025 21:08:43 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-sqH1OthaTueVtmItq0jnWJQi6x3nJ1KSyY+IQ5kyWQ4="
+          "Value": "sha256-nWCM5K+t4ltgx+ENk/lwTuQSFKcwlWEfNMCldw9GwjA="
         }
       ]
     },
     {
-      "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.n2s0c9bbw5.bundle.scp.css",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.n2s0c9bbw5.bundle.scp.css",
+      "Route": "_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.ouw50eeq2n.bundle.scp.css",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.7\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.ouw50eeq2n.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8056,7 +8056,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "101309"
+          "Value": "101516"
         },
         {
           "Name": "Content-Type",
@@ -8064,21 +8064,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"4bF1YfPYqfPbHaqh6+RtCMmnSSnJmGZhQ1BfOtX/+4k=\""
+          "Value": "\"cHLzSKswjAKkIEi9vRM3Ty8hcvacB5SuI0/8RmfWbBU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 05 Mar 2025 09:55:46 GMT"
+          "Value": "Wed, 19 Mar 2025 21:09:24 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "n2s0c9bbw5"
+          "Value": "ouw50eeq2n"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-4bF1YfPYqfPbHaqh6+RtCMmnSSnJmGZhQ1BfOtX/+4k="
+          "Value": "sha256-cHLzSKswjAKkIEi9vRM3Ty8hcvacB5SuI0/8RmfWbBU="
         },
         {
           "Name": "label",
@@ -8088,7 +8088,7 @@
     },
     {
       "Route": "app.64jpa8c1ly.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\app.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8133,7 +8133,7 @@
     },
     {
       "Route": "app.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\app.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8170,7 +8170,7 @@
     },
     {
       "Route": "caseimages/63b62b43-5136-4afa-898f-41684db5022f_.ci5laxbejb.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8215,7 +8215,7 @@
     },
     {
       "Route": "caseimages/63b62b43-5136-4afa-898f-41684db5022f_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8252,7 +8252,7 @@
     },
     {
       "Route": "css/app.min.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\app.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\app.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8289,7 +8289,7 @@
     },
     {
       "Route": "css/app.min.fows6hrcay.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\app.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\app.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8334,7 +8334,7 @@
     },
     {
       "Route": "css/bootstrap.min.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8371,7 +8371,7 @@
     },
     {
       "Route": "css/bootstrap.min.tj6bpobdv2.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8416,7 +8416,7 @@
     },
     {
       "Route": "css/icons.min.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\icons.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\icons.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8453,7 +8453,7 @@
     },
     {
       "Route": "css/icons.min.h8erx7pruz.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\icons.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\icons.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8498,7 +8498,7 @@
     },
     {
       "Route": "favicon.a8m5cweeeb.ico",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\favicon.ico",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\favicon.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8543,7 +8543,7 @@
     },
     {
       "Route": "favicon.ico",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\favicon.ico",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\favicon.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8580,7 +8580,7 @@
     },
     {
       "Route": "files/Guest/20250310/Book2.udt6e347b6.xlsx",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8625,7 +8625,7 @@
     },
     {
       "Route": "files/Guest/20250310/Book2.xlsx",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8662,7 +8662,7 @@
     },
     {
       "Route": "files/Guest/20250310/Canvas-master (1).fq3h3twx4p.zip",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8707,7 +8707,7 @@
     },
     {
       "Route": "files/Guest/20250310/Canvas-master (1).zip",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8744,7 +8744,7 @@
     },
     {
       "Route": "files/Skill Bonus - new proposal - to anh Thành (1).4lyowl8ynb.xlsx",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8789,7 +8789,7 @@
     },
     {
       "Route": "files/Skill Bonus - new proposal - to anh Thành (1).xlsx",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8826,7 +8826,7 @@
     },
     {
       "Route": "images/019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8863,7 +8863,7 @@
     },
     {
       "Route": "images/019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.t2blh6ed0x.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8908,7 +8908,7 @@
     },
     {
       "Route": "images/04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8945,7 +8945,7 @@
     },
     {
       "Route": "images/04d471b6-28d6-4981-8565-a1ef74d47a97_.knsh6hmtah.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8990,7 +8990,7 @@
     },
     {
       "Route": "images/061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9027,7 +9027,7 @@
     },
     {
       "Route": "images/061f30b3-d497-4cbb-be6a-e47c581590bf_.utljjln12v.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9072,7 +9072,7 @@
     },
     {
       "Route": "images/0e5e9868-ca31-4cb0-b113-90034cf59f27_.7g2hng4n0m.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9117,7 +9117,7 @@
     },
     {
       "Route": "images/0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9154,7 +9154,7 @@
     },
     {
       "Route": "images/2b8ed0c2-87b6-4505-9beb-4090ceb08042_.9ys16knsx2.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9199,7 +9199,7 @@
     },
     {
       "Route": "images/2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9236,7 +9236,7 @@
     },
     {
       "Route": "images/2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9273,7 +9273,7 @@
     },
     {
       "Route": "images/2f10066f-881a-443e-96e8-e29eacde7646_purchase.o7sfa2sncg.ico",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9318,7 +9318,7 @@
     },
     {
       "Route": "images/3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.f4qobtyp5d.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9363,7 +9363,7 @@
     },
     {
       "Route": "images/3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9400,7 +9400,7 @@
     },
     {
       "Route": "images/760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9437,7 +9437,7 @@
     },
     {
       "Route": "images/760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.t2blh6ed0x.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9482,7 +9482,7 @@
     },
     {
       "Route": "images/76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9519,7 +9519,7 @@
     },
     {
       "Route": "images/76447bb9-2296-40ca-a93b-71219dacc579_img1.t2blh6ed0x.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9564,7 +9564,7 @@
     },
     {
       "Route": "images/7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9601,7 +9601,7 @@
     },
     {
       "Route": "images/7a74d4ca-c108-4198-be60-fd3311b78aba_img1.t2blh6ed0x.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9646,7 +9646,7 @@
     },
     {
       "Route": "images/7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9683,7 +9683,7 @@
     },
     {
       "Route": "images/7b710a64-8744-4d01-8f99-7c86180e1baf_.qqyp1d3ici.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9728,7 +9728,7 @@
     },
     {
       "Route": "images/barcode.4mg6kvmsif.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\barcode.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\barcode.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9773,7 +9773,7 @@
     },
     {
       "Route": "images/barcode.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\barcode.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\barcode.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9810,7 +9810,7 @@
     },
     {
       "Route": "images/beachogo.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\beachogo.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\beachogo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9847,7 +9847,7 @@
     },
     {
       "Route": "images/beachogo.tndk27bixt.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\beachogo.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\beachogo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9892,7 +9892,7 @@
     },
     {
       "Route": "images/c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9929,7 +9929,7 @@
     },
     {
       "Route": "images/c063f545-6e72-48d3-ab46-45644a7a939e_.mvz30mtq9z.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9974,7 +9974,7 @@
     },
     {
       "Route": "images/cd51994f-b800-412a-8c69-d7e29e229704_.9ys16knsx2.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10019,7 +10019,7 @@
     },
     {
       "Route": "images/cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10056,7 +10056,7 @@
     },
     {
       "Route": "images/ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10093,7 +10093,7 @@
     },
     {
       "Route": "images/ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.t2blh6ed0x.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10138,7 +10138,7 @@
     },
     {
       "Route": "images/d13659c0-66c3-4aff-890e-3155a5777890_doctor.f4qobtyp5d.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10183,7 +10183,7 @@
     },
     {
       "Route": "images/d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10220,7 +10220,7 @@
     },
     {
       "Route": "images/f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10257,7 +10257,7 @@
     },
     {
       "Route": "images/f579e975-17eb-482d-bee9-90a458eb962c_.mvz30mtq9z.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10302,7 +10302,7 @@
     },
     {
       "Route": "images/logo ztech.e3flcwepu9.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo ztech.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo ztech.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10347,7 +10347,7 @@
     },
     {
       "Route": "images/logo ztech.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo ztech.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo ztech.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10384,7 +10384,7 @@
     },
     {
       "Route": "images/logo.af8nolj749.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10429,7 +10429,7 @@
     },
     {
       "Route": "images/logo.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10466,7 +10466,7 @@
     },
     {
       "Route": "images/logo1.o1ckawotj7.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10511,7 +10511,7 @@
     },
     {
       "Route": "images/logo1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10548,7 +10548,7 @@
     },
     {
       "Route": "images/logodadl.m65k9h5tb1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logodadl.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logodadl.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10593,7 +10593,7 @@
     },
     {
       "Route": "images/logodadl.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logodadl.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logodadl.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10630,7 +10630,7 @@
     },
     {
       "Route": "images/no-picture.onbeppb7wj.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\no-picture.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\no-picture.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10675,7 +10675,7 @@
     },
     {
       "Route": "images/no-picture.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\no-picture.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\no-picture.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10712,7 +10712,7 @@
     },
     {
       "Route": "images/teethinfo.qs9tqzeebb.svg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\teethinfo.svg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\teethinfo.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10757,7 +10757,7 @@
     },
     {
       "Route": "images/teethinfo.svg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\teethinfo.svg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\teethinfo.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10794,7 +10794,7 @@
     },
     {
       "Route": "js/myscript.e81n0f213e.js",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\js\\myscript.js",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\js\\myscript.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10839,7 +10839,7 @@
     },
     {
       "Route": "js/myscript.js",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\js\\myscript.js",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\js\\myscript.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10875,8 +10875,8 @@
       ]
     },
     {
-      "Route": "LabManagement.g0qfchuf62.styles.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Debug\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
+      "Route": "LabManagement.hkwj0if56h.styles.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\obj\\Debug\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10897,25 +10897,25 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"kL60HFzLkJznqZYkWQ+3Ogdlq3wnsSdSIp34xb6PMq0=\""
+          "Value": "\"oeMAEiiTtrpe4cDVaQ4pPo3gghBxW4HYg6hkk5VFrII=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 12 Mar 2025 06:37:33 GMT"
+          "Value": "Thu, 20 Mar 2025 01:42:22 GMT"
         },
         {
           "Name": "Link",
-          "Value": "<_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.n2s0c9bbw5.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+          "Value": "<_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.ouw50eeq2n.bundle.scp.css>; rel=\"preload\"; as=\"style\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "g0qfchuf62"
+          "Value": "hkwj0if56h"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-kL60HFzLkJznqZYkWQ+3Ogdlq3wnsSdSIp34xb6PMq0="
+          "Value": "sha256-oeMAEiiTtrpe4cDVaQ4pPo3gghBxW4HYg6hkk5VFrII="
         },
         {
           "Name": "label",
@@ -10925,7 +10925,7 @@
     },
     {
       "Route": "LabManagement.modules.json",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Debug\\net8.0\\jsmodules\\jsmodules.build.manifest.json",
+      "AssetFile": "D:\\GitLab\\LabManagement\\obj\\Debug\\net8.0\\jsmodules\\jsmodules.build.manifest.json",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10962,7 +10962,7 @@
     },
     {
       "Route": "LabManagement.styles.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Debug\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\obj\\Debug\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10983,27 +10983,27 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"kL60HFzLkJznqZYkWQ+3Ogdlq3wnsSdSIp34xb6PMq0=\""
+          "Value": "\"oeMAEiiTtrpe4cDVaQ4pPo3gghBxW4HYg6hkk5VFrII=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 12 Mar 2025 06:37:33 GMT"
+          "Value": "Thu, 20 Mar 2025 01:42:22 GMT"
         },
         {
           "Name": "Link",
-          "Value": "<_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.n2s0c9bbw5.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+          "Value": "<_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.ouw50eeq2n.bundle.scp.css>; rel=\"preload\"; as=\"style\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-kL60HFzLkJznqZYkWQ+3Ogdlq3wnsSdSIp34xb6PMq0="
+          "Value": "sha256-oeMAEiiTtrpe4cDVaQ4pPo3gghBxW4HYg6hkk5VFrII="
         }
       ]
     },
     {
       "Route": "print-template.4van3pj2ow.html",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\print-template.html",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\print-template.html",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -11048,7 +11048,7 @@
     },
     {
       "Route": "print-template.html",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\print-template.html",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\print-template.html",
       "Selectors": [],
       "ResponseHeaders": [
         {

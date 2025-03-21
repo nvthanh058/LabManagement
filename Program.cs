@@ -75,15 +75,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

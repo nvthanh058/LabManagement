@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "b83hibSlqyI3XYVPLFjOPDwKi7UyhlQ7sN7TYQrMzZQ=",
+  "Hash": "gPOz4OMRACP9wFCtqnQxqichnaZ7XfRntRl5g/MI2Kw=",
   "Source": "LabManagement",
   "BasePath": "_content/LabManagement",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "LabManagement\\wwwroot",
       "Source": "LabManagement",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "Pattern": "**"
     }
@@ -731,27 +731,6 @@
       "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pl.json"
     },
     {
-      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt.json",
-      "SourceId": "Blazor-ApexCharts",
-      "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\",
-      "BasePath": "_content/Blazor-ApexCharts",
-      "RelativePath": "locales/pt.json",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "7b8xi8hfxj",
-      "Integrity": "rRUDFC/Tqe7MUK5n/STmcacv2q72vRl1CwznzIge3pM=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt.json"
-    },
-    {
       "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt-br.json",
       "SourceId": "Blazor-ApexCharts",
       "SourceType": "Package",
@@ -771,6 +750,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt-br.json"
+    },
+    {
+      "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt.json",
+      "SourceId": "Blazor-ApexCharts",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\",
+      "BasePath": "_content/Blazor-ApexCharts",
+      "RelativePath": "locales/pt.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "7b8xi8hfxj",
+      "Integrity": "rRUDFC/Tqe7MUK5n/STmcacv2q72vRl1CwznzIge3pM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt.json"
     },
     {
       "Identity": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\ru.json",
@@ -1781,10 +1781,10 @@
       "OriginalItemSpec": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.11.6\\staticwebassets\\Microsoft.FluentUI.AspNetCore.Components.n2s0c9bbw5.bundle.scp.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Release\\net8.0\\jsmodules\\jsmodules.publish.manifest.json",
+      "Identity": "D:\\GitLab\\LabManagement\\obj\\Release\\net8.0\\jsmodules\\jsmodules.publish.manifest.json",
       "SourceId": "LabManagement",
       "SourceType": "Computed",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Release\\net8.0\\jsmodules\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\obj\\Release\\net8.0\\jsmodules\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "LabManagement.modules.json",
       "AssetKind": "Publish",
@@ -1802,10 +1802,10 @@
       "OriginalItemSpec": "obj\\Release\\net8.0\\jsmodules\\jsmodules.publish.manifest.json"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Release\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
+      "Identity": "D:\\GitLab\\LabManagement\\obj\\Release\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
       "SourceId": "LabManagement",
       "SourceType": "Computed",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Release\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\obj\\Release\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "LabManagement#[.{fingerprint}]?.styles.css",
       "AssetKind": "All",
@@ -1820,13 +1820,13 @@
       "Integrity": "kL60HFzLkJznqZYkWQ+3Ogdlq3wnsSdSIp34xb6PMq0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Release\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css"
+      "OriginalItemSpec": "D:\\GitLab\\LabManagement\\obj\\Release\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\app.css",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\app.css",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "app#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -1844,10 +1844,10 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "caseimages/63b62b43-5136-4afa-898f-41684db5022f_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -1865,10 +1865,10 @@
       "OriginalItemSpec": "wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\app.min.css",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\css\\app.min.css",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "css/app.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -1886,10 +1886,10 @@
       "OriginalItemSpec": "wwwroot\\css\\app.min.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "css/bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -1907,10 +1907,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap.min.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\icons.min.css",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\css\\icons.min.css",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "css/icons.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -1928,10 +1928,10 @@
       "OriginalItemSpec": "wwwroot\\css\\icons.min.css"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\favicon.ico",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\favicon.ico",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "favicon#[.{fingerprint}]?.ico",
       "AssetKind": "All",
@@ -1949,10 +1949,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "files/Guest/20250310/Book2#[.{fingerprint}]?.xlsx",
       "AssetKind": "All",
@@ -1970,10 +1970,10 @@
       "OriginalItemSpec": "wwwroot\\files\\Guest\\20250310\\Book2.xlsx"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "files/Guest/20250310/Canvas-master (1)#[.{fingerprint}]?.zip",
       "AssetKind": "All",
@@ -1991,10 +1991,10 @@
       "OriginalItemSpec": "wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "files/Skill Bonus - new proposal - to anh Thành (1)#[.{fingerprint}]?.xlsx",
       "AssetKind": "All",
@@ -2012,10 +2012,10 @@
       "OriginalItemSpec": "wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/019f64c2-b319-4d23-931b-cf5a408e7c2b_img1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2033,10 +2033,10 @@
       "OriginalItemSpec": "wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/04d471b6-28d6-4981-8565-a1ef74d47a97_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2054,10 +2054,10 @@
       "OriginalItemSpec": "wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/061f30b3-d497-4cbb-be6a-e47c581590bf_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2075,10 +2075,10 @@
       "OriginalItemSpec": "wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/0e5e9868-ca31-4cb0-b113-90034cf59f27_#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2096,10 +2096,10 @@
       "OriginalItemSpec": "wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/2b8ed0c2-87b6-4505-9beb-4090ceb08042_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2117,10 +2117,10 @@
       "OriginalItemSpec": "wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/2f10066f-881a-443e-96e8-e29eacde7646_purchase#[.{fingerprint}]?.ico",
       "AssetKind": "All",
@@ -2138,10 +2138,10 @@
       "OriginalItemSpec": "wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2159,10 +2159,10 @@
       "OriginalItemSpec": "wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/760b1bbe-afe6-4421-b8fd-61c328ec7902_img1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2180,10 +2180,10 @@
       "OriginalItemSpec": "wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/76447bb9-2296-40ca-a93b-71219dacc579_img1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2201,10 +2201,10 @@
       "OriginalItemSpec": "wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/7a74d4ca-c108-4198-be60-fd3311b78aba_img1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2222,10 +2222,10 @@
       "OriginalItemSpec": "wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/7b710a64-8744-4d01-8f99-7c86180e1baf_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2243,10 +2243,10 @@
       "OriginalItemSpec": "wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\barcode.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\barcode.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/barcode#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2264,10 +2264,10 @@
       "OriginalItemSpec": "wwwroot\\images\\barcode.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\beachogo.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\beachogo.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/beachogo#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2285,10 +2285,10 @@
       "OriginalItemSpec": "wwwroot\\images\\beachogo.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/c063f545-6e72-48d3-ab46-45644a7a939e_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2306,10 +2306,10 @@
       "OriginalItemSpec": "wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/cd51994f-b800-412a-8c69-d7e29e229704_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2327,10 +2327,10 @@
       "OriginalItemSpec": "wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2348,10 +2348,10 @@
       "OriginalItemSpec": "wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/d13659c0-66c3-4aff-890e-3155a5777890_doctor#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2369,10 +2369,10 @@
       "OriginalItemSpec": "wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/f579e975-17eb-482d-bee9-90a458eb962c_#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -2390,10 +2390,10 @@
       "OriginalItemSpec": "wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo ztech.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo ztech.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/logo ztech#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2411,10 +2411,10 @@
       "OriginalItemSpec": "wwwroot\\images\\logo ztech.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/logo#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2432,10 +2432,10 @@
       "OriginalItemSpec": "wwwroot\\images\\logo.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo1.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo1.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/logo1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2453,10 +2453,10 @@
       "OriginalItemSpec": "wwwroot\\images\\logo1.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logodadl.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logodadl.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/logodadl#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2474,10 +2474,10 @@
       "OriginalItemSpec": "wwwroot\\images\\logodadl.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\no-picture.png",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\no-picture.png",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/no-picture#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -2495,10 +2495,10 @@
       "OriginalItemSpec": "wwwroot\\images\\no-picture.png"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\teethinfo.svg",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\images\\teethinfo.svg",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "images/teethinfo#[.{fingerprint}]?.svg",
       "AssetKind": "All",
@@ -2516,10 +2516,10 @@
       "OriginalItemSpec": "wwwroot\\images\\teethinfo.svg"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\js\\myscript.js",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\js\\myscript.js",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "js/myscript#[.{fingerprint}]?.js",
       "AssetKind": "All",
@@ -2537,10 +2537,10 @@
       "OriginalItemSpec": "wwwroot\\js\\myscript.js"
     },
     {
-      "Identity": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\print-template.html",
+      "Identity": "D:\\GitLab\\LabManagement\\wwwroot\\print-template.html",
       "SourceId": "LabManagement",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\",
+      "ContentRoot": "D:\\GitLab\\LabManagement\\wwwroot\\",
       "BasePath": "_content/LabManagement",
       "RelativePath": "print-template#[.{fingerprint}]?.html",
       "AssetKind": "All",
@@ -5303,88 +5303,6 @@
       ]
     },
     {
-      "Route": "_content/Blazor-ApexCharts/locales/pt.7b8xi8hfxj.json",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt.json",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "675"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "application/json"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"rRUDFC/Tqe7MUK5n/STmcacv2q72vRl1CwznzIge3pM=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 04 Feb 2025 15:50:06 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "7b8xi8hfxj"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-rRUDFC/Tqe7MUK5n/STmcacv2q72vRl1CwznzIge3pM="
-        },
-        {
-          "Name": "label",
-          "Value": "_content/Blazor-ApexCharts/locales/pt.json"
-        }
-      ]
-    },
-    {
-      "Route": "_content/Blazor-ApexCharts/locales/pt.json",
-      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt.json",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "675"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "application/json"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"rRUDFC/Tqe7MUK5n/STmcacv2q72vRl1CwznzIge3pM=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 04 Feb 2025 15:50:06 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-rRUDFC/Tqe7MUK5n/STmcacv2q72vRl1CwznzIge3pM="
-        }
-      ]
-    },
-    {
       "Route": "_content/Blazor-ApexCharts/locales/pt-br.1ss52jen86.json",
       "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt-br.json",
       "Selectors": [],
@@ -5463,6 +5381,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-D9Hj2hy1KOq9dGLrGGe8ays1RSWMHlINH7h+4NLPs7g="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor-ApexCharts/locales/pt.7b8xi8hfxj.json",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "675"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rRUDFC/Tqe7MUK5n/STmcacv2q72vRl1CwznzIge3pM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 04 Feb 2025 15:50:06 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7b8xi8hfxj"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-rRUDFC/Tqe7MUK5n/STmcacv2q72vRl1CwznzIge3pM="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Blazor-ApexCharts/locales/pt.json"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Blazor-ApexCharts/locales/pt.json",
+      "AssetFile": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\blazor-apexcharts\\5.1.0\\staticwebassets\\locales\\pt.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "675"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rRUDFC/Tqe7MUK5n/STmcacv2q72vRl1CwznzIge3pM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 04 Feb 2025 15:50:06 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-rRUDFC/Tqe7MUK5n/STmcacv2q72vRl1CwznzIge3pM="
         }
       ]
     },
@@ -8088,7 +8088,7 @@
     },
     {
       "Route": "app.64jpa8c1ly.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\app.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8133,7 +8133,7 @@
     },
     {
       "Route": "app.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\app.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8170,7 +8170,7 @@
     },
     {
       "Route": "caseimages/63b62b43-5136-4afa-898f-41684db5022f_.ci5laxbejb.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8215,7 +8215,7 @@
     },
     {
       "Route": "caseimages/63b62b43-5136-4afa-898f-41684db5022f_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\caseimages\\63b62b43-5136-4afa-898f-41684db5022f_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8252,7 +8252,7 @@
     },
     {
       "Route": "css/app.min.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\app.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\app.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8289,7 +8289,7 @@
     },
     {
       "Route": "css/app.min.fows6hrcay.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\app.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\app.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8334,7 +8334,7 @@
     },
     {
       "Route": "css/bootstrap.min.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8371,7 +8371,7 @@
     },
     {
       "Route": "css/bootstrap.min.tj6bpobdv2.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8416,7 +8416,7 @@
     },
     {
       "Route": "css/icons.min.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\icons.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\icons.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8453,7 +8453,7 @@
     },
     {
       "Route": "css/icons.min.h8erx7pruz.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\css\\icons.min.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\css\\icons.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8498,7 +8498,7 @@
     },
     {
       "Route": "favicon.a8m5cweeeb.ico",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\favicon.ico",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\favicon.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8543,7 +8543,7 @@
     },
     {
       "Route": "favicon.ico",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\favicon.ico",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\favicon.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8580,7 +8580,7 @@
     },
     {
       "Route": "files/Guest/20250310/Book2.udt6e347b6.xlsx",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8625,7 +8625,7 @@
     },
     {
       "Route": "files/Guest/20250310/Book2.xlsx",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Book2.xlsx",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8662,7 +8662,7 @@
     },
     {
       "Route": "files/Guest/20250310/Canvas-master (1).fq3h3twx4p.zip",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8707,7 +8707,7 @@
     },
     {
       "Route": "files/Guest/20250310/Canvas-master (1).zip",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Guest\\20250310\\Canvas-master (1).zip",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8744,7 +8744,7 @@
     },
     {
       "Route": "files/Skill Bonus - new proposal - to anh Thành (1).4lyowl8ynb.xlsx",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8789,7 +8789,7 @@
     },
     {
       "Route": "files/Skill Bonus - new proposal - to anh Thành (1).xlsx",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\files\\Skill Bonus - new proposal - to anh Thành (1).xlsx",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8826,7 +8826,7 @@
     },
     {
       "Route": "images/019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8863,7 +8863,7 @@
     },
     {
       "Route": "images/019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.t2blh6ed0x.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8908,7 +8908,7 @@
     },
     {
       "Route": "images/04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8945,7 +8945,7 @@
     },
     {
       "Route": "images/04d471b6-28d6-4981-8565-a1ef74d47a97_.knsh6hmtah.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -8990,7 +8990,7 @@
     },
     {
       "Route": "images/061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9027,7 +9027,7 @@
     },
     {
       "Route": "images/061f30b3-d497-4cbb-be6a-e47c581590bf_.utljjln12v.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9072,7 +9072,7 @@
     },
     {
       "Route": "images/0e5e9868-ca31-4cb0-b113-90034cf59f27_.7g2hng4n0m.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9117,7 +9117,7 @@
     },
     {
       "Route": "images/0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9154,7 +9154,7 @@
     },
     {
       "Route": "images/2b8ed0c2-87b6-4505-9beb-4090ceb08042_.9ys16knsx2.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9199,7 +9199,7 @@
     },
     {
       "Route": "images/2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9236,7 +9236,7 @@
     },
     {
       "Route": "images/2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9273,7 +9273,7 @@
     },
     {
       "Route": "images/2f10066f-881a-443e-96e8-e29eacde7646_purchase.o7sfa2sncg.ico",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9318,7 +9318,7 @@
     },
     {
       "Route": "images/3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.f4qobtyp5d.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9363,7 +9363,7 @@
     },
     {
       "Route": "images/3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9400,7 +9400,7 @@
     },
     {
       "Route": "images/760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9437,7 +9437,7 @@
     },
     {
       "Route": "images/760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.t2blh6ed0x.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\760b1bbe-afe6-4421-b8fd-61c328ec7902_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9482,7 +9482,7 @@
     },
     {
       "Route": "images/76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9519,7 +9519,7 @@
     },
     {
       "Route": "images/76447bb9-2296-40ca-a93b-71219dacc579_img1.t2blh6ed0x.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\76447bb9-2296-40ca-a93b-71219dacc579_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9564,7 +9564,7 @@
     },
     {
       "Route": "images/7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9601,7 +9601,7 @@
     },
     {
       "Route": "images/7a74d4ca-c108-4198-be60-fd3311b78aba_img1.t2blh6ed0x.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9646,7 +9646,7 @@
     },
     {
       "Route": "images/7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9683,7 +9683,7 @@
     },
     {
       "Route": "images/7b710a64-8744-4d01-8f99-7c86180e1baf_.qqyp1d3ici.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9728,7 +9728,7 @@
     },
     {
       "Route": "images/barcode.4mg6kvmsif.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\barcode.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\barcode.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9773,7 +9773,7 @@
     },
     {
       "Route": "images/barcode.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\barcode.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\barcode.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9810,7 +9810,7 @@
     },
     {
       "Route": "images/beachogo.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\beachogo.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\beachogo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9847,7 +9847,7 @@
     },
     {
       "Route": "images/beachogo.tndk27bixt.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\beachogo.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\beachogo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9892,7 +9892,7 @@
     },
     {
       "Route": "images/c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9929,7 +9929,7 @@
     },
     {
       "Route": "images/c063f545-6e72-48d3-ab46-45644a7a939e_.mvz30mtq9z.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -9974,7 +9974,7 @@
     },
     {
       "Route": "images/cd51994f-b800-412a-8c69-d7e29e229704_.9ys16knsx2.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10019,7 +10019,7 @@
     },
     {
       "Route": "images/cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\cd51994f-b800-412a-8c69-d7e29e229704_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10056,7 +10056,7 @@
     },
     {
       "Route": "images/ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10093,7 +10093,7 @@
     },
     {
       "Route": "images/ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.t2blh6ed0x.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10138,7 +10138,7 @@
     },
     {
       "Route": "images/d13659c0-66c3-4aff-890e-3155a5777890_doctor.f4qobtyp5d.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10183,7 +10183,7 @@
     },
     {
       "Route": "images/d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10220,7 +10220,7 @@
     },
     {
       "Route": "images/f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10257,7 +10257,7 @@
     },
     {
       "Route": "images/f579e975-17eb-482d-bee9-90a458eb962c_.mvz30mtq9z.jpg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\f579e975-17eb-482d-bee9-90a458eb962c_.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10302,7 +10302,7 @@
     },
     {
       "Route": "images/logo ztech.e3flcwepu9.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo ztech.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo ztech.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10347,7 +10347,7 @@
     },
     {
       "Route": "images/logo ztech.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo ztech.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo ztech.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10384,7 +10384,7 @@
     },
     {
       "Route": "images/logo.af8nolj749.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10429,7 +10429,7 @@
     },
     {
       "Route": "images/logo.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10466,7 +10466,7 @@
     },
     {
       "Route": "images/logo1.o1ckawotj7.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10511,7 +10511,7 @@
     },
     {
       "Route": "images/logo1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logo1.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logo1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10548,7 +10548,7 @@
     },
     {
       "Route": "images/logodadl.m65k9h5tb1.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logodadl.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logodadl.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10593,7 +10593,7 @@
     },
     {
       "Route": "images/logodadl.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\logodadl.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\logodadl.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10630,7 +10630,7 @@
     },
     {
       "Route": "images/no-picture.onbeppb7wj.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\no-picture.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\no-picture.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10675,7 +10675,7 @@
     },
     {
       "Route": "images/no-picture.png",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\no-picture.png",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\no-picture.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10712,7 +10712,7 @@
     },
     {
       "Route": "images/teethinfo.qs9tqzeebb.svg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\teethinfo.svg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\teethinfo.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10757,7 +10757,7 @@
     },
     {
       "Route": "images/teethinfo.svg",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\images\\teethinfo.svg",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\images\\teethinfo.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10794,7 +10794,7 @@
     },
     {
       "Route": "js/myscript.e81n0f213e.js",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\js\\myscript.js",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\js\\myscript.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10839,7 +10839,7 @@
     },
     {
       "Route": "js/myscript.js",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\js\\myscript.js",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\js\\myscript.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10876,7 +10876,7 @@
     },
     {
       "Route": "LabManagement.g0qfchuf62.styles.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Release\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\obj\\Release\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10925,7 +10925,7 @@
     },
     {
       "Route": "LabManagement.modules.json",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Release\\net8.0\\jsmodules\\jsmodules.publish.manifest.json",
+      "AssetFile": "D:\\GitLab\\LabManagement\\obj\\Release\\net8.0\\jsmodules\\jsmodules.publish.manifest.json",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -10962,7 +10962,7 @@
     },
     {
       "Route": "LabManagement.styles.css",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\Release\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
+      "AssetFile": "D:\\GitLab\\LabManagement\\obj\\Release\\net8.0\\scopedcss\\bundle\\LabManagement.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -11003,7 +11003,7 @@
     },
     {
       "Route": "print-template.4van3pj2ow.html",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\print-template.html",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\print-template.html",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -11048,7 +11048,7 @@
     },
     {
       "Route": "print-template.html",
-      "AssetFile": "D:\\ASPCore\\LabManagement\\LabManagement\\wwwroot\\print-template.html",
+      "AssetFile": "D:\\GitLab\\LabManagement\\wwwroot\\print-template.html",
       "Selectors": [],
       "ResponseHeaders": [
         {

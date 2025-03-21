@@ -1,4 +1,5 @@
 ﻿@page "/product"
+@using LabManagement.Components.Pages.Categories.Controls
 
 @rendermode InteractiveServer
 @inject IDialogService DialogService
@@ -35,30 +36,81 @@
                 TGridItem="Product"
                 ResizableColumns=true
                 ShowHover="true"
+                           RowStyle="@rowStyle"
                 HeaderCellAsButtonWithMenu="true"
-                                RowSize="DataGridRowSize.Medium"
+                RowSize="DataGridRowSize.Medium"
                 Pagination="@pagination">
-
-
                     <PropertyColumn Width="80px" Property="@(p => p.ItemCode)" Sortable="true" />
 
-                    <PropertyColumn Width="250px" Property="@(c => c.ItemName)" InitialSortDirection=SortDirection.Descending Sortable="true" Comparer="@StringLengthComparer.Instance" Filtered="!string.IsNullOrWhiteSpace(nameFilter)">
+                    <PropertyColumn Width="250px" Property="@(c => c.ItemName)" Sortable="true" Comparer="@StringLengthComparer.Instance" Filtered="!string.IsNullOrWhiteSpace(nameFilter)">
                         <ColumnOptions>
                             <div class="search-box">
                                 <FluentSearch type="search" Autofocus=true @bind-Value=nameFilter @oninput="HandleUserNameFilter" AfterBindValue="HandleClear" Placeholder="employee name..." />
                             </div>
                         </ColumnOptions>
                     </PropertyColumn>
+                    <TemplateColumn Title="Name Alias" Width="250">
+                        @if(context.IsUpdate==true)
+                        {
+                            <FluentTextField AutoComplete="off" @bind-Value="@context.NameAlias" Style="width:250px"></FluentTextField>
+                        }
+                        else{
+                            <FluentLabel Style="width:250px">@context.NameAlias</FluentLabel>
+                        }
+                    </TemplateColumn>
 
-                    <PropertyColumn Width="120px" Property="@(p => p.NameAlias)" Sortable="true" />
-                    <PropertyColumn Width="120px" Property="@(p => p.UnitID)" Sortable="true" />
+                     <TemplateColumn Title="Unit" Width="80">
+                        @if(context.IsUpdate==true)
+                        {
+                          
+                            <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
+                                <FluentLabel Style="width:60px">@context.UnitID</FluentLabel>
+                                <FluentButton IconStart="@(new Icons.Regular.Size16.TriangleDown())" OnClick="@(() => SelectUnit(context))" ></FluentButton>
+                            </FluentStack>
+                          
+                        }
+                        else{
+                            <FluentLabel Style="width:100px">@context.UnitID</FluentLabel>
+                        }
+                    </TemplateColumn>
+                   <TemplateColumn Title="Group" Width="150">
+                        @if(context.IsUpdate==true)
+                        {
+                            <FluentTextField AutoComplete="off" @bind-Value="@context.PackagingGroup" Style="width:150px"></FluentTextField>
+                        }
+                        else{
+                            <FluentLabel Style="width:150px">@context.PackagingGroup</FluentLabel>
+                        }
+                    </TemplateColumn>
+                     <TemplateColumn Title="Bom Code" Width="150">
+                        @if(context.IsUpdate==true)
+                        {
+                            <FluentTextField AutoComplete="off" @bind-Value="@context.BomCode" Style="width:150px"></FluentTextField>
+                        }
+                        else{
+                            <FluentLabel Style="width:150px">@context.BomCode</FluentLabel>
+                        }
+                    </TemplateColumn>
+                     <TemplateColumn Title="Bom ItemName" Width="150">
+                        @if(context.IsUpdate==true)
+                        {
+                            <FluentTextField AutoComplete="off" @bind-Value="@context.BomItemName" Style="width:150px"></FluentTextField>
+                        }
+                        else{
+                            <FluentLabel Style="width:150px">@context.BomItemName</FluentLabel>
+                        }
+                    </TemplateColumn>                   
 
-                    <PropertyColumn Width="120px" Property="@(p => p.PackagingGroup)" Sortable="true" />
-                    <PropertyColumn Width="120px" Property="@(p => p.BomCode)" Sortable="true" />
-                    <PropertyColumn Width="120px" Property="@(p => p.BomItemName)" Sortable="true" />
                     <TemplateColumn Title="Actions" Align="@Align.End">
-                        <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
-                        <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+                        @if(context.IsUpdate==true){
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Save())" OnClick="@(() => SaveLineAsync(context))" />
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowStepBack())" OnClick="@(() => CancelLineUpdate(context))" />  
+                        }  
+                        else{
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineAsync(context))" />
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineAsync(context))" />  
+                        }                     
+
                     </TemplateColumn>
 
                 </FluentDataGrid>
@@ -89,6 +141,7 @@ else
                                               Items="@departmentItems"
                                               Width="200px"
                                               Height="250px"
+    using LabManagement.Components.Pages.Categories.Controls;
                                               OptionValue="@(i => i.DeptID)"
                                               OptionText="@(i => i.DeptName)"
                                               @bind-Value="@Content.DeptID">
@@ -99,18 +152,15 @@ else
 
                 <FluentStack Orientation="Orientation.Vertical">
 
-
-                    <FluentSelect Label="Gender" @bind-Value="@Content.UnitID" TOption="string">
-                        <FluentOption Value="pcs">
-                            pcs
-                            <FluentIcon Value="@(new Icons.Regular.Size16.Person())" Color="@Color.Neutral" Slot="start" />
-                        </FluentOption>
-                        <FluentOption Value="box" Selected="true">
-                            box
-                            <FluentIcon Value="@(new Icons.Regular.Size16.Person())" Color="@Color.Neutral" Slot="start" />
-                        </FluentOption>
-
-                    </FluentSelect>
+                    <FluentSelect TOption="ProductUnit"
+                        Label="Select a Unit"
+                        Items="@unitItems"                        
+                        Width="100px"
+                        Height="250px"
+                        Placeholder="Make a selection..."
+                        OptionValue="@(p => p.UnitID)"
+                        OptionText="@(p => p.UnitEn)"
+                        @bind-Value="@Content.UnitID"/>
 
                     <FluentTextField Label="PackagingGroup" @bind-Value="@Content.PackagingGroup" />
                     <FluentTextField Label="BomCode" @bind-Value="@Content.BomCode" />
@@ -119,15 +169,11 @@ else
                 </FluentStack>
             </FluentStack>
 
-
             <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
                 <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save</FluentButton>
                 <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
             </FluentStack>
-
         </FluentStack>
-
-
 
     </div>
 
@@ -139,11 +185,12 @@ else
 
     IQueryable<Product>? items;
     // IQueryable<Department>? departmentItems;
-
+    IQueryable<ProductUnit>? unitItems;
     string Search = "";
 
     bool SelectFromEntireRow = true;
     DataGridSelectMode Mode = DataGridSelectMode.Single;
+    Func<Product, string?> rowStyle = x => x.IsUpdate == true ? "background-color: #f9eda9" : null;
 
     PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
 
@@ -161,6 +208,7 @@ else
     {
         //departmentItems = (await context.GetAllDepartment("", "")).AsQueryable();
         items = (await context.GetAll(0,"", Search)).AsQueryable();
+        unitItems =(await context.GetAllUnits(0,"", Search)).AsQueryable();        
     }
 
     IQueryable<Product>? FilteredItems => items?.Where(x => x.ItemName.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
@@ -196,16 +244,65 @@ else
         LoadData();
     }
 
-
-    private async Task EditAsync(Product item)
+    private async Task SelectUnit(Product item)
     {
-        Content = item;
-        ShowList = false;
+        var parameters = new DialogParameters
+            {
+                Title = "Select Unit",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,    
+                Width = "500px",
+                Height = "500px",               
+                Modal = false,
+            };
 
+        var unitItem = new ProductUnit();
+        
+        var dialog = await DialogService.ShowDialogAsync<UnitDialog>(unitItem, parameters);
+        var dialogResult = await dialog.Result;
+        await OnSelectUnitComplete(item,dialogResult);
     }
 
+  private async Task OnSelectUnitComplete(Product item,DialogResult result)
+    {        
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }        
 
-    private async Task DeleteAsync(Product item)
+        if (result.Data is not null)
+        {
+            var itemRes = result.Data as ProductUnit;
+            item.UnitID = itemRes!.UnitID;
+        }        
+    }
+
+    private async Task EditLineAsync(Product item)
+    {
+        foreach(var line in items)
+        {
+            if (line.IsUpdate == true) return;
+        }
+        //Content = item;
+        //ShowList = false;
+        item.IsUpdate = true;
+    }
+
+    private async Task SaveLineAsync(Product item)
+    {
+        await context.Save(item);
+        item.IsUpdate = false;
+        LoadData();
+    }
+
+    private async Task CancelLineUpdate(Product item)
+    {        
+        item.IsUpdate = false;
+        LoadData();
+    }
+
+    private async Task DeleteLineAsync(Product item)
     {
 
         if (item is null)

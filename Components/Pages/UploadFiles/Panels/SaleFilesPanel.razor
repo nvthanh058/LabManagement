@@ -157,7 +157,7 @@
 
     private async Task DownloadItem(OrderFile item)
     {
-        var path = @"files/" + item.UserID + "/" + item.UploadDate.ToString("yyyyMMdd") + "/";
+        var path = @"files/" + item!.UserID + @"/" + item.UploadDate.ToString("yyyyMMdd") + "/";       
         await JS.InvokeVoidAsync("urlFileDownload", item.FilePath, path + item.FilePath);
     }
 

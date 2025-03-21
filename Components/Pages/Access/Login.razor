@@ -9,11 +9,11 @@
     <FluentStack VerticalAlignment="VerticalAlignment.Center" HorizontalAlignment="HorizontalAlignment.Center" Width="100%" >
 
         <FluentStack Orientation="Orientation.Vertical" Style="width:400px" VerticalGap="20">
-            <img src="images/beachogo.png" width="200" height="72" />
+            <img src="images/logodadl.png" width="200" height="72" />
             <FluentLabel Typo="Typography.H4">Login</FluentLabel>
 
             <FluentLabel Typo="Typography.H5" Color="Color.Warning">@Message</FluentLabel>
-            <FluentTextField Name="Model.UserName" @bind-Value="Model.UserName" Style="width:200px" AriaLabel="User ID" Placeholder="User Name"></FluentTextField>
+            <FluentTextField AutoComplete="off"  Name="Model.UserName" @bind-Value="Model.UserName" Style="width:200px" AriaLabel="User ID" Placeholder="User Name"></FluentTextField>
             <ValidationMessage For="()=>Model.UserName"></ValidationMessage>
             <FluentTextField Name="Model.Password" @bind-Value="@Model.Password" Style="width:200px" TextFieldType="TextFieldType.Password" Placeholder="Password">Password</FluentTextField>
 

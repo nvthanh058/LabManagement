@@ -180,10 +180,10 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Authorization/8.0.13": {
+      "Microsoft.AspNetCore.Authorization/8.0.14": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Metadata": "8.0.13",
+          "Microsoft.AspNetCore.Metadata": "8.0.14",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
           "Microsoft.Extensions.Options": "8.0.2"
         },
@@ -198,11 +198,11 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components/8.0.13": {
+      "Microsoft.AspNetCore.Components/8.0.14": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Authorization": "8.0.13",
-          "Microsoft.AspNetCore.Components.Analyzers": "8.0.13"
+          "Microsoft.AspNetCore.Authorization": "8.0.14",
+          "Microsoft.AspNetCore.Components.Analyzers": "8.0.14"
         },
         "compile": {
           "lib/net8.0/Microsoft.AspNetCore.Components.dll": {
@@ -215,16 +215,16 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components.Analyzers/8.0.13": {
+      "Microsoft.AspNetCore.Components.Analyzers/8.0.14": {
         "type": "package",
         "build": {
           "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets": {}
         }
       },
-      "Microsoft.AspNetCore.Components.Forms/8.0.13": {
+      "Microsoft.AspNetCore.Components.Forms/8.0.14": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Components": "8.0.13"
+          "Microsoft.AspNetCore.Components": "8.0.14"
         },
         "compile": {
           "lib/net8.0/Microsoft.AspNetCore.Components.Forms.dll": {
@@ -237,14 +237,14 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components.Web/8.0.13": {
+      "Microsoft.AspNetCore.Components.Web/8.0.14": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Components": "8.0.13",
-          "Microsoft.AspNetCore.Components.Forms": "8.0.13",
+          "Microsoft.AspNetCore.Components": "8.0.14",
+          "Microsoft.AspNetCore.Components.Forms": "8.0.14",
           "Microsoft.Extensions.DependencyInjection": "8.0.1",
           "Microsoft.Extensions.Primitives": "8.0.0",
-          "Microsoft.JSInterop": "8.0.13",
+          "Microsoft.JSInterop": "8.0.14",
           "System.IO.Pipelines": "8.0.0"
         },
         "compile": {
@@ -258,7 +258,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Metadata/8.0.13": {
+      "Microsoft.AspNetCore.Metadata/8.0.14": {
         "type": "package",
         "compile": {
           "lib/net8.0/Microsoft.AspNetCore.Metadata.dll": {
@@ -390,11 +390,11 @@
           }
         }
       },
-      "Microsoft.EntityFrameworkCore/8.0.13": {
+      "Microsoft.EntityFrameworkCore/8.0.14": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Abstractions": "8.0.13",
-          "Microsoft.EntityFrameworkCore.Analyzers": "8.0.13",
+          "Microsoft.EntityFrameworkCore.Abstractions": "8.0.14",
+          "Microsoft.EntityFrameworkCore.Analyzers": "8.0.14",
           "Microsoft.Extensions.Caching.Memory": "8.0.1",
           "Microsoft.Extensions.Logging": "8.0.1"
         },
@@ -412,7 +412,7 @@
           "buildTransitive/net8.0/Microsoft.EntityFrameworkCore.props": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Abstractions/8.0.13": {
+      "Microsoft.EntityFrameworkCore.Abstractions/8.0.14": {
         "type": "package",
         "compile": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
@@ -425,7 +425,7 @@
           }
         }
       },
-      "Microsoft.EntityFrameworkCore.Analyzers/8.0.13": {
+      "Microsoft.EntityFrameworkCore.Analyzers/8.0.14": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/_._": {}
@@ -775,10 +775,10 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.FluentUI.AspNetCore.Components/4.11.6": {
+      "Microsoft.FluentUI.AspNetCore.Components/4.11.7": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Components.Web": "8.0.13",
+          "Microsoft.AspNetCore.Components.Web": "8.0.14",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.1",
           "Microsoft.Extensions.Http": "8.0.1"
@@ -800,11 +800,11 @@
           "buildMultiTargeting/Microsoft.FluentUI.AspNetCore.Components.props": {}
         }
       },
-      "Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter/4.11.6": {
+      "Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter/4.11.7": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "8.0.13",
-          "Microsoft.FluentUI.AspNetCore.Components": "4.11.6"
+          "Microsoft.EntityFrameworkCore": "8.0.14",
+          "Microsoft.FluentUI.AspNetCore.Components": "4.11.7"
         },
         "compile": {
           "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter.dll": {
@@ -817,7 +817,7 @@
           }
         }
       },
-      "Microsoft.FluentUI.AspNetCore.Components.Icons/4.11.6": {
+      "Microsoft.FluentUI.AspNetCore.Components.Icons/4.11.7": {
         "type": "package",
         "dependencies": {
           "Microsoft.FluentUI.AspNetCore.Components": "4.11.0"
@@ -965,7 +965,7 @@
           }
         }
       },
-      "Microsoft.JSInterop/8.0.13": {
+      "Microsoft.JSInterop/8.0.14": {
         "type": "package",
         "compile": {
           "lib/net8.0/Microsoft.JSInterop.dll": {
@@ -1582,10 +1582,10 @@
         "lib/netstandard2.0/ExcelNumberFormat.xml"
       ]
     },
-    "Microsoft.AspNetCore.Authorization/8.0.13": {
-      "sha512": "cMdPz2hFN8fjEdUBelItljBrsbiz2eVspV5W5bee9c6OT4ChgprnHe7BKXYc3Wwzhxo/ls9XxcLuXZrfVCIT6Q==",
+    "Microsoft.AspNetCore.Authorization/8.0.14": {
+      "sha512": "lcKWEvzaJz+ahDj5J0zz05NGyv4vqEa2vLalBuBf69vL0qrWqqB/rwI4/zdyloun+fLTq1bCnsAwiplbFgQtAA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.authorization/8.0.13",
+      "path": "microsoft.aspnetcore.authorization/8.0.14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1597,14 +1597,14 @@
         "lib/net8.0/Microsoft.AspNetCore.Authorization.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.xml",
-        "microsoft.aspnetcore.authorization.8.0.13.nupkg.sha512",
+        "microsoft.aspnetcore.authorization.8.0.14.nupkg.sha512",
         "microsoft.aspnetcore.authorization.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components/8.0.13": {
-      "sha512": "SIYJDi7/VYd4YRF72GGH3owUDvlnD39AGREgEKlLux89z54FIGapTj3P4qwdI+VOf7ycTfmzPMfVWFkSUbRM0Q==",
+    "Microsoft.AspNetCore.Components/8.0.14": {
+      "sha512": "b/6dwE/ESturk5VHHzq/GP15qkcxb196T+qxFs4wzUkeZtCx2OuK+1rPIHSgsOjthnHNOAhCY7/9n5uLqyenKA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components/8.0.13",
+      "path": "microsoft.aspnetcore.components/8.0.14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1612,14 +1612,14 @@
         "THIRD-PARTY-NOTICES.txt",
         "lib/net8.0/Microsoft.AspNetCore.Components.dll",
         "lib/net8.0/Microsoft.AspNetCore.Components.xml",
-        "microsoft.aspnetcore.components.8.0.13.nupkg.sha512",
+        "microsoft.aspnetcore.components.8.0.14.nupkg.sha512",
         "microsoft.aspnetcore.components.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components.Analyzers/8.0.13": {
-      "sha512": "30bbr+LZVvCNd4Yd1IgYLsrk9EnO7X4ZqXTgDJKKQMdItAso29zddZ5s952TRljTatLRisdKS2Rd6eBYOwbOgQ==",
+    "Microsoft.AspNetCore.Components.Analyzers/8.0.14": {
+      "sha512": "pHPb1bqV2ECTfOw2QcGQzO1/fdpo8mwekY8Jbycm2UZ6yvqLtZRRPd+RVzL74oXR/HTakvqSh2Un1W1rIFTnoQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components.analyzers/8.0.13",
+      "path": "microsoft.aspnetcore.components.analyzers/8.0.14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1628,14 +1628,14 @@
         "analyzers/dotnet/cs/Microsoft.AspNetCore.Components.Analyzers.dll",
         "build/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
         "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
-        "microsoft.aspnetcore.components.analyzers.8.0.13.nupkg.sha512",
+        "microsoft.aspnetcore.components.analyzers.8.0.14.nupkg.sha512",
         "microsoft.aspnetcore.components.analyzers.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components.Forms/8.0.13": {
-      "sha512": "747kk0/m4lWoK3thqUFwFwQx2nStgfgaB7oKHGbyl4O3M7AfoBS9Pxljd9COZCi+UGvpLLqFXkADKQWRcxwWrA==",
+    "Microsoft.AspNetCore.Components.Forms/8.0.14": {
+      "sha512": "U83TX0obbdIh1DeIGCix62RILHRa4HC7h0fgEYrV9Gl8tz0wzv6AoYkU4PvnxXAqpYA2wPTMgNOuqt1X2XxCoQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components.forms/8.0.13",
+      "path": "microsoft.aspnetcore.components.forms/8.0.14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1643,14 +1643,14 @@
         "THIRD-PARTY-NOTICES.txt",
         "lib/net8.0/Microsoft.AspNetCore.Components.Forms.dll",
         "lib/net8.0/Microsoft.AspNetCore.Components.Forms.xml",
-        "microsoft.aspnetcore.components.forms.8.0.13.nupkg.sha512",
+        "microsoft.aspnetcore.components.forms.8.0.14.nupkg.sha512",
         "microsoft.aspnetcore.components.forms.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components.Web/8.0.13": {
-      "sha512": "/oR/tw4a2Z3rPHVguTiE8GyWa/+SKsEbysd5DhuB6PdlX9B0l9+3j9zUFtoeIo0yONJAuQYGbhl5Y3l47mAowA==",
+    "Microsoft.AspNetCore.Components.Web/8.0.14": {
+      "sha512": "h/XSCAHmBywDF6San0FGPyXxK6PZh1g/xz4Ln9yeJNgSmKq5F1ehgVStDkJr4d6pWGr2RRkNxgGYMLRnULMnKw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components.web/8.0.13",
+      "path": "microsoft.aspnetcore.components.web/8.0.14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1658,14 +1658,14 @@
         "THIRD-PARTY-NOTICES.txt",
         "lib/net8.0/Microsoft.AspNetCore.Components.Web.dll",
         "lib/net8.0/Microsoft.AspNetCore.Components.Web.xml",
-        "microsoft.aspnetcore.components.web.8.0.13.nupkg.sha512",
+        "microsoft.aspnetcore.components.web.8.0.14.nupkg.sha512",
         "microsoft.aspnetcore.components.web.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Metadata/8.0.13": {
-      "sha512": "V8HLO2Md9Vs/69FZ+kpXCyx9C0pnfMn/Mlnr35SctMEy3JVuaqkmb2Cn+K05n5uX8irVHOcql4ACMPK6tLuldA==",
+    "Microsoft.AspNetCore.Metadata/8.0.14": {
+      "sha512": "4dkb/7GoyaFtEggCEHStc/t05nKgnEr1QUJIP8QaDvxdZTXk9SebVeMMPBSR4zbj6dK2tUwBAOdHLA215lmOWg==",
       "type": "package",
-      "path": "microsoft.aspnetcore.metadata/8.0.13",
+      "path": "microsoft.aspnetcore.metadata/8.0.14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1677,7 +1677,7 @@
         "lib/net8.0/Microsoft.AspNetCore.Metadata.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.xml",
-        "microsoft.aspnetcore.metadata.8.0.13.nupkg.sha512",
+        "microsoft.aspnetcore.metadata.8.0.14.nupkg.sha512",
         "microsoft.aspnetcore.metadata.nuspec"
       ]
     },
@@ -1817,10 +1817,10 @@
         "runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.dll"
       ]
     },
-    "Microsoft.EntityFrameworkCore/8.0.13": {
-      "sha512": "4wyLeg64sZgJcER83fkitlKuySY3OzwcOZSZcGV1TNskmThupfhcVlsQht7bNCfNpXTCZVNIOwAZChk6/OFdXQ==",
+    "Microsoft.EntityFrameworkCore/8.0.14": {
+      "sha512": "HNn+NPKCm7rR7ij7IRCCbuImaMulFJGloyIbMwi3Ews77RsthM8gxpTZciFLgRYPsBtszKpdIClEwnWmP0vjUg==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore/8.0.13",
+      "path": "microsoft.entityframeworkcore/8.0.14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1829,14 +1829,14 @@
         "buildTransitive/net8.0/Microsoft.EntityFrameworkCore.props",
         "lib/net8.0/Microsoft.EntityFrameworkCore.dll",
         "lib/net8.0/Microsoft.EntityFrameworkCore.xml",
-        "microsoft.entityframeworkcore.8.0.13.nupkg.sha512",
+        "microsoft.entityframeworkcore.8.0.14.nupkg.sha512",
         "microsoft.entityframeworkcore.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Abstractions/8.0.13": {
-      "sha512": "a6O+v8CMStumpVoQyN0aUpx5P3/qYZP+5791sGrzJhIM+QsniQdSaJVdUSneL40M+FpBgtiC8ggqzNo2x/gVlw==",
+    "Microsoft.EntityFrameworkCore.Abstractions/8.0.14": {
+      "sha512": "Om8/jdWyx9eKFkA1YEgxk13KjGIzA8teLgG7iNFunsI2+MT6UT54Eb4t6oe4NQlIaACj5voUe6szVAQe9GKwDA==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.abstractions/8.0.13",
+      "path": "microsoft.entityframeworkcore.abstractions/8.0.14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1844,14 +1844,14 @@
         "PACKAGE.md",
         "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll",
         "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.xml",
-        "microsoft.entityframeworkcore.abstractions.8.0.13.nupkg.sha512",
+        "microsoft.entityframeworkcore.abstractions.8.0.14.nupkg.sha512",
         "microsoft.entityframeworkcore.abstractions.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Analyzers/8.0.13": {
-      "sha512": "ENny33QADFiRxge5ikJBs2p7JB4MQx/ZSPKPNwt2eJPO0lVUGSjTiJeunGGggkVHiaUy0yY4f625LQtNlErIsw==",
+    "Microsoft.EntityFrameworkCore.Analyzers/8.0.14": {
+      "sha512": "lzNb3s4t5JDMHGoUFuX/f977dFythvmzGFJxvjlhExdiATPKQfquo2NM0uX8Kelfq04jRljpdbRzcsSsK1q9Tw==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.analyzers/8.0.13",
+      "path": "microsoft.entityframeworkcore.analyzers/8.0.14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1859,7 +1859,7 @@
         "analyzers/dotnet/cs/Microsoft.EntityFrameworkCore.Analyzers.dll",
         "docs/PACKAGE.md",
         "lib/netstandard2.0/_._",
-        "microsoft.entityframeworkcore.analyzers.8.0.13.nupkg.sha512",
+        "microsoft.entityframeworkcore.analyzers.8.0.14.nupkg.sha512",
         "microsoft.entityframeworkcore.analyzers.nuspec"
       ]
     },
@@ -2448,10 +2448,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.FluentUI.AspNetCore.Components/4.11.6": {
-      "sha512": "5DDQ01ecqIO8cUImh+NvZTIgh3lb5pWz9gj4UDCla+9AB7PZx+lE04JaduzNnK3dOL9Ut6kELNeixdjflEM0pA==",
+    "Microsoft.FluentUI.AspNetCore.Components/4.11.7": {
+      "sha512": "DlT1mklQ1sthVgczxtuSMCLWMhX4Bijthblzche/b3vChm/XPdV6x6KBEtYwGNPIi3r52eAzXYKYh592PT094g==",
       "type": "package",
-      "path": "microsoft.fluentui.aspnetcore.components/4.11.6",
+      "path": "microsoft.fluentui.aspnetcore.components/4.11.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2466,7 +2466,7 @@
         "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.xml",
         "lib/net9.0/Microsoft.FluentUI.AspNetCore.Components.dll",
         "lib/net9.0/Microsoft.FluentUI.AspNetCore.Components.xml",
-        "microsoft.fluentui.aspnetcore.components.4.11.6.nupkg.sha512",
+        "microsoft.fluentui.aspnetcore.components.4.11.7.nupkg.sha512",
         "microsoft.fluentui.aspnetcore.components.nuspec",
         "staticwebassets/Components/Anchor/FluentAnchor.razor.js",
         "staticwebassets/Components/AnchoredRegion/FluentAnchoredRegion.razor.js",
@@ -2500,16 +2500,16 @@
         "staticwebassets/Microsoft.FluentUI.AspNetCore.Components.lib.module.js",
         "staticwebassets/Microsoft.FluentUI.AspNetCore.Components.lib.module.js.LEGAL.txt",
         "staticwebassets/Microsoft.FluentUI.AspNetCore.Components.lib.module.js.map",
-        "staticwebassets/Microsoft.FluentUI.AspNetCore.Components.n2s0c9bbw5.bundle.scp.css",
+        "staticwebassets/Microsoft.FluentUI.AspNetCore.Components.ouw50eeq2n.bundle.scp.css",
         "staticwebassets/css/reboot.css",
         "staticwebassets/js/initializersLoader.webview.js",
         "staticwebassets/js/loading-theme.js"
       ]
     },
-    "Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter/4.11.6": {
-      "sha512": "eKz0SLD7V9RCe7uniNza5DFVX2zmzw7obF/bvjxV233Li58orxo62NAzqAKazHELmUXcmZva7t4u/vFCyUsZtg==",
+    "Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter/4.11.7": {
+      "sha512": "a6cibwzntUemSE08ZloepjXr0zJiZqWVXIDB9uNhQ3gPcwuPW5veyPXBLqgXAPaCxYolisK9uXk9eICbG4VjkQ==",
       "type": "package",
-      "path": "microsoft.fluentui.aspnetcore.components.datagrid.entityframeworkadapter/4.11.6",
+      "path": "microsoft.fluentui.aspnetcore.components.datagrid.entityframeworkadapter/4.11.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2519,14 +2519,14 @@
         "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter.xml",
         "lib/net9.0/Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter.dll",
         "lib/net9.0/Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter.xml",
-        "microsoft.fluentui.aspnetcore.components.datagrid.entityframeworkadapter.4.11.6.nupkg.sha512",
+        "microsoft.fluentui.aspnetcore.components.datagrid.entityframeworkadapter.4.11.7.nupkg.sha512",
         "microsoft.fluentui.aspnetcore.components.datagrid.entityframeworkadapter.nuspec"
       ]
     },
-    "Microsoft.FluentUI.AspNetCore.Components.Icons/4.11.6": {
-      "sha512": "j9Y0paHMzDbin0Re3HqthTa3GjNdmsx8xTZbiWcVRdch6YiuOFRWd+L3n8XgCCbpxahYodFS4oN9e3RSSXRGfg==",
+    "Microsoft.FluentUI.AspNetCore.Components.Icons/4.11.7": {
+      "sha512": "4Lsr3RkBzFqqmU7nC0vQtyVW7/y5nDZnvdYsfbbKHvHyrVtnbbhdWGXQZ22DHbF38BWP94dx0NxIk1kcRxVoJg==",
       "type": "package",
-      "path": "microsoft.fluentui.aspnetcore.components.icons/4.11.6",
+      "path": "microsoft.fluentui.aspnetcore.components.icons/4.11.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2537,7 +2537,7 @@
         "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.Icons.Light.dll",
         "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.Icons.Regular.dll",
         "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.Icons.dll",
-        "microsoft.fluentui.aspnetcore.components.icons.4.11.6.nupkg.sha512",
+        "microsoft.fluentui.aspnetcore.components.icons.4.11.7.nupkg.sha512",
         "microsoft.fluentui.aspnetcore.components.icons.nuspec"
       ]
     },
@@ -2716,10 +2716,10 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
-    "Microsoft.JSInterop/8.0.13": {
-      "sha512": "lheEKaQvTD9YRn2g6evReg97Ia4whzHbOOoMBdLHPtO2Gs6e/ffx4+cKP+SCSEnmyi6Dc/Av75kxAJCiuQx8zA==",
+    "Microsoft.JSInterop/8.0.14": {
+      "sha512": "eg5HYSshwlO1oOzOg4WdT2ZSPKOu3hv556zPkfNpKEi5qoLuQt49mE1tegsL4H7ENl1dL0vBLRv4+YAuLKt/nA==",
       "type": "package",
-      "path": "microsoft.jsinterop/8.0.13",
+      "path": "microsoft.jsinterop/8.0.14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2727,7 +2727,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net8.0/Microsoft.JSInterop.dll",
         "lib/net8.0/Microsoft.JSInterop.xml",
-        "microsoft.jsinterop.8.0.13.nupkg.sha512",
+        "microsoft.jsinterop.8.0.14.nupkg.sha512",
         "microsoft.jsinterop.nuspec"
       ]
     },
@@ -3416,9 +3416,9 @@
       "ClosedXML >= 0.104.2",
       "Dapper >= 2.1.66",
       "Microsoft.Data.SqlClient >= 6.0.1",
-      "Microsoft.FluentUI.AspNetCore.Components >= 4.11.6",
-      "Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter >= 4.11.6",
-      "Microsoft.FluentUI.AspNetCore.Components.Icons >= 4.11.6",
+      "Microsoft.FluentUI.AspNetCore.Components >= 4.11.7",
+      "Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter >= 4.11.7",
+      "Microsoft.FluentUI.AspNetCore.Components.Icons >= 4.11.7",
       "System.Drawing.Common >= 9.0.2",
       "ZXing.Net >= 0.16.10"
     ]
@@ -3430,11 +3430,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ASPCore\\LabManagement\\LabManagement\\LabManagement.csproj",
+      "projectUniqueName": "D:\\GitLab\\LabManagement\\LabManagement.csproj",
       "projectName": "LabManagement",
-      "projectPath": "D:\\ASPCore\\LabManagement\\LabManagement\\LabManagement.csproj",
+      "projectPath": "D:\\GitLab\\LabManagement\\LabManagement.csproj",
       "packagesPath": "C:\\Users\\ThanhNguyen\\.nuget\\packages\\",
-      "outputPath": "D:\\ASPCore\\LabManagement\\LabManagement\\obj\\",
+      "outputPath": "D:\\GitLab\\LabManagement\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3495,15 +3495,15 @@
           },
           "Microsoft.FluentUI.AspNetCore.Components": {
             "target": "Package",
-            "version": "[4.11.6, )"
+            "version": "[4.11.7, )"
           },
           "Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter": {
             "target": "Package",
-            "version": "[4.11.6, )"
+            "version": "[4.11.7, )"
           },
           "Microsoft.FluentUI.AspNetCore.Components.Icons": {
             "target": "Package",
-            "version": "[4.11.6, )"
+            "version": "[4.11.7, )"
           },
           "System.Drawing.Common": {
             "target": "Package",

@@ -1,0 +1,80 @@
+@implements IDialogContentComponent<ProductUnit>
+@inject IProductResposity context
+
+<FluentDialogHeader ShowDismiss="false">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size24.List())" />
+        <FluentLabel Typo="Typography.H5">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<div style="height: 300px; overflow:auto;" tabindex="-1">
+    <FluentStack Orientation="Orientation.Vertical">
+        <FluentSearch @bind-Value=Search Style="width:300px" @bind-Value:after=LoadData></FluentSearch>
+        <FluentDataGrid Items="@items"
+        TGridItem="ProductUnit"
+        ResizableColumns=true
+                        RowSize="DataGridRowSize.Medium"
+        ShowHover="true"
+        HeaderCellAsButtonWithMenu="true"
+        Pagination="@pagination">
+
+            <SelectColumn TGridItem="ProductUnit"
+            SelectMode="@Mode"
+            SelectFromEntireRow="@SelectFromEntireRow"
+            Property="@(e => e.Selected)"
+            OnSelect="@(e => e.Item.Selected = e.Selected)">
+            </SelectColumn>
+
+            <PropertyColumn Width="120px" Property="@(p => p.UnitID)" Sortable="true" />
+            <PropertyColumn Width="150px" Property="@(p => p.UnitEn)" Sortable="true" />            
+
+        </FluentDataGrid>
+    </FluentStack>
+
+</div>
+
+<FluentDialogFooter>
+    <FluentPaginator State="@pagination" />
+    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Checkmark())" OnClick="@SaveAsync">OK</FluentButton>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+</FluentDialogFooter>
+
+@code {
+
+    [Parameter]
+    public ProductUnit Content { get; set; } = default!;
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+    string Search = "";
+    static IQueryable<ProductUnit>? items;
+
+    ProductUnit SelectedItem;
+    bool SelectFromEntireRow = true;
+    DataGridSelectMode Mode = DataGridSelectMode.Single;
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    protected async Task LoadData()
+    {
+        items = (await context.GetAllUnits(0, "", Search)).AsQueryable();
+    }
+
+    private async Task SaveAsync()
+    {
+        SelectedItem = items!.Where(i => i.Selected).FirstOrDefault()!;
+        await Dialog.CloseAsync(SelectedItem);
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+}

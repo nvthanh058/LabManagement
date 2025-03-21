@@ -1,0 +1,191 @@
+﻿@page "/units"
+
+
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject IProductResposity context
+@inject IJSRuntime JSRuntime
+@inject IToastService ToastService
+
+    <FluentStack Orientation="Orientation.Vertical" Width="100%">
+
+        <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+            <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowSquareDown())">Import</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.Print())">Print</FluentButton>
+            <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
+
+        </FluentStack>
+
+        @if (items == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {           
+                <FluentDataGrid Items="@items"
+                TGridItem="ProductUnit"
+                ResizableColumns=true
+                ShowHover="true"
+                           RowStyle="@rowStyle"
+                HeaderCellAsButtonWithMenu="true"
+                RowSize="DataGridRowSize.Medium"
+                Pagination="@pagination">
+                    <PropertyColumn Width="0px" Property="@(p => p.RecID)" Sortable="true" IsDefaultSortColumn="true" Style="display:none" />
+                    <TemplateColumn Title="Unit Code" Width="100">
+                        @if(context.IsUpdate==true)
+                        {
+                            <FluentTextField @ref="txtUnitID" AutoComplete="off" @bind-Value="@context.UnitID" Disabled="@(context.RecID==0?false:true)" Style="width:100px"></FluentTextField>
+                        }
+                        else{
+                            <FluentLabel Style="width:100px">@context.UnitID</FluentLabel>
+                        }
+
+                    </TemplateColumn>
+                    <TemplateColumn Title="Unit EN" Width="100">
+                        @if(context.IsUpdate==true)
+                        {
+                            <FluentTextField AutoComplete="off" @bind-Value="@context.UnitEn" Style="width:100px"></FluentTextField>
+                        }
+                        else{
+                            <FluentLabel Style="width:100px">@context.UnitEn</FluentLabel>
+                        }
+                    </TemplateColumn>
+
+                    
+                    <TemplateColumn Title="Unit Vn" Width="100">
+                        @if(context.IsUpdate==true)
+                        {
+                            <FluentTextField AutoComplete="off" @bind-Value="@context.UnitVn" Style="width:100px"></FluentTextField>
+                        }
+                        else{
+                            <FluentLabel Style="width:100px">@context.UnitVn</FluentLabel>
+                        }
+                    </TemplateColumn>
+
+                   
+                    <TemplateColumn Title="Actions" Align="@Align.End">
+                        @if(context.IsUpdate==true){
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Save())" OnClick="@(() => SaveLineAsync(context))" />
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowStepBack())" OnClick="@(() => CancelLineUpdate(context))" />  
+                        }  
+                        else{
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineAsync(context))" />
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineAsync(context))" />  
+                        }                     
+
+                    </TemplateColumn>
+
+                </FluentDataGrid>
+            
+            <FluentPaginator State="@pagination" />
+        }
+    </FluentStack>
+
+@code {
+   
+    FluentTextField ? txtUnitID;
+    bool ShowList = true;
+    IQueryable<ProductUnit>? items;
+    // IQueryable<Department>? departmentItems;
+    
+    string Search = "";
+
+    bool SelectFromEntireRow = true;
+    DataGridSelectMode Mode = DataGridSelectMode.Single;
+    Func<ProductUnit, string?> rowStyle = x => x.IsUpdate == true ? "background-color: #f9eda9" : null;
+    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+
+    [Parameter]
+    public ProductUnit Content { get; set; } = default!;
+   
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+        LoadData();
+    }
+    private async void LoadData()
+    {      
+        items = (await context.GetAllUnits(0,"", Search)).AsQueryable();
+    }
+    
+    private async Task AddAsync()
+    {
+        Content = new ProductUnit();
+        //ShowList = false;
+        List<ProductUnit> newList =new List<ProductUnit>();
+            newList.Add(Content);
+        
+        Content.IsUpdate=true;
+        items = items!.ToList().Concat(newList).AsQueryable();
+    }
+
+    private async Task EditLineAsync(ProductUnit item)
+    {
+        foreach(var line in items)
+        {
+            if (line.IsUpdate == true) return;
+        }
+        //Content = item;
+        //ShowList = false;
+        item.IsUpdate = true;
+    }
+
+    private async Task SaveLineAsync(ProductUnit item)
+    {
+        if(item.UnitID==""){
+            txtUnitID!.Style="background-color:#FFC300";
+            txtUnitID!.FocusAsync();            
+            ToastService.ShowWarning("Please input Unit Code");    
+            return;
+        }
+        
+        await context.SaveUnit(item);
+        LoadData();
+        item.IsUpdate = false;
+    }
+
+    private async Task CancelLineUpdate(ProductUnit item)
+    {        
+        item.IsUpdate = false;
+        LoadData();
+    }
+
+    private async Task DeleteLineAsync(ProductUnit item)
+    {
+
+        if (item is null)
+        {
+            return;
+        }
+
+        var dialogParameters = new DialogParameters
+            {
+                Title = "Delete Item",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true
+            };
+
+        // var dialog = await dialogService.ShowDialogAsync<ConfirmationPanel>(dialogParameters);
+        var dialog = await DialogService.ShowConfirmationAsync(
+            "Are you sure you want to delete selected item?",
+            "Yes",
+            "No",
+            "Delete Item?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            var res = await context.DeleteUnit(item.RecID);
+            LoadData();
+        }
+
+    }
+
+
+
+
+
+}
+
