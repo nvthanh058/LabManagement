@@ -1,0 +1,760 @@
+﻿@page "/casetracking"
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+@using ClosedXML.Excel
+@using LabManagement.Components.Pages.Controls
+@using LabManagement.Components.Pages.Production.Panels
+@using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
+@inject IWebHostEnvironment _webHost;
+@inject IJSRuntime JS
+@inject IDialogService DialogService
+@inject ISalesOrderResposity salesDB
+@inject IProductionResposity productionDB
+@inject ISystemResposity systemDB
+@inject IUserInfoResposity userdb
+@inject IToastService ToastService
+@inject TypeRampBaseFontSize FontSize
+
+    <FluentStack Orientation="Orientation.Vertical" VerticalGap="10">
+
+    <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+        <FluentLabel Style="width:50px" Typo="Typography.H5">Lab:</FluentLabel>
+        <FluentAutocomplete TOption="LabInfo"
+                            AutoComplete="off"
+                            Width="150px"
+                            OnOptionsSearch="OnSearch"
+                            Placeholder="Select Lab"
+                            MaximumOptionsSearch="int.MaxValue"
+                            MaximumSelectedOptions="1"
+                            Virtualize="true"
+                            OptionText="@(item => $"{item.LabName}")"
+                            @bind-SelectedOptions="@SelectedLabs" />
+    </FluentStack>
+
+
+        <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">           
+           @*  <FluentButton IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddAsync">New</FluentButton> *@
+
+            <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.TableArrowUp())" OnClick="@ExportData">Export</FluentButton>            
+
+            <FluentDatePicker Label="From Date" Style="width:120px" @bind-Value="@fromDate"></FluentDatePicker>
+            <FluentDatePicker Label="To Date" Style="width:120px" @bind-Value="@toDate"></FluentDatePicker>
+            <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
+            <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Search())" OnClick="@LoadData">LoadData</FluentButton>
+            <FluentPaginator State="@pagination" />
+        </FluentStack>
+
+
+     <FluentSplitter Style="height:100%" Orientation="Orientation.Horizontal" BarSize="6" Panel1Size="60%" Panel2Size="auto">
+        <Panel1>
+    @if (items == null)
+            {
+                <div style="width:200px;height:200px;margin-top:100px;margin-left:100px;">
+                    <FluentProgressRing></FluentProgressRing>
+                </div>
+
+            }
+            else
+            {
+
+                <div style="display: table; table-layout: fixed; width: 100%;">
+            <div style="overflow-x: auto;">
+
+                    <FluentDataGrid Id="grid" Items="@items"
+                    Style="height: 100%;min-width: max-content;font-size:10pt;"
+                    TGridItem="CaseTracking"
+                    RowClass="@rowClass"
+                    RowStyle="@rowStyle"
+                    ShowHover="true"       
+                    AutoFit=true                                        
+                    RowSize="DataGridRowSize.Medium"
+                    ResizableColumns=true
+                    Pagination="@pagination">
+
+                        <SelectColumn TGridItem="CaseTracking"
+                        SelectMode="@Mode"
+                        SelectFromEntireRow="true"
+                        Property="@(e => e.Selected)"
+                        SelectAll="@(items.All(e => e.Selected))"
+                        SelectAllChanged="@(all => items.ToList().ForEach(p => p.Selected = (all == true)))"
+                        OnSelect="@((e) =>OnSelectOrder(e.Item,e.Selected))">
+                        </SelectColumn>
+
+                        <TemplateColumn Title="" Align="@Align.End" Width="160px">
+                            <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
+                            <FluentButton IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+                            <FluentButton IconEnd="@(new Icons.Regular.Size16.Image())" OnClick="@(() => ViewImageAsync(context))" />
+                        </TemplateColumn>
+
+
+                        <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Width="120px" Sortable="true" ></PropertyColumn>
+                        <PropertyColumn Title="Patient Name" Property="@(p => p.PatientName)" Width="200px" Sortable="true" />
+                        <PropertyColumn Title="Trans Date" Property="@(p => p.TransDate)" Format="MM/dd/yyyy" Sortable="true"  />                            
+                        <PropertyColumn Title="Rush Category" Property="@(p => p.RushCategory)" Sortable="true" />
+                        <PropertyColumn Title="Concern Issue" Property="@(p => p.ConcernIssue)" Sortable="true"  />
+                        <PropertyColumn Title="Technician Suggestion" Property="@(p => p.TechnicianSuggestion)" Sortable="true"  />
+                        <PropertyColumn Title="Response" Property="@(p => p.Response)" Sortable="true"  />
+                        <PropertyColumn Title="Date" Property="@(p => p.ResponseDate)" Format="MM/dd/yyyy" Sortable="true"  />
+                        <PropertyColumn Title="Lab Status" Property="@(p => p.LabStatus)" Sortable="true" />
+                        <PropertyColumn Title="TT Status" Property="@(p => p.FactoryStatus)" Sortable="true" />
+
+                    </FluentDataGrid>
+
+                    
+                </div>
+
+                </div>
+
+            }
+        </Panel1>
+
+        <Panel2>
+
+            <FluentToolbar>
+                <FluentLabel>Case: @Content.CaseNo </FluentLabel>
+                @*  <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddCommunicate">New Communicate</FluentButton> *@
+            </FluentToolbar>
+
+
+
+            @if (CommunicateContent.TransID != "")
+            {
+                <FluentTabs Style="width:100%" @bind-ActiveTabId="@activeid" OnTabChange="HandleOnTabChange">
+                    <FluentTab Id="tab-general">
+                        <Header>
+                            <FluentStack Orientation="Orientation.Horizontal" Style="@(activeid=="tab-general"?tabActiveStyle:tabStyle)">
+                                <FluentIcon Value="@(new Icons.Regular.Size20.Album())" />
+                                <FluentLabel Typo="Typography.H6">General</FluentLabel>
+                            </FluentStack>
+                        </Header>
+                        <Content>
+
+                            <CaseQuestionPanel Content="@CommunicateContent" CurrentUser="@CurrentUser"></CaseQuestionPanel>
+                        </Content>
+                    </FluentTab>
+                    <FluentTab Id="tab-images">
+                        <Header>
+                            <FluentStack Orientation="Orientation.Horizontal" Style="@(activeid=="tab-images"?tabActiveStyle:tabStyle)">
+                                <FluentIcon Value="@(new Icons.Regular.Size20.Album())" />
+                                <FluentLabel Typo="Typography.H6">Images</FluentLabel>
+                            </FluentStack>
+                        </Header>
+                        <Content>
+
+
+                            <FluentStack>
+
+                                <FluentInputFile Id="my-file-uploader"
+                                Mode="InputFileMode.SaveToTemporaryFolder"
+                                Multiple="true"
+                                MaximumFileCount="20"
+                                MaximumFileSize="@(10*1024*1024)"
+                                Accept="image/*"
+                                @bind-ProgressPercent="@ProgressPercent"
+                                OnCompleted="@OnCompletedAsync"
+                                Style="height: 50px;width:50px">
+                                    <ChildContent>
+                                        <label for="my-file-uploader">
+                                            <FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
+                                        </label>
+
+                                    </ChildContent>
+                                </FluentInputFile>
+
+
+                                @if (imageitems == null)
+                                {
+
+                                }
+                                else
+                                {
+                                    @foreach (var f in imageitems)
+                                    {
+                                        <FluentCard Width="300px" Height="300px">
+                                            <FluentStack Orientation="Orientation.Vertical">
+                                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End">
+                                                    <FluentButton IconStart="@(new Icons.Regular.Size16.ContentView())" OnClick="@(() => ShowPicture(f))"></FluentButton>
+                                                    <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteImage(f.RecID,f.FilePath))"></FluentButton>
+                                                </FluentStack>
+
+                                                <img src="/caseimages/@f.FilePath" width="250" height="200" />
+
+                                            </FluentStack>
+
+                                        </FluentCard>
+                                    }
+                                }
+
+
+
+                            </FluentStack>
+
+
+
+                        </Content>
+                    </FluentTab>
+                </FluentTabs>
+            }
+
+
+        </Panel2>
+    </FluentSplitter>
+</FluentStack>
+
+
+
+@code {
+
+
+    string? activeid = "tab-general";
+
+    string tabActiveStyle = "border: 1px solid var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;background-color:#EEEEEE";
+    string tabStyle = "border: 1px dotted var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;";
+
+    bool showPrint = false;
+
+    bool openActionMenu = false;
+
+    DateTime ? fromDate;
+    DateTime ? toDate;
+
+    [Parameter]
+    public CaseTracking Content { get; set; } = new();
+
+    Func<CaseTracking, string?> rowClass = x => x.Selected == true ? "highlighted" : null;
+    Func<CaseTracking, string?> rowStyle = x => x.FocusedRow == true ? "background-color: #a1d8f5" : null;
+
+    public CaseCommunicate CommunicateContent { get; set; } = new();
+
+    IQueryable<CaseTracking>? items;
+    IQueryable<LabInfo>? labs;
+    IEnumerable<LabInfo> SelectedLabs = Array.Empty<LabInfo>();
+    private void OnSearch(OptionsSearchEventArgs<LabInfo> e)
+    {
+        e.Items = labs.Where(culture =>
+            culture.LabName.Contains(e.Text, StringComparison.OrdinalIgnoreCase));
+    }
+
+    IQueryable<CaseTrackingTask>? taskItems;
+    public IQueryable<OrderFile>? imageitems = default!;
+    int ProgressPercent = 0;
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authStateTask { get; set; }
+
+    UserInfo? CurrentUser { get; set; } = new();
+
+    FluentTextField txtCaseNo;
+
+    string ErrorMessage ="";
+
+    bool openContextMenu = false;
+    string Search = "";
+
+
+    DataGridSelectMode Mode = DataGridSelectMode.Single;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        FontSize!.WithDefault("10pt");
+        
+        fromDate = DateTime.Now.AddDays(-30);
+        toDate = DateTime.Now;
+
+        var authState = await authStateTask;
+        var UserID = authState.User.Identity.Name;
+
+        CurrentUser = await userdb.GetUser(UserID);
+
+        labs = (await systemDB.GetAllLabs(0, "", "")).AsQueryable();
+
+
+        await LoadData();
+
+    }
+
+    private async Task LoadData()
+    {
+        var LabID = "";
+        if (SelectedLabs.FirstOrDefault() != null)
+        {
+            LabID = SelectedLabs.FirstOrDefault().DATAAREAID;
+        }
+
+        items = (await productionDB.GetCasesTracking(0, fromDate, toDate, Search,LabID)).AsQueryable();
+
+        if (items.FirstOrDefault() != null)
+        {
+            Content = items.FirstOrDefault()!;
+
+            await LoadCommunicate();
+
+        }
+    }
+
+    private async Task LoadCommunicate()
+    {        
+        var res = (await productionDB.GetCaseCommunicate(0,"", Content.TransID)).AsQueryable().FirstOrDefault()!;
+        if (res != null)
+        {
+            CommunicateContent = res;
+            await LoadImages(CommunicateContent.TransID);
+        }
+        else
+        {
+            CommunicateContent = new();
+        }
+    }
+
+
+    private async Task AddAsync()
+    {
+
+        var LabID = "";
+        if (SelectedLabs.FirstOrDefault() == null)
+        {
+            ToastService.ShowWarning("Please select a Lab");
+            return;
+        }
+
+        LabID = SelectedLabs.FirstOrDefault().DATAAREAID;
+
+        Content = new CaseTracking();
+        Content.UserID = CurrentUser!.EmplRefID;
+        Content.LabID = LabID;
+
+        var parameters = new DialogParameters
+                {
+                    Title = "Add New Case",
+                    PrimaryAction = "Yes",
+                    PrimaryActionEnabled = true,
+                    Width = "900px",
+                    Height = "600px",
+                    Modal = false,
+                };
+
+        var dialog = await DialogService.ShowDialogAsync<FormCaseTrackingInput>(Content, parameters);
+        var dialogResult = await dialog.Result;
+        await AddResult(dialogResult);
+    }
+    private async Task AddResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var itemRes = result.Data as CaseTracking;
+
+            if (itemRes is not null)
+            {                
+                //await productionDB.SaveCaseTracking(itemRes);              
+                await LoadData();
+            }
+
+        }
+    }
+
+    private async Task EditAsync(CaseTracking item)
+    {
+        Content = item;       
+        var parameters = new DialogParameters
+            {
+                Title = "Update Case",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,
+                Width = "900px",
+                Height = "600px",
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<FormCaseTrackingInput>(Content, parameters);
+        var dialogResult = await dialog.Result;
+        await UpdateResult(dialogResult);
+    }
+
+    private async Task UpdateResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var itemRes = result.Data as CaseTracking;
+
+            if (itemRes is not null)
+            {
+                await productionDB.SaveCaseTracking(itemRes);
+                await LoadData();
+            }
+
+        }
+    }
+
+    private async Task AddCommunicate()
+    {
+        await Task.Delay(500);
+        if (Content != null)
+        {
+            if (Content.RecID > 0)
+            {
+                CommunicateContent = new();                
+            }
+        }
+
+
+    }
+
+    private async Task SaveCommunicate(ChangeEventArgs e,string FieldName)
+    {
+        await Task.Delay(500);
+
+        CommunicateContent.TransID = Content.TransID;
+        CommunicateContent.UserID = CurrentUser.EmplRefID;
+
+        if (FieldName == "ConcernIssue")
+            CommunicateContent.ConcernIssue = e.Value.ToString();
+        if (FieldName == "TechnicianSuggestion")
+            CommunicateContent.TechnicianSuggestion = e.Value.ToString();
+        if (FieldName == "Response")
+            CommunicateContent.Response = e.Value.ToString();
+        if (FieldName == "ResponseDate")
+            CommunicateContent.ResponseDate = DateTime.Parse(e.Value.ToString());
+
+        if (FieldName == "LabStatus")
+            CommunicateContent.LabStatus = e.Value.ToString();
+        if (FieldName == "FactoryStatus")
+            CommunicateContent.FactoryStatus = e.Value.ToString();
+
+
+        var res = await productionDB.SaveCaseCommunicate(CommunicateContent);
+
+        if (CommunicateContent.RecID == 0)
+        {
+            if (res != null)
+            {
+                CommunicateContent = res;
+            }
+        }
+
+    }
+
+
+
+    private async Task DeleteAsync(CaseTracking item)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this Case?");
+        var result = await dialog.Result;
+
+        if(!result.Cancelled){
+            var res = await productionDB.DeleteCaseTracking(item.RecID);
+
+            if (res > 0)
+            {
+                await LoadData();                
+            }
+        }
+
+    }
+
+
+    private async Task DeleteOrderAsync()
+    {
+        IEnumerable<CaseTracking> SelectedItems = items.Where(p => p.Selected);
+        if (SelectedItems.FirstOrDefault() == null)
+        {
+            ToastService.ShowWarning("Please select cases");
+            return;
+        }
+
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete selected cases?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            foreach(var delItem in SelectedItems)
+            {
+                var item = delItem;                       
+                var res = await productionDB.DeleteCaseTracking(item.RecID);                  
+            }
+            await LoadData();
+        }
+
+    }
+
+    private async Task ClearSelectAsync()
+    {
+        await Task.Delay(500);     
+        await LoadData();
+    }
+
+    private async Task OnSelectOrder(CaseTracking item, bool Selected)
+    {
+
+        if (item != null)
+        {            
+            item.Selected = Selected;
+
+            foreach (var order in items)
+            {
+                order.FocusedRow = false;
+            }
+            item.FocusedRow = true;
+
+            Content = item;
+            imageitems = default;
+            await LoadCommunicate();
+
+            StateHasChanged();
+        }
+
+    }
+
+    private async Task DeleteTrackingTask(CaseTrackingTask item)
+    {
+
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete selected Task?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {            
+            var res = await productionDB.DeleteCaseTrackingTask(item.RecID);           
+
+        }
+    }
+
+    private async Task UpdateTrackingTask(CaseTrackingTask item)
+    {
+        await OpenInputTrackingTask(item);
+    }
+
+    private async Task AddTrackingTask()
+    {
+        if (Content == null)
+        {
+            return;
+        }
+
+        if (Content.RecID > 0)
+        {
+            var item = new CaseTrackingTask();
+            item.UserID = CurrentUser!.EmplRefID;
+            item.TransID = Content.TransID;
+            await OpenInputTrackingTask(item);
+        }
+    }
+
+    private async Task OpenInputTrackingTask(CaseTrackingTask item)
+    {
+
+        var parameters = new DialogParameters
+                {
+                    Title = "",
+                    PrimaryAction = "Yes",
+                    PrimaryActionEnabled = true,
+                    Width = "500px",
+                    Height = "500px",
+                    Modal = false,
+                };
+
+        var dialog = await DialogService.ShowDialogAsync<FormAssignCaseTask>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await saveTaskResult(dialogResult);
+
+
+    }
+
+    private async Task saveTaskResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var itemRes = result.Data as CaseTrackingTask;
+
+            if (itemRes is not null)
+            {
+                await productionDB.SaveCaseTrackingTask(itemRes);
+
+            }
+        }
+    }
+
+
+    public async Task ExportData()
+    {
+        var exportItems = items!.ToList();
+
+        using var workbook = new XLWorkbook();
+        var worksheet = workbook.Worksheets.Add("Data");
+
+        worksheet.Cell(1, 1).Value = "No";
+        worksheet.Cell(1, 2).Value = "CaseNo No";
+        worksheet.Cell(1, 3).Value = "Patient Name";
+        worksheet.Cell(1, 4).Value = "Date";
+        worksheet.Cell(1, 5).Value = "RushCategory";
+        worksheet.Cell(1, 6).Value = "Concern/Issue";
+        worksheet.Cell(1, 7).Value = "Technician Suggestion";
+        worksheet.Cell(1, 8).Value = "Response";
+        worksheet.Cell(1, 9).Value = "Lab Status";
+        worksheet.Cell(1, 10).Value = "TT Status";
+
+        worksheet.Range("A1:M1").Style.Font.Bold = true;
+        var startRow = 2;
+        foreach (var item in exportItems)
+        {
+            worksheet.Cell(startRow, 1).Value = startRow - 1;
+            worksheet.Cell(startRow, 2).Value = item.CaseNo;
+            worksheet.Cell(startRow, 3).Value = item.TransDate?.ToString("MM/dd/yyyy");
+            worksheet.Cell(startRow, 4).Value = item.PatientName;
+            worksheet.Cell(startRow, 5).Value = item.RushCategory;
+            worksheet.Cell(startRow, 6).Value = item.ConcernIssue;
+            worksheet.Cell(startRow, 7).Value = item.TechnicianSuggestion;
+            worksheet.Cell(startRow, 8).Value = item.Response;
+            worksheet.Cell(startRow, 9).Value = item.LabStatus;
+            worksheet.Cell(startRow, 10).Value = item.FactoryStatus;
+
+            startRow += 1;
+            // Add more properties as needed
+        }
+
+        worksheet.Columns().AdjustToContents();
+
+        using var stream = new MemoryStream();
+        workbook.SaveAs(stream);
+        stream.Seek(0, SeekOrigin.Begin);
+
+        var content = new byte[stream.Length];
+        await stream.ReadAsync(content, 0, (int)stream.Length);
+
+        var fileDate = DateTime.Now.ToString("yyMMddHHmmssttt");
+
+        await JS.InvokeVoidAsync("saveAsFile", "LabData" + fileDate + ".xlsx", Convert.ToBase64String(content));
+    }
+
+    FluentInputFileEventArgs[] Files = Array.Empty<FluentInputFileEventArgs>();
+
+    private async Task ShowPicture(OrderFile item)
+    {
+        var parameters = new DialogParameters
+            {
+                Title = "",
+                PrimaryAction = "Ok",
+                PrimaryActionEnabled = false,
+                Width = "90%",
+                Height = "90%",
+                Modal = true,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<PictureViewPanel>(item, parameters);
+    }
+
+    private async Task DeleteImage(int RecID, string FilePath)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this image?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await salesDB.DeleteFile(RecID);
+
+            if (res > 0)
+            {
+                string uploadsFolder = Path.Combine(_webHost.WebRootPath, "caseimages");
+                string filePath = Path.Combine(uploadsFolder, FilePath);
+
+                try
+                {
+                    File.Delete(filePath);
+                }
+                catch
+                {
+
+                }
+                await LoadImages(CommunicateContent!.TransID);
+            }
+        }
+    }
+    private async Task OnCompletedAsync(IEnumerable<FluentInputFileEventArgs> files)
+    {
+
+        if (CommunicateContent.TransID == "")
+        {
+            return;
+        }
+
+
+        Files = files.ToArray();
+
+        // For the demo, delete these files.
+        foreach (var file in Files)
+        {
+
+            string uniqueFileName = null;
+
+            string uploadsFolder = Path.Combine(_webHost.WebRootPath, "caseimages");
+            uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetExtension(file.Name);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            // using (var fileStream = new FileStream(filePath, FileMode.Create))
+            // {
+            file.LocalFile?.CopyTo(filePath);
+            //}
+            var PhotoUrl = uniqueFileName;
+
+            await salesDB.AddFile(CommunicateContent.TransID, uniqueFileName, 0);
+            await LoadImages(CommunicateContent.TransID);
+            file.LocalFile?.Delete();
+        }
+
+        // Wait 3 seconds before to reset the progress bar.
+        await Task.Delay(3000);
+        ProgressPercent = 0;
+    }
+
+    private async Task LoadImages(string OrderID)
+    {
+        imageitems = (await salesDB.GetFiles(OrderID, 0)).AsQueryable();
+    }
+    private async Task HandleOnTabChange(FluentTab tab)
+    {
+
+    }
+
+    private async Task ViewImageAsync(CaseTracking caseTracking)
+    {
+
+        var item = (await productionDB.GetCaseCommunicate(0, "", caseTracking.TransID)).AsQueryable().FirstOrDefault();
+
+        if (item != null)
+        {
+            var parameters = new DialogParameters
+                {
+                    Title = "",
+                    PrimaryAction = "Ok",
+                    PrimaryActionEnabled = false,
+                    Width = "70%",
+                    Height = "600px",                   
+                    Modal = true,
+                };
+
+            var dialog = await DialogService.ShowDialogAsync<ViewImagesListPanel>(item, parameters);
+        }
+        else
+        {
+            ToastService.ShowWarning("No Off Hold information in this case");
+        }
+    }
+
+}

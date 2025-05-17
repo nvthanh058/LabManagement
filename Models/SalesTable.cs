@@ -23,9 +23,10 @@
         public DateTime? ShippingDateRequested { get; set; } = DateTime.Now;
         public DateTime? ShippingDateConfirmed { get; set; } = DateTime.Now;
         public DateTime? CustReqShipDate { get; set; } = DateTime.Now;
-        public int LabpanNum { get; set; } = 0;
+        public string LabpanNum { get; set; } = "";
         public string BoxRef { get; set; } = "";
-        
+        public string Assignment { get; set; } = "";
+
         [ModelAttribute("NotTableField")]
         public string SalesStatusName { get; set; } = "";
         public DateTime? CreatedDateTime { get; set; } = DateTime.Now;
@@ -34,11 +35,15 @@
         public string DATAAREAID { get; set; } = "";
 
         [ModelAttribute("NotTableField")]
+        public string LabName { get; set; } = "";
+
+        [ModelAttribute("NotTableField")]
         public bool Selected { get; set; } = false;
         public bool ShowImages { get; set; } = true;
         public bool ShowFiles { get; set; } = true;
         public bool ReadOnly { get; set; } = false;
-
+        public bool FocusedRow { get; set; } = false;
+        
         public string Image64 { get; set; } = "";
     }
 }

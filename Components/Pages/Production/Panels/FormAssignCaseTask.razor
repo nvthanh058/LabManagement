@@ -1,0 +1,108 @@
+﻿@attribute [Authorize]
+@implements IDialogContentComponent<CaseTrackingTask>
+
+@inject IUserInfoResposity userDB
+@inject IProductionResposity productionDB
+
+<!-- Header -->
+<FluentDialogHeader ShowDismiss="true">
+
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size24.PersonInfo())" />
+        <FluentLabel Typo="Typography.PaneHeader">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<!-- Body -->
+<FluentDialogBody>
+
+    <FluentLabel Color="Color.Warning">@ErrorMessage</FluentLabel>
+
+        <FluentStack Orientation="Orientation.Vertical">
+            <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                <FluentLabel Style="width:100px">Select Task</FluentLabel>
+                <FluentSelect Disabled="@(Content.RecID>0?true:false)" TOption="ProductLine"
+                              Placeholder="--Select Task--"
+                              Items="@prodLines"
+                              Width="150px"
+                              Height="200px"
+                              OptionValue="@(i => i.LineID)"
+                              OptionText="@(i => i.LineName)"
+                              @bind-Value="@Content.LineID">
+                </FluentSelect>
+            </FluentStack>
+            <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                <FluentLabel Style="width:100px">Responsibility</FluentLabel>
+                <FluentTextField @bind-Value="@Content.Responsibility"> </FluentTextField>
+            </FluentStack>
+            <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                <FluentLabel Style="width:100px">Task Notes</FluentLabel>
+                <FluentTextField @bind-Value="@Content.LocationNotes"> </FluentTextField>
+            </FluentStack>
+
+        <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+            <FluentLabel Style="width:100px">Status</FluentLabel>
+            <FluentSelect TOption="CaseStatus"
+                          Placeholder="--Status--"
+                          Items="@lineStatus"
+                          Width="150px"
+                          Height="200px"
+                          OptionValue="@(i => i.StatusID)"
+                          OptionText="@(i => i.StatusName)"
+                          @bind-Value="@Content.LineStatus">
+            </FluentSelect>
+
+        </FluentStack>
+
+        </FluentStack>
+
+  
+</FluentDialogBody>
+
+<!-- Footer -->
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Accent"
+                  OnClick="@SaveAsync" IconStart="@(new Icons.Regular.Size24.Save())">Save</FluentButton>
+
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync" IconStart="@(new Icons.Regular.Size24.ArrowEnterLeft())"> Cancel</FluentButton>
+</FluentDialogFooter>
+
+@code {
+  
+    IQueryable<CaseStatus>? lineStatus;   
+    IQueryable<ProductLine>? prodLines;
+    string ErrorMessage = "";
+    
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    [Parameter]
+    public CaseTrackingTask Content { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        prodLines = (await productionDB.GetAllProdLine(0, "", "DESIGN", "")).AsQueryable();
+        lineStatus = (await productionDB.GetCaseStatus(2)).AsQueryable();
+    }
+
+    private async Task SaveAsync()
+    {
+        if (Content.LineID == "")
+        {
+            ErrorMessage = "You should select Task";
+            return;
+        }
+        
+        await Dialog.CloseAsync(Content);
+
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+
+
+}

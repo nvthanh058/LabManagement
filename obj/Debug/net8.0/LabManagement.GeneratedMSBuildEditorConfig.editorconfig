@@ -28,6 +28,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcRGFzaGJvYXJkTGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/GitLab/LabManagement/Components/Layout/HeaderLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcSGVhZGVyTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Layout/HomeAppBar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcSG9tZUFwcEJhci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Layout/HomeLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcSG9tZUxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Layout/HomeMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcSG9tZU1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/GitLab/LabManagement/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -80,12 +96,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50UmVjZWl2YWJsZVxQYW5lbHNcSW5wdXRTYWxlTGluZXNQYW5lbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GitLab/LabManagement/Components/Pages/AccountReceivable/Panels/PictureViewPanel.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50UmVjZWl2YWJsZVxQYW5lbHNcUGljdHVyZVZpZXdQYW5lbC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/GitLab/LabManagement/Components/Pages/AccountReceivable/Panels/PrintViewSample.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50UmVjZWl2YWJsZVxQYW5lbHNcUHJpbnRWaWV3U2FtcGxlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/AccountReceivable/Panels/RXPrintTemplate.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50UmVjZWl2YWJsZVxQYW5lbHNcUlhQcmludFRlbXBsYXRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/GitLab/LabManagement/Components/Pages/AccountReceivable/Panels/SaleFilesPanel.razor]
@@ -144,6 +160,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDYXRlZ29yaWVzXFVuaXRzUGFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/GitLab/LabManagement/Components/Pages/CommonForms/AISample.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21tb25Gb3Jtc1xBSVNhbXBsZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/GitLab/LabManagement/Components/Pages/CommonForms/CustomerPage.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21tb25Gb3Jtc1xDdXN0b21lclBhZ2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -162,6 +182,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/GitLab/LabManagement/Components/Pages/CommonForms/PrintBarcodePage.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb21tb25Gb3Jtc1xQcmludEJhcmNvZGVQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Controls/BarcodeDesign.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb250cm9sc1xCYXJjb2RlRGVzaWduLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Controls/MyButton.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb250cm9sc1xNeUJ1dHRvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Controls/MyDatePicker.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb250cm9sc1xNeURhdGVQaWNrZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Controls/MyLabel.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb250cm9sc1xNeUxhYmVsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Controls/PictureViewPanel.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb250cm9sc1xQaWN0dXJlVmlld1BhbmVsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/GitLab/LabManagement/Components/Pages/Controls/TeethComponent.razor]
@@ -184,8 +224,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GitLab/LabManagement/Components/Pages/LocationPage.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMb2NhdGlvblBhZ2UucmF6b3I=
+[D:/GitLab/LabManagement/Components/Pages/Inventory/MaterialRequisitionPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJbnZlbnRvcnlcTWF0ZXJpYWxSZXF1aXNpdGlvblBhZ2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/GitLab/LabManagement/Components/Pages/PayrollSetup/FixedPayCodePage.razor]
@@ -200,12 +240,40 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQYXlyb2xsU2V0dXBcUGF5Q29kZVBhZ2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/GitLab/LabManagement/Components/Pages/Production/CaseTrackingPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXENhc2VUcmFja2luZ1BhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/GitLab/LabManagement/Components/Pages/Production/Panels/AssignProductPanel.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXFBhbmVsc1xBc3NpZ25Qcm9kdWN0UGFuZWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/GitLab/LabManagement/Components/Pages/Production/Panels/CaseQuestionImagesPanel.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXFBhbmVsc1xDYXNlUXVlc3Rpb25JbWFnZXNQYW5lbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Production/Panels/CaseQuestionPanel.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXFBhbmVsc1xDYXNlUXVlc3Rpb25QYW5lbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Production/Panels/FormAssignCaseTask.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXFBhbmVsc1xGb3JtQXNzaWduQ2FzZVRhc2sucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Production/Panels/FormCaseTrackingInput.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXFBhbmVsc1xGb3JtQ2FzZVRyYWNraW5nSW5wdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Production/Panels/PrintWorkOrderPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXFBhbmVsc1xQcmludFdvcmtPcmRlclBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/GitLab/LabManagement/Components/Pages/Production/Panels/ProductOrderPanel.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXFBhbmVsc1xQcm9kdWN0T3JkZXJQYW5lbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Production/Panels/ViewImagesListPanel.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXFBhbmVsc1xWaWV3SW1hZ2VzTGlzdFBhbmVsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/GitLab/LabManagement/Components/Pages/Production/Panels/WorkMessagePanel.razor]
@@ -230,6 +298,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/GitLab/LabManagement/Components/Pages/Production/WorkOrderPage.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXFdvcmtPcmRlclBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Reports/IncomingCasesPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZXBvcnRzXEluY29taW5nQ2FzZXNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Reports/LocationPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZXBvcnRzXExvY2F0aW9uUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Reports/TasksReportPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZXBvcnRzXFRhc2tzUmVwb3J0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/SystemPages/LabConfig.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTeXN0ZW1QYWdlc1xMYWJDb25maWcucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/GitLab/LabManagement/Components/Pages/SystemPages/OrganizationPage.razor]

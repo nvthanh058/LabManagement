@@ -184,7 +184,6 @@ D:\GitLab\LabManagement\obj\Debug\net9.0\compressed\dko6y7plta-j4a4u2uj29.gz
 D:\GitLab\LabManagement\obj\Debug\net9.0\compressed\1j8oabzfj7-qz6clc5837.gz
 D:\GitLab\LabManagement\obj\Debug\net9.0\compressed\0g0tdqq8mx-ody88ncx6z.gz
 D:\GitLab\LabManagement\obj\Debug\net9.0\compressed\fjksqlyngd-gr22aexx73.gz
-D:\GitLab\LabManagement\obj\Debug\net9.0\compressed\ouoqdom44t-64jpa8c1ly.gz
 D:\GitLab\LabManagement\obj\Debug\net9.0\compressed\28c194a7bj-fows6hrcay.gz
 D:\GitLab\LabManagement\obj\Debug\net9.0\compressed\08u9w1b68e-tj6bpobdv2.gz
 D:\GitLab\LabManagement\obj\Debug\net9.0\compressed\viu6m92v0x-h8erx7pruz.gz
@@ -212,3 +211,10 @@ D:\GitLab\LabManagement\obj\Debug\net9.0\refint\LabManagement.dll
 D:\GitLab\LabManagement\obj\Debug\net9.0\LabManagement.pdb
 D:\GitLab\LabManagement\obj\Debug\net9.0\LabManagement.genruntimeconfig.cache
 D:\GitLab\LabManagement\obj\Debug\net9.0\ref\LabManagement.dll
+D:\GitLab\LabManagement\obj\Debug\net9.0\compressed\ouoqdom44t-n84huig9k5.gz
+D:\GitLab\LabManagement\bin\Debug\net9.0\Humanizer.dll
+D:\GitLab\LabManagement\bin\Debug\net9.0\Json.More.dll
+D:\GitLab\LabManagement\bin\Debug\net9.0\JsonPointer.Net.dll
+D:\GitLab\LabManagement\bin\Debug\net9.0\JsonSchema.Net.dll
+D:\GitLab\LabManagement\bin\Debug\net9.0\JsonSchema.Net.Generation.dll
+D:\GitLab\LabManagement\bin\Debug\net9.0\Mscc.GenerativeAI.dll

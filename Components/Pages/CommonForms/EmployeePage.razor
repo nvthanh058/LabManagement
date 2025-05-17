@@ -1,4 +1,5 @@
 ﻿@page "/employee"
+@attribute [Authorize]
 @using LabManagement.Components.Pages.CommonForms.Panels
 
 @rendermode InteractiveServer
@@ -13,7 +14,7 @@
 @if(ShowList==true)
 {
 
-    <div style="height: 600px; overflow:auto;" tabindex="-1">
+    <div style="height: 100%; overflow:auto;" tabindex="-1">
 
     <FluentStack Orientation="Orientation.Vertical" Width="100%">
 
@@ -39,6 +40,7 @@
                 TGridItem="Employee"
                 ResizableColumns=true
                 ShowHover="true"
+                Style="font-size:10pt;"
                 HeaderCellAsButtonWithMenu="true"
                                 RowSize="DataGridRowSize.Medium"
                 Pagination="@pagination">
@@ -60,9 +62,9 @@
 
                     </TemplateColumn>
 
-                    <PropertyColumn Width="80px" Property="@(p => p.EmplID)" Sortable="true" />
+                    <PropertyColumn Width="80px" Property="@(p => p.EmplID)" InitialSortDirection=SortDirection.Ascending  Sortable="true" />
 
-                    <PropertyColumn Width="250px" Property="@(c => c.FullName)" InitialSortDirection=SortDirection.Descending Sortable="true" Comparer="@StringLengthComparer.Instance" Filtered="!string.IsNullOrWhiteSpace(nameFilter)">
+                    <PropertyColumn Width="250px" Property="@(c => c.FullName)"  Sortable="true" Comparer="@StringLengthComparer.Instance" Filtered="!string.IsNullOrWhiteSpace(nameFilter)">
                         <ColumnOptions>
                             <div class="search-box">
                                 <FluentSearch type="search" Autofocus=true @bind-Value=nameFilter @oninput="HandleUserNameFilter" AfterBindValue="HandleClear" Placeholder="employee name..." />
@@ -245,7 +247,7 @@ else{
     bool SelectFromEntireRow = true;
     DataGridSelectMode Mode = DataGridSelectMode.Single;
 
-    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
 
 
     int ProgressPercent = 0;

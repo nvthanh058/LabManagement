@@ -48,7 +48,7 @@ builder.Services.AddTransient<IFixedPayCodeResposity, FixedPayCodeResposity>();
 builder.Services.AddTransient<IProductResposity, ProductResposity>();
 builder.Services.AddTransient<ISalesOrderResposity, SalesOrderResposity>();
 builder.Services.AddTransient<IProductionResposity, ProductionResposity>();
-
+builder.Services.AddTransient<ISystemResposity, SystemResposity>();
 builder.Services.AddTransient<IDashboardResposity, DashboardResposity>();
 builder.Services.AddTransient<IFileOrderResposity, FileOrderResposity>();
 

@@ -14,6 +14,7 @@
         <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.TableArrowUp())" OnClick="@ExportAsync">Export</FluentButton>
     </FluentStack>
 <FluentDataGrid Items="@items"
+                    Style="font-size:10pt;"
                 TGridItem="ProductionTask"
                 ResizableColumns=true
                 ShowHover="true"

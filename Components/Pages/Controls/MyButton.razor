@@ -1,0 +1,12 @@
+﻿@inherits FluentButton
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.Style = "font-size:10pt";
+    }
+}

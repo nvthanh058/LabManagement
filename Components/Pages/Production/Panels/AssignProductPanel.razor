@@ -1,4 +1,5 @@
-﻿@implements IDialogContentComponent<ProductionTask>
+﻿@attribute [Authorize]
+@implements IDialogContentComponent<ProductionTask>
 @inject IEmployeeResposity employeeDB
 @inject IProductionResposity productionDB
 
@@ -23,10 +24,11 @@
     Placeholder="search"
     OnOptionsSearch="@OnSearchAsync"
     MaximumSelectedOptions="1"
+    MaximumOptionsSearch="int.MaxValue"
     AutoComplete="off"
     KeepOpen="true"
     OptionText="@(item => item.FullName)"
-    OptionStyle="min-height: 40px;"
+    OptionStyle="min-height: 40px;"    
     @bind-SelectedOptions="@SelectedEmpl">
 
         <LabelTemplate>        
@@ -80,11 +82,14 @@
     </FluentAutocomplete>
 
 
-    <FluentSelect TOption="ProductLine" Label="Production Line"
+    <FluentSelect TOption="ProductLine" Label="Production Line" Disabled="@(Content.RecID>0?true:false)"
     Placeholder="Select a Production Line" Items="@prodlineItems"
-     Width="200px" Height="250px" OptionValue="@(i => i.LineID)" OptionText="@(i => i.LineName)" @bind-Value="@LineID">
+    Width="200px" Height="250px" OptionValue="@(i => i.LineID)" OptionText="@(i => i.LineName)" 
+    @bind-Value="@Content.LineID">
 
     </FluentSelect>
+
+    <FluentDatePicker @bind-Value="@Content.TransDate"></FluentDatePicker>
 
     <FluentTextArea Label="Notes" @bind-Value="@Notes" Cols="80" Resize="TextAreaResize.Both"></FluentTextArea>
 
@@ -103,7 +108,7 @@
 </FluentDialogFooter>
 
 @code {
-    public string LineID { get; set; } = "";
+
     public string Notes { get; set; } = "";
     public string Messages { get; set; } = "";
     public int JobType { get; set; } = 0;
@@ -125,12 +130,18 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var items = (await employeeDB.GetAll("", "")).AsQueryable();
+        // if (Content.RecID > 0)
+        // {
+            SelectedEmpl = items!.Where(x => x.EmplRefID == Content.EmplRefID);
+        //}
+        
         await LoadData();
     }
 
     protected async Task LoadData()
     {        
-        prodlineItems = (await productionDB.GetAllProdLine(0,"", "")).AsQueryable();
+        prodlineItems = (await productionDB.GetAllProdLine(0,"","", "")).AsQueryable();
     }
 
     private async Task SaveAsync()
@@ -139,34 +150,33 @@
         if(employee!=null)
         {
 
-            var prodTask = await productionDB.GetProductionTaskStatus(Content.TaskRefID,"");
-            if(prodTask!=null){
+            //var prodTask = await productionDB.GetProductionTaskStatus(Content.TaskRefID,"");
+            //if(prodTask!=null){
 
-                if (prodTask.ProdStatus == 0){
-                    if (prodTask.EmplRefID == employee.EmplRefID)
-                    {
-                        Messages = "This order have been assign to selected Technician";
-                        return;
-                    }
-                    else
-                    {
-                        Content.RecID = prodTask.RecID;
-                    }
-                }
+            //     if (prodTask.ProdStatus == 0){
+            //         if (prodTask.EmplRefID == employee.EmplRefID)
+            //         {
+            //             Messages = "This order have been assign to selected Technician";
+            //             return;
+            //         }
+            //         else
+            //         {
+            //             Content.RecID = prodTask.RecID;
+            //         }
+            //     }
 
-                if (prodTask.ProdStatus == 1)
-                {
-                    Messages = "This order in processed can not assign";
-                    return;
-                }              
-            }
+            //     if (prodTask.ProdStatus == 1)
+            //     {
+            //         Messages = "This order in processed can not assign";
+            //         return;
+            //     }              
+            // }
 
-            Content.EmplRefID = employee.EmplRefID;
-            Content.LineID = LineID;
+            Content.EmplRefID = employee.EmplRefID;            
             Content.Notes = Notes;
             Content.JobType = JobType;
 
-            if(LineID=="")
+            if (Content.LineID == "")
             {
                 Messages = "Please select a product line";
                 return;
@@ -194,7 +204,7 @@
     {
         var items = (await employeeDB.GetAll("", "")).AsQueryable();
         e.Items = items.Where(i => i.FullName.StartsWith(e.Text, StringComparison.OrdinalIgnoreCase))
-                             .OrderBy(i => i.FullName);
+                             .OrderBy(i => i.EmplID);
     }
 
 }

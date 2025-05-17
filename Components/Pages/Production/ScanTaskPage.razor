@@ -2,6 +2,7 @@
 @attribute [Authorize]
 @rendermode InteractiveServer
 @inject IProductionResposity productionDB
+@inject ISalesOrderResposity salesDB
 @inject IEmployeeResposity employeeDB
 @inject IUserInfoResposity userDB
 @inject IDialogService DialogService
@@ -16,7 +17,7 @@
 
     <FluentSplitter Style="width:100%;height:100%" Orientation="Orientation.Horizontal" BarSize="6" Panel1Size="10%" Panel2Size="auto">
         <Panel1>
-           
+
                 <FluentListbox Style="padding:5px;" Items="@lineitems"
                                OptionValue="@(i => i.LineID)"
                                @bind-SelectedOption=@selectedLine>
@@ -25,17 +26,27 @@
                         <FluentLabel @onclick="@(() => LoadTask(@context.LineID))">@context.LineName</FluentLabel>
                     </OptionTemplate>
                 </FluentListbox>
-          
-                           
-           
+
+
+
         </Panel1>
         <Panel2 >
             <FluentStack Orientation="Orientation.Vertical" VerticalGap="10" style="overflow:hidden">
 
-                <FluentStack Style="margin-left:10px" HorizontalGap="10" Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%" HorizontalAlignment="HorizontalAlignment.Start">
+                <FluentStack HorizontalGap="10" Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="90%" HorizontalAlignment="HorizontalAlignment.Start">
 
-                    <FluentTextField Label="Case No" @ref="txtCaseNo" @bind-Value="@CaseNo" @onkeydown="@ProcessCaseNo" AutoComplete="Off"></FluentTextField>
-                    <FluentTextField Label="TechID" @ref="txtTechID" @bind-Value="@TechID" @onkeydown="@ProcessTech" AutoComplete="Off"></FluentTextField>
+                    <FluentAutocomplete TOption="ProdTable"
+                                        AutoComplete="off"
+                                        Width="100%"
+                                        OnOptionsSearch="OnSearchCases"
+                                        Placeholder="Select Cases"
+                                        MaximumOptionsSearch="int.MaxValue"
+                                        MaximumSelectedOptions="1"
+                                        Virtualize="true"
+                                        OptionText="@(item => $"{item.CaseNo}")"
+                                        @bind-SelectedOptions="@SelectedSearchCases" />
+
+                    
                     <FluentAutocomplete Id="my-customized"
                     @ref="EmployeeList"
                     TOption="Employee"
@@ -47,9 +58,7 @@
                     KeepOpen="true"
                     OptionText="@(item => item.FullName)"
                     OptionStyle="min-height: 40px;"
-                    @bind-SelectedOptions="@SelectedEmpl"
-                                        @bind-SelectedOptions:after="@AddTech">
-
+                    @bind-SelectedOptions="@SelectedEmpl">
 
                         @* Template used with each Selected items *@
                         <SelectedOptionTemplate>
@@ -95,11 +104,15 @@
                             }
                         </FooterContent>
                     </FluentAutocomplete>
+
+
+                    <FluentButton IconStart="@(new Icons.Regular.Size20.AddCircle())" OnClick="@ProcessCaseNo">Add Task</FluentButton>
                 </FluentStack>
 
                 <FluentDataGrid Items="@taskitems"
-                    ResizableColumns="true"
-                                RowSize="DataGridRowSize.Medium"
+                ResizableColumns="true"
+                                Style="font-size:10pt;"
+                RowSize="DataGridRowSize.Medium"
                 TGridItem="ProductionTask">
                     <TemplateColumn Title="" Width="60px">
                         @if (context.ProdStatus == 0 && context.EmplRefID != "")
@@ -154,6 +167,8 @@
 </FluentStack>
 
 @code {
+    DateTime? fromDate = DateTime.Now;
+    DateTime? toDate = DateTime.Now;
 
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
@@ -162,7 +177,18 @@
     string TechID = "";
     string TechRefID = "";
 
-    FluentTextField txtCaseNo;
+    IQueryable<ProdTable>? searchCases;
+    IEnumerable<ProdTable> SelectedSearchCases = Array.Empty<ProdTable>();
+    private void OnSearchCases(OptionsSearchEventArgs<ProdTable> e)
+    {
+        e.Items = searchCases.Where(culture =>
+            culture.CaseNo.Contains(e.Text, StringComparison.OrdinalIgnoreCase));
+
+
+
+    }
+
+
     FluentTextField txtTechID;
 
     IQueryable<ProductionTask>? taskitems;
@@ -174,13 +200,30 @@
     {
         await Task.Delay(500);
 
+        fromDate = DateTime.Now.AddDays(-10);
+        toDate = DateTime.Now;
+
         var authState = await authenticationStateTask;
         var userName = authState.User.Identity.Name;
 
         CurrentUser = await userDB.GetUser(userName);
 
+        var SalesList = "";
+        if (SelectedSearchCases.FirstOrDefault() != null)
+        {
+            SalesList = "";
+            foreach (var item in SelectedSearchCases)
+            {
+                SalesList = SalesList + item.SalesID + ",";
+            }
+            SalesList = SalesList.Trim(',');
 
-        lineitems = (await productionDB.GetAllProdLine(0,"","")).AsQueryable();
+        }
+
+
+        searchCases = (await salesDB.GetProdOrders(0, SalesList, "", fromDate?.ToString("yyyy-MM-dd"), toDate?.ToString("yyyy-MM-dd"), "")).AsQueryable();
+
+        lineitems = (await productionDB.GetAllProdLine(0,"","","")).AsQueryable();
         await LoadTask("");
     }
 
@@ -192,39 +235,30 @@
 
     private ProdTable ScanProduct = default!;
 
-    private async Task ProcessCaseNo(KeyboardEventArgs e)
+    private async Task ProcessCaseNo()
     {
-        if (e.Code == "Enter" || e.Code == "NumpadEnter")
-        {           
-            if (selectedLine == null)
-            {
-                //var dialog = await DialogService.ShowWarningAsync("You should select a production line");
-
-                ToastService.ShowWarning("You should select a production line");
-                txtCaseNo.FocusAsync();
-                return;
-            }
-
-            ScanProduct = await productionDB.GetProductOrder("", CaseNo);
-
-            if (ScanProduct == null)
-            {
-                //var dialog = await DialogService.ShowWarningAsync("This case number not in system");
-                ToastService.ShowWarning("This case number not in system");
-                txtCaseNo.FocusAsync();
-                return;
-            }
-
-            if (SelectedEmpl.ToList().Count == 0)
-            {
-                //var dialog = await DialogService.ShowWarningAsync("You should select a technician");
-                ToastService.ShowWarning("You should select a technician");
-                txtTechID.FocusAsync();
-                return;
-            }
-
-            await InsertTask();
+                 
+        if (selectedLine == null)
+        {                
+            ToastService.ShowWarning("You should select a production line");                
+            return;
         }
+
+        if (SelectedSearchCases.FirstOrDefault() == null)
+        {                
+            ToastService.ShowWarning("Please select a case#");                
+            return;
+        }
+
+        if (SelectedEmpl.ToList().Count == 0)
+        {
+            ToastService.ShowWarning("You should select a technician");
+            txtTechID.FocusAsync();
+            return;
+        }
+
+        await InsertTask();
+        
     }
 
     private async Task AddTech()
@@ -237,29 +271,7 @@
             await InsertTask();
         }
     }
-
-    private async Task ProcessTech(KeyboardEventArgs e)
-    {
-        await Task.Delay(500);
-        var empl = (await employeeDB.GetAll(TechID, "")).AsQueryable().FirstOrDefault();
-
-        if(TechID==""){
-            ToastService.ShowWarning("You should select a valid technician");
-            txtTechID.FocusAsync();
-            return;
-        }
-
-        if(empl==null){
-            ToastService.ShowWarning("You should select a valid technician");
-            txtTechID.FocusAsync();
-            return;
-        }
-        TechID = empl.EmplID;
-        TechRefID = empl.EmplRefID;
-
-        await InsertTask();
-    }
-
+   
     private async Task InsertTask()
     {
 
@@ -267,20 +279,22 @@
         {
 
             var task = new ProductionTask();
-            task.TaskRefID = ScanProduct.INVENTTRANSID;
-            task.CaseNo = CaseNo;
-            task.EmplRefID = TechRefID;
+
+            task.TaskRefID = SelectedSearchCases.FirstOrDefault()!.INVENTTRANSID;
+            task.CaseNo = SelectedSearchCases.FirstOrDefault()!.CaseNo;
+            task.EmplRefID = SelectedEmpl.FirstOrDefault().EmplRefID;
             task.LineID = selectedLine.LineID;
             task.JobType = 0;
             task.UserRefID = CurrentUser.EmplRefID;
 
             var res = await productionDB.SaveAssignProductTask(task);
             await LoadTask(selectedLine.LineID);
+
             CaseNo = "";
             TechID = "";
-            TechRefID = "";
-            txtCaseNo.FocusAsync();
+            TechRefID = "";            
             SelectedEmpl = default!;
+            SelectedSearchCases = default!;
         }
 
     }
@@ -319,7 +333,7 @@
         if (!result.Cancelled)
         {
             var res = await productionDB.DeleteProductTask(item);
-            await LoadTask(selectedLine.LineID);
+            await LoadTask(item.LineID);
         }
     }
 

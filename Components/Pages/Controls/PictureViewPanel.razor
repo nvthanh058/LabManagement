@@ -1,0 +1,101 @@
+﻿@implements IDialogContentComponent<OrderFile>
+@inject ISalesOrderResposity context
+@inject IJSRuntime JS
+
+<FluentDialogHeader ShowDismiss="true">
+
+    <FluentButton IconStart="@(new Icons.Regular.Size20.ArrowStepInLeft())" Appearance="Appearance.Accent" OnClick="@PreviousImage">Previous</FluentButton>
+    <FluentButton IconStart="@(new Icons.Regular.Size20.ArrowStepInRight())"  Appearance="Appearance.Accent" OnClick="@NextImage">Next</FluentButton>
+
+</FluentDialogHeader>
+<FluentStack Orientation="Orientation.Vertical">
+    <div style="height: 98%;width:98%; overflow-x: scroll; overflow-y: scroll;">
+        <img src="/caseimages/@Content.FilePath" height="@imageHeight" />
+    </div>
+</FluentStack>
+
+<FluentDialogFooter>
+
+</FluentDialogFooter>
+
+@code {
+
+    public int windowHeight, windowWidth;
+    public int imageHeight;
+
+    public class WindowDimensions
+    {
+        public int Width { get; set; }
+        public int Height { get; set; }
+    }
+
+    [Parameter]
+    public OrderFile Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    public IQueryable<OrderFile>? imageitems = default!;
+
+    public int CurrentIndex = 0;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+        await GetWindowSize();
+        imageitems = (await context.GetFiles(Content.OrderID, 0)).AsQueryable();
+
+        CurrentIndex = GetIndex(Content.RecID);
+        imageHeight = windowHeight * 70 / 100;
+    }
+
+    private async Task GetWindowSize()
+    {
+        var dimension = await JS.InvokeAsync<WindowDimensions>("getWindowSize");
+        windowHeight = dimension.Height;
+        windowWidth = dimension.Width;
+    }
+
+
+    private int GetIndex(int ID)
+    {
+        var i = 0;
+        foreach(var item in imageitems)
+        {
+            if (item.RecID == ID)
+            {
+                return i;
+            }
+            i++;
+        }
+        return i;
+    }
+
+    private async Task NextImage()
+    {
+        await Task.Delay(200);
+        if (CurrentIndex < imageitems.ToList().Count-1)
+        {
+            CurrentIndex += 1;
+            Content = imageitems!.ToList()[CurrentIndex];
+        }
+    }
+    private async Task PreviousImage()
+    {
+        await Task.Delay(200);
+        if (CurrentIndex >0)
+        {
+            CurrentIndex -= 1;
+            Content = imageitems!.ToList()[CurrentIndex];
+        }
+    }
+
+    private async Task SaveAsync()
+    {
+        await Dialog.CloseAsync(Content);
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+}

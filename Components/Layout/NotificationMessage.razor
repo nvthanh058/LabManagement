@@ -1,4 +1,5 @@
-﻿@implements IDisposable
+﻿@attribute [Authorize]
+@implements IDisposable
 @inject IDialogService DialogService
 @inject IMessageService MessageService
 @inject IProductionResposity productionDB
@@ -37,8 +38,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        items = (await productionDB.GetTaskMessagesNotify(CurrentUser.EmplRefID)).AsQueryable();
-        counter = items.Count();
+         items = (await productionDB.GetTaskMessagesNotify(CurrentUser.EmplRefID)).AsQueryable();
+         counter = items.Count();
     }
      
     int counter = 0;

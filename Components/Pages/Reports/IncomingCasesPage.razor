@@ -1,0 +1,185 @@
+﻿@page "/incoming"
+@using ClosedXML.Excel
+@attribute [Authorize]
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+
+@inject IDialogService DialogService
+@inject ISalesOrderResposity db
+@inject ICustomerResposity customerdb
+@inject IUserInfoResposity userdb
+@inject IToastService ToastService
+@inject NavigationManager navigationManager
+
+
+
+                <FluentStack Orientation="Orientation.Horizontal" Style="height:48px" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                    <FluentDatePicker Label="From Date" Style="width:120px" @bind-Value="@orderView!.fromDate"></FluentDatePicker>
+                    <FluentDatePicker Label="To Date" Style="width:120px" @bind-Value="@orderView!.toDate"></FluentDatePicker>
+                    <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
+                    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Search())" OnClick="@LoadData">Load</FluentButton>
+                     <FluentButton IconStart="@(new Icons.Regular.Size20.ArrowExportUp())" OnClick="@ExportData">Export</FluentButton>
+
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+                    
+                     <FluentPaginator State="@pagination" />
+
+                 </FluentStack>
+
+                @if (orderView!.items == null)
+{
+    <div style="width:200px;height:200px;margin-top:100px;margin-left:100px;">
+        <FluentProgressRing></FluentProgressRing>
+    </div>
+
+}
+else
+{
+    <FluentStack Orientation="Orientation.Vertical" Width="100%" Style="overflow:auto;">
+       
+            <FluentDataGrid RowSize="DataGridRowSize.Medium" Items="@orderView!.items"
+            TGridItem="SalesTable"
+            ResizableColumns=true
+            AutoFit=true
+            ShowHover="true"
+            HeaderCellAsButtonWithMenu="true"
+                        Style="width:95%;font-size:10pt;"
+            Pagination="@pagination">
+
+
+
+                <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Sortable="true"  />
+                <PropertyColumn Title="PatientName" Property="@(p => p.PatientName)" Sortable="true"  />
+                <PropertyColumn Title="PanNo" Property="@(p => p.LabpanNum)" Sortable="true"  />
+                <PropertyColumn Title="Date In" Property="@(p => p.CaseDate)" Format="@db.DateFormat" Sortable="true"  />
+                <PropertyColumn Title="ShipDate" Property="@(p => p.ShipDate)" Format="@db.DateFormat" Sortable="true" />
+                <PropertyColumn Title="Cust Req ShipDAte" Property="@(p => p.CustReqShipDate)" Format="@db.DateFormat" Sortable="true" />
+                <PropertyColumn Title="Customer" Property="@(p => p.SalesName)" Sortable="true" />
+                <PropertyColumn Title="Doctor Name" Property="@(p => p.DoctorName)" Align="Align.End" Sortable="true" />
+                <PropertyColumn Title="Doctor Account" Property="@(p => p.DocAccount)" Align="Align.End" Sortable="true"  />
+                <PropertyColumn Title="Sales Status" Property="@(p => p.SalesStatusName)" Align="Align.End" Sortable="true"  />
+
+
+            </FluentDataGrid>
+    
+
+    </FluentStack>
+
+}
+
+
+@code {
+
+  
+    bool openActionMenu = false;
+    //DataGridSelectMode Mode = DataGridSelectMode.Multiple;
+
+    SalesOrderView? orderView = new();
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authStateTask { get; set; }
+
+    UserInfo? CurrentUser { get; set; } = new();
+
+    string Search = "";
+
+    [Parameter]
+    public SalesTable Content { get; set; } = default!;
+
+    Customer SelectedCustomer { get; set; } = new Customer();
+    PaginationState pagination = new PaginationState { ItemsPerPage = 15 };
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var authState = await authStateTask;
+        var UserID = authState.User.Identity.Name;
+
+        CurrentUser = await userdb.GetUser(UserID);
+        LoadData();
+
+    }
+
+    private async void LoadData()
+    {
+        orderView.items = (await db.GetOrders(0, "", "", Search, orderView.fromDate, orderView.toDate,"")).AsQueryable();
+    }
+
+    private async void LoadLineItems()
+    {
+        if (orderView!.FirstOrder == null)
+        {
+            ToastService.ShowWarning("Please select an Order");
+            return;
+        }
+
+        orderView.lineitems = (await db.GetOrderLines(orderView!.FirstOrder.SalesID)).AsQueryable();
+    }
+
+
+
+
+    private async Task OnSelectOrder(SalesTable item, bool Selected)
+    {
+        if (item != null)
+        {
+            item.Selected = Selected;
+            orderView.lineitems = (await db.GetOrderLines(item.SalesID)).AsQueryable();
+        }
+
+    }   
+
+    public async Task ExportData()
+    {
+        var exportItems = orderView.items!.ToList();
+
+        using var workbook = new XLWorkbook();
+        var worksheet = workbook.Worksheets.Add("Data");
+
+        worksheet.Cell(1, 1).Value = "No";
+        worksheet.Cell(1, 2).Value = "CaseNo No";
+        worksheet.Cell(1, 3).Value = "Lab Num";
+        worksheet.Cell(1, 4).Value = "Patient Name";
+        worksheet.Cell(1, 5).Value = "Doctor Name";
+        worksheet.Cell(1, 6).Value = "Date In";
+        worksheet.Cell(1, 7).Value = "Ship Date";
+        worksheet.Cell(1, 8).Value = "Customer Name";
+        worksheet.Cell(1, 9).Value = "Cust Requests";
+        worksheet.Cell(1, 10).Value = "Work notes";
+
+        worksheet.Range("A1:Z1").Style.Font.Bold = true;
+        var startRow = 2;
+        foreach (var item in exportItems)
+        {
+            worksheet.Cell(startRow, 1).Value = startRow - 1;
+            worksheet.Cell(startRow, 2).Value = item.CaseNo;
+            worksheet.Cell(startRow, 3).Value = item.LabpanNum;
+            worksheet.Cell(startRow, 4).Value = item.PatientName;
+            worksheet.Cell(startRow, 5).Value = item.DoctorName;
+            worksheet.Cell(startRow, 6).Value = item.CaseDate;
+            worksheet.Cell(startRow, 7).Value = item.ShipDate;
+            worksheet.Cell(startRow, 8).Value = item.CustomerName;
+            worksheet.Cell(startRow, 9).Value = item.WorkTicketNotes;
+            worksheet.Cell(startRow, 10).Value = item.TranslateNotes;
+
+            startRow += 1;
+            // Add more properties as needed
+        }
+
+        worksheet.Columns().AdjustToContents();
+
+        using var stream = new MemoryStream();
+        workbook.SaveAs(stream);
+        stream.Seek(0, SeekOrigin.Begin);
+
+        var content = new byte[stream.Length];
+        await stream.ReadAsync(content, 0, (int)stream.Length);
+
+        var fileDate = DateTime.Now.ToString("yyMMddHHmmssttt");
+
+        await JSRuntime.InvokeVoidAsync("saveAsFile", "Incoming" + fileDate + ".xlsx", Convert.ToBase64String(content));
+    }
+
+}

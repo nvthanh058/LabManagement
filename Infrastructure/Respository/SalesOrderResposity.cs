@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using LabManagement.Infrastructure.IRespository;
 using LabManagement.Models;
@@ -10,6 +11,7 @@ namespace LabManagement.Infrastructure.Respository
     public class SalesOrderResposity : ISalesOrderResposity
     {
         private readonly IDapperServices _services;
+        public string DateFormat => _services.DateFormat!;
         public SalesOrderResposity(IDapperServices services)
         {
             _services = services;
@@ -46,7 +48,7 @@ namespace LabManagement.Infrastructure.Respository
         }
 
         public async Task<List<SalesTable>> GetOrders(int RecID, string SalesID, string CustomerID, string Search,
-            DateTime? FromDate, DateTime? ToDate)
+            DateTime? FromDate, DateTime? ToDate,string LabID)
         {
             var query = @"LAB_GetSalesTable";
             var lst = new List<SalesTable>();
@@ -60,7 +62,7 @@ namespace LabManagement.Infrastructure.Respository
                 dbParams.Add("@Search", Search);
                 dbParams.Add("@FromDate", FromDate?.ToString("yyyy-MM-dd"));
                 dbParams.Add("@ToDate", ToDate?.ToString("yyyy-MM-dd"));
-                dbParams.Add("@DATAAREAID", _services!.DATAAREAID());
+                dbParams.Add("@DATAAREAID", LabID);
 
                 lst = Task.FromResult(_services.GetAll<SalesTable>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
             }
@@ -73,9 +75,7 @@ namespace LabManagement.Infrastructure.Respository
             try
             {
                 var dbParams = new DynamicParameters();
-
-                model.DATAAREAID = _services!.DATAAREAID();
-
+               
                 dbParams.Add("@RecID", model.RecID);
                 dbParams.Add("@SalesID", model.SalesID);
                 dbParams.Add("@SalesName", model.SalesName);
@@ -98,6 +98,7 @@ namespace LabManagement.Infrastructure.Respository
                 dbParams.Add("@DocAccount", model.DocAccount);
                 dbParams.Add("@UserID", model.UserID);
                 dbParams.Add("@DATAAREAID", model.DATAAREAID);
+                dbParams.Add("@Assignment", model.Assignment);
 
                 var query = @"LAB_SaveSalesTable";
                 var res = Task.FromResult(_services.ExcuteScalerObject<SalesTable>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
@@ -116,13 +117,10 @@ namespace LabManagement.Infrastructure.Respository
             try
             {
                 var dbParams = new DynamicParameters();
-                var query = "DELETE FROM LAB_SalesTable WHERE RecID=@RecID";
-                query += " AND DATAAREAID=@DATAAREAID";
-
+                var query = "LAB_DeleteSaleOrder";               
                 dbParams.Add("@RecID", RecID);
-                dbParams.Add("@DATAAREAID", _services!.DATAAREAID());
-
-                res = Task.FromResult(_services.ExcuteScaler<SalesTable>(query, dbParams, commandType: CommandType.Text)).Result;
+               
+                res = Task.FromResult(_services.ExcuteScaler<SalesTable>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
             }
             catch (Exception ex) { }
             return res;
@@ -164,9 +162,7 @@ namespace LabManagement.Infrastructure.Respository
             try
             {
                 var dbParams = new DynamicParameters();
-
-                model.DATAAREAID = _services!.DATAAREAID();
-
+               
                 dbParams.Add("@RecID", model.RecID);
                 dbParams.Add("@SalesID", model.SalesID);                
                 dbParams.Add("@CaseNo", model.CaseNo);
@@ -211,15 +207,14 @@ namespace LabManagement.Infrastructure.Respository
                 model.Quantity = SL.SalesQty;
                 model.SalesID = SL.SalesID;
                 model.CaseNo = SL.CaseNo;
+                model.CustomerRequests = SL.CustomerRequests;
                 model.WTNotes = SL.WorkNotes;
                 model.UserID = SL.UserID;
                 model.INVENTREFTRANSID = SL.INVENTTRANSID;
                 model.DATAAREAID = SL.DATAAREAID;
 
                 var dbParams = new DynamicParameters();
-
-                model.DATAAREAID = _services!.DATAAREAID();
-
+               
                 dbParams.Add("@TransDate", DateTime.Now.ToString("yyyy-MM-dd"));
                 dbParams.Add("@ItemID", model.ItemID);
                 dbParams.Add("@ItemCode", model.ItemCode);
@@ -228,7 +223,8 @@ namespace LabManagement.Infrastructure.Respository
                 dbParams.Add("@Quantity", model.Quantity);
                 dbParams.Add("@INVENTREFTRANSID", model.INVENTREFTRANSID);
                 dbParams.Add("@SalesID", model.SalesID);
-                dbParams.Add("@CaseNo", model.CaseNo);                
+                dbParams.Add("@CaseNo", model.CaseNo);
+                dbParams.Add("@CustomerRequests", model.CustomerRequests);
                 dbParams.Add("@WTNotes", model.WTNotes);
                 dbParams.Add("@UsTeeth", model.UsTeeth);
                 dbParams.Add("@EurTeeth", model.EurTeeth);
@@ -254,19 +250,17 @@ namespace LabManagement.Infrastructure.Respository
             try
             {
                 var dbParams = new DynamicParameters();
-                var query = "DELETE FROM LAB_SalesLine WHERE RecID=@RecID";
-                query += " AND DATAAREAID=@DATAAREAID";
-
+                var query = "LAB_DeleteSaleLine";
+               
                 dbParams.Add("@RecID", RecID);
-                dbParams.Add("@DATAAREAID", _services!.DATAAREAID());
-
-                res = Task.FromResult(_services.ExcuteScaler<SalesLine>(query, dbParams, commandType: CommandType.Text)).Result;
+               
+                res = Task.FromResult(_services.ExcuteScaler<SalesLine>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
             }
             catch (Exception ex) { }
             return res;
         }
 
-        public async Task<List<ProdTable>> GetProdOrders(int RecID, string SalesID, string FromDate, string ToDate)
+        public async Task<List<ProdTable>> GetProdOrders(int RecID, string SalesID,string LabID, string FromDate, string ToDate,string Search)
         {
             var query = @"LAB_GetProdOrders";
             
@@ -277,8 +271,10 @@ namespace LabManagement.Infrastructure.Respository
                 var dbParams = new DynamicParameters();
                 dbParams.Add("@RecID", RecID);
                 dbParams.Add("@SalesID", SalesID);
+                dbParams.Add("@LabID", LabID);
                 dbParams.Add("@FromDate", FromDate);
                 dbParams.Add("@ToDate", ToDate);
+                dbParams.Add("@Search", Search);
 
                 lst = Task.FromResult(_services.GetAll<ProdTable>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
             }
@@ -325,13 +321,12 @@ namespace LabManagement.Infrastructure.Respository
             try
             {
                 var dbParams = new DynamicParameters();
-                var query = "DELETE FROM LAB_ProductTable WHERE RecID=@RecID";
-                query += " AND DATAAREAID=@DATAAREAID";
+                var query = "LAB_DeleteProdTable";
+               
 
                 dbParams.Add("@RecID", RecID);
-                dbParams.Add("@DATAAREAID", _services!.DATAAREAID());
-
-                res = Task.FromResult(_services.ExcuteScaler<ProdTable>(query, dbParams, commandType: CommandType.Text)).Result;
+              
+                res = Task.FromResult(_services.ExcuteScaler<ProdTable>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
             }
             catch (Exception ex) { }
             return res;
@@ -388,6 +383,36 @@ namespace LabManagement.Infrastructure.Respository
             }
             catch (Exception ex) { }
             return res;
+        }
+
+        public async Task<SequenceInfo> GetSequenceNum(string SeqID)
+        {
+            var query = @"SYS_GetSequence";
+            var model = new SequenceInfo();
+            try
+            {
+                var dbParams = new DynamicParameters();
+               
+                dbParams.Add("@SeqID", SeqID);
+                model = Task.FromResult(_services.Get<SequenceInfo>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+            }
+            catch (Exception ex) { }
+            return model;
+        }
+
+        public async Task<List<AssignmentInfo>> GetAssignment()
+        {
+            var query = @"Select * FROM LAB_Assignment";
+
+            var lst = new List<AssignmentInfo>();
+
+            try
+            {
+               
+                lst = Task.FromResult(_services.GetAll<AssignmentInfo>(query, null, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
         }
     }
 }

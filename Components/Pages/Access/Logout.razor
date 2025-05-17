@@ -5,20 +5,18 @@
     [CascadingParameter]
     public HttpContext? HttpContext { get; set; }
 
-  
+
     protected override async Task OnInitializedAsync()
     {
 
-        if(HttpContext.User.Identity.IsAuthenticated)
+        if(HttpContext!.User.Identity!.IsAuthenticated)
         {
             await HttpContext.SignOutAsync();
-            navigationManager.NavigateTo($"/login");
-          
+            PageRedirect.RedirectTo(HttpContext,"/");
         }
 
         await base.OnInitializedAsync();
     }
 
- 
-
+  
 }

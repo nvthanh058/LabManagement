@@ -22,10 +22,9 @@ namespace LabManagement.Infrastructure.Respository
             {
                 var dbParams = new DynamicParameters();
                 var query = "DELETE FROM LAB_ProductLines WHERE RecID=@RecID";
-                query += " AND DATAAREAID=@DATAAREAID";
-
+               
                 dbParams.Add("@RecID", RecID);
-                dbParams.Add("@DATAAREAID", _services!.DATAAREAID());
+             
 
                 res = Task.FromResult(_services.ExcuteScaler<ProductLine>(query, dbParams, commandType: CommandType.Text)).Result;
             }
@@ -33,12 +32,13 @@ namespace LabManagement.Infrastructure.Respository
             return res;
         }
 
-        public async Task<List<ProductLine>> GetAllProdLine(int RecID, string LineID, string Search)
+        public async Task<List<ProductLine>> GetAllProdLine(int RecID, string LineID,string LineGroup, string Search)
         {
 
-            var query = @"Select * FROM LAB_ProductLines where DATAAREAID=@DATAAREAID";
+            var query = @"Select * FROM LAB_ProductLines where 1=1";
             query += " AND (@RecID=0 OR RecID=@RecID)";
             query += " AND (@LineID='' OR LineID=@LineID)";
+            query += " AND (@LineGroup='' OR LineGroup=@LineGroup)";
             query += " AND (@Search='' OR LineName=@Search)";
 
             var lst = new List<ProductLine>();
@@ -49,7 +49,7 @@ namespace LabManagement.Infrastructure.Respository
                 dbParams.Add("@RecID", RecID);
                 dbParams.Add("@LineID", LineID);
                 dbParams.Add("@Search", Search);
-                dbParams.Add("@DATAAREAID", _services!.DATAAREAID());
+                dbParams.Add("@LineGroup", LineGroup);
 
                 lst = Task.FromResult(_services.GetAll<ProductLine>(query, dbParams, commandType: CommandType.Text)).Result;
             }
@@ -59,14 +59,12 @@ namespace LabManagement.Infrastructure.Respository
 
         public async Task<ProductLine> GetProdLine(int RecID)
         {
-            var query = @"Select * FROM LAB_ProductLines where RecID=@RecID";
-            query += " AND DATAAREAID=@DATAAREAID";
+            var query = @"Select * FROM LAB_ProductLines where RecID=@RecID";            
             var model = new ProductLine();
             try
             {
                 var dbParams = new DynamicParameters();
-                dbParams.Add("@RecID", RecID);
-                dbParams.Add("@DATAAREAID", _services!.DATAAREAID());
+                dbParams.Add("@RecID", RecID);                
 
                 model = Task.FromResult(_services.Get<ProductLine>(query, dbParams, commandType: CommandType.Text)).Result;
             }
@@ -179,7 +177,7 @@ namespace LabManagement.Infrastructure.Respository
 
                 dbParams.Add("@RecID", model.RecID);
                 dbParams.Add("@TaskRefID", model.TaskRefID);
-                dbParams.Add("@TransDate", DateTime.Now.ToString("yyyy-MM-dd"));
+                dbParams.Add("@TransDate", model.TransDate?.ToString("yyyy-MM-dd"));
                 dbParams.Add("@EmplRefID", model.EmplRefID);
                 dbParams.Add("@LineID", model.LineID);
                 dbParams.Add("@Notes", model.Notes);
@@ -209,6 +207,26 @@ namespace LabManagement.Infrastructure.Respository
                 dbParams.Add("@EmplRefID", EmplRefID);
                 dbParams.Add("@TaskID", TaskID);
                 dbParams.Add("@LineID", LineID);
+
+                lst = Task.FromResult(_services.GetAll<ProductionTask>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<List<ProductionTask>> GetProductTasksReports(string EmplRefID, DateTime? fromDate, DateTime? toDate)
+        {
+            var query = @"LAB_GetProductTasksReport";
+
+            var lst = new List<ProductionTask>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+                
+                dbParams.Add("@EmplRefID", EmplRefID);
+                dbParams.Add("@FromDate", fromDate?.ToString("yyyy-MM-dd"));
+                dbParams.Add("@ToDate", toDate?.ToString("yyyy-MM-dd"));
 
                 lst = Task.FromResult(_services.GetAll<ProductionTask>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
             }
@@ -380,6 +398,247 @@ namespace LabManagement.Infrastructure.Respository
             }
             catch (Exception ex) { }
             return lst;
+        }
+
+        public async Task<List<CaseTracking>> GetCasesTracking(int RecID, DateTime? FromDate, DateTime? ToDate,string Search,string LabID)
+        {
+            var query = @"LAB_GetCasesTracking";
+
+            var lst = new List<CaseTracking>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+
+                dbParams.Add("@RecID", RecID);
+                dbParams.Add("@FromDate", FromDate?.ToString("yyyy-MM-dd"));
+                dbParams.Add("@ToDate", ToDate?.ToString("yyyy-MM-dd"));
+                dbParams.Add("@Search", Search);
+                dbParams.Add("@LabID", LabID);
+
+                lst = Task.FromResult(_services.GetAll<CaseTracking>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<CaseTracking> SaveCaseTracking(CaseTracking model)
+        {
+            try
+            {
+                var dbParams = new DynamicParameters();
+                
+                dbParams.Add("@RecID", model.RecID);
+                dbParams.Add("@SalesID", model.SalesID);
+                dbParams.Add("@CaseNo", model.CaseNo);
+                dbParams.Add("@LabNum", model.LabNum);
+                dbParams.Add("@PatientName", model.PatientName);
+                dbParams.Add("@TransDate", model.TransDate?.ToString("yyyy-MM-dd"));
+                dbParams.Add("@RushCategory", model.RushCategory);                
+                dbParams.Add("@UserID", model.UserID);
+                dbParams.Add("@LabID", model.LabID);
+
+                var query = @"LAB_SaveCaseTracking";
+                var res = Task.FromResult(_services.ExcuteScalerObject<CaseTracking>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+
+                if (res != null)
+                    model.RecID = Int32.Parse(res.ToString());
+            }
+            catch (Exception ex) { }
+
+            return model;
+        }
+
+        public async Task<int> DeleteCaseTracking(int RecID)
+        {
+            var res = 0;
+            try
+            {
+                var dbParams = new DynamicParameters();
+                var query = "DELETE FROM LAB_CasesTracking WHERE RecID=@RecID";
+
+                dbParams.Add("@RecID", RecID);
+
+                res = Task.FromResult(_services.ExcuteScaler<CaseTracking>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return res;
+        }
+
+        public async Task<List<CaseTrackingTask>> GetCasesTrackingTask(int RecID, string TransID)
+        {
+            var query = @"LAB_GetCaseTrackingTasks";
+
+            var lst = new List<CaseTrackingTask>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+
+                dbParams.Add("@RecID", RecID);
+                dbParams.Add("@TransID", TransID);
+
+                lst = Task.FromResult(_services.GetAll<CaseTrackingTask>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<CaseTrackingTask> SaveCaseTrackingTask(CaseTrackingTask model)
+        {
+            try
+            {
+                var dbParams = new DynamicParameters();
+
+                dbParams.Add("@RecID", model.RecID);
+                dbParams.Add("@TransID", model.TransID);
+                dbParams.Add("@LineID", model.LineID);
+                dbParams.Add("@TransDate", model.TransDate?.ToString("yyyy-MM-dd"));
+                dbParams.Add("@Responsibility", model.Responsibility);                
+                dbParams.Add("@LocationNotes", model.LocationNotes);                
+                dbParams.Add("@UserID", model.UserID);
+                dbParams.Add("@LineStatus", model.LineStatus);
+
+                var query = @"LAB_SaveCaseTrackingTasks";
+                var res = Task.FromResult(_services.ExcuteScalerObject<CaseTrackingTask>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+
+                if (res != null)
+                    model.RecID = Int32.Parse(res.ToString());
+            }
+            catch (Exception ex) { }
+
+            return model;
+        }
+
+        public async Task<int> DeleteCaseTrackingTask(int RecID)
+        {
+            var res = 0;
+            try
+            {
+                var dbParams = new DynamicParameters();
+                var query = "DELETE FROM LAB_CasesTrackingTasks WHERE RecID=@RecID";
+
+                dbParams.Add("@RecID", RecID);
+
+                res = Task.FromResult(_services.ExcuteScaler<CaseTrackingTask>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return res;
+        }
+
+        public async Task<List<CaseCommunicate>> GetCaseCommunicate(int RecID, string SalesID, string TransID)
+        {
+            var query = @"LAB_GetCaseCommunicate";
+
+            var lst = new List<CaseCommunicate>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+
+                dbParams.Add("@RecID", RecID);
+                dbParams.Add("@SalesID", SalesID);
+                dbParams.Add("@TransID", TransID);
+
+                lst = Task.FromResult(_services.GetAll<CaseCommunicate>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<CaseCommunicate> SaveCaseCommunicate(CaseCommunicate model)
+        {
+            try
+            {
+                var dbParams = new DynamicParameters();
+
+                dbParams.Add("@RecID", model.RecID);
+                dbParams.Add("@SalesID", model.SalesID);
+                dbParams.Add("@TransID", model.TransID);
+                dbParams.Add("@ConcernIssue", model.ConcernIssue);
+                dbParams.Add("@TechnicianSuggestion", model.TechnicianSuggestion);
+                dbParams.Add("@Response", model.Response);
+                dbParams.Add("@ResponseDate", model.ResponseDate?.ToString("yyyy-MM-dd"));
+                dbParams.Add("@LabStatus", model.LabStatus);
+                dbParams.Add("@FactoryStatus", model.FactoryStatus);
+                dbParams.Add("@UserID", model.UserID);
+                
+                var query = @"LAB_SaveCaseCommunicate";
+                var res = Task.FromResult(_services.ExcuteScalerObject<CaseCommunicate>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+
+                if (res != null)
+                {
+                    if(model.RecID==0)
+                    model.RecID = Int32.Parse(res.ToString());
+                }
+                    
+            }
+            catch (Exception ex) { }
+
+            return model;
+        }
+
+        public async Task<int> DeleteCaseCommunicate(int RecID)
+        {
+            var res = 0;
+            try
+            {
+                var dbParams = new DynamicParameters();
+                var query = "DELETE FROM LAB_CasesCommunicate WHERE RecID=@RecID";
+
+                dbParams.Add("@RecID", RecID);
+
+                res = Task.FromResult(_services.ExcuteScaler<CaseCommunicate>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return res;
+        }
+
+        public async Task<List<CaseStatus>> GetCaseStatus(int StatusGroup)
+        {
+            var query = @"Select * FROM LAB_CaseTrackingStatus WHERE StatusGroup=@StatusGroup";
+
+            var lst = new List<CaseStatus>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+                
+                dbParams.Add("@StatusGroup", StatusGroup);
+                lst = Task.FromResult(_services.GetAll<CaseStatus>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<CaseTracking> GetCasesTrackingByID(int RecID)
+        {
+            var query = @"LAB_GetCasesTrackingByID";
+            var model = new CaseTracking();
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@RecID", RecID);
+
+                model = Task.FromResult(_services.Get<CaseTracking>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+            }
+            catch (Exception ex) { }
+            return model;
+        }
+
+        public async Task<CaseTracking> GetCasesTrackingBySalesID(string SalesID)
+        {
+            var query = @"LAB_GetCasesTrackingBySalesID";
+            var model = new CaseTracking();
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@SalesID", SalesID);
+
+                model = Task.FromResult(_services.Get<CaseTracking>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+            }
+            catch (Exception ex) { }
+            return model;
         }
     }
 }

@@ -9,8 +9,7 @@
     <FluentStack VerticalAlignment="VerticalAlignment.Center" HorizontalAlignment="HorizontalAlignment.Center" Width="100%" >
 
         <FluentStack Orientation="Orientation.Vertical" Style="width:400px" VerticalGap="20">
-            <img src="images/logodadl.png" width="200" height="72" />
-            <FluentLabel Typo="Typography.H4">Login</FluentLabel>
+            <img src="images/Hogan.png" width="278" height="100" />
 
             <FluentLabel Typo="Typography.H5" Color="Color.Warning">@Message</FluentLabel>
             <FluentTextField AutoComplete="off"  Name="Model.UserName" @bind-Value="Model.UserName" Style="width:200px" AriaLabel="User ID" Placeholder="User Name"></FluentTextField>
@@ -40,8 +39,6 @@
     //public AuthenticationStateProvider AuthenticationState { get; set; }
 
     string Message = "";
-
-
 
     private async Task CancelAsync()
     {
@@ -76,7 +73,7 @@
                 var principal = new ClaimsPrincipal(identity);
 
                 await HttpContext.SignInAsync(principal);
-            navigationManager.NavigateTo($"/casesorder");
+            PageRedirect.RedirectTo(HttpContext,"/");
         }
        
 

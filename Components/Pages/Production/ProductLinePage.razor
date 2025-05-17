@@ -1,4 +1,5 @@
 ﻿@page "/productline"
+@attribute [Authorize]
 @using LabManagement.Components.Pages.PayrollSetup.Panels
 
 @rendermode InteractiveServer
@@ -26,7 +27,7 @@
                 else
                 {
                     <FluentDataGrid Items="@items"
-                                    style="height: 100%;"
+                            style="height: 100%;font-size:10pt;"
                                     TGridItem="ProductLine"
                                     ShowHover="true"
                             RowSize="DataGridRowSize.Medium"
@@ -93,7 +94,7 @@
     }
     private async void LoadData()
     {
-        items = (await context.GetAllProdLine(0,"", "")).AsQueryable();
+        items = (await context.GetAllProdLine(0,"", "","")).AsQueryable();
        
     }
 

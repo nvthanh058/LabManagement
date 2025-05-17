@@ -1,6 +1,7 @@
 ﻿@implements IDialogContentComponent<SalesTable>
 @using LabManagement.Components.Pages.Categories
 @using LabManagement.Components.Pages.CommonForms.Panels
+@using LabManagement.Components.Pages.Controls
 
 
 @rendermode InteractiveServer
@@ -9,6 +10,7 @@
 @inject ICustomerResposity customerdb
 @inject IProductResposity productdb
 @inject IUserInfoResposity userdb
+@inject ISystemResposity systemDB
 @inject IToastService ToastService
 @inject NavigationManager navigationManager
 @inject IWebHostEnvironment _webHost;
@@ -53,6 +55,19 @@
 
                             <FluentStack Orientation="Orientation.Vertical" VerticalGap="10" Style="width:300px">
 
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px" Typo="Typography.H5">Lab:</FluentLabel>
+                                    <FluentSelect TOption="LabInfo"
+                                    Placeholder="Select a Lab"
+                                    Items="@labs"
+                                    Width="180px"
+                                    Height="250px"
+                                    OptionValue="@(i => i.DATAAREAID)"
+                                    OptionText="@(i => i.LabName)"
+                                    @bind-Value="@Content.DATAAREAID">
+
+                                    </FluentSelect>
+                                </FluentStack>
 
                                 <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
                                     <FluentLabel Style="width:100px">Customer</FluentLabel>
@@ -67,7 +82,7 @@
 
                                 <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
                                     <FluentLabel Style="width:100px">Labpan Num</FluentLabel>
-                                    <FluentNumberField Style="width:100px" @bind-Value="@Content.LabpanNum" />
+                                    <FluentTextField Style="width:100px" @bind-Value="@Content.LabpanNum" />
                                 </FluentStack>
 
                                 <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
@@ -79,20 +94,15 @@
                                     <FluentTextField Style="width:180px" @bind-Value="@Content.DoctorName" />
                                 </FluentStack>
                             </FluentStack>
-                            <FluentStack Orientation="Orientation.Vertical" VerticalGap="10" Style="width:300px">
+                            <FluentStack Orientation="Orientation.Vertical" VerticalGap="10" Style="width:450px">
 
                                 <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
-                                    <FluentLabel Style="width:100px">Doctor Acccount</FluentLabel>
+                                    <FluentLabel Style="width:150px">Doctor Acccount</FluentLabel>
                                     <FluentTextField Style="width:180px" @bind-Value="@Content.DocAccount" />
                                 </FluentStack>
 
                                 <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
-                                    <FluentLabel Style="width:100px">Box Reference</FluentLabel>
-                                    <FluentTextField Style="width:180px" @bind-Value="@Content.BoxRef" />
-                                </FluentStack>
-
-                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
-                                    <FluentLabel Style="width:100px">Status</FluentLabel>
+                                    <FluentLabel Style="width:150px">Status</FluentLabel>
                                     <FluentSelect Items=@salesStatusOptions
                                     Disabled="true"
                                     Width="180px"                                                  
@@ -104,12 +114,20 @@
                                     </FluentSelect>
                                 </FluentStack>
 
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:150px">Customer Requests</FluentLabel>
+                                    <FluentTextArea @bind-Value="@Content.WorkTicketNotes" Cols="40" Resize="TextAreaResize.Both" />
 
+                                </FluentStack>
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:150px">Work Notes</FluentLabel>
+                                    <FluentTextArea @bind-Value="@Content.TranslateNotes" Cols="40" Resize="TextAreaResize.Both" />
 
+                                </FluentStack>
 
                             </FluentStack>
 
-                            <FluentStack Orientation="Orientation.Vertical" Style="width:300px">
+                            <FluentStack Orientation="Orientation.Vertical" Style="width:250px">
                                 <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
                                     <FluentLabel Style="width:100px">Case Date</FluentLabel>
                                     <FluentDatePicker @bind-Value="@Content.CaseDate"></FluentDatePicker>
@@ -123,38 +141,21 @@
                                     <FluentLabel Style="width:100px">Cust Req ShipDate</FluentLabel>
                                     <FluentDatePicker @bind-Value="@Content.CustReqShipDate"></FluentDatePicker>
                                 </FluentStack>
-
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Assignment</FluentLabel>
+                                    <FluentCombobox Items=@assignmentItems
+                                    TOption="AssignmentInfo"
+                                    OptionText="@(i => i.Assignment)"
+                                    OptionValue="@(i => i.RecID.ToString())"
+                                    @bind-Value="@Content.Assignment" @onchange="@((e)=> SaveAssignment(e,Content))" />
+                                </FluentStack>
                             </FluentStack>
                         </FluentStack>
 
                     </Content>
 
                 </FluentTab>
-                <FluentTab Id="tab-translate">
-                    <Header>
-                        @if (activeid == "tab-translate")
-                        {
-                            tabStyle = "border: 1px solid var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;background-color:#EEEEEE";
-                        }
-                        else
-                        {
-                            tabStyle = "border: 1px dotted var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;";
-                        }
-                        <FluentStack Orientation="Orientation.Horizontal" Style="@tabStyle">
-                            <FluentIcon Value="@(new Icons.Regular.Size20.Translate())" />
-                            <FluentLabel Typo="Typography.H6">Workticket Notes</FluentLabel>
-                        </FluentStack>
-                    </Header>
-                    <Content>
-                        <FluentStack Orientation="Orientation.Vertical">
-                            <FluentTextArea Label="Customer Notes" @bind-Value="@Content.WorkTicketNotes" Cols="80" Resize="TextAreaResize.Both" />
 
-                            <FluentTextArea Label="Work Notes" @bind-Value="@Content.TranslateNotes" Cols="80" Resize="TextAreaResize.Both" />
-
-                        </FluentStack>
-                    </Content>
-
-                </FluentTab>
                 @if(Content.ShowImages==true){
                     <FluentTab Id="tab-pictures">
                         <Header>
@@ -234,7 +235,7 @@
             <PropertyColumn Title="SalesPrice" Property="@(p => p.SalesPrice)" Sortable="true" Width="150px" />
             <PropertyColumn Title="LineAmount" Property="@(p => p.SalesPrice)" Sortable="true" Width="150px" />
 
-           
+
         </FluentDataGrid>
     </Panel2>
 </FluentSplitter>
@@ -242,6 +243,10 @@
 
 
 @code {
+
+    string LabID = "";
+    IQueryable<LabInfo>? labs;
+    IQueryable<AssignmentInfo>? assignmentItems;
 
     [Parameter]
     public SalesTable Content { get; set; } = default!;
@@ -253,6 +258,7 @@
         { new Option<int> { Value =2, Text = "Cancelled" } }
 
     };
+
 
     [Parameter] public Func<bool, Task>? OnBackToList { get; set; }
     [Parameter] public Func<bool, Task>? OnNewOrder { get; set; }
@@ -283,6 +289,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+        labs = (await systemDB.GetAllLabs(0, "", "")).AsQueryable();
+        assignmentItems = (await db.GetAssignment()).AsQueryable();
+
         if(Content.RecID==0){
 
         }
@@ -301,40 +310,51 @@
     }
 
     private async Task AddAsync()
-    {
+    {        
         if (this.OnNewOrder is not null)
-        {
+        {            
             // unless you're an async expert keep the await clean and simple
             await this.OnNewOrder.Invoke(true);
             await Task.Delay(1000);
         }
     }
+
+    private async Task SaveAssignment(ChangeEventArgs e, SalesTable item)
+    {
+        if (item.RecID > 0)
+        {
+            item.Assignment = e.Value.ToString();
+            await db.SaveOrder(item);
+        }
+    }
+
     private async Task SaveAsync()
     {
         Content.SalesStatus = Int32.Parse(SaleStatus!);
 
-        if (Content.SalesName.Equals(""))
-        {
-            ErrorMessage = "You should choose a Customer Account";
-            return;
-        }
+
+
         if (Content.CaseNo.Equals(""))
         {
-            ErrorMessage = "You should input case number";
-            txtCaseNo.FocusAsync();
+            ErrorMessage = "You should input Case Number";
             return;
         }
 
 
         var res = await db.SaveOrder(Content);
 
-        Content = await db.GetOrderByRecID(res.RecID);
-
-        if (Content.SalesID != "")
+        if (Content.RecID == 0)
         {
-            await AddItemDetail();
-        }
+            if (res.RecID > 0)
+                Content = await db.GetOrderByRecID(res.RecID);
 
+            if (Content.SalesID != "")
+            {
+                await AddItemDetail();
+            }
+
+        }
+     
         ToastService.ShowSuccess("Save Order Success");       
 
         LoadLineItems();
@@ -354,6 +374,7 @@
         var item = new SalesLine();
         item.SalesID = Content.SalesID;
         item.CaseNo = Content.CaseNo;
+        item.DATAAREAID = Content.DATAAREAID;
 
         var parameters = new DialogParameters
             {
@@ -398,7 +419,7 @@
         if (lineitems!.ToList().Count > 0)
         {
 
-            var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this item?");
+            var dialog = await DialogService.ShowConfirmationAsync("Do you sure to create work order?");
             var result = await dialog.Result;
 
             if (!result.Cancelled)
@@ -408,6 +429,7 @@
                 {
                     item.UserID = Content.UserID;
                     item.WorkNotes = SO.TranslateNotes;
+                    item.CustomerRequests = SO.WorkTicketNotes;
 
                     var res = await db.SaveProdOrder(item);
                     iCount += res.RecID;
@@ -466,7 +488,7 @@
 
     private async void LoadLineItems()
     {
-        lineitems = (await db.GetOrderLines(SO!.SalesID)).AsQueryable();
+        lineitems = (await db.GetOrderLines(Content.SalesID)).AsQueryable();
     }
 
 

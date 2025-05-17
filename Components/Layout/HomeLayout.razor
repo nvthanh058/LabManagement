@@ -1,0 +1,135 @@
+﻿@using LabManagement.Components.Pages.SystemPages
+@inherits LayoutComponentBase
+@inject IUserInfoResposity userDB
+@inject IDialogService DialogService
+@inject IMessageService MessageService
+
+<FluentDesignTheme Mode="DesignThemeModes.Light" OfficeColor="OfficeColor.Yammer" />
+
+<FluentLayout>
+    <FluentHeader Style="background-color:#FFFFFF;height:72px;padding:2px;">
+
+        <AuthorizeView>
+
+            <Authorized>
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="@HorizontalAlignment.Start">
+                    <img src="images/logodadl.png" width="200" height="72" />
+                </FluentStack>
+
+                <FluentStack HorizontalAlignment="@HorizontalAlignment.End"
+                             VerticalAlignment="@VerticalAlignment.Center"
+                             Style="height: 48px; padding-inline-end: 10px; ">
+
+                    <NotificationTask CurrentUser="@CurrentUser"></NotificationTask>
+                    <NotificationMessage CurrentUser="@CurrentUser"></NotificationMessage>
+
+                    <UserProfile CurrentUser="@CurrentUser"></UserProfile>
+
+                </FluentStack>
+
+            </Authorized>
+
+        </AuthorizeView>
+
+    </FluentHeader>
+    <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
+         <AuthorizeView>
+            <Authorized>
+                <HomeAppBar CurrentUser="@CurrentUser" />
+            </Authorized>
+        </AuthorizeView> 
+        <FluentStack Orientation="Orientation.Vertical">
+
+            <HomeMenu></HomeMenu>
+
+            <FluentBodyContent Class="body-content">
+                <div class="content">
+                   
+                    <FluentMessageBarProvider Section="@App.MESSAGES_TOP" @rendermode="RenderMode.InteractiveServer" />
+                    @Body
+
+                </div>
+            </FluentBodyContent>
+        </FluentStack>
+
+
+    </FluentStack>
+    <FluentFooter>
+        <a href="#" target="_blank">Copy Right Lab Management 2005</a>
+        <FluentSpacer />
+        <a href="#" target="_blank">ERP System for Labs</a>
+    </FluentFooter>
+</FluentLayout>
+
+<FluentMenuProvider @rendermode="RenderMode.InteractiveServer" />
+<FluentToastProvider @rendermode="RenderMode.InteractiveServer" />
+<FluentDialogProvider @rendermode="RenderMode.InteractiveServer" />
+<FluentTooltipProvider @rendermode="RenderMode.InteractiveServer" />
+<FluentKeyCodeProvider @rendermode="RenderMode.InteractiveServer" />
+
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+@code {
+
+    //public DesignThemeModes Mode { get; set; }
+    // public OfficeColor? officeColor { get; set; }
+
+    private IDialogReference? _dialog;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    UserInfo? CurrentUser { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        //officeColor = OfficeColor.Yammer;
+        MessageService.OnMessageItemsUpdated += UpdateCount;
+
+        var authState = await authenticationStateTask;
+        var username = authState.User.Identity.Name;
+
+        CurrentUser = await userDB.GetUser(username);
+
+
+    }
+
+
+    private void UpdateCount()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+
+
+    private RenderFragment NotificationIcon() =>
+        @<FluentIcon Value="@(new Icons.Regular.Size20.Alert())" Color="Color.Neutral" Title="Notification center" />;
+
+    private static void HandlePanel(DialogResult result)
+    {
+        if (result.Cancelled)
+        {
+
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+
+            return;
+        }
+    }
+
+    public void Dispose()
+    {
+        MessageService.OnMessageItemsUpdated -= UpdateCount;
+    }
+
+}
+
+

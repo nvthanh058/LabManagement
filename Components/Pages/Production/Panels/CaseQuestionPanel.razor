@@ -1,0 +1,121 @@
+﻿@using LabManagement.Components.Pages.Controls
+@rendermode InteractiveServer
+
+@inject IProductionResposity productionDB
+@inject IWebHostEnvironment _webHost;
+@inject IDialogService DialogService;
+@inject ISalesOrderResposity db
+
+<FluentStack Orientation="Orientation.Vertical" Style="margin-left:5px;padding:10;width:98%">
+    <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+        <FluentLabel Style="width:100px">ConcernIssue</FluentLabel>
+        <FluentTextArea Style="width:90%" @bind-Value="@Content.ConcernIssue" @onchange="@(e=> SaveCommunicate(e,"ConcernIssue"))" Cols="60" Rows="4" />
+    </FluentStack>
+    <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+        <FluentLabel Style="width:100px">Technician Suggestion</FluentLabel>
+        <FluentTextArea Style="width:90%" @bind-Value="@Content.TechnicianSuggestion" Rows="4" Cols="60" @onchange="@(e=> SaveCommunicate(e,"TechnicianSuggestion"))" />
+    </FluentStack>
+    <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+        <FluentLabel Style="width:100px">Response</FluentLabel>
+        <FluentTextArea Style="width:90%" @bind-Value="@Content.Response" Cols="60" Rows="4" @onchange="@(e=> SaveCommunicate(e,"Response"))" />
+    </FluentStack>
+    <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+        <FluentLabel Style="width:100px">Date</FluentLabel>
+        <FluentDatePicker Style="width:140px" @bind-Value="@Content.ResponseDate" @onchange="@((e)=> SaveCommunicate(e,"ResponseDate"))" />
+    </FluentStack>
+
+    <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+        <FluentLabel Style="width:100px">Lab Status</FluentLabel>
+
+        <FluentSelect TOption="CaseStatus"
+                      Placeholder="--Status--"
+                      Items="@labStatus"
+                      Width="140px"
+                      Height="200px"
+                      OptionValue="@(i => i.StatusID)"
+                      OptionText="@(i => i.StatusName)"
+                      @bind-Value="@Content.LabStatus" @onchange="@(e=> SaveCommunicate(e,"LabStatus"))">
+        </FluentSelect>
+
+        <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+            <FluentLabel Style="width:100px">Factory Status</FluentLabel>
+
+            <FluentSelect TOption="CaseStatus"
+                          Placeholder="--TT Status--"
+                          Items="@TTStatus"
+                          Width="140px"
+                          Height="200px"
+                          OptionValue="@(i => i.StatusID)"
+                          OptionText="@(i => i.StatusName)"
+                          @bind-Value="@Content.FactoryStatus" @onchange="@(e=> SaveCommunicate(e,"FactoryStatus"))">
+
+            </FluentSelect>
+        </FluentStack>
+
+
+    </FluentStack>
+
+</FluentStack>
+
+@code {
+
+    private string ErrorMessage = "";
+
+    IQueryable<CaseStatus>? labStatus;
+    IQueryable<CaseStatus>? TTStatus;
+
+    [Parameter]
+    public bool ShowUpload { get; set; } = true;    
+    int ProgressPercent = 0;
+
+  
+    [Parameter]
+    public CaseCommunicate Content { get; set; } = new();
+
+    [Parameter]
+    public UserInfo CurrentUser { get; set; } = new();
+
+     protected override async void OnInitialized()
+    {
+        labStatus = (await productionDB.GetCaseStatus(1)).AsQueryable();
+        TTStatus = (await productionDB.GetCaseStatus(1)).AsQueryable();
+       
+    }
+
+ 
+
+    private async Task SaveCommunicate(ChangeEventArgs e, string FieldName)
+    {
+        await Task.Delay(500);
+
+        Content.UserID = CurrentUser.EmplRefID;
+
+        if (FieldName == "ConcernIssue")
+            Content.ConcernIssue = e.Value.ToString();
+        if (FieldName == "TechnicianSuggestion")
+            Content.TechnicianSuggestion = e.Value.ToString();
+        if (FieldName == "Response")
+            Content.Response = e.Value.ToString();
+        if (FieldName == "ResponseDate")
+            Content.ResponseDate = DateTime.Parse(e.Value.ToString());
+
+        if (FieldName == "LabStatus")
+            Content.LabStatus = e.Value.ToString();
+        if (FieldName == "FactoryStatus")
+            Content.FactoryStatus = e.Value.ToString();
+
+
+        var res = await productionDB.SaveCaseCommunicate(Content);
+
+        if (Content.RecID == 0)
+        {
+            if (res != null)
+            {
+                Content = res;
+            }
+        }
+    }
+
+    
+
+}

@@ -4,8 +4,9 @@ namespace LabManagement.Infrastructure.IRespository
 {
     public interface ISalesOrderResposity
     {
+        string DateFormat { get; }
         Task<List<SalesTable>> GetOrders(int RecID, string SalesID,string CustomerID, string Search, 
-            DateTime ? FromDate, DateTime ? ToDate);
+            DateTime ? FromDate, DateTime ? ToDate, string LabID);
         Task<SalesTable> GetOrderByRecID(int RecID);
         Task<SalesTable> GetOrderBySalesID(string SalesID);
 
@@ -20,7 +21,7 @@ namespace LabManagement.Infrastructure.IRespository
 
         Task<ProdTable> UpdateProdOrder(ProdTable model);
 
-        Task<List<ProdTable>> GetProdOrders(int RecID,string SalesID, string FromDate,string ToDate);
+        Task<List<ProdTable>> GetProdOrders(int RecID,string SalesID,string LabID, string FromDate,string ToDate,string Search);
 
         Task<int> DeleteOrderLine(int RecID);
 
@@ -29,5 +30,8 @@ namespace LabManagement.Infrastructure.IRespository
         Task<List<OrderFile>> GetFiles(string OrderID,int FileType);
         Task<int> AddFile(string OrderID,string PicturePath,int FileType);
         Task<int> DeleteFile(int RecID);
+        Task<SequenceInfo> GetSequenceNum(string SeqID);
+
+        Task<List<AssignmentInfo>> GetAssignment();
     }
 }

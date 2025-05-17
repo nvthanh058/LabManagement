@@ -29,8 +29,8 @@
     --bs-light: #f5f6f8;
     --bs-dark: #343a40;
     --bs-purple: #6f42c1;
-    --bs-font-sans-serif: "Roboto",sans-serif;
-    --bs-font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    --bs-font-sans-serif: "Roboto";
+    --bs-font-monospace: "Roboto";
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0))
 }
 
@@ -47,8 +47,8 @@
 
 body {
     margin: 0;
-    font-family: "Roboto",sans-serif;
-    font-size: .82rem;
+    font-family: "Roboto";
+    font-size: 10pt;
     font-weight: 400;
     line-height: 1.5;
     color: #495057;
@@ -2328,7 +2328,7 @@ progress {
     display: block;
     width: 100%;
     padding: .17rem .35rem;
-    font-size: .82rem;
+    font-size: 10pt;
     font-weight: 400;
     line-height: 1.5;
     color: #495057;
@@ -6543,7 +6543,7 @@ textarea.form-control-lg {
     z-index: 1080;
     display: block;
     margin: 0;
-    font-family: "IBM Plex Sans",sans-serif;
+    font-family: "IBM Plex Sans";
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;
@@ -6656,7 +6656,7 @@ textarea.form-control-lg {
     z-index: 1070;
     display: block;
     max-width: 276px;
-    font-family: "IBM Plex Sans",sans-serif;
+    font-family: "IBM Plex Sans";
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;

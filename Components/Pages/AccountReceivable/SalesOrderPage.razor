@@ -1,60 +1,90 @@
 ﻿@page "/salesorder"
 @attribute [Authorize]
 
+@using ClosedXML.Excel
 @using LabManagement.Components.Pages.AccountReceivable.Panels
 @using LabManagement.Components.Pages.Categories
 @using LabManagement.Components.Pages.CommonForms.Panels
+@using LabManagement.Components.Pages.Controls
 @using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 
 @rendermode InteractiveServer
-@inject IJSRuntime JS
+@inject IJSRuntime JSRuntime
 
 @inject IDialogService DialogService
 @inject ISalesOrderResposity db
 @inject ICustomerResposity customerdb
+@inject IProductResposity productdb
 @inject IUserInfoResposity userdb
+@inject ISystemResposity systemDB
 @inject IToastService ToastService
+@inject IKeyCodeService KeyCodeService
 @inject NavigationManager navigationManager
+@inject ClipboardService ClipboardService
+@inject TypeRampBaseFontSize FontSize
 
 @if (ShowList == true)
 {
-    <FluentSplitter Style="height:100%" Orientation="Orientation.Vertical" BarSize="6" Panel1Size="80%" Panel2Size="auto">
+    <FluentSplitter Style="height:100%" Orientation="Orientation.Horizontal" BarSize="6" Panel1Size="80%" Panel2Size="auto">
         <Panel1>
-            <div style="height: 600px; overflow:auto;" tabindex="-1">
-                <FluentStack  Orientation="Orientation.Horizontal" Style="height:48px" VerticalAlignment="VerticalAlignment.Center" Width="100%">
-                    <FluentDatePicker Label="From Date" Style="width:120px" @bind-Value="@orderView!.fromDate"></FluentDatePicker>
-                    <FluentDatePicker Label="To Date" Style="width:120px" @bind-Value="@orderView!.toDate"></FluentDatePicker>
-                    <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
-                    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Search())" OnClick="@LoadData">Load</FluentButton>
+            
+                <FluentStack  Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start" VerticalAlignment="VerticalAlignment.Center">
+
+                    <FluentAutocomplete TOption="LabInfo"
+                    AutoComplete="off"
+                    Width="150px"                    
+                    OnOptionsSearch="OnSearch"
+                    Placeholder="Select Lab"                   
+                    MaximumOptionsSearch="int.MaxValue"
+                    MaximumSelectedOptions="1"
+                    Virtualize="true"
+                    OptionStyle="font-size:10pt"
+                    OptionText="@(item => $"{item.LabName}")"
+                    @bind-SelectedOptions="@SelectedLabs" />
+
+                    <MyLabel Width="80">From Date</MyLabel>
+                    <MyDatePicker Width="120" @bind-Value="@orderView!.fromDate"></MyDatePicker>
+
+                    <MyLabel Width="80">To Date</MyLabel>
+                    <MyDatePicker Width="120" @bind-Value="@orderView!.toDate"></MyDatePicker>
+
+                    <FluentSearch @bind-Value=Search Style="width:200px;font-size:10pt" @bind-Value:after=LoadData></FluentSearch>
+                    <MyButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Search())" OnClick="@LoadData">Load</MyButton>
 
                 </FluentStack>
+
+
                 <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
 
-                    <FluentButton IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddAsync">New</FluentButton>
-                    <FluentButton IconStart="@(new Icons.Regular.Size20.ArrowSquareDown())">Import</FluentButton>
+                    <MyButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddAsync">New</MyButton>               
+                    <MyButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.SendCopy())" OnClick="@CreateProduct">Create Work Order</MyButton>
 
-                    <FluentButton @ref="ref1" IconStart="@(new Icons.Regular.Size20.ArrowCircleDown())" id="btnActionMenu" Appearance="Appearance.Outline" @onclick="@(() => openActionMenu = !openActionMenu)">
-                    </FluentButton>
-
-                    <FluentMenu Anchor="btnActionMenu" @bind-Open="openActionMenu" VerticalThreshold="170" UseMenuService="false">
-
-                        <FluentMenuItem OnClick="() => ViewOrderAsync()">
-                            <span slot="start"><FluentIcon Value="@(new Icons.Regular.Size16.Eye())" Color="Color.Neutral" Slot="start" /></span>
-                            View
-                        </FluentMenuItem>
-                        <FluentMenuItem OnClick="() => DeleteMultiOrderAsync()">
-                            <span slot="start"><FluentIcon Value="@(new Icons.Regular.Size16.Delete())" Color="Color.Neutral" Slot="start" /></span>
-                            Delete selected orders
+                    <FluentMenuButton Text="More" Style="width:100px;font-size:10pt" IconStart="new Icons.Regular.Size16.List()">
+                        <FluentMenuItem OnClick="ExportData">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.ArrowExportUp())" />
+                            Export Data
                         </FluentMenuItem>
 
-                        <FluentMenuItem OnClick="() => ShowProductionAsync()">
-                            <span slot="start"><FluentIcon Value="@(new Icons.Regular.Size16.Settings())" Color="Color.Neutral" Slot="start" /></span>
-                            Show Product Order
+                        <FluentMenuItem OnClick="PrintRXOrder">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.Print())" />
+                            Print RX
                         </FluentMenuItem>
 
-                    </FluentMenu>
-                    <FluentButton IconStart="@(new Icons.Regular.Size20.Print())" OnClick="@PrintRXOrder">Print RX</FluentButton>
+                        <FluentMenuItem OnClick="PrintBarcode">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.Print())" />
+                            Barcode
+                        </FluentMenuItem>
 
+                        <FluentMenuItem OnClick="DeleteAll">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.Delete())" />
+                            Delete All Selected
+                        </FluentMenuItem>
+
+                    </FluentMenuButton>
+                    
+                    <FluentPaginator State="@pagination" />
+
+                                        <FluentCheckbox @bind-Value="IsAllowPaste" Style="font-size:10pt">Paste Data</FluentCheckbox>
                 </FluentStack>
 
                 @if (orderView!.items == null)
@@ -66,13 +96,18 @@
                 }
                 else
                 {
-                    <FluentStack Orientation="Orientation.Vertical" Width="100%">
 
-                        <FluentDataGrid RowSize="DataGridRowSize.Medium" Id="grid" Items="@orderView!.items"
-                        style="height: 100%;"
+                     <div style="display: table; table-layout: fixed; width: 100%;">
+                    <div style="overflow-x: auto;">
+
+                    <FluentStack Orientation="Orientation.Vertical" Width="95%">
+
+                        <FluentDataGrid Style="min-width: max-content;font-size:10pt;" RowSize="DataGridRowSize.Medium" Items="@orderView!.items"                        
                         TGridItem="SalesTable"                                    
                         ResizableColumns=true
-
+                        RowClass="@rowClass"                   
+                        RowStyle="@rowStyle"
+                        AutoFit=true                                
                         ShowHover="true"            
                         HeaderCellAsButtonWithMenu="true"
                         Pagination="@pagination">
@@ -81,60 +116,102 @@
                             SelectMode="@Mode"
                             SelectFromEntireRow="true"
                             Property="@(e => e.Selected)"
-                                          SelectAll="@(orderView!.items.All(e => e.Selected))"
-                                          SelectAllChanged="@(all => orderView!.items.ToList().ForEach(p => p.Selected = (all == true)))"
+                            SelectAll="@(orderView!.items.All(e => e.Selected))"
+                            SelectAllChanged="@(all => orderView!.items.ToList().ForEach(p => p.Selected = (all == true)))"
                             OnSelect="@((e) =>OnSelectOrder(e.Item,e.Selected))">
                             </SelectColumn>
 
-                            <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Sortable="true" Width="120px" />
-                            <PropertyColumn Title="PatientName" Property="@(p => p.PatientName)" Sortable="true" Width="100px" />
-                            <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Sortable="true" Width="120px" />
-                            <PropertyColumn Title="PanNo" Property="@(p => p.LabpanNum)" Sortable="true" Width="100px" />                            
-                            <PropertyColumn Title="ShipDate" Property="@(p => p.ShipDate)" Format="dd/MM/yyyy" Sortable="true" Width="100px" />
-                            <PropertyColumn Title="Cust Req ShipDAte" Property="@(p => p.CustReqShipDate)" Format="dd/MM/yyyy" Sortable="true" Width="100px" />
-                            <PropertyColumn Title="Customer" Property="@(p => p.SalesName)" Sortable="true" Width="80px" />
-                            <PropertyColumn Title="Doctor Name" Property="@(p => p.DoctorName)" Align="Align.End" Sortable="true" Width="120px" />
-                            <PropertyColumn Title="Doctor Account" Property="@(p => p.DocAccount)" Align="Align.End" Sortable="true" Width="120px" />
-                            <PropertyColumn Title="Sales Status" Property="@(p => p.SalesStatusName)" Align="Align.End" Sortable="true" Width="120px" />
-                            <TemplateColumn Title="" Align="@Align.End">
-
+                            <TemplateColumn Title="" Align="@Align.End" Width="120px">
                                 <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditOrderAsync(context))" />
                                 <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteOrderAsync(context))" />
 
                             </TemplateColumn>
 
+
+                            <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Sortable="true" />
+                            <PropertyColumn Title="PatientName" Property="@(p => p.PatientName)" Sortable="true" />                            
+                            <PropertyColumn Title="PanNo" Property="@(p => p.LabpanNum)" Sortable="true"  />
+                            <PropertyColumn Title="Date In" Property="@(p => p.CaseDate)" Format="@db.DateFormat" Sortable="true" />
+                            <PropertyColumn Title="Ship Date" Property="@(p => p.ShipDate)" Format="@db.DateFormat" Sortable="true" />
+                            <PropertyColumn Title="Cust Req ShipDAte" Property="@(p => p.CustReqShipDate)" Format="@db.DateFormat" Sortable="true" />
+                            <PropertyColumn Title="Customer" Property="@(p => p.SalesName)" Sortable="true"  />
+                            <PropertyColumn Title="Doctor Name" Property="@(p => p.DoctorName)" Align="Align.End" Sortable="true" />
+                            <PropertyColumn Title="Assignment" Property="@(p => p.Assignment)" Align="Align.End" Sortable="true" />
+                            <PropertyColumn Title="Sales Status" Property="@(p => p.SalesStatusName)" Align="Align.End" Sortable="true"  />
+
+
+
                         </FluentDataGrid>
-                        <FluentPaginator State="@pagination" />
+
 
                     </FluentStack>
 
-
+                     </div>
+                    </div>
                 }
-            </div>
+           
         </Panel1>
         <Panel2>
 
-            <FluentDataGrid RowSize="DataGridRowSize.Medium" Items="@orderView!.lineitems"
-                            TGridItem="SalesLine"
+            @* <FluentDataGrid RowSize="DataGridRowSize.Medium" Items="@orderView!.lineitems"
+            TGridItem="SalesLine"
+            AutoFit=true
             ResizableColumns=true>
 
-                <PropertyColumn Title="Item Code" Property="@(p => p.ItemCode)" Width="120px" />
-                <PropertyColumn Title="Name" Property="@(p => p.ItemName)" Width="220px" />
-                <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Width="120px" />
-                <PropertyColumn Title="Us Teeth" Property="@(p => p.UsTeeth)" Width="150px" />
-                <PropertyColumn Title="EurTeeth" Property="@(p => p.EurTeeth)" Sortable="true" Width="150px" />
-                <PropertyColumn Title="Shade" Property="@(p => p.Shade)" Sortable="true" Width="150px" />
-                <PropertyColumn Title="SalesQty" Property="@(p => p.SalesQty)" Sortable="true" Width="150px" />
-                <PropertyColumn Title="SalesPrice" Property="@(p => p.SalesPrice)" Sortable="true" Width="150px" />
-                <PropertyColumn Title="LineAmount" Property="@(p => p.SalesPrice)" Sortable="true" Width="150px" />
-                <TemplateColumn Title="Actions" Align="@Align.End">
+                <TemplateColumn Align="@Align.End" Width="120px">
 
                     <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineItem(context))" />
                     <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineItem(context))" />
 
                 </TemplateColumn>
+                <PropertyColumn Title="Item Code" Property="@(p => p.ItemCode)" />
+                <PropertyColumn Title="Name" Property="@(p => p.ItemName)"  />
+                <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" />
+                <PropertyColumn Title="Us Teeth" Property="@(p => p.UsTeeth)" />
+                <PropertyColumn Title="EurTeeth" Property="@(p => p.EurTeeth)" Sortable="true" />
+                <PropertyColumn Title="Shade" Property="@(p => p.Shade)" Sortable="true"  />
+                <PropertyColumn Title="SalesQty" Property="@(p => p.SalesQty)" Sortable="true"  />
+                <PropertyColumn Title="SalesPrice" Property="@(p => p.SalesPrice)" Sortable="true" />
+                <PropertyColumn Title="LineAmount" Property="@(p => p.SalesPrice)" Sortable="true" />
 
-            </FluentDataGrid>
+
+            </FluentDataGrid> *@
+
+            @if (orderView!.lineitems != null)
+            {
+                <FluentAccordion Style="width:99%" OnAccordionItemChange="HandleOnAccordionItemChange" ExpandMode="AccordionExpandMode.Multi">
+                @foreach(var item in orderView!.lineitems!)
+                {
+                     <FluentAccordionItem Id="@item.RecID.ToString()" Style="background-color:#EEE" Expanded="true">
+                        <HeadingTemplate>
+                               <FluentLabel  Typo="Typography.H4">@item.ItemName</FluentLabel>
+                        </HeadingTemplate>
+                    
+                        <ChildContent>
+                            <FluentStack Orientation="Orientation.Vertical">
+                                 <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Us Teeth</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@item.UsTeeth" />
+                                </FluentStack> 
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Shade</FluentLabel>
+                                    <FluentTextField Style="width:180px" @bind-Value="@item.Shade" />
+                                </FluentStack>
+
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                                    <FluentLabel Style="width:100px">Qty</FluentLabel>
+                                    <FluentNumberField ReadOnly="true" Style="width:180px" @bind-Value="@item.SalesQty"/>
+                                </FluentStack>
+
+                            </FluentStack>
+                                
+                        </ChildContent>
+                    </FluentAccordionItem>
+                }
+                </FluentAccordion>
+            }
+           
 
         </Panel2>
     </FluentSplitter>
@@ -142,7 +219,6 @@
 }
 else
 {
-
 
     <SalesOrderInputPanel Content="@Content" OnBackToList="@(e =>CancelAsync(true))" OnNewOrder="@(e =>OnNewOrderCallBack(true))"></SalesOrderInputPanel>
 
@@ -156,43 +232,87 @@ else
     }
 </div>
 
+<div id="barcodeId" style="display:none">
+    @if (orderView.SelectedItems != null)
+    {
+        @foreach (var item in orderView.SelectedItems)
+        {
+            <BarcodeDesign Content="@item.CaseNo"></BarcodeDesign>
+            <p class="breakhere"></p>
+        }
+    }
+
+</div>
 @code {
+
+    private bool activePage = false;
+    private FluentMenuButton menubuttonm = new();
+
+    IQueryable<LabInfo>? labs;
+    IEnumerable<LabInfo> SelectedLabs = Array.Empty<LabInfo>();
+    private void OnSearch(OptionsSearchEventArgs<LabInfo> e)
+    {
+        e.Items = labs.Where(culture =>
+            culture.LabName.Contains(e.Text, StringComparison.OrdinalIgnoreCase));
+    }
 
     bool ShowList = true;
     bool openActionMenu = false;
     DataGridSelectMode Mode = DataGridSelectMode.Multiple;
 
+    Func<SalesTable, string?> rowClass = x => x.Selected == true ? "highlighted" : null;
+    Func<SalesTable, string?> rowStyle = x => x.FocusedRow == true ? "background-color: #a1d8f5" : null;
     SalesOrderView? orderView = new();
 
     [CascadingParameter]
     private Task<AuthenticationState> authStateTask { get; set; }
 
     UserInfo? CurrentUser { get; set; } = new();
-     
+
     string Search = "";   
-   
+
     [Parameter]
     public SalesTable Content { get; set; } = default!;
 
     Customer SelectedCustomer { get; set; } = new Customer();
-    PaginationState pagination = new PaginationState { ItemsPerPage = 15 };
-             
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
+
     protected override async Task OnInitializedAsync()
     {
-       
+        FontSize.WithDefault("10pt");
+
+        KeyCodeService.RegisterListener(OnKeyHandleAsync);
+        IsAllowPaste = false;
+
         var authState = await authStateTask;
         var UserID = authState.User.Identity.Name;
 
         CurrentUser = await userdb.GetUser(UserID);
-        LoadData();
 
+        labs = (await systemDB.GetAllLabs(0, "", "")).AsQueryable();
+
+        await LoadData();
+
+        activePage = true;
     }
 
-    private async void LoadData()
+    // private void OnRowFocus(FluentDataGridRow<SalesTable> row)
+    // {
+    //     var activeP = (SalesTable)row.Item;
+    //     foreach (var p in orderView.items)
+    //         p.FocusedRow = ReferenceEquals(p, activeP);
+    // }
+
+    private async Task LoadData()
     {
-        orderView.items = (await db.GetOrders(0, "", "", Search, orderView.fromDate, orderView.toDate)).AsQueryable();
+        var LabID = "";
+        if(SelectedLabs.FirstOrDefault() !=null)
+        {
+            LabID = SelectedLabs.FirstOrDefault().DATAAREAID;
+        }
+        orderView.items = (await db.GetOrders(0, "", "", Search, orderView.fromDate, orderView.toDate,LabID)).AsQueryable();
     }
-    
+
     private async void LoadLineItems()
     {        
         if (orderView!.FirstOrder == null)
@@ -208,15 +328,15 @@ else
     private async Task CancelAsync(bool b)
     {        
         ShowList = true;
-        LoadData();
+        await LoadData();
         await Task.Yield();
         StateHasChanged();
     }
 
-        private async Task OnNewOrderCallBack(bool b)
+    private async Task OnNewOrderCallBack(bool b)
     {
         ShowList = true;
-        LoadData();                
+        await LoadData();                
         await Task.Yield();
         StateHasChanged();
 
@@ -229,10 +349,21 @@ else
 
     private async Task AddAsync()
     {
+        var LabID = "";
+        if(SelectedLabs.FirstOrDefault()==null)
+        {
+            ToastService.ShowWarning("Please select a Lab");
+            return;            
+        }
+
+        LabID = SelectedLabs.FirstOrDefault().DATAAREAID;
+
         Content = new SalesTable();
+        Content.LabpanNum = (await db.GetSequenceNum("LabNum")).SeqNumber;
         Content.UserID = CurrentUser.EmplRefID;
         Content.ShowImages = true;
         Content.ShowFiles = true;
+        Content.DATAAREAID = LabID;
 
         ShowList = false;
     }
@@ -278,7 +409,7 @@ else
 
     private async Task EditOrderAsync(SalesTable item)
     {
-      
+
         Content = item;
         Content.UserID = CurrentUser.EmplRefID;
         Content.ShowImages = true;
@@ -300,7 +431,25 @@ else
             var res = await db.DeleteOrder(item.RecID);
 
 
-            LoadData();
+            await LoadData();
+        }
+
+    }
+
+    private async Task DeleteAll()
+    {
+
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete selected orders?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+
+            foreach(var item in orderView.SelectedItems)
+            {
+                var res = await db.DeleteOrder(item.RecID);
+            }
+
+            await LoadData();
         }
 
     }
@@ -323,7 +472,7 @@ else
                 var res = await db.DeleteOrder(item.RecID);
             }
 
-            LoadData();
+            await LoadData();
         }
 
     }
@@ -331,22 +480,22 @@ else
     private async Task ClearSelectAsync()
     {
         await Task.Delay(500);     
-        LoadData();
+        await LoadData();
     }
 
     private async Task EditLineItem(SalesLine item)
     {       
         var parameters = new DialogParameters
             {
-                Title = "Select Products",
+                Title = "Order Detail",
                 PrimaryAction = "Yes",
-                PrimaryActionEnabled = true,    
-                Width = "700px",
-                Height = "600px",               
+                PrimaryActionEnabled = true,
+                Width = "800px",
+                Height = "600px",
                 Modal = false,
             };
 
-        var dialog = await DialogService.ShowDialogAsync<SalesLinePanel>(item, parameters);
+        var dialog = await DialogService.ShowDialogAsync<InputSaleLinesPanel>(item, parameters);
         var dialogResult = await dialog.Result;
         await UpdateLineItem(dialogResult);
     }
@@ -389,38 +538,325 @@ else
         {
             item.Selected = Selected;
             orderView.lineitems = (await db.GetOrderLines(item.SalesID)).AsQueryable();
+
+
+            foreach(var order in orderView.items)
+            {
+                order.FocusedRow = false;
+            }
+            item.FocusedRow = true;
         }
 
     }
 
     [Inject]
     private ControlCornerRadius ControlCornerRadius { get; set; } = default!;
-    private FluentButton? ref1;
+    //private FluentButton? ref1;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
 
-            await ControlCornerRadius.SetValueFor(ref1!.Element, 0);            
-            StateHasChanged();
+            // await ControlCornerRadius.SetValueFor(ref1!.Element, 0);            
+            // StateHasChanged();
         }
     }
 
     public async Task PrintRXOrder()
     {
-        
+
         if (orderView.SelectedItems == null)
         {
             ToastService.ShowWarning("Please select Orders");
             return;
         }
 
-        await JS.InvokeVoidAsync("printComponent", "#componentId");
-        
-      
+        await JSRuntime.InvokeVoidAsync("printComponent", "#componentId");
 
     }
 
 
+    IQueryable<SalesLine>? lineitems;
+    private async Task CreateProduct()
+    {
+        if (orderView.SelectedItems == null)
+        {
+            ToastService.ShowWarning("Please select Orders");
+            return;
+        }
+
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to create work order?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var iCount = 0;
+            foreach(var sOrder in orderView.SelectedItems)
+            {
+
+                lineitems = (await db.GetOrderLines(sOrder.SalesID)).AsQueryable();
+                if (lineitems.FirstOrDefault() != null)
+                {
+                    foreach (SalesLine item in lineitems)
+                    {
+                        item.UserID = CurrentUser!.UserID;
+                        item.WorkNotes = sOrder.TranslateNotes;
+                        item.CustomerRequests = sOrder.WorkTicketNotes;
+
+                        var res = await db.SaveProdOrder(item);
+                        iCount += res.RecID;
+                    }
+                }
+                else
+                {
+                    ToastService.ShowWarning("No product in Case#" + sOrder.CaseNo);  
+                }
+
+            }
+
+            if (iCount > 0)
+            {
+                navigationManager.NavigateTo("/ProductOrder");
+            }
+            else
+            {
+                dialog = await DialogService.ShowInfoAsync("This order have been in Production");
+                result = await dialog.Result;
+            }
+
+        }
+    }
+    private async Task GotoPage(string url)
+    {       
+        navigationManager.NavigateTo(url);
+        StateHasChanged();
+    }
+
+
+    public async Task ExportData()
+    {
+        var exportItems = orderView.items!.ToList();
+
+        using var workbook = new XLWorkbook();
+        var worksheet = workbook.Worksheets.Add("Data");
+
+        worksheet.Cell(1, 1).Value = "No";
+        worksheet.Cell(1, 2).Value = "CaseNo No";
+        worksheet.Cell(1, 3).Value = "Lab Num";
+        worksheet.Cell(1, 4).Value = "Patient Name";
+        worksheet.Cell(1, 5).Value = "Doctor Name";
+        worksheet.Cell(1, 6).Value = "Date In";
+        worksheet.Cell(1, 7).Value = "Ship Date";
+        worksheet.Cell(1, 8).Value = "Customer Name";
+        worksheet.Cell(1, 9).Value = "Cust Requests";
+        worksheet.Cell(1, 10).Value = "Work notes";
+
+        worksheet.Range("A1:Z1").Style.Font.Bold = true;
+        var startRow = 2;
+        foreach (var item in exportItems)
+        {
+            worksheet.Cell(startRow, 1).Value = startRow - 1;
+            worksheet.Cell(startRow, 2).Value = item.CaseNo;
+            worksheet.Cell(startRow, 3).Value = item.LabpanNum;
+            worksheet.Cell(startRow, 4).Value = item.PatientName;
+            worksheet.Cell(startRow, 5).Value = item.DoctorName;
+            worksheet.Cell(startRow, 6).Value = item.CaseDate;
+            worksheet.Cell(startRow, 7).Value = item.ShipDate;
+            worksheet.Cell(startRow, 8).Value = item.CustomerName;     
+            worksheet.Cell(startRow, 9).Value = item.WorkTicketNotes;
+            worksheet.Cell(startRow, 10).Value = item.TranslateNotes;
+
+            startRow += 1;
+            // Add more properties as needed
+        }
+
+        worksheet.Columns().AdjustToContents();
+
+        using var stream = new MemoryStream();
+        workbook.SaveAs(stream);
+        stream.Seek(0, SeekOrigin.Begin);
+
+        var content = new byte[stream.Length];
+        await stream.ReadAsync(content, 0, (int)stream.Length);
+
+        var fileDate = DateTime.Now.ToString("yyMMddHHmmssttt");
+
+        await JSRuntime.InvokeVoidAsync("saveAsFile", "SaleOrders" + fileDate + ".xlsx", Convert.ToBase64String(content));
+    }
+
+    private bool IsAllowPaste = false;
+    private bool IncludeKeyUp = false;
+    private bool StopRepeat = true;
+    private List<(string Key, string Event)> KeyPressed = new();
+
+    private async Task OnKeyHandleAsync(FluentKeyCodeEventArgs args)
+    {
+        if (activePage == true)
+        {
+             if (IsAllowPaste == false)
+        {
+            return;
+        }
+
+        if (StopRepeat && args.Repeat)
+        {
+
+        }
+        else
+        {
+            KeyPressed.Add((args.ToString(), args.Name));
+
+            var keyStr = "";
+            @foreach (var key in KeyPressed)
+            {
+                keyStr = key.Key;
+                if (keyStr == "Ctrl + V")
+                {
+                    var a = key.Key;
+
+                    string s = await ClipboardService.ReadTextAsync();
+                    await ProcessImportData(s);
+                    await LoadData();
+                }
+
+            }
+
+            StateHasChanged();
+        }
+
+        }
+       
+
+    }
+
+    public async Task ProcessImportData(string s)
+    {
+        string[] lines = s.Split('\n');
+
+        List<SalesTable> data = new List<SalesTable>();
+        var CountInsert = 0;
+        foreach (string line in lines)
+        {
+
+            string[] sCells = line.Split('\t');
+
+            if (sCells.Length > 5)
+            {
+                var item = new SalesTable();
+                item.RecID = 0;
+                item.CaseDate = DateTime.Parse(sCells[0].Trim());
+                item.CaseNo = sCells[1].Trim();
+                item.LabpanNum = sCells[2].Trim();
+
+                try
+                {
+                    var shipDate = DateTime.Parse(sCells[3].Trim());
+
+                    item.ShipDate = shipDate;
+                    item.CustReqShipDate = shipDate;
+
+                }
+                catch
+                {
+                    item.ShipDate = item.CaseDate?.AddDays(3);
+                    item.CustReqShipDate = item.CaseDate?.AddDays(3);
+
+                }
+
+
+                item.PatientName = sCells[4].Trim();
+
+                var LabName = sCells[5].Trim();
+
+                var labList = (await systemDB.GetAllLabs(0, "", LabName)).AsQueryable();
+                if (labList.FirstOrDefault() != null)
+                    item.DATAAREAID = labList.FirstOrDefault()!.DATAAREAID;
+
+                item.DoctorName = sCells[6].Trim();
+                item.WorkTicketNotes = sCells[12].Trim();
+                item.TranslateNotes = sCells[13].Trim();
+
+                if (sCells[14] != null)
+                {
+                    item.Assignment = sCells[14].Trim();
+                }
+
+                item.UserID = CurrentUser.EmplRefID;
+
+                var itemName = sCells[9].Trim();
+
+                var res = await db.SaveOrder(item);
+
+                if (res.RecID > 0)
+                {
+                    CountInsert += 1;
+                    var prod = (await productdb.GetAll(0, "", itemName.ToUpper())).AsQueryable().FirstOrDefault()!;
+                    if (itemName.IndexOf(",") > 0)
+                    {
+                        prod = (await productdb.GetAll(0, "", "COMBO")).AsQueryable().FirstOrDefault()!;
+                    } 
+
+                    if (prod != null)
+                    {
+                        var SO = await db.GetOrderByRecID(res.RecID);
+
+                        var SL = new SalesLine();
+                        SL.SalesID = SO.SalesID;
+                        SL.ItemID = prod.ItemID;
+                        SL.ItemCode = prod.ItemCode;
+                        SL.ItemName = prod.ItemName;
+
+                        SL.UsTeeth = sCells[7].Trim();
+
+                        var qty = 1;
+                        try
+                        {
+                            qty = Int32.Parse(sCells[8].Trim());
+                        }
+                        catch
+                        {
+                            qty = 1;
+                        }
+                        SL.CaseNo = SO.CaseNo;
+
+                        SL.SalesQty = qty;
+                        SL.Shade = sCells[10].Trim();
+                        SL.DATAAREAID = SO.DATAAREAID;
+
+                        await db.SaveOrderLine(SL);
+                    }
+                }
+            }
+        }
+
+         ToastService.ShowWarning("(" + CountInsert + ") Cases imported");        
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        KeyCodeService.UnregisterListener(OnKeyHandleAsync, OnKeyHandleAsync);
+        return ValueTask.CompletedTask;
+    }
+
+    public async Task PrintBarcode()
+    {
+
+        if (orderView!.SelectedItems == null)
+        {
+            ToastService.ShowWarning("Please select Orders");
+            return;
+        }
+        await JSRuntime.InvokeVoidAsync("printComponent", "#barcodeId");
+
+    }
+
+    FluentAccordionItem? changed;
+    string activeItemId = "";
+    private async Task HandleOnAccordionItemChange(FluentAccordionItem item)
+    {        
+        changed = item;
+        activeItemId = changed.Id;
+        await Task.Delay(200);    
+    }
 
 }

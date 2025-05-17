@@ -20,6 +20,9 @@
         public string OtherNotes { get; set; } = "";
 
         [ModelAttribute("NotTableField")]
+        public string CustomerRequests { get; set; } = "";
+
+        [ModelAttribute("NotTableField")]
         public string WorkNotes { get; set; } = "";
 
         public string Rework { get; set; } = "";

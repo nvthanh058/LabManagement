@@ -5,7 +5,7 @@
         public int RecID { get; set; } = 0;        
         public string TaskID { get; set; } = "";
         public string TaskRefID { get; set; } = "";
-        public DateTime TransDate { get; set; } = DateTime.Now;        
+        public DateTime? TransDate { get; set; } = DateTime.Now;        
         public string EmplRefID { get; set; } = "";
 
         [ModelAttribute("NotTableField")]

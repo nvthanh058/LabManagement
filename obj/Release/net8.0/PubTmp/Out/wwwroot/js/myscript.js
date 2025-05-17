@@ -1,4 +1,9 @@
-﻿
+﻿function getWindowSize() {
+    return {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+};
 
 function printComponent(componentSelector) {   
     var elementToPrint = document.querySelector(componentSelector);

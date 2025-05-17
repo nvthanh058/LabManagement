@@ -1,4 +1,5 @@
-﻿@inject IDialogService DialogService
+﻿@attribute [Authorize]
+@inject IDialogService DialogService
 @rendermode InteractiveServer
 
 <FluentButton BackgroundColor="var(--neutral-layer-4)" OnClick="OpenSiteSettingsAsync" Title="Site settings">

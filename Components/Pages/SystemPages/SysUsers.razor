@@ -1,5 +1,5 @@
 ﻿@page "/sysusers"
-
+@attribute [Authorize]
 @rendermode InteractiveServer
 @inject IDialogService DialogService
 @inject IUserInfoResposity context
@@ -25,9 +25,9 @@
     </FluentStack>
 
 
-    <FluentDataGrid Items="@FilteredItems" 
-    style="height: 100%;" 
-    TGridItem="UserInfo"
+    <FluentDataGrid Items="@FilteredItems"
+                    style="height: 100%;font-size:10pt;"
+                    TGridItem="UserInfo"
                     RowSize="DataGridRowSize.Medium"
     Pagination="@pagination">
         <TemplateColumn Title="Status">

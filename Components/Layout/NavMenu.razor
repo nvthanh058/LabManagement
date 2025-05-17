@@ -1,6 +1,6 @@
 ﻿@rendermode InteractiveServer
 @inject IUserInfoResposity userDB
-
+@attribute [Authorize]
 
 @if (CurrentUser.GroupID == "customer")
 {
@@ -8,8 +8,8 @@
         @{
             var wh = _vertical ? "height: 100%; width: 100%;" : "";
         }
-    <FluentStack Orientation="Orientation.Vertical" Style="height: 100%;">
-       
+        <FluentStack Orientation="Orientation.Vertical" Style="height: 100%;">
+
             <FluentAppBar Orientation="Orientation.Vertical" Style="@(" background-color: #fff;")">
 
                 <FluentAppBarItem Href="/casesorder"
@@ -18,95 +18,93 @@
                 IconActive="ResourcesIcon(active: true)"
                 Text="List Case" />
 
-             
+
             </FluentAppBar>
 
-       
-    </FluentStack>
+
+        </FluentStack>
     </div>
 }
 else
 {
-    <FluentNavMenu @bind-Expanded="@expanded" Width="260" Collapsible="true">
-
-        @* 
-        <FluentNavGroup Expanded="true" Title="Cases Submit" Icon="@(new Icons.Regular.Size24.MoneyCalculator())">
-            <FluentNavLink Icon="@(new Icons.Regular.Size24.FolderPeople())" Href="/casesorder">Submit New Cases</FluentNavLink>            
-        </FluentNavGroup> *@
-
+    <FluentNavMenu @bind-Expanded="@expanded" Width="250" Collapsible="true">
+     
         <FluentNavLink Icon="@(new Icons.Regular.Size24.Home())" Href="/">Dashboard</FluentNavLink>
 
         @if (CurrentUser.GroupID == "admin" || CurrentUser.GroupID == "vieworder" || CurrentUser.GroupID == "manager")
         {
-            <FluentNavGroup Expanded="true" Title="Cases Submit" Icon="@(new Icons.Regular.Size24.MoneyCalculator())">                
+            <FluentNavGroup Expanded="true" Title="Cases Submit" Icon="@(new Icons.Regular.Size24.DocumentData())">
                 <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentCatchUp())" Href="/casesorderadmin">All Accounts</FluentNavLink>
+                                
             </FluentNavGroup>
         }
 
         @if (CurrentUser.GroupID == "admin" || CurrentUser.GroupID == "manager" || CurrentUser.GroupID == "office")
         {
-            <FluentNavGroup Title="Reports" Icon="@(new Icons.Regular.Size24.DocumentData())" Href="#">
 
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentCatchUp())" Href="#">Technicians Jobs</FluentNavLink>
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentCatchUp())" Href="#">Incomming Cases</FluentNavLink>
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentCatchUp())" Href="#">Shipping</FluentNavLink>
+             <FluentNavGroup Expanded="true" Title="Account Receivaible" Icon="@(new Icons.Regular.Size24.MoneyCalculator())">
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.FolderPeople())" Href="/Customer">Customers</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.CodeBlock())" Href="/SalesOrder">Sales Order</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.CodeBlock())" Href="/ProductOrder">Production Order</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleList())" Href="/casetracking">On Hold Reports</FluentNavLink>
+
+            </FluentNavGroup>
+            
+
+            <FluentNavGroup Title="Reports" Icon="@(new Icons.Regular.Size24.DocumentData())" >
+
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentCatchUp())" Href="/location">Cases Location</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentCatchUp())" Href="/incoming">Incomming Cases</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentCatchUp())" Href="/taskreport">Tasks Report</FluentNavLink>
                 <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentCatchUp())" Href="#">Late Cases</FluentNavLink>
+
             </FluentNavGroup>
 
-            <FluentNavGroup Title="Technicians" Icon="@(new Icons.Regular.Size24.PeopleTeam())" Href="#">
+            <FluentNavGroup Title="Production" Icon="@(new Icons.Regular.Size24.PeopleTeam())"  >
 
+                
                 <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleList())" Href="/ScanTask">Scan Task</FluentNavLink>
                 <FluentNavLink Icon="@(new Icons.Regular.Size24.DocumentBulletListArrowLeft())" Href="/WorkOrderList">Work Order List</FluentNavLink>
 
             </FluentNavGroup>
-
-            <FluentNavGroup Title="Invoices" Icon="@(new Icons.Regular.Size24.PeopleMoney())" Href="#">
-
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.MoneyCalculator())" Href="Weather">Sales Invoices</FluentNavLink>
-            </FluentNavGroup>
-
-            <FluentNavGroup Title="Categories" Icon="@(new Icons.Regular.Size24.DocumentBulletList())" Href="#">
-
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.AlbumAdd())" Href="/product">Products</FluentNavLink>
-                 <FluentNavLink Icon="@(new Icons.Regular.Size24.TaskListAdd())" Href="/units">Units</FluentNavLink>
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.TaskListAdd())" Href="/tableprice">Prices</FluentNavLink>
-
-            </FluentNavGroup>
-
-            <FluentNavGroup Expanded="true" Title="Account Receivaible" Icon="@(new Icons.Regular.Size24.MoneyCalculator())" Href="#">
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.FolderPeople())" Href="/Customer">Customers</FluentNavLink>
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.CodeBlock())" Href="/SalesOrder">Sales Order</FluentNavLink>
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.BarcodeScanner())" Href="/printbarcode">Print LabelCode</FluentNavLink>
-            </FluentNavGroup>
-            <FluentNavGroup Expanded="true" Title="Production" Icon="@(new Icons.Regular.Size24.MoneyCalculator())" Href="#">
-
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.CodeBlock())" Href="/ProductOrder">Production Order</FluentNavLink>
-                <FluentNavLink Icon="@(new Icons.Regular.Size24.CodeBlock())" Href="/ProductLine">Production Line</FluentNavLink>
-
-            </FluentNavGroup>
-
+                    
+           
         }
 
 
         @if (CurrentUser.GroupID == "admin")
         {
-            <FluentNavGroup Expanded="true" Title="System" Icon="@(new Icons.Regular.Size24.Folder())" Href="#">
+            <FluentNavGroup Title="Invoices" Icon="@(new Icons.Regular.Size24.PeopleMoney())">
 
-            <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleCommunity())" Href="/Employee">Employees</FluentNavLink>
-            <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleAudience())" Href="/SysUserGroup">User Groups</FluentNavLink>
-            <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleLock())" Href="/SysUsers">Users</FluentNavLink>
-            <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleLock())" Href="/Organization">Organization</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.MoneyCalculator())" Href="#">Sales Invoices</FluentNavLink>
 
-        </FluentNavGroup>
+            </FluentNavGroup>
+             <FluentNavGroup Title="Categories" Icon="@(new Icons.Regular.Size24.DocumentBulletList())" >
+
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.AlbumAdd())" Href="/product">Products</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.TaskListAdd())" Href="/units">Units</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.TaskListAdd())" Href="/tableprice">Prices</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.CodeBlock())" Href="/ProductLine">Production Line</FluentNavLink>
+
+            </FluentNavGroup>
+
+            <FluentNavGroup Expanded="true" Title="System" Icon="@(new Icons.Regular.Size24.Folder())" >
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleLock())" Href="/labs">Labs</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleCommunity())" Href="/Employee">Employees</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleAudience())" Href="/SysUserGroup">User Groups</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleLock())" Href="/SysUsers">Users</FluentNavLink>
+                <FluentNavLink Icon="@(new Icons.Regular.Size24.PeopleLock())" Href="/Organization">Organization</FluentNavLink>
+
+            </FluentNavGroup>
         }
-    }
-   
+
 
     </FluentNavMenu>
 }
+
 @code {
 
-    private bool expanded = true;
+    private bool expanded = false;
     string stylevalue = $"background-color: #fff; overflow: auto; resize: vertical; width: 86px; height: 320px; padding: 10px;";
     [Parameter]
     public UserInfo CurrentUser { get; set; } = new();
@@ -117,6 +115,15 @@ else
         active ? new Icons.Filled.Size24.DocumentBulletList()
                : new Icons.Regular.Size24.DocumentBulletList();
 
-   
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+        }
+
+        expanded = false;
+        base.OnAfterRender(firstRender);
+    }
 }

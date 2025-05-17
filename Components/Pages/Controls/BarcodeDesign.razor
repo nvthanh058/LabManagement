@@ -1,0 +1,38 @@
+﻿@using LabManagement.Helpers
+@inject ISalesOrderResposity db
+@rendermode InteractiveServer
+
+
+
+<table style="width:151px;height:113px;border:0px solid;">
+    <tr style="height:20px">
+        <td style="width:151px;text-align:left;vertical-align:top">
+            <img src="images/Hogan.png" style="height:20px" />
+        </td>
+    </tr>
+    <tr style="height:55px">
+        <td style="width:151px;text-align:center;vertical-align:top">
+            <img src="@barcode.Image64" style="width:55px;height:55px" />
+        </td>
+    </tr>
+    <tr style="height:30px">
+        <td style="width:148px;text-align:center;vertical-align:top;">
+            <span style="font-family:Arial;font-size:7.0vw;font-weight:bold">@barcode.BarcodeContent</span>
+        </td></tr>
+</table>
+
+@code {
+    //page soze 3x4mm=113x150px'
+
+    [Parameter]
+    public string Content { get; set; } = default!;
+
+
+    private BarcodeLabel barcode=new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        barcode.BarcodeContent = Content;
+        barcode.Image64 =await Helper.GenerateBarcode(Content, ZXing.BarcodeFormat.QR_CODE, 150, 150);
+    }
+}

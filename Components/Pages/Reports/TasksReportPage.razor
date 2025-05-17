@@ -1,0 +1,121 @@
+﻿@page "/taskreport"
+@attribute [Authorize]
+@inject IUserInfoResposity userDB
+@rendermode InteractiveServer
+@inject IProductionResposity productionDB
+@inject IEmployeeResposity emplDB
+<FluentStack Orientation="Orientation.Vertical">
+    <FluentLabel Typo="Typography.H4">Technicians Tasks Report</FluentLabel>
+    <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start" VerticalAlignment="VerticalAlignment.Center">
+        <FluentDatePicker Label="From Date" Style="width:120px" @bind-Value="@fromDate"></FluentDatePicker>
+        <FluentDatePicker Label="To Date" Style="width:120px" @bind-Value="@toDate"></FluentDatePicker>
+
+
+        </FluentStack>
+    <FluentStack Orientation="Orientation.Horizontal">
+
+        <FluentStack Orientation="Orientation.Vertical" Width="320">
+            <FluentNavMenu Expanded="true" Width="300">                               
+                <FluentNavGroup Expanded="true" Title="Technicians">
+
+                    @if (employees != null)
+                    {
+                        @foreach (var e in employees)
+                        {
+                            <FluentNavLink OnClick="@(()=> LoadData(e.EmplRefID))" Icon="@(new Icons.Regular.Size20.Person())">@e.EmplID @e.FullName</FluentNavLink>
+                        }
+                    }
+                                     
+                </FluentNavGroup>
+            </FluentNavMenu>
+        </FluentStack>
+        <FluentStack Orientation="Orientation.Vertical" Width="100%">
+
+            <FluentDataGrid Items="@taskitems" Au
+                            TGridItem="ProductionTask" Style="width: 100%;font-size:10pt;" AutoFit="true" RowSize="@DataGridRowSize.Medium">
+                <TemplateColumn Title="" Width="50px">
+                    @if (context.ProdStatus == 0 && context.EmplRefID != "")
+                    {
+                        <FluentIcon Value="@(new Icons.Regular.Size20.AccessibilityCheckmark())" />
+                    }
+                    @if (context.ProdStatus == 1)
+                    {
+                        <FluentProgressRing Width="16px"></FluentProgressRing>
+                    }
+                    @if (context.ProdStatus == 2)
+                    {
+                        <FluentIcon Value="@(new Icons.Regular.Size20.Checkmark())" />
+                    }
+                    @if (context.ProdStatus == 3)
+                    {
+                        <FluentIcon Value="@(new Icons.Regular.Size20.CalendarCancel())" />
+                    }
+                </TemplateColumn>
+
+                <TemplateColumn Title="" Width="46px">
+                    @if (context.EmplRefID != "")
+                    {
+                        <FluentPersona Status="PresenceStatus.Available"
+                        StatusSize="PresenceBadgeSize.Small"
+                        StatusTitle=""
+                        Image="@context.GetPhotoUrl"
+                        ImageSize="32px">
+                        </FluentPersona>
+                    }
+
+                </TemplateColumn>
+                <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Sortable="true" />
+                <PropertyColumn Title="Tech" Property="@(p => p.DisplayName)" Sortable="true" />
+                <PropertyColumn Title="Line" Property="@(p => p.LineName)" Sortable="true" />
+                <PropertyColumn Title="Date" Property="@(p => p.TransDate)" Format="MM/dd/yy" Sortable="true" />
+                <PropertyColumn Title="Time" Property="@(p => p.CreatedDateTime)" Format="HH:mm" Sortable="true" />
+
+                <PropertyColumn Title="Item Name" Property="@(p => p.ItemName)" Sortable="true" />
+                <PropertyColumn Title="Us Teeth" Property="@(p => p.UsTeeth)" Sortable="true" />
+                <PropertyColumn Title="Shade" Property="@(p => p.Shade)" Sortable="true" />
+                <PropertyColumn Title="Quantity" Property="@(p => p.Quantity)" Sortable="true" />
+
+            </FluentDataGrid>
+
+        </FluentStack>
+    </FluentStack>
+
+</FluentStack>
+
+@code {
+
+    DateTime? fromDate = DateTime.Now;
+    DateTime? toDate = DateTime.Now;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    public UserInfo CurrentUser { get; set; } = new();
+
+    IQueryable<ProductionTask>? taskitems;
+    IQueryable<Employee>? employees;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+
+        fromDate = DateTime.Now.AddDays(-30);
+        toDate = DateTime.Now;
+
+        var authState = await authenticationStateTask;
+        var userName = authState.User.Identity!.Name;
+
+        CurrentUser = await userDB.GetUser(userName!);
+
+        employees = (await emplDB.GetAll("", "")).AsQueryable();
+        await LoadData("");
+        
+    }
+
+    private async Task LoadData(string EmplRefID)
+    {        
+        taskitems = (await productionDB.GetProductTasksReports(EmplRefID, fromDate, toDate)).AsQueryable();
+    }
+
+
+
+}

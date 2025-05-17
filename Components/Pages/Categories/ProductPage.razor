@@ -17,11 +17,11 @@
         <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
 
             <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
-            <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowSquareDown())">Import</FluentButton>
+            
             <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>
-            <FluentButton IconStart="@(new Icons.Regular.Size24.Print())">Print</FluentButton>
+           
             <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
-
+            <FluentPaginator State="@pagination" />
         </FluentStack>
 
         @if (items == null)
@@ -36,19 +36,24 @@
                 TGridItem="Product"
                 ResizableColumns=true
                 ShowHover="true"
+                Style="font-size:10pt;"
                            RowStyle="@rowStyle"
                 HeaderCellAsButtonWithMenu="true"
                 RowSize="DataGridRowSize.Medium"
                 Pagination="@pagination">
                     <PropertyColumn Width="80px" Property="@(p => p.ItemCode)" Sortable="true" />
+                   
+                     <TemplateColumn Title="Item Name" Width="250">
+                        @if(context.IsUpdate==true)
+                        {
+                            <FluentTextField AutoComplete="off" @bind-Value="@context.ItemName" Style="width:250px"></FluentTextField>
+                        }
+                        else{
+                            <FluentLabel Style="width:250px">@context.ItemName</FluentLabel>
+                        }
+                    </TemplateColumn>
 
-                    <PropertyColumn Width="250px" Property="@(c => c.ItemName)" Sortable="true" Comparer="@StringLengthComparer.Instance" Filtered="!string.IsNullOrWhiteSpace(nameFilter)">
-                        <ColumnOptions>
-                            <div class="search-box">
-                                <FluentSearch type="search" Autofocus=true @bind-Value=nameFilter @oninput="HandleUserNameFilter" AfterBindValue="HandleClear" Placeholder="employee name..." />
-                            </div>
-                        </ColumnOptions>
-                    </PropertyColumn>
+
                     <TemplateColumn Title="Name Alias" Width="250">
                         @if(context.IsUpdate==true)
                         {
@@ -117,7 +122,7 @@
 
 
             </div>
-            <FluentPaginator State="@pagination" />
+            
         }
     </FluentStack>
 }
@@ -192,7 +197,7 @@ else
     DataGridSelectMode Mode = DataGridSelectMode.Single;
     Func<Product, string?> rowStyle = x => x.IsUpdate == true ? "background-color: #f9eda9" : null;
 
-    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
 
     [Parameter]
     public Product Content { get; set; } = default!;

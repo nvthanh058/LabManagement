@@ -1,0 +1,16 @@
+﻿@inherits FluentLabel
+@{
+    base.BuildRenderTree(__builder);
+}
+@code {
+
+    [Parameter]
+    public int Width { get; set; } = 60;
+        
+    private int FontSize { get; set; } = 10;
+       
+    protected override void OnInitialized()
+    {
+        base.Style = "width:" + Width + "px;font-size:" + FontSize + "pt";
+    }
+}

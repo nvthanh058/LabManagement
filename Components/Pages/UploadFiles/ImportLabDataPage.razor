@@ -10,7 +10,7 @@
 
 
 <FluentBreadcrumb Style="margin-top:20px;margin-bottom:10px">
-    <FluentBreadcrumbItem Href="/dashboard">
+    <FluentBreadcrumbItem Href="/">
         Dashboard
         <FluentIcon Value="@(new Icons.Regular.Size16.Home())" Color="@Color.Neutral" Slot="start" />
     </FluentBreadcrumbItem>
@@ -40,7 +40,7 @@
 
 
     <FluentDataGrid Items="@items"
-    style="height: 100%;"
+    style="height: 100%;font-size:10pt;"
     TGridItem="ReportCasesInfo"
     RowSize="DataGridRowSize.Medium"
     Pagination="@pagination" AutoFit="true">

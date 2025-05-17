@@ -28,6 +28,7 @@
                 <FluentDataGrid Items="@items"
                 TGridItem="ProductUnit"
                 ResizableColumns=true
+                Style="font-size:10pt;"
                 ShowHover="true"
                            RowStyle="@rowStyle"
                 HeaderCellAsButtonWithMenu="true"
@@ -67,6 +68,7 @@
 
                    
                     <TemplateColumn Title="Actions" Align="@Align.End">
+
                         @if(context.IsUpdate==true){
                             <FluentButton IconStart="@(new Icons.Regular.Size16.Save())" OnClick="@(() => SaveLineAsync(context))" />
                             <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowStepBack())" OnClick="@(() => CancelLineUpdate(context))" />  

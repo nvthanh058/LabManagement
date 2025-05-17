@@ -5,6 +5,7 @@ namespace LabManagement.Infrastructure.IRespository
 {
     public interface IDapperServices : IDisposable
     {
+        string? DateFormat { get; }
         string? DATAAREAID();
         T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);

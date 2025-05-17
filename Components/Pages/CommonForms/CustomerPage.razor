@@ -1,4 +1,5 @@
 ﻿@page "/customer"
+@attribute [Authorize]
 @using LabManagement.Components.Pages.CommonForms.Panels
 @rendermode InteractiveServer
 @inject IDialogService DialogService
@@ -32,6 +33,7 @@
             <FluentDataGrid Items="@FilteredItems"
             TGridItem="Customer"
             ResizableColumns=true
+            Style="font-size:10pt;"
             ShowHover="true"        
             RowSize="DataGridRowSize.Medium"
             Pagination="@pagination">

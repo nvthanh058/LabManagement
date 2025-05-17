@@ -15,6 +15,8 @@ namespace LabManagement.Resposities.Respository
             _configuration = configuration;
         }
 
+        public string? DateFormat => _configuration.GetConnectionString("DateFormat");
+
         public string? DATAAREAID()
         {
             return _configuration.GetConnectionString("DATAAREAID");

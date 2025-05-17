@@ -1,0 +1,76 @@
+﻿@attribute [Authorize]
+@rendermode InteractiveServer
+
+@inject NavigationManager navigationManager
+
+    
+    <FluentTabs @bind-ActiveTabId="@activeid" OnTabChange="HandleOnTabChange" Width="100%" Style="width:100%;padding:0px;color:#fff">
+
+        <FluentTab Label="/" Id="tab-1">
+            <Header>
+                <FluentStack Orientation="Orientation.Horizontal" Style="@(activeid=="tab-1"? ActiveStyle:NormalStyle)">
+                    <FluentIcon Value="@(new Icons.Regular.Size20.Home())" />
+                <FluentLabel Style="font-size:10pt">Dashboard</FluentLabel>
+                </FluentStack>
+            </Header>
+        </FluentTab>
+
+    <FluentTab Label="/SalesOrder" Id="tab-3" >
+            <Header>
+                <FluentStack Orientation="Orientation.Horizontal" Style="@(activeid=="tab-3"? ActiveStyle:NormalStyle)">
+                    <FluentIcon Value="@(new Icons.Regular.Size20.ListBar())" />
+                <FluentLabel Style="font-size:10pt">Sale Orders</FluentLabel>
+                </FluentStack>
+            </Header>
+        </FluentTab>
+    <FluentTab Label="/ProductOrder" Id="tab-4">
+        <Header>
+                <FluentStack Orientation="Orientation.Horizontal" Style="@(activeid=="tab-4"? ActiveStyle:NormalStyle)">
+                    <FluentIcon Value="@(new Icons.Regular.Size20.ListBar())" />
+                <FluentLabel Style="font-size:10pt">Product Orders</FluentLabel>
+                </FluentStack>
+            </Header>
+        </FluentTab>
+    <FluentTab Label="/casetracking" Id="tab-5" >
+        <Header>
+                 <FluentStack Orientation="Orientation.Horizontal" Style="@(activeid == "tab-5" ? ActiveStyle : NormalStyle)">
+                        <FluentIcon Value="@(new Icons.Regular.Size20.ProductionCheckmark())" />
+                     <FluentLabel Style="font-size:10pt">Off Hold</FluentLabel>
+                </FluentStack>
+            </Header>
+        </FluentTab>
+   </FluentTabs>
+
+                       
+
+@code {
+    [Parameter]
+    public UserInfo CurrentUser { get; set; } = new();
+
+    public HttpContext? HttpContext { get; set; }
+
+    string? activeid = "tab-1";
+    string tabStyle = "";
+
+    string ActiveStyle = "border: 1px solid var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:1px;background-color:#EEEEEE";
+    string NormalStyle = "border: 1px dotted var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:1px;color:#ffffff";
+
+    FluentTab? changedto;
+
+    private void HandleOnTabChange(FluentTab tab)
+    {
+        changedto = tab;
+        navigationManager.NavigateTo(tab.Label);
+
+    }
+    private void GotoPage(string url)
+    {
+        // if (HttpContext!.User.Identity!.IsAuthenticated)
+        // {            
+        //     PageRedirect.RedirectTo(HttpContext, url);
+        // }
+
+        navigationManager.NavigateTo(url);
+      
+    }
+}

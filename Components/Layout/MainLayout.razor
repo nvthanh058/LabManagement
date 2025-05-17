@@ -1,42 +1,50 @@
 ﻿@using LabManagement.Components.Pages.SystemPages
+@using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 @inherits LayoutComponentBase
 @inject IUserInfoResposity userDB
 @inject IDialogService DialogService
 @inject IMessageService MessageService
 
-<FluentDesignTheme Mode="DesignThemeModes.Light" OfficeColor="OfficeColor.Yammer" />
+<FluentDesignTheme Mode="DesignThemeModes.Light" OfficeColor="OfficeColor.Excel" />
 
 <FluentLayout>
-    <FluentHeader Style="background-color:#FFFFFF;height:72px;padding:2px;">
-        
+
+    <FluentHeader Style="height:64px;padding:2px;background-color:#fff">
+
         <AuthorizeView>
-
             <Authorized>
-                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="@HorizontalAlignment.Start">
-                    <img src="images/logodadl.png" width="200" height="72" />
-                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" Style="margin-left:2px;width:100%" VerticalAlignment="VerticalAlignment.Bottom" HorizontalAlignment="@HorizontalAlignment.Left" HorizontalGap="0">
+                    <img src="images/Hogan.png" width="167" height="60" style="margin-left:2px;" />
+                    @if (CurrentUser != null)
+                        @if (CurrentUser.GroupID == "admin" || CurrentUser.GroupID == "vieworder" || CurrentUser.GroupID == "manager")
+                        {
+                            <HeaderLayout CurrentUser="@CurrentUser"></HeaderLayout>
+                        }
 
-                <FluentStack HorizontalAlignment="@HorizontalAlignment.End"
-                VerticalAlignment="@VerticalAlignment.Center"
-                Style="height: 48px; padding-inline-end: 10px; ">
+                    </FluentStack>
 
-                    <NotificationTask CurrentUser="@CurrentUser"></NotificationTask>
-                    <NotificationMessage CurrentUser="@CurrentUser"></NotificationMessage>
 
-                    <UserProfile CurrentUser="@CurrentUser"></UserProfile>
-                    
-                </FluentStack>
+            <FluentStack HorizontalAlignment="@HorizontalAlignment.End"
+            VerticalAlignment="@VerticalAlignment.Center"
+            Style="height: 48px; padding-inline-end: 10px; ">
 
-            </Authorized>
+                <NotificationTask CurrentUser="@CurrentUser"></NotificationTask>
+                <NotificationMessage CurrentUser="@CurrentUser"></NotificationMessage>
 
-        </AuthorizeView>
+                <UserProfile CurrentUser="@CurrentUser"></UserProfile>
 
-    </FluentHeader>
+            </FluentStack>
+
+        </Authorized>
+
+    </AuthorizeView>
+
+</FluentHeader>
     <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
         <AuthorizeView>
-            <Authorized>
+             <Authorized>
                 <NavMenu  CurrentUser="@CurrentUser"/>
-            </Authorized>
+            </Authorized> 
 
         </AuthorizeView>
         <FluentBodyContent Class="body-content">
@@ -71,6 +79,9 @@
 
 @code {
 
+    [Inject]
+    private BodyFont BodyFont { get; set; } = default!;
+    
     //public DesignThemeModes Mode { get; set; }
    // public OfficeColor? officeColor { get; set; }
 
@@ -123,6 +134,15 @@
     public void Dispose()
     {
         MessageService.OnMessageItemsUpdated -= UpdateCount;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await BodyFont.WithDefault("Roboto");
+            StateHasChanged();
+        }
     }
 
 }

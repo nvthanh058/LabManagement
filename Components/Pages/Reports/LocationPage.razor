@@ -1,0 +1,233 @@
+﻿@page "/location"
+@attribute [Authorize]
+@using LabManagement.Components.Infrastructure.IRespository
+@inject IUserInfoResposity userDB
+@rendermode InteractiveServer
+@inject IProductionResposity productionDB
+@inject IDashboardResposity db
+
+<FluentGrid Spacing="@Spacing" AdaptiveRendering="true" Justify="JustifyContent.FlexStart" Style="background-color: var(--neutral-layer-3); padding: 4px;font-size:10pt; ">
+
+    <FluentGridItem xs="6" sm="3">
+        <FluentCard Height="200">
+            <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center"
+            VerticalGap="50" Style="height:190px">
+                <FluentLabel Typo="Typography.H1">Total Cases In Location</FluentLabel>
+                <FluentLabel Typo="Typography.H1" Style="font-size:70pt;color:#5cb85c" Color="Color.Info">
+                    @taskitems.ToList().Count
+                </FluentLabel>
+
+            </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="6" sm="9">
+        <FluentCard Height="200">
+            <ApexCharts.ApexChart Width="800" Height="180" TItem="LocationModel"
+            Title="" Options="LocationChartOptions">
+
+                <ApexCharts.ApexPointSeries TItem="LocationModel"
+                Items="LocationData"
+                Name="Cases In Locations"
+                ShowDataLabels
+                SeriesType="ApexCharts.SeriesType.Bar"
+                XValue="e => e.LineName"
+                YValue="e=> e.TotalCases" PointColor="e=> e.LocationColor" />
+
+
+            </ApexCharts.ApexChart>
+        </FluentCard>
+    </FluentGridItem>
+
+    <FluentGridItem xs="12">
+
+
+        <FluentCard>
+            <FluentHorizontalScroll Style="width:600px" class="both-gradient" Speed="600" Easing=ScrollEasing.EaseInOut>
+                @if (activeLineID == "")
+                {
+                    <FluentButton Style="width:150px" Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size16.BuildingFactory())" OnClick="@(() => LoadTask(""))">ALL</FluentButton>
+                }
+                else
+                {
+                    <FluentButton Style="width:150px" Appearance="Appearance.Outline" IconStart="@(new Icons.Regular.Size16.BuildingFactory())" OnClick="@(() => LoadTask(""))">ALL</FluentButton>
+                }
+
+                @foreach (var line in prodLines)
+                {
+                    @if (activeLineID == line.LineID)
+                    {
+                        <FluentButton Style="width:150px" Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size16.BuildingFactory())" OnClick="@(() => LoadTask(line.LineID))">@line.LineName</FluentButton>
+                    }
+                    else
+                    {
+                        <FluentButton Style="width:150px" Appearance="Appearance.Outline" IconStart="@(new Icons.Regular.Size16.BuildingFactory())" OnClick="@(() => LoadTask(line.LineID))">@line.LineName</FluentButton>
+                    }
+
+                }
+
+            </FluentHorizontalScroll>
+            <FluentDataGrid Items="@taskitems" Au
+                            TGridItem="ProductionTask" Style="width: 100%;font-size:10pt;" AutoFit="true" RowSize="@DataGridRowSize.Medium">
+                <TemplateColumn Title="" Width="50px">
+                    @if (context.ProdStatus == 0 && context.EmplRefID != "")
+                    {
+                        <FluentIcon Value="@(new Icons.Regular.Size20.AccessibilityCheckmark())" />
+                    }
+                    @if (context.ProdStatus == 1)
+                    {
+                        <FluentProgressRing Width="16px"></FluentProgressRing>
+                    }
+                    @if (context.ProdStatus == 2)
+                    {
+                        <FluentIcon Value="@(new Icons.Regular.Size20.Checkmark())" />
+                    }
+                    @if (context.ProdStatus == 3)
+                    {
+                        <FluentIcon Value="@(new Icons.Regular.Size20.CalendarCancel())" />
+                    }
+                </TemplateColumn>
+
+                <TemplateColumn Title="" Width="46px">
+                    @if (context.EmplRefID != "")
+                    {
+                        <FluentPersona Status="PresenceStatus.Available"
+                        StatusSize="PresenceBadgeSize.Small"
+                        StatusTitle=""
+                        Image="@context.GetPhotoUrl"
+                        ImageSize="32px">
+                        </FluentPersona>
+                    }
+
+                </TemplateColumn>
+                <PropertyColumn Title="Case No"  Property="@(p => p.CaseNo)" Sortable="true" />
+                <PropertyColumn Title="Tech"  Property="@(p => p.DisplayName)" Sortable="true" />
+                <PropertyColumn Title="Line"  Property="@(p => p.LineName)" Sortable="true" />
+                <PropertyColumn Title="Date"  Property="@(p => p.TransDate)" Format="MM/dd/yy" Sortable="true" />
+                <PropertyColumn Title="Time"  Property="@(p => p.CreatedDateTime)" Format="HH:mm" Sortable="true" />
+
+                <PropertyColumn Title="Item Name"  Property="@(p => p.ItemName)" Sortable="true" />
+                <PropertyColumn Title="Us Teeth"  Property="@(p => p.UsTeeth)" Sortable="true" />
+                <PropertyColumn Title="Shade" Property="@(p => p.Shade)" Sortable="true" />
+                <PropertyColumn Title="Quantity"  Property="@(p => p.Quantity)" Sortable="true" />
+
+            </FluentDataGrid>
+        </FluentCard>
+
+    </FluentGridItem>
+
+</FluentGrid>
+
+
+@code{
+
+    private string activeLineID = "";
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authStateTask { get; set; }
+
+    public UserInfo CurrentUser { get; set; } = new();
+
+    int Spacing = 1;
+
+    IQueryable<ProductionTask>? taskitems;
+    IQueryable<ProductLine>? prodLines;
+
+    private IQueryable<LocationModel>? LocationData { get; set; }=default!;
+
+    private ApexCharts.ApexChartOptions<LocationModel> LocationChartOptions { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        // var authState = await authStateTask;
+        // var username = authState.User.Identity!.Name;
+
+        // CurrentUser = await userDB.GetUser(username!);
+
+        var ToDate = DateTime.Now.ToString("yyyy-MM-dd");
+        var FromDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+        await LoadTask("");
+
+        prodLines = (await productionDB.GetAllProdLine(0,"","","")).AsQueryable();
+        LocationData = (await db.GetLocationCases(FromDate, ToDate)).AsQueryable();
+
+        LocationChartOptions = new ApexCharts.ApexChartOptions<LocationModel>
+            {
+                Chart = new ApexCharts.Chart
+                {
+                    Toolbar = new ApexCharts.Toolbar
+                    {
+                        Show = false
+                    },
+                    DropShadow = new ApexCharts.DropShadow
+                    {
+                        Enabled = true,
+                        Color = "",
+                        Top = 18,
+                        Left = 7,
+                        Blur = 10,
+                        Opacity = 0.2d
+                    }
+                },
+                DataLabels = new ApexCharts.DataLabels
+                {
+                    OffsetY = -2d,
+                    Style = new ApexCharts.DataLabelsStyle
+                    {
+                        FontSize = "20px",
+                    }
+                },
+                // Grid = new ApexCharts.Grid
+                // {
+                //     BorderColor = "#e7e7e7",
+                //     Row = new ApexCharts.GridRow
+                //     {
+                //         Colors = new List<string> { "#f3f3f3", "transparent" },
+                //         Opacity = 0.5d
+                //     }
+                // },
+
+                Colors = new List<string> { "#77B6EA", "#545454" },
+                Markers = new ApexCharts.Markers { Shape = ApexCharts.ShapeEnum.Circle, Size = 5, FillOpacity = new ApexCharts.Opacity(0.8d) },
+                Stroke = new ApexCharts.Stroke { Curve = ApexCharts.Curve.Smooth },
+                Legend = new ApexCharts.Legend
+                {
+                    Position = ApexCharts.LegendPosition.Top,
+                    HorizontalAlign = ApexCharts.Align.Right,
+                    Floating = true,
+                    OffsetX = -5,
+                    OffsetY = -25
+                },
+
+                Xaxis = new ApexCharts.XAxis
+                {
+                    Title = new ApexCharts.AxisTitle
+                    {
+                        Style = new ApexCharts.AxisTitleStyle
+                        {
+                            FontSize = "14px",
+
+                        }
+                    },
+                    Labels = new ApexCharts.XAxisLabels
+                    {
+                        Style = new ApexCharts.AxisLabelStyle
+                        {
+                            FontSize = "16px",
+                            FontWeight = "Bold"
+                        }
+                    }
+                },
+
+
+            };
+    }
+
+    private async Task LoadTask(string LineID)
+    {
+        activeLineID = LineID;
+        taskitems = (await productionDB.GetProductTasks(0,"","","",LineID)).AsQueryable();
+    }
+
+}

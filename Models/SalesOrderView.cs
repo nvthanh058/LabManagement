@@ -4,7 +4,7 @@ namespace LabManagement.Models
 {
     public class SalesOrderView
     {       
-        public DateTime? fromDate { get; set; } =DateTime.Now;
+        public DateTime? fromDate { get; set; } =DateTime.Now.AddDays(-3);
         public DateTime? toDate { get; set; } = DateTime.Now;
 
         public IQueryable<SalesTable>? items=default!;

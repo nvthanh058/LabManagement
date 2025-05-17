@@ -1,0 +1,188 @@
+﻿@implements IDialogContentComponent<CaseTracking>
+
+@inject IUserInfoResposity userDB
+@inject IProductionResposity productionDB
+
+<!-- Header -->
+<FluentDialogHeader ShowDismiss="true">
+
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size24.PersonInfo())" />
+        <FluentLabel Typo="Typography.PaneHeader">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<!-- Body -->
+<FluentDialogBody>
+
+    <FluentLabel Color="Color.Warning">@ErrorMessage</FluentLabel>
+
+    <FluentSplitter Style="height:100%" Orientation="Orientation.Horizontal" BarSize="6" Panel1Size="40%" Panel2Size="auto">
+        <Panel1>
+
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                    <FluentLabel Style="width:100px">Case No</FluentLabel>
+                    <FluentTextField Style="width:180px" @ref="txtCaseNo" @bind-Value="@Content.CaseNo" />
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                    <FluentLabel Style="width:100px">Patient Name</FluentLabel>
+                    <FluentTextField Style="width:180px" @bind-Value="@Content.PatientName" />
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                    <FluentLabel Style="width:100px">Date</FluentLabel>
+                    <FluentDatePicker Style="width:120px" @bind-Value="@Content.TransDate" />
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                    <FluentLabel Style="width:100px">Rush Category</FluentLabel>
+                    <FluentTextField Style="width:100px" @bind-Value="@Content.RushCategory" />
+                </FluentStack>
+
+            </FluentStack>
+        </Panel1>
+        <Panel2>
+            <FluentStack Orientation="Orientation.Vertical" Style="margin-left:5px;padding:5;width:98%">
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                    <FluentLabel Style="width:100px">ConcernIssue</FluentLabel>
+                    <FluentTextArea Style="width:90%" @bind-Value="@CommunicateContent.ConcernIssue" Cols="60" Rows="4" />
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                    <FluentLabel Style="width:100px">Technician Suggestion</FluentLabel>
+                    <FluentTextArea Style="width:90%" @bind-Value="@CommunicateContent.TechnicianSuggestion" Cols="60" Rows="4" />
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                    <FluentLabel Style="width:100px">Response</FluentLabel>
+                    <FluentTextArea Style="width:90%" @bind-Value="@CommunicateContent.Response" Cols="60" Rows="4" />
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                    <FluentLabel Style="width:100px">Date</FluentLabel>
+                    <FluentDatePicker Style="width:180px" @bind-Value="@CommunicateContent.ResponseDate" />
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                    <FluentLabel Style="width:100px">Lab Status</FluentLabel>
+
+                    <FluentSelect TOption="CaseStatus"
+                    Placeholder="--Status--"
+                    Items="@labStatus"
+                    Width="150px"
+                    Height="200px"
+                    OptionValue="@(i => i.StatusID)"
+                    OptionText="@(i => i.StatusName)"
+                    @bind-Value="@CommunicateContent.LabStatus">
+                    </FluentSelect>
+
+                </FluentStack>
+
+
+                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                    <FluentLabel Style="width:100px">Factory Status</FluentLabel>
+
+                    <FluentSelect TOption="CaseStatus"
+                    Placeholder="--TT Status--"
+                    Items="@TTStatus"
+                    Width="150px"
+                    Height="200px"
+                    OptionValue="@(i => i.StatusID)"
+                    OptionText="@(i => i.StatusName)"
+                    @bind-Value="@CommunicateContent.FactoryStatus">
+
+                    </FluentSelect>
+                </FluentStack>
+
+            </FluentStack>
+
+
+        </Panel2>
+    </FluentSplitter>     
+
+
+
+    @*    <FluentSelect Disabled="true" TOption="UserGroupInfo"
+                  Label="Group"
+                  Placeholder="Select a group"
+                  Items="@groupitems"
+                  Width="200px"
+                  Height="250px"
+                  OptionValue="@(i => i.GroupID)"
+                  OptionText="@(i => i.GroupName)"
+                  @bind-Value="@Content.GroupID"
+                  @bind-SelectedOption=@selectedGroup>
+
+    </FluentSelect> *@
+
+
+</FluentDialogBody>
+
+<!-- Footer -->
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Accent"
+    OnClick="@SaveAsync" IconStart="@(new Icons.Regular.Size24.Save())">Save</FluentButton>
+
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync" IconStart="@(new Icons.Regular.Size24.ArrowEnterLeft())"> Cancel</FluentButton>
+</FluentDialogFooter>
+
+@code {
+
+    FluentTextField txtCaseNo;
+    IQueryable<CaseStatus>? labStatus;
+    IQueryable<CaseStatus>? TTStatus;
+
+    string ErrorMessage = "";
+    IQueryable<UserGroupInfo>? groupitems;
+
+    UserGroupInfo selectedGroup = default!;
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    [Parameter]
+    public CaseTracking Content { get; set; } = new();
+    public CaseCommunicate CommunicateContent { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(Content.RecID>0)
+        {
+            var res = (await productionDB.GetCaseCommunicate(0,"",Content.TransID)).AsQueryable().FirstOrDefault()!;
+            if (res != null)
+            {
+                CommunicateContent = res;
+            }
+        }
+
+        labStatus = (await productionDB.GetCaseStatus(1)).AsQueryable();
+        TTStatus = (await productionDB.GetCaseStatus(1)).AsQueryable();
+
+    }
+
+    private async Task SaveAsync()
+    {
+        if (Content.CaseNo == "")
+        {
+            ErrorMessage = "You should input case number";
+            return;
+        }
+
+        var res = await productionDB.SaveCaseTracking(Content);
+        var caseRes = await productionDB.GetCasesTrackingByID(res.RecID);
+        if(caseRes!=null)
+        {
+            CommunicateContent.SalesID = caseRes.SalesID;
+            CommunicateContent.TransID = caseRes.TransID;
+
+            await productionDB.SaveCaseCommunicate(CommunicateContent);
+        }
+
+        await Dialog.CloseAsync(Content);
+        
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+   
+
+}

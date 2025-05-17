@@ -1,0 +1,60 @@
+﻿@page "/aisample"
+@rendermode InteractiveServer
+@inject IProductionResposity productionDB
+<FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+
+    <FluentTextArea @bind-Value="@Question" Cols="100" Rows="10"></FluentTextArea>
+    <FluentButton OnClick="ResponseQuestion">Answer</FluentButton>
+    <div>
+        @if (itemRes != null)
+        {
+            @foreach (var item in itemRes[0].Content.Parts)
+            {
+                <p>@item.Text</p>
+            }
+        }
+      
+    </div>
+
+</FluentStack>
+
+@code {
+
+    //    if part.text is not None:
+    //   print(part.text)
+    // elif part.inline_data is not None:
+    //   image = Image.open(BytesIO(part.inline_data.data))
+    //   image.show()
+
+    string Question = "";
+    string Result = "";
+
+    private GoogleAI googleAI = new GoogleAI(apiKey: "AIzaSyDnhCxgEgCMPtBgYi9evlCDm8NKWHrFbMc");
+    private GenerativeModel model { get; set; } = default!;
+    List<Candidate> itemRes;
+    IQueryable<CaseTracking>? items;
+    DateTime? fromDate;
+    DateTime? toDate;
+    protected override async Task OnInitializedAsync()
+    {
+        fromDate = DateTime.Now.AddDays(-30);
+        toDate = DateTime.Now;
+
+        model = googleAI.GenerativeModel(model: Model.Gemini20Flash);
+
+        items = (await productionDB.GetCasesTracking(0, fromDate, toDate, "", "")).AsQueryable();
+    }
+
+
+
+    private async Task ResponseQuestion()
+    {
+        var response = await model.GenerateContent(Question);
+        itemRes = response.Candidates!;
+
+
+    }
+
+
+
+}

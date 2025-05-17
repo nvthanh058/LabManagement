@@ -1,17 +1,22 @@
 ﻿@page "/ProductOrder"
 @attribute [Authorize]
+@using ClosedXML.Excel
 @using LabManagement.Components.Pages.AccountReceivable.Panels
+@using LabManagement.Components.Pages.Controls
 @using LabManagement.Components.Pages.Production.Panels
 @using LabManagement.Components.Pages.CommonForms.Panels
+@using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 @rendermode InteractiveServer
 @inject IDialogService DialogService
 @inject ISalesOrderResposity context
 @inject IProductionResposity productionDB
+@inject ISystemResposity systemDB
 @inject IJSRuntime JSRuntime
 @inject IUserInfoResposity userDB
 @inject IToastService ToastService
 @inject IMessageService MessageService
-
+@inject IWebHostEnvironment _webHost;
+@inject TypeRampBaseFontSize FontSize
 <FluentMenuProvider @rendermode="RenderMode.InteractiveServer" />
 
 
@@ -20,16 +25,73 @@
 
         @if (ShowList == true)
         {
+            <div style="display: table; table-layout: fixed; width: 100%;">
+            <div style="overflow-x: auto;">
+
             <FluentStack Orientation="Orientation.Vertical" Width="100%">
 
                 <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
 
-                    <FluentButton IconStart="@(new Icons.Regular.Size20.TableArrowUp())">Export</FluentButton>
-                    <FluentButton IconStart="@(new Icons.Regular.Size20.Print())" OnClick="@PrintWorkOrder">Print WorkOrder</FluentButton>
-                    <FluentButton IconStart="@(new Icons.Regular.Size20.TaskListAdd())" OnClick="@SelectTask">Assign</FluentButton>
-                    <FluentButton IconStart="@(new Icons.Regular.Size20.AirplaneTakeOff())" OnClick="@PakShipTask">PakShip</FluentButton>
-                    <FluentButton IconStart="@(new Icons.Regular.Size20.Info())" OnClick="@ShowSalesInfo">Sales Order</FluentButton>
+                    <FluentAutocomplete TOption="LabInfo"
+                    AutoComplete="off"
+                    Width="150px"
+                    OnOptionsSearch="OnSearch"
+                    Placeholder="Select Lab"
+                    MaximumOptionsSearch="int.MaxValue"
+                    MaximumSelectedOptions="1"
+                    Virtualize="true"
+                    OptionText="@(item => $"{item.LabName}")"
+                    @bind-SelectedOptions="@SelectedLabs" />
+
+
+                    <MyDatePicker Label="From Date" Width="120" @bind-Value="@fromDate"></MyDatePicker>
+                    <MyDatePicker Label="To Date" Width="120" @bind-Value="@toDate"></MyDatePicker>
+
                     <FluentSearch AutoComplete="off" @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
+                    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Search())" OnClick="@LoadData">LoadData</FluentButton>
+
+                </FluentStack>
+
+                <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                    <MyButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.TableArrowUp())" OnClick="@ExportData">Export</MyButton>
+                    <MyButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Print())" OnClick="@PrintWorkOrder">Print</MyButton>
+                    <MyButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Print())" OnClick="@PrintBarcode">Barcode</MyButton>
+                    <FluentMenuButton Text="Task">
+                        <FluentMenuItem OnClick="SelectTask">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.TaskListAdd())" />
+                            Assign
+                        </FluentMenuItem>
+
+                        <FluentMenuItem OnClick="AddCommunicateNote">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.TaskListAdd())" />
+                            Add On Hold Note
+                        </FluentMenuItem>
+
+                        <FluentMenuItem OnClick="PakShipTask">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.AirplaneTakeOff())" />
+                            PakShip
+                        </FluentMenuItem>
+
+                        <FluentMenuItem OnClick="ShowSalesInfo">
+                            <FluentIcon Value="@(new Icons.Regular.Size20.Info())" />
+                            Sales Information
+                        </FluentMenuItem>
+
+                    </FluentMenuButton>
+                     <FluentPaginator State="@pagination" />
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal">
+
+                    <FluentAutocomplete TOption="ProdTable"
+                    AutoComplete="off"
+                    Width="100%"
+                    OnOptionsSearch="OnSearchCases"
+                    Placeholder="Select Cases"
+                    MaximumOptionsSearch="int.MaxValue"
+                    MaximumSelectedOptions="5"
+                    Virtualize="true"
+                    OptionText="@(item => $"{item.CaseNo}")"
+                    @bind-SelectedOptions="@SelectedSearchCases"/>
 
                 </FluentStack>
 
@@ -41,47 +103,52 @@
                 }
                 else
                 {
-                    <FluentDataGrid Items="@items"
+                    <FluentDataGrid Style="min-width: max-content;font-size:10pt;" Items="@items"
                     TGridItem="ProdTable"
                     ResizableColumns=true
+                    RowClass="@rowClass"
+                    RowStyle="@rowStyle"
                     ShowHover="true"
-                                    RowSize="DataGridRowSize.Medium"
+                    AutoFit ="true"
+                    RowSize="DataGridRowSize.Medium"
                     Pagination="@pagination">
                         <SelectColumn TGridItem="ProdTable" 
                         SelectMode="@Mode"
                         SelectFromEntireRow="@SelectFromEntireRow"
                         Property="@(e => e.Selected)"
                         SelectAll="@(items.All(e => e.Selected))"
-                        SelectAllChanged="@(all => items.ToList().ForEach(p => p.Selected = (all == true)))"
+                        SelectAllChanged="@(all => OnSelectAll(all == true))"
                         OnSelect="@((e) =>OnSelectProduct(e.Item,e.Selected))">
                         </SelectColumn>
+                        <TemplateColumn Align="@Align.Start" Width="160">
+                            <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
+                            <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
+                            <FluentButton IconEnd="@(new Icons.Regular.Size16.Image())" OnClick="@(() => ViewImageAsync(context))" />
 
-                        <PropertyColumn Width="120px" Property="@(p => p.CaseNo)" Sortable="true" />
-                        <PropertyColumn Title="Code" Width="120px" Property="@(p => p.ItemCode)" Sortable="true" />
+                        </TemplateColumn>
+                        <PropertyColumn Property="@(p => p.CaseNo)" Sortable="true" />
+                        <PropertyColumn Title="Lab Num" Width="120px" Property="@(p => p.LabpanNum)" Sortable="true" />
                         <PropertyColumn Title="Item Name" Width="120px" Property="@(p => p.ItemName)" Sortable="true" />
-                        <PropertyColumn Width="150px" Property="@(p => p.PatientName)" Sortable="true" />
-                        <PropertyColumn Width="120px" Property="@(p => p.TransDate)" Format="MM/dd/yyyy" Sortable="true" />
+                        <PropertyColumn Property="@(p => p.PatientName)" Sortable="true" />
+                        <PropertyColumn Property="@(p => p.DoctorName)" Sortable="true" />
+                        <PropertyColumn Title="Assignment" Property="@(p => p.Assignment)" Sortable="true" />
+                        <PropertyColumn Property="@(p => p.TransDate)" Format="MM/dd/yyyy" Sortable="true" />
                         <PropertyColumn Title="Us Teeth" Property="@(p => p.UsTeeth)" Sortable="true" />
                         <PropertyColumn Title="Eur Teeth" Property="@(p => p.EurTeeth)" Sortable="true" />
                         <PropertyColumn Title="Shade" Property="@(p => p.Shade)" Sortable="true" />
                         <PropertyColumn Title="Quantity" Property="@(p => p.Quantity)" Sortable="true" />
 
-                        <TemplateColumn Title="Actions" Align="@Align.End">
-                            <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
-                            <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
-
-
-
-                        </TemplateColumn>
 
                     </FluentDataGrid>
 
-                    <FluentPaginator State="@pagination" />
+                   
                 }
 
 
             </FluentStack>
-
+             </div>
+               
+            </div>
         }
 
         else
@@ -92,84 +159,196 @@
             <ProductOrderPanel Content="@Content"></ProductOrderPanel>
 
         }
+
+      
     </Panel1>
     <Panel2>
+        <FluentStack Orientation="Orientation.Vertical" VerticalGap="10">
+            <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                <FluentLabel Style="margin-left:2px">Case#:</FluentLabel>
+
+                @if (Content != null)
+                {
+                    <FluentLabel Typo="Typography.H5">@Content.CaseNo</FluentLabel>
+                }
+
+            </FluentStack>
+            <FluentLabel Style="margin-left:2px" Typo="Typography.H5">Tasks</FluentLabel>
+
+            <FluentStack Orientation="Orientation.Vertical">
+                <FluentDataGrid Items="@taskitems"
+                TGridItem="ProductionTask"
+                RowSize="DataGridRowSize.Medium">
+
+                    <TemplateColumn Title="" Width="120px">
+                        <FluentButton IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteTask(context))" />
+                        <FluentButton IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditTask(context))" />
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="" Width="46px">
+                        @if (context.EmplRefID != "")
+                        {
+                            <FluentPersona Status="PresenceStatus.Available"
+                            StatusSize="PresenceBadgeSize.Small"
+                            StatusTitle=""
+                            Image="@context.GetPhotoUrl"
+                            ImageSize="32px">
+                            </FluentPersona>
+                        }
+
+                    </TemplateColumn>
+
+                    <PropertyColumn Title="Tech" Width="200px" Property="@(p => p.DisplayName)" Sortable="true" />
+                    <PropertyColumn Title="Line" Width="100px" Property="@(p => p.LineName)" Sortable="true" />
+                    <PropertyColumn Title="Date" Width="120px" Property="@(p => p.TransDate)" Sortable="true" Format="MM/dd/yy"/>
+                    @* <PropertyColumn Title="Start Time" Width="150px" Property="@(p => p.CreatedDateTime)" Format="MM/dd/yy HH:mm" Sortable="true" /> *@
+
+                </FluentDataGrid>
+
+                @if (CommunicateContent.RecID >0)
+                {
+
+                    <FluentTabs Style="width:100%" @bind-ActiveTabId="@activeid" OnTabChange="HandleOnTabChange">
+                        <FluentTab Id="tab-general" >
+                            <Header>                               
+                                <FluentStack Orientation="Orientation.Horizontal" Style="@(activeid=="tab-general"?tabActiveStyle:tabStyle)">
+                                    <FluentIcon Value="@(new Icons.Regular.Size20.Album())" />
+                                    <FluentLabel Typo="Typography.H6">General</FluentLabel>
+                                </FluentStack>
+                            </Header>
+                            <Content>
+
+                                <CaseQuestionPanel Content="@CommunicateContent" CurrentUser="@CurrentUser"></CaseQuestionPanel>
+                            </Content>
+                        </FluentTab>
+                        <FluentTab Id="tab-images">
+                            <Header>
+                                <FluentStack Orientation="Orientation.Horizontal" Style="@(activeid=="tab-images"?tabActiveStyle:tabStyle)">
+                                    <FluentIcon Value="@(new Icons.Regular.Size20.Album())" />
+                                    <FluentLabel Typo="Typography.H6">Images</FluentLabel>
+                                </FluentStack>
+                            </Header>
+                            <Content>
 
 
-        <FluentTabs @bind-ActiveTabId="@activeid">
-            <FluentTab Id="tab-1">
-                <Header>
+                                <FluentStack>
 
-                    <FluentStack Orientation="Orientation.Horizontal">
-                        <FluentIcon Value="@(new Icons.Regular.Size20.Album())" />
-                        <FluentLabel Typo="Typography.H6">Tasks</FluentLabel>
-                    </FluentStack>
+                                    <FluentInputFile Id="my-file-uploader"
+                                    Mode="InputFileMode.SaveToTemporaryFolder"
+                                    Multiple="true"
+                                    MaximumFileCount="20"
+                                    MaximumFileSize="@(10*1024*1024)"
+                                    Accept="image/*"
+                                    @bind-ProgressPercent="@ProgressPercent"
+                                    OnCompleted="@OnCompletedAsync"
+                                    Style="height: 50px;width:50px">
+                                        <ChildContent>
+                                            <label for="my-file-uploader">
+                                                <FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
+                                            </label>
 
-                </Header>
-
-                <Content>
-                    <div id="printView">
+                                        </ChildContent>
+                                    </FluentInputFile>
 
 
-                        <FluentDataGrid Items="@taskitems"
-                        TGridItem="ProductionTask"
-                                        RowSize="DataGridRowSize.Medium">
-                            
-                            <TemplateColumn Title="" Width="40px">
-                                @if (context.ProdStatus == 0 && context.EmplRefID!="")
-                                {
-                                    <FluentIcon Value="@(new Icons.Regular.Size20.AccessibilityCheckmark())" />
-                                }
-                                @if (context.ProdStatus == 1)
-                                {
-                                    <FluentProgressRing Width="16px"></FluentProgressRing>
-                                }
-                                @if (context.ProdStatus == 2)
-                                {
-                                    <FluentIcon Value="@(new Icons.Regular.Size20.Checkmark())" />
-                                }
-                                @if (context.ProdStatus == 3)
-                                {
-                                    <FluentIcon Value="@(new Icons.Regular.Size20.CalendarCancel())" />
-                                }
-                            </TemplateColumn>
-                            
-                            <TemplateColumn Title="" Width="46px">
-                                @if(context.EmplRefID!=""){
-                                    <FluentPersona Status="PresenceStatus.Available"
-                                                   StatusSize="PresenceBadgeSize.Small"
-                                                   StatusTitle=""
-                                                   Image="@context.GetPhotoUrl"
-                                                   ImageSize="32px">
-                                    </FluentPersona>
-                                }
-                               
-                            </TemplateColumn> 
+                                    @if (imageitems == null)
+                                    {
 
-                            <PropertyColumn Title="Tech" Width="200px" Property="@(p => p.DisplayName)" Sortable="true" />
-                            <PropertyColumn Title="Line" Width="100px" Property="@(p => p.LineName)" Sortable="true" />
-                            <PropertyColumn Title="Start Time" Width="150px" Property="@(p => p.CreatedDateTime)" Format="MM/dd/yy HH:mm" Sortable="true" />
-                            @*  <TemplateColumn Title="Actions" Align="@Align.End">
-                            <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditTask(context))" />
-                            <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteTask(context))" />
-                        </TemplateColumn> *@
+                                    }
+                                    else
+                                    {
+                                        @foreach (var f in imageitems)
+                                        {
+                                            <FluentCard Width="300px" Height="300px">
+                                                <FluentStack Orientation="Orientation.Vertical">
+                                                    <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End">
+                                                        <FluentButton IconStart="@(new Icons.Regular.Size16.ContentView())" OnClick="@(() => ShowPicture(f))"></FluentButton>
+                                                        <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteImage(f.RecID,f.FilePath))"></FluentButton>
+                                                    </FluentStack>
 
-                        </FluentDataGrid>
+                                                    <img src="/caseimages/@f.FilePath" width="250" height="200" />
 
-                    </div>
-                </Content>
+                                                </FluentStack>
 
-            </FluentTab>
-        </FluentTabs>
+                                            </FluentCard>
+                                        }
+                                    }
+
+
+
+                                </FluentStack>
+
+
+
+                            </Content>
+                        </FluentTab>
+                    </FluentTabs>
+
+                }
+
+            </FluentStack>
+
+
+
+
+
+        </FluentStack>
 
     </Panel2>
 </FluentSplitter>
 
+<div id="barcodeId" style="display:none">
+    @if (selectedItems != null)
+    {
+        @foreach (var item in selectedItems)
+        {
+            <BarcodeDesign Content="@item.CaseNo"></BarcodeDesign>
+            <p class="breakhere"></p>
+        }
+    }
+
+</div>
+
+<div id="componentId" style="display:none">
+    @if (selectedItems != null)
+    {
+        @foreach (var item in selectedItems)
+        {
+            <PrintWorkOrderPage Content="@item"></PrintWorkOrderPage>
+            <p class="breakhere"></p>
+        }
+    }
+
+</div>
+
 
 @code {
 
-    string? activeid = "tab-1";
+    IQueryable<LabInfo>? labs;
+    IEnumerable<LabInfo> SelectedLabs = Array.Empty<LabInfo>();
+    private void OnSearch(OptionsSearchEventArgs<LabInfo> e)
+    {
+        e.Items = labs.Where(culture =>
+            culture.LabName.Contains(e.Text, StringComparison.OrdinalIgnoreCase));
+    }
 
+    IQueryable<ProdTable>? searchCases;
+    IEnumerable<ProdTable> SelectedSearchCases = Array.Empty<ProdTable>();
+    private void OnSearchCases(OptionsSearchEventArgs<ProdTable> e)
+    {
+        e.Items = searchCases.Where(culture =>
+            culture.CaseNo.Contains(e.Text, StringComparison.OrdinalIgnoreCase));
+
+
+
+    }
+
+    DateTime ? fromDate =DateTime.Now;
+    DateTime? toDate = DateTime.Now;
+    string? activeid = "tab-general";
+
+    string tabActiveStyle = "border: 1px solid var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;background-color:#EEEEEE";
+    string tabStyle = "border: 1px dotted var(--accent-fill-rest);border-width: 1px 1px 0 1px;padding:2px;";
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
 
@@ -177,7 +356,19 @@
 
     bool ShowList = true;
     IQueryable<ProdTable>? items;
+    IQueryable<ProdTable>? selectedItems;    
+
+    Func<ProdTable, string?> rowClass = x => x.Selected == true ? "highlighted" : null;
+    Func<ProdTable, string?> rowStyle = x => x.FocusedRow == true ? "background-color: #a1d8f5" : null;
+
     IQueryable<ProductionTask>? taskitems;
+    IQueryable<CaseStatus>? labStatus;
+    IQueryable<CaseStatus>? TTStatus;
+
+    public IQueryable<OrderFile>? imageitems = default!;
+
+    int ProgressPercent = 0;
+
     string Search = "";
 
     bool SelectFromEntireRow = true;
@@ -186,36 +377,91 @@
     PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
 
     public ProdTable Content { get; set; } = default!;
+    public CaseCommunicate CommunicateContent { get; set; } = new();
+    public CaseTracking TrackingContent { get; set; } = new();
+
     public Employee SelectedEmployee { get; set; } = default!;
 
     string nameFilter = string.Empty;
-    
+
 
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(500);
+        FontSize.WithDefault("10pt");
+        fromDate = DateTime.Now.AddDays(-3);
+        toDate = DateTime.Now;
+
         var authState = await authenticationStateTask;
         var userName = authState.User.Identity.Name;
 
         CurrentUser = await userDB.GetUser(userName);
 
-        LoadData();
+        labs = (await systemDB.GetAllLabs(0, "", "")).AsQueryable();
+
+
+        await LoadData();
+
+        labStatus = (await productionDB.GetCaseStatus(1)).AsQueryable();
+        TTStatus = (await productionDB.GetCaseStatus(1)).AsQueryable();
     }
 
     private async Task OnSelectProduct(ProdTable item, bool Selected)
     {
 
+        item.Selected = Selected;
 
-        if(item!=null){
-            item.Selected = Selected;
-            await  LoadTask(item.INVENTTRANSID);
+        foreach(var order in items)
+        {
+            order.FocusedRow = false;
+        }
+        item.FocusedRow = true;
+
+        Content = item;
+
+        await  LoadTask(item.INVENTTRANSID);
+        TrackingContent = await productionDB.GetCasesTrackingBySalesID(item.SalesID);
+        imageitems = default;
+        CommunicateContent = new();
+
+        if(TrackingContent != null)
+        {
+            await LoadCommunicate(item.SalesID);
         }
 
         var msg =item.ItemName;
     }
-    private async void LoadData()
+
+    private async Task LoadImages(string OrderID)
     {
-        items = (await context.GetProdOrders(0, "", DateTime.Now.ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"))).AsQueryable();
+        imageitems = (await context.GetFiles(OrderID, 0)).AsQueryable();
+    }
+
+    private async Task LoadData()
+    {
+        var LabID = "";
+        if (SelectedLabs.FirstOrDefault() != null)
+        {
+            LabID = SelectedLabs.FirstOrDefault().DATAAREAID;
+        }
+
+        var SalesList = "";
+        if (SelectedSearchCases.FirstOrDefault() != null)
+        {
+            SalesList = "";
+            foreach (var item in SelectedSearchCases)
+            {
+                SalesList = SalesList + item.SalesID + ",";
+            }
+            SalesList = SalesList.Trim(',');
+
+        }
+
+
+        items = (await context.GetProdOrders(0, SalesList, LabID, fromDate?.ToString("yyyy-MM-dd"), toDate?.ToString("yyyy-MM-dd"), Search)).AsQueryable();
+
+        searchCases = items;
+
     }
     private async Task LoadTask(string TaskRefID)
     {
@@ -225,9 +471,59 @@
     private async Task EditTask(ProductionTask item)
     {
 
+        var parameters = new DialogParameters
+                {
+                    Title = "Update task " + item.CaseNo,
+                    PrimaryAction = "Yes",
+                    PrimaryActionEnabled = true,
+                    Width = "600px",
+                    Height = "500px",
+                    Modal = false,
+                };
+
+        var dialog = await DialogService.ShowDialogAsync<AssignProductPanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await EditTaskResult(dialogResult);
+
     }
+
+    private async Task EditTaskResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {            
+            var taskView = result.Data as ProductionTask;                                                    
+            var res = await productionDB.SaveAssignProductTask(taskView);                          
+            await LoadTask(taskView!.TaskRefID);
+        }
+    }
+
     private async Task DeleteTask(ProductionTask item)
     {
+        var dialogParameters = new DialogParameters
+            {
+                Title = "Delete Selected Task",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true
+            };
+
+        // var dialog = await dialogService.ShowDialogAsync<ConfirmationPanel>(dialogParameters);
+        var dialog = await DialogService.ShowConfirmationAsync(
+            "Are you sure you want to delete this Task?",
+            "Yes",
+            "No",
+            "Delete Task?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            var res = await productionDB.DeleteProductTask(item);
+            await LoadTask(item.TaskRefID);
+        }
 
     }
 
@@ -276,7 +572,7 @@
         if (!result.Cancelled)
         {
             var res = await context.DeleteProdOrder(item.RecID);
-            LoadData();
+            await LoadData();
         }
 
     }
@@ -312,7 +608,7 @@
         }
         else
         {
-            var dialog = await DialogService.ShowInfoAsync("You should select a product to assign");
+            var dialog = await DialogService.ShowInfoAsync("You should select a Order");
         }
 
     }
@@ -323,10 +619,7 @@
 
         if (prodTable != null)
         {
-
             var item = new ProductionTask();
-            item.TaskRefID = prodTable.INVENTTRANSID;
-            item.UserRefID = CurrentUser.EmplRefID;
 
             var parameters = new DialogParameters
                 {
@@ -348,6 +641,7 @@
         }
 
     }
+
     private async Task SelectTaskResult(DialogResult result)
     {
         await Task.Delay(500);
@@ -358,45 +652,115 @@
 
         if (result.Data is not null)
         {
-            var taskView = result.Data as ProductionTask;
+            var selectedItems = items!.Where(p => p.Selected);
 
-            var res = await productionDB.SaveAssignProductTask(taskView);
+            if (selectedItems.FirstOrDefault() != null)
+            {
+                var taskView = result.Data as ProductionTask;
+                foreach(var item in selectedItems)
+                {
 
+                    taskView!.TaskRefID = item.INVENTTRANSID;
+                    taskView.UserRefID = CurrentUser!.EmplRefID;
+                    var res = await productionDB.SaveAssignProductTask(taskView);
+
+                }
+            }
+            await LoadTask(selectedItems.FirstOrDefault()!.INVENTTRANSID);
+        }
+
+    }
+
+
+    private async Task AddCommunicateNote()
+    {
+        //ProdTable prodTable = items.Where(p => p.Selected).FirstOrDefault();
+
+        if(Content==null)
+        {
+            var alert = await DialogService.ShowInfoAsync("You should select a case");
+            return;
+        }
+
+        var item = new CaseTracking();
+        item.UserID = CurrentUser!.EmplRefID;
+        item.CaseNo = Content.CaseNo;
+        item.PatientName = Content.PatientName;
+        item.LabID = Content.DATAAREAID;
+        item.SalesID = Content.SalesID;
+        item.LabNum = Content.LabpanNum;
+
+
+        var parameters = new DialogParameters
+        {
+            Title = "Communicate for Case" + Content.CaseNo,
+            PrimaryAction = "Yes",
+            PrimaryActionEnabled = true,
+            Width = "900px",
+            Height = "600px",
+            Modal = false,
+        };
+
+        var dialog = await DialogService.ShowDialogAsync<FormCaseTrackingInput>(item, parameters);
+        var dialogResult = await dialog.Result;
+
+
+        await AddCommunicateResult(dialogResult);
+
+
+    }
+
+    private async Task AddCommunicateResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var caseTracking = result.Data as CaseTracking;
+
+            CommunicateContent = (await productionDB.GetCaseCommunicate(0, "", caseTracking.TransID)).AsQueryable().FirstOrDefault();
+            await LoadImages(CommunicateContent.TransID);
         }
     }
 
+
+
     private async Task PakShipTask()
     {
-        var selectedItems = items.Where(p => p.Selected).ToList();
+        var selectedItems = items!.Where(p => p.Selected).ToList();
 
         if (selectedItems.Count>0)
         {
-            var pakshipLine = (await productionDB.GetAllProdLine(0, "", "PAKSHIP")).AsQueryable().FirstOrDefault();
+            var pakshipLine = (await productionDB.GetAllProdLine(0, "", "", "PACKING")).AsQueryable().FirstOrDefault();
 
             if(pakshipLine!=null){
-                var dialog = await DialogService.ShowConfirmationAsync(
-           "Are you sure you want to PAKSHIP selected orders?",
-           "Yes",
-           "No",
-           "Pakship Order?");
 
-                var result = await dialog.Result;
-                if (!result.Cancelled)
-                {
-                    foreach (var prod in selectedItems)
+                var item = new ProductionTask();
+                item.LineID = pakshipLine.LineID;
+                item.EmplRefID = CurrentUser!.EmplRefID;
+
+                var parameters = new DialogParameters
                     {
-                        var item = new ProductionTask();
-                        item.TaskRefID = prod.INVENTTRANSID;
-                        item.UserRefID = CurrentUser.EmplRefID;
-                        item.LineID = pakshipLine.LineID;
-                        
-                        var res = await productionDB.SaveAssignProductTask(item);
+                        Title = "Confirm PAKING for Selected Cases ",
+                        PrimaryAction = "Yes",
+                        PrimaryActionEnabled = true,
+                        Width = "600px",
+                        Height = "500px",
+                        Modal = false,
+                    };
 
-                    }
-                    await DialogService.ShowSuccessAsync("All orders Shipped");
-                }
+
+
+                var dialog = await DialogService.ShowDialogAsync<AssignProductPanel>(item, parameters);
+                var dialogResult = await dialog.Result;
+                await PaskshipTaskResult(dialogResult);
+
             }
-                      
+
         }
         else
         {
@@ -404,13 +768,286 @@
         }
 
     }
-   
 
-    
-   
-    
-    private async Task PrintWorkOrder()
+    private async Task PaskshipTaskResult(DialogResult result)
     {
-        await JSRuntime.InvokeVoidAsync("printComponent", "#printView");
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var selectedItems = items!.Where(p => p.Selected);
+
+            if (selectedItems.FirstOrDefault() != null)
+            {
+                var taskView = result.Data as ProductionTask;
+                foreach (var item in selectedItems)
+                {
+
+                    taskView!.TaskRefID = item.INVENTTRANSID;
+                    taskView.UserRefID = CurrentUser!.EmplRefID;                    
+                    var res = await productionDB.SaveAssignProductTask(taskView);
+
+                }
+            }
+
+            await LoadTask(selectedItems.FirstOrDefault()!.INVENTTRANSID);
+        }
+
+    }
+
+
+
+    private async Task OnSelectAll(bool Selected)
+    {
+        items.ToList().ForEach(p => p.Selected = Selected);
+        selectedItems = items.Where(p => p.Selected);
+    }
+
+    public async Task PrintWorkOrder()
+    {
+
+        if (selectedItems == null)
+        {
+            ToastService.ShowWarning("Please select Orders");
+            return;
+        }
+
+        await JSRuntime.InvokeVoidAsync("printComponent", "#componentId");
+
+    }
+
+    public async Task PrintBarcode()
+    {
+
+        if (selectedItems == null)
+        {
+            ToastService.ShowWarning("Please select Orders");
+            return;
+        }
+
+        await JSRuntime.InvokeVoidAsync("printComponent", "#barcodeId");
+
+    }
+
+    private bool ShowImage = false;
+
+    private async Task LoadCommunicate(string SalesID)
+    {      
+        CommunicateContent = (await productionDB.GetCaseCommunicate(0, SalesID, "")).AsQueryable().FirstOrDefault()!;       
+        await LoadImages(CommunicateContent.TransID);
+    }
+
+    private async Task SaveCommunicate(ChangeEventArgs e,string FieldName)
+    {
+        await Task.Delay(500);
+
+        CommunicateContent.UserID = CurrentUser.EmplRefID;
+
+        if (FieldName == "ConcernIssue")
+            CommunicateContent.ConcernIssue = e.Value.ToString();
+        if (FieldName == "TechnicianSuggestion")
+            CommunicateContent.TechnicianSuggestion = e.Value.ToString();
+        if (FieldName == "Response")
+            CommunicateContent.Response = e.Value.ToString();
+        if (FieldName == "ResponseDate")
+            CommunicateContent.ResponseDate = DateTime.Parse(e.Value.ToString());
+
+        if (FieldName == "LabStatus")
+            CommunicateContent.LabStatus = e.Value.ToString();
+        if (FieldName == "FactoryStatus")
+            CommunicateContent.FactoryStatus = e.Value.ToString();
+
+
+        var res = await productionDB.SaveCaseCommunicate(CommunicateContent);
+
+        if (CommunicateContent.RecID == 0)
+        {
+            if (res != null)
+            {
+                CommunicateContent = res;
+            }
+        }
+    }
+
+
+    public async Task ExportData()
+    {
+        var exportItems = items!.ToList();
+
+        using var workbook = new XLWorkbook();
+        var worksheet = workbook.Worksheets.Add("Data");
+
+        worksheet.Cell(1, 1).Value = "No";
+        worksheet.Cell(1, 2).Value = "CaseNo No";
+        worksheet.Cell(1, 3).Value = "Lab Num";
+        worksheet.Cell(1, 4).Value = "Patient Name";
+        worksheet.Cell(1, 5).Value = "Doctor Name";
+        worksheet.Cell(1, 6).Value = "Item Name";
+        worksheet.Cell(1, 7).Value = "US Teeth";
+        worksheet.Cell(1, 8).Value = "Shade";
+        worksheet.Cell(1, 9).Value = "Qty";
+        worksheet.Cell(1, 10).Value = "Request";
+        worksheet.Cell(1, 11).Value = "WTNotes";
+
+        worksheet.Range("A1:Z1").Style.Font.Bold = true;
+        var startRow = 2;
+        foreach (var item in exportItems)
+        {
+            worksheet.Cell(startRow, 1).Value = startRow - 1;
+            worksheet.Cell(startRow, 2).Value = item.CaseNo;
+            worksheet.Cell(startRow, 3).Value = item.LabpanNum;
+            worksheet.Cell(startRow, 4).Value = item.PatientName;
+            worksheet.Cell(startRow, 5).Value = item.DoctorName;
+            worksheet.Cell(startRow, 6).Value = item.ItemName;
+            worksheet.Cell(startRow, 7).Value = item.UsTeeth;
+            worksheet.Cell(startRow, 8).Value = item.Shade;
+            worksheet.Cell(startRow, 9).Value = item.Quantity;
+            worksheet.Cell(startRow, 10).Value = item.CustomerRequests;
+            worksheet.Cell(startRow, 11).Value = item.WTNotes;
+
+            startRow += 1;
+            // Add more properties as needed
+        }
+
+        worksheet.Columns().AdjustToContents();
+
+        using var stream = new MemoryStream();
+        workbook.SaveAs(stream);
+        stream.Seek(0, SeekOrigin.Begin);
+
+        var content = new byte[stream.Length];
+        await stream.ReadAsync(content, 0, (int)stream.Length);
+
+        var fileDate = DateTime.Now.ToString("yyMMddHHmmssttt");
+
+        await JSRuntime.InvokeVoidAsync("saveAsFile", "ProductCases" + fileDate + ".xlsx", Convert.ToBase64String(content));
+    }
+
+    private async Task HandleOnTabChange(FluentTab tab)
+    {
+        // await Task.Yield();
+        // StateHasChanged();
+
+    }
+
+
+    FluentInputFileEventArgs[] Files = Array.Empty<FluentInputFileEventArgs>();
+
+    private async Task ShowPicture(OrderFile item)
+    {
+        var parameters = new DialogParameters
+            {
+                Title = "",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,
+                Width = "800px",
+                Height = "600px",
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<PictureViewPanel>(item, parameters);
+    }
+
+    private async Task DeleteImage(int RecID, string FilePath)
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete this image?");
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            var res = await context.DeleteFile(RecID);
+
+            if (res > 0)
+            {
+                string uploadsFolder = Path.Combine(_webHost.WebRootPath, "caseimages");
+                string filePath = Path.Combine(uploadsFolder, FilePath);
+
+                try
+                {
+                    File.Delete(filePath);
+                }
+                catch
+                {
+
+                }
+                await LoadImages(CommunicateContent!.TransID);
+            }
+        }
+    }
+    private async Task OnCompletedAsync(IEnumerable<FluentInputFileEventArgs> files)
+    {
+
+        CommunicateContent = (await productionDB.GetCaseCommunicate(0, Content.SalesID, "")).AsQueryable().FirstOrDefault()!;
+
+        if (CommunicateContent.TransID == "")
+        {          
+            return;
+        }
+
+
+        Files = files.ToArray();
+
+        // For the demo, delete these files.
+        foreach (var file in Files)
+        {
+
+            string uniqueFileName = null;
+
+            string uploadsFolder = Path.Combine(_webHost.WebRootPath, "caseimages");
+            uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetExtension(file.Name);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            // using (var fileStream = new FileStream(filePath, FileMode.Create))
+            // {
+            file.LocalFile?.CopyTo(filePath);
+            //}
+            var PhotoUrl = uniqueFileName;
+
+            await context.AddFile(CommunicateContent.TransID, uniqueFileName, 0);
+            await LoadImages(CommunicateContent.TransID);
+            file.LocalFile?.Delete();
+        }
+
+        // Wait 3 seconds before to reset the progress bar.
+        await Task.Delay(3000);
+        ProgressPercent = 0;
+    }
+
+
+    private async Task ViewImageAsync(ProdTable prodTable)
+    {
+        var caseTracking = await productionDB.GetCasesTrackingBySalesID(prodTable.SalesID);
+
+        if(caseTracking != null)
+        {
+            var item = (await productionDB.GetCaseCommunicate(0, "", caseTracking.TransID)).AsQueryable().FirstOrDefault();
+
+            if (item != null)
+            {
+                var parameters = new DialogParameters
+                    {
+                        Title = "",
+                        PrimaryAction = "Ok",
+                        PrimaryActionEnabled = false,
+                        Width = "70%",
+                        Height = "600px",
+                        Modal = true,
+                    };
+
+                var dialog = await DialogService.ShowDialogAsync<ViewImagesListPanel>(item, parameters);
+            }
+            else
+            {
+                ToastService.ShowWarning("No Off Hold information in this case");
+            }
+        }
+        else
+        {
+            ToastService.ShowWarning("No Off Hold information in this case");
+        }
+
     }
 }

@@ -1,13 +1,16 @@
 @import '/_content/Microsoft.FluentUI.AspNetCore.Components/css/reboot.css';
 
 body {
-    --body-font: "Segoe UI Variable", "Segoe UI", sans-serif;
+    --body-font: "Roboto", "Roboto", "Roboto";
     font-family: var(--body-font);
-    font-size: var(--type-ramp-base-font-size);
+    font-size: 10pt;
     line-height: var(--type-ramp-base-line-height);
-    margin: 0;
+    margin: 0;   
 }
 
+.rotate-table {
+    transform: rotate(90deg);
+}
 .breakhere {
     display: block;
     clear: both;
@@ -32,12 +35,14 @@ body {
     align-self: stretch;
     height: calc(100dvh - 86px) !important;
     display: flex;
+    font-size: 10pt;
 }
 
 .content {
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 0.5rem;
     align-self: stretch !important;
-    width: 100%;
+    width: 100%;    
+    font-size: 10pt;
 }
 
 .manage {
