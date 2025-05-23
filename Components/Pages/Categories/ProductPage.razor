@@ -1,12 +1,15 @@
 ﻿@page "/product"
+@attribute [Authorize]
 @using LabManagement.Components.Pages.Categories.Controls
-
+@using LabManagement.Models.Commons
+@using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 @rendermode InteractiveServer
 @inject IDialogService DialogService
 @inject IProductResposity context
 @inject ExportService exportService
 @inject IJSRuntime JSRuntime
 @inject IWebHostEnvironment _webHost;
+@inject TypeRampBaseFontSize FontSize
 
 <FluentMenuProvider @rendermode="RenderMode.InteractiveServer" />
 
@@ -16,119 +19,178 @@
 
         <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
 
-            <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddAsync">New</FluentButton>
             
-            <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size20.TableArrowUp())">Export</FluentButton>
            
             <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
-            <FluentPaginator State="@pagination" />
+           
+
+             @if (DisplayStyle == "list")
+                {
+                     <FluentPaginator State="@pagination" />
+                    <FluentButton OnClick="ChangeDisplay" IconStart="@(new Icons.Regular.Size20.Grid())"></FluentButton>
+                }
+                else
+                {
+                     <FluentButton OnClick="ChangeDisplay" IconStart="@(new Icons.Regular.Size20.List())"></FluentButton>
+                }
         </FluentStack>
 
-        @if (items == null)
+        @if(DisplayStyle=="list")
         {
-            <p><em>Loading...</em></p>
+                @if (items == null)
+                {
+                    <p><em>Loading...</em></p>
+                }
+                else
+                {
+                    <div style="height: 600px; overflow:auto;" tabindex="-1">
+
+                        <FluentDataGrid Items="@FilteredItems"
+                        TGridItem="Product"
+                        ResizableColumns=true
+                        ShowHover="true"
+                        Style="font-size:10pt;"
+                                   RowStyle="@rowStyle"
+                        HeaderCellAsButtonWithMenu="true"
+                        RowSize="DataGridRowSize.Medium"
+                        Pagination="@pagination">
+                            <PropertyColumn Width="80px" Property="@(p => p.ItemCode)" Sortable="true" />
+                   
+                             <TemplateColumn Title="Item Name" Width="250">
+                                @if(context.IsUpdate==true)
+                                {
+                                    <FluentTextField AutoComplete="off" @bind-Value="@context.ItemName" Style="width:250px"></FluentTextField>
+                                }
+                                else{
+                                    <FluentLabel Style="width:250px">@context.ItemName</FluentLabel>
+                                }
+                            </TemplateColumn>
+
+                             <PropertyColumn Width="100px" Property="@(p => p.ItemType)" Sortable="true" />
+
+                            <TemplateColumn Title="Name Alias" Width="250">
+                                @if(context.IsUpdate==true)
+                                {
+                                    <FluentTextField AutoComplete="off" @bind-Value="@context.NameAlias" Style="width:250px"></FluentTextField>
+                                }
+                                else{
+                                    <FluentLabel Style="width:250px">@context.NameAlias</FluentLabel>
+                                }
+                            </TemplateColumn>
+
+                             <TemplateColumn Title="Unit" Width="80">
+                                @if(context.IsUpdate==true)
+                                {
+                          
+                                    <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
+                                        <FluentLabel Style="width:60px">@context.UnitID</FluentLabel>
+                                        <FluentButton IconStart="@(new Icons.Regular.Size16.TriangleDown())" OnClick="@(() => SelectUnit(context))" ></FluentButton>
+                                    </FluentStack>
+                          
+                                }
+                                else{
+                                    <FluentLabel Style="width:100px">@context.UnitID</FluentLabel>
+                                }
+                            </TemplateColumn>
+                           <TemplateColumn Title="Group" Width="150">
+                                @if(context.IsUpdate==true)
+                                {
+                                     <FluentAutocomplete TOption="ProductGroup"
+                                        AutoComplete="off"
+                                        Width="150px"
+                                        OnOptionsSearch="OnSearch"
+                                        Placeholder="Select Group"
+                                        MaximumOptionsSearch="int.MaxValue"
+                                        MaximumSelectedOptions="1"
+                                        Virtualize="true"
+                                        OptionText="@(item => $"{item.GroupName}")"
+                                        @bind-SelectedOptions="@SelectedGroups" />
+                                }
+                                else{
+                                    <FluentLabel Style="width:150px">@context.GroupName</FluentLabel>
+                                }
+                            </TemplateColumn>
+                             <TemplateColumn Title="Unit Price" Width="100">
+                                @if(context.IsUpdate==true)
+                                {
+                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.UnitPrice" Style="width:150px"></FluentNumberField>
+                                }
+                                else{
+                                    <FluentLabel Style="width:150px">@context.UnitPrice</FluentLabel>
+                                }
+                            </TemplateColumn>
+                             <TemplateColumn Title="Sales Price" Width="100">
+                                @if(context.IsUpdate==true)
+                                {
+                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesPrice" Style="width:150px"></FluentNumberField>
+                                }
+                                else{
+                                    <FluentLabel Style="width:150px">@context.SalesPrice</FluentLabel>
+                                }
+                            </TemplateColumn>                   
+                             <TemplateColumn Title="OnHand" Width="100">
+                                @if(context.IsUpdate==true)
+                                {
+                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.OnHand" Style="width:150px"></FluentNumberField>
+                                }
+                                else{
+                                    <FluentLabel Style="width:150px">@context.OnHand</FluentLabel>
+                                }
+                            </TemplateColumn> 
+                            <TemplateColumn Title="Actions" Align="@Align.End">
+                                @if(context.IsUpdate==true){
+                                    <FluentButton IconStart="@(new Icons.Regular.Size16.Save())" OnClick="@(() => SaveLineAsync(context))" />
+                                    <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowStepBack())" OnClick="@(() => CancelLineUpdate(context))" />  
+                                }  
+                                else{
+                                    <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineAsync(context))" />
+                                    <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineAsync(context))" />  
+                                }                     
+
+                            </TemplateColumn>
+
+                        </FluentDataGrid>
+
+
+                    </div>
+            }
+
         }
         else
         {
-            <div style="height: 600px; overflow:auto;" tabindex="-1">
+            @if (items != null)
+            {
+                 <FluentStack Wrap=true>                
+                    @foreach(var item in items)
+                    {
+                         <FluentCard Width="220px" Height="250px">
 
-                <FluentDataGrid Items="@FilteredItems"
-                TGridItem="Product"
-                ResizableColumns=true
-                ShowHover="true"
-                Style="font-size:10pt;"
-                           RowStyle="@rowStyle"
-                HeaderCellAsButtonWithMenu="true"
-                RowSize="DataGridRowSize.Medium"
-                Pagination="@pagination">
-                    <PropertyColumn Width="80px" Property="@(p => p.ItemCode)" Sortable="true" />
-                   
-                     <TemplateColumn Title="Item Name" Width="250">
-                        @if(context.IsUpdate==true)
-                        {
-                            <FluentTextField AutoComplete="off" @bind-Value="@context.ItemName" Style="width:250px"></FluentTextField>
-                        }
-                        else{
-                            <FluentLabel Style="width:250px">@context.ItemName</FluentLabel>
-                        }
-                    </TemplateColumn>
-
-
-                    <TemplateColumn Title="Name Alias" Width="250">
-                        @if(context.IsUpdate==true)
-                        {
-                            <FluentTextField AutoComplete="off" @bind-Value="@context.NameAlias" Style="width:250px"></FluentTextField>
-                        }
-                        else{
-                            <FluentLabel Style="width:250px">@context.NameAlias</FluentLabel>
-                        }
-                    </TemplateColumn>
-
-                     <TemplateColumn Title="Unit" Width="80">
-                        @if(context.IsUpdate==true)
-                        {
-                          
-                            <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
-                                <FluentLabel Style="width:60px">@context.UnitID</FluentLabel>
-                                <FluentButton IconStart="@(new Icons.Regular.Size16.TriangleDown())" OnClick="@(() => SelectUnit(context))" ></FluentButton>
+                                <FluentStack Orientation="Orientation.Vertical" Style="width:200px">
+                                    <img style='display:block; height:120px'
+                                                src='@item.ProductImage' />
+                                    <FluentLabel>@item.ItemName</FluentLabel>
+                                    <FluentLabel>Price: @String.Format("{0:#,###,##0}",@item.SalesPrice)</FluentLabel>
+                                    <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End" Style="width:180px;height:30px">                                        
+                                        <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditItemAsync(item))" />
+                                            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineAsync(item))" />  
+                                        </FluentStack>
                             </FluentStack>
-                          
-                        }
-                        else{
-                            <FluentLabel Style="width:100px">@context.UnitID</FluentLabel>
-                        }
-                    </TemplateColumn>
-                   <TemplateColumn Title="Group" Width="150">
-                        @if(context.IsUpdate==true)
-                        {
-                            <FluentTextField AutoComplete="off" @bind-Value="@context.PackagingGroup" Style="width:150px"></FluentTextField>
-                        }
-                        else{
-                            <FluentLabel Style="width:150px">@context.PackagingGroup</FluentLabel>
-                        }
-                    </TemplateColumn>
-                     <TemplateColumn Title="Bom Code" Width="150">
-                        @if(context.IsUpdate==true)
-                        {
-                            <FluentTextField AutoComplete="off" @bind-Value="@context.BomCode" Style="width:150px"></FluentTextField>
-                        }
-                        else{
-                            <FluentLabel Style="width:150px">@context.BomCode</FluentLabel>
-                        }
-                    </TemplateColumn>
-                     <TemplateColumn Title="Bom ItemName" Width="150">
-                        @if(context.IsUpdate==true)
-                        {
-                            <FluentTextField AutoComplete="off" @bind-Value="@context.BomItemName" Style="width:150px"></FluentTextField>
-                        }
-                        else{
-                            <FluentLabel Style="width:150px">@context.BomItemName</FluentLabel>
-                        }
-                    </TemplateColumn>                   
-
-                    <TemplateColumn Title="Actions" Align="@Align.End">
-                        @if(context.IsUpdate==true){
-                            <FluentButton IconStart="@(new Icons.Regular.Size16.Save())" OnClick="@(() => SaveLineAsync(context))" />
-                            <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowStepBack())" OnClick="@(() => CancelLineUpdate(context))" />  
-                        }  
-                        else{
-                            <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineAsync(context))" />
-                            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineAsync(context))" />  
-                        }                     
-
-                    </TemplateColumn>
-
-                </FluentDataGrid>
-
-
-            </div>
-            
+                             
+                                
+                        </FluentCard>
+                    }
+               
+            </FluentStack>
+            }
+           
         }
     </FluentStack>
 }
 else
 {
-    <div style="margin-left:20px;width:600px;">
+    <div style="margin-left:20px;width:700px;">
 
         <FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
 
@@ -136,22 +198,34 @@ else
             <FluentStack Orientation="Orientation.Horizontal">
 
                 <FluentStack Orientation="Orientation.Vertical">
-                    <FluentTextField Label="Item Code" @bind-Value="@Content.ItemCode" />
+                    <FluentTextField Label="Item Code" @bind-Value="@Content.ItemCode" Disabled="true" />
                     <FluentTextField Label="Item Name" @bind-Value="@Content.ItemName" />
                     <FluentTextField Label="Name Alias" @bind-Value="@Content.NameAlias" Style="width:250px" />
 
-                    @*  <FluentSelect TOption="Department"
-                                              Label="Department"
-                                              Placeholder="Select a Department"
-                                              Items="@departmentItems"
+                      <FluentCombobox TOption="ProductType"
+                                              Label="Item Type"
+                                              Placeholder="--Item Type--"
+                                              Items="@itemTypes"
                                               Width="200px"
-                                              Height="250px"
-    using LabManagement.Components.Pages.Categories.Controls;
-                                              OptionValue="@(i => i.DeptID)"
-                                              OptionText="@(i => i.DeptName)"
-                                              @bind-Value="@Content.DeptID">
+                                              Height="250px"    
+                                              OptionValue="@(i => i.ItemType.ToString())"
+                                              OptionText="@(i => i.TypeName)"
+                                              @bind-Value="@Content.ItemType">
 
-                                </FluentSelect> *@
+                                </FluentCombobox> 
+
+
+                    <FluentAutocomplete TOption="ProductGroup"
+                        AutoComplete="off"
+                        Width="150px"
+                        OnOptionsSearch="OnSearch"
+                        Placeholder="Select Group"
+                        MaximumOptionsSearch="int.MaxValue"
+                        MaximumSelectedOptions="1"
+                        Virtualize="true"
+                        @bind-Value = "@Content.ItemGroupID"
+                        OptionText="@(item => $"{item.GroupName}")"
+                        @bind-SelectedOptions="@SelectedGroups" />
 
                 </FluentStack>
 
@@ -166,11 +240,42 @@ else
                         OptionValue="@(p => p.UnitID)"
                         OptionText="@(p => p.UnitEn)"
                         @bind-Value="@Content.UnitID"/>
+                
+                        <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                            <FluentLabel Style="width:100px">Unit Price</FluentLabel>
+                            <FluentNumberField  Style="width:100px" @bind-Value="@Content.UnitPrice"   />
+                            <FluentLabel Typo="Typography.H4">@String.Format("{0:#,###,##0}",Content.UnitPrice)</FluentLabel>
+                        </FluentStack>
+                        
+                        <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                            <FluentLabel  Style="width:100px">Sales Price</FluentLabel>
+                            <FluentNumberField  Style="width:100px" @bind-Value="@Content.SalesPrice"   />
+                            <FluentLabel Typo="Typography.H4">@String.Format("{0:#,###,##0}",Content.SalesPrice)</FluentLabel>
+                        </FluentStack>
+                        <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+                            <FluentLabel Style="width:100px">On Hand</FluentLabel>
+                            <FluentNumberField  Style="width:100px" @bind-Value="@Content.OnHand"   />
+                            <FluentLabel Typo="Typography.H4">@String.Format("{0:#,###,##0}",Content.OnHand)</FluentLabel>
+                        </FluentStack>
 
-                    <FluentTextField Label="PackagingGroup" @bind-Value="@Content.PackagingGroup" />
-                    <FluentTextField Label="BomCode" @bind-Value="@Content.BomCode" />
-                    <FluentTextField Label="BomItemName" @bind-Value="@Content.BomItemName" />
+                    <FluentInputFile Id="prod-image-uploader"                    
+                             Mode="InputFileMode.SaveToTemporaryFolder"
+                             Multiple="true"
+                             MaximumFileCount="1"
+                             MaximumFileSize="@(10*1024*1024)"
+                             Accept=".png, .jpg, .jpeg"                 
+                             @bind-ProgressPercent="@ProgressPercent"
+                             OnCompleted="@OnCompletedAsync"
+                             Style="height: 30px;width:50px">
+                <ChildContent>
+                    <label for="prod-image-uploader">
+                        <FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
+                    </label>
 
+                </ChildContent>
+            </FluentInputFile>
+                     <img style='display:block; width:200px;'
+                                            src='@Content.ProductImage' />
                 </FluentStack>
             </FluentStack>
 
@@ -188,9 +293,22 @@ else
 
     bool ShowList = true;
 
+    string DisplayStyle = "list";
+
     IQueryable<Product>? items;
     // IQueryable<Department>? departmentItems;
     IQueryable<ProductUnit>? unitItems;
+    IQueryable<ProductType>? itemTypes;
+
+
+    IQueryable<ProductGroup>? groupItems;
+    IEnumerable<ProductGroup> SelectedGroups = Array.Empty<ProductGroup>();
+    private void OnSearch(OptionsSearchEventArgs<ProductGroup> e)
+    {
+        e.Items = groupItems!.Where(culture =>
+            culture.GroupName.Contains(e.Text, StringComparison.OrdinalIgnoreCase));
+    }
+
     string Search = "";
 
     bool SelectFromEntireRow = true;
@@ -206,14 +324,17 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(500);
+
+        FontSize.WithDefault("10pt");
+        unitItems =(await context.GetAllUnits(0,"", Search)).AsQueryable();        
+        itemTypes =(await context.GetProductTypes()).AsQueryable();    
+        groupItems  =(await context.GetProductGroups()).AsQueryable();    
         LoadData();
     }
     private async void LoadData()
-    {
-        //departmentItems = (await context.GetAllDepartment("", "")).AsQueryable();
+    {        
         items = (await context.GetAll(0,"", Search)).AsQueryable();
-        unitItems =(await context.GetAllUnits(0,"", Search)).AsQueryable();        
+
     }
 
     IQueryable<Product>? FilteredItems => items?.Where(x => x.ItemName.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
@@ -240,13 +361,25 @@ else
     private async Task AddAsync()
     {
         Content = new Product();
+        Content.ItemType = "sale";
         ShowList = false;
     }
     private async Task SaveAsync()
-    {        
+    {
+        if (SelectedGroups.FirstOrDefault() != null)
+        {
+            Content.ItemGroupID = SelectedGroups.FirstOrDefault().GroupID;
+        }
         await context.Save(Content);
         ShowList = true;
         LoadData();
+    }
+
+    private async Task EditItemAsync(Product item)
+    {
+        Content = item;
+        SelectedGroups = groupItems.Where(x => x.GroupID == item.ItemGroupID);
+        ShowList = false;
     }
 
     private async Task SelectUnit(Product item)
@@ -262,13 +395,13 @@ else
             };
 
         var unitItem = new ProductUnit();
-        
+
         var dialog = await DialogService.ShowDialogAsync<UnitDialog>(unitItem, parameters);
         var dialogResult = await dialog.Result;
         await OnSelectUnitComplete(item,dialogResult);
     }
 
-  private async Task OnSelectUnitComplete(Product item,DialogResult result)
+    private async Task OnSelectUnitComplete(Product item,DialogResult result)
     {        
         await Task.Delay(500);
         if (result.Cancelled)
@@ -292,10 +425,16 @@ else
         //Content = item;
         //ShowList = false;
         item.IsUpdate = true;
+        SelectedGroups = groupItems.Where(x => x.GroupID == item.ItemGroupID);
     }
 
     private async Task SaveLineAsync(Product item)
     {
+        if (SelectedGroups.FirstOrDefault() != null)
+        {
+            item.ItemGroupID = SelectedGroups.FirstOrDefault()!.GroupID;
+        }
+
         await context.Save(item);
         item.IsUpdate = false;
         LoadData();
@@ -337,7 +476,17 @@ else
 
     }
 
-
+    private void ChangeDisplay()
+    {        
+        if(DisplayStyle=="list")
+        {
+            DisplayStyle = "grid";
+        }
+        else
+        {
+            DisplayStyle = "list";
+        }
+    }
 
     public class StringLengthComparer : IComparer<string>
     {
@@ -359,7 +508,43 @@ else
         }
     }
 
+    int ProgressPercent = 0;
 
+    FluentInputFileEventArgs[] Files = Array.Empty<FluentInputFileEventArgs>();
+
+    private async Task OnCompletedAsync(IEnumerable<FluentInputFileEventArgs> files)
+    {
+
+        Files = files.ToArray();
+
+        // For the demo, delete these files.
+        foreach (var file in Files)
+        {
+
+            string uniqueFileName = null;
+
+            string uploadsFolder = Path.Combine(_webHost.WebRootPath, "images");
+            uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetExtension(file.Name);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            file.LocalFile?.CopyTo(filePath);
+
+            MemoryStream ms = new MemoryStream();
+            using (FileStream fileDest = new FileStream(filePath, FileMode.Open, FileAccess.Read))            
+                fileDest.CopyTo(ms);
+
+            //System.IO.BinaryReader br = new System.IO.BinaryReader(fileDest);
+            var bytes = ms.ToArray();
+            string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+
+            Content.ProductImage = "data:image/png;base64," + base64String;
+           
+            file.LocalFile?.Delete();
+        }
+
+        await Task.Delay(3000);
+        ProgressPercent = 0;
+    }
 
 }
 

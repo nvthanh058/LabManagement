@@ -1,4 +1,6 @@
 ﻿using LabManagement.Models;
+using LabManagement.Models.ProductionModels;
+using LabManagement.Models.SaleModels;
 
 namespace LabManagement.Infrastructure.IRespository
 {
@@ -7,6 +9,9 @@ namespace LabManagement.Infrastructure.IRespository
         string DateFormat { get; }
         Task<List<SalesTable>> GetOrders(int RecID, string SalesID,string CustomerID, string Search, 
             DateTime ? FromDate, DateTime ? ToDate, string LabID);
+
+        Task<List<SalesTable>> GetOrdersByPackageID(string PackageID);
+
         Task<SalesTable> GetOrderByRecID(int RecID);
         Task<SalesTable> GetOrderBySalesID(string SalesID);
 
@@ -33,5 +38,9 @@ namespace LabManagement.Infrastructure.IRespository
         Task<SequenceInfo> GetSequenceNum(string SeqID);
 
         Task<List<AssignmentInfo>> GetAssignment();
+        Task<int> SaveSalesLog(SalesLog log);
+        Task<List<SalesLog>> GetSalesLog(string PackageID);
+
+
     }
 }

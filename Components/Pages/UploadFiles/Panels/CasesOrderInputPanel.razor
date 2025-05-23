@@ -1,5 +1,6 @@
 ﻿@implements IDialogContentComponent<CaseOrder>
 @using LabManagement.Components.Pages.UploadFiles.Panels
+@using LabManagement.Models.SaleModels
 
 @rendermode InteractiveServer
 @inject IDialogService DialogService
@@ -9,23 +10,25 @@
 @inject NavigationManager navigationManager
 @inject IWebHostEnvironment _webHost;
 
-<FluentStack Style="height:100%" Orientation="Orientation.Vertical">
 
-    <FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+ <FluentSplitter Style="height:100%" Orientation="Orientation.Horizontal" BarSize="6" Panel1Size="60%" Panel2Size="auto">
+        <Panel1>
+            <FluentStack Style="height:100%" Orientation="Orientation.Vertical">
 
-        <FluentStack Orientation="Orientation.Horizontal" Style="width:50%">
-            <FluentStack Orientation="Orientation.Vertical">
+             <FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
 
+        <FluentStack Orientation="Orientation.Horizontal" Style="width:100%" HorizontalGap="20">
+                    <FluentStack Orientation="Orientation.Vertical" Style="width:50%" HorizontalAlignment="HorizontalAlignment.Left">
                 <FluentLabel Color="Color.Warning" Typo="Typography.H5">@ErrorMessage</FluentLabel>
                 <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
                     <FluentTextField Label="Order No" Disabled=true AutoComplete="off" @bind-Value="@Content.OrderNo" />
                 </FluentStack>
 
                 <FluentStack Orientation="Orientation.Horizontal">
-                    <FluentTextField Label="Patient Name" @bind-Value="@Content.PatientName" />
+                    <FluentTextField Label="Patient Name" @bind-Value="@Content.PatientName" Style="width:100%" />
                 </FluentStack>
                 <FluentStack Orientation="Orientation.Horizontal">
-                    <FluentTextField Label="Doctor Name" @bind-Value="@Content.DoctorName" />
+                            <FluentTextField Label="Doctor Name" @bind-Value="@Content.DoctorName" Style="width:100%" />
                 </FluentStack>
                 <FluentStack Orientation="Orientation.Horizontal">
                     <FluentDatePicker Label="Order Date" @bind-Value="@Content.OrderDate"></FluentDatePicker>
@@ -33,7 +36,8 @@
 
             </FluentStack>
 
-            <FluentStack>
+                    <FluentStack Style="width:50%" HorizontalAlignment="HorizontalAlignment.Left">
+
                 <FluentTextArea Label="Work Notes" @bind-Value="@Content.WorkNotes" Rows="7" Cols="100" Resize="TextAreaResize.Vertical" />
             </FluentStack>
 
@@ -49,9 +53,23 @@
         }
 
     </FluentStack>
+            <FluentStack Orientation="Orientation.Horizontal">
+                <FluentIcon Value="@(new Icons.Regular.Size20.DocumentAdd())" />
+                <FluentLabel Typo="Typography.H6">Upload Files</FluentLabel>
+            </FluentStack>
+            
+            <SaleFilesPanel SalesID="@Content.OrderID" UserName="@CurrentUser.UserID" ShowUpload="ShowUpload"></SaleFilesPanel>
+            <FluentStack Orientation="Orientation.Horizontal">
+                <FluentIcon Value="@(new Icons.Regular.Size20.ImageAdd())" />
+                <FluentLabel Typo="Typography.H6">Upload Images</FluentLabel>
+            </FluentStack>
+            <SaleImagesPanel SalesID="@Content.OrderID" UserName="@CurrentUser.UserID" ShowUpload="@ShowUpload"></SaleImagesPanel>
+            </FluentStack>
 
-    <FluentTabs Style="width:100%">
-        <FluentTab Id="tab-details">
+        </Panel1>
+        <Panel2>
+        <FluentTabs Style="width:100%">
+             <FluentTab Id="tab-details">
             <Header>
                 <FluentStack Orientation="Orientation.Horizontal">
                     <FluentIcon Value="@(new Icons.Regular.Size20.AppsList())" />
@@ -93,40 +111,11 @@
 
             </Content>
         </FluentTab>
-
-        @if (Content.ShowFiles == true)
-        {
-            <FluentTab Id="tab-files">
-                <Header>
-                    <FluentStack Orientation="Orientation.Horizontal">
-                        <FluentIcon Value="@(new Icons.Regular.Size20.DocumentAdd())" />
-                        <FluentLabel Typo="Typography.H6">Other Files</FluentLabel>
-                    </FluentStack>
-                </Header>
-                <Content>
-                    <SaleFilesPanel SalesID="@Content.OrderID" UserName="@CurrentUser.UserID" ShowUpload="ShowUpload"></SaleFilesPanel>
-                </Content>
-            </FluentTab>
-        }
-
-        @if (Content.ShowImages == true)
-        {
-            <FluentTab Id="tab-pictures">
-                <Header>
-                    <FluentStack Orientation="Orientation.Horizontal">
-                        <FluentIcon Value="@(new Icons.Regular.Size20.ImageAdd())" />
-                        <FluentLabel Typo="Typography.H6">Pictures</FluentLabel>
-                    </FluentStack>
-                </Header>
-                <Content>
-                    <SaleImagesPanel SalesID="@Content.OrderID" UserName="@CurrentUser.UserID" ShowUpload="@ShowUpload"></SaleImagesPanel>
-                </Content>
-            </FluentTab>
-        }
+       
 
     </FluentTabs>
-
-</FluentStack>
+    </Panel2>
+</FluentSplitter>
 
 @code {
 

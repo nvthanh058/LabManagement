@@ -1,0 +1,20 @@
+﻿@page "/pos"
+@attribute [Authorize]
+@using LabManagement.Components.Pages.Categories.Controls
+@using LabManagement.Models.Commons
+@using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject IProductResposity context
+@inject ExportService exportService
+@inject IJSRuntime JSRuntime
+@inject IWebHostEnvironment _webHost;
+@inject TypeRampBaseFontSize FontSize
+
+
+@code {
+
+    bool ShowList = false;
+
+
+}

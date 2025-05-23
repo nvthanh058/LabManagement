@@ -4,8 +4,9 @@
 
 @using ClosedXML.Excel
 @using LabManagement.Components.Pages.UploadFiles.Panels
+@using LabManagement.Models.SaleModels
 @using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
-
+@inject TypeRampBaseFontSize FontSize
 @rendermode InteractiveServer
 @inject IWebHostEnvironment _webHost;
 @inject IJSRuntime JS
@@ -25,15 +26,16 @@
 
         <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">           
             <FluentButton IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddAsync">New</FluentButton>
-
             <FluentButton IconStart="@(new Icons.Regular.Size20.TableArrowUp())" OnClick="@ExportData">Export</FluentButton>            
-
             <FluentDatePicker Label="From Date" Style="width:120px" @bind-Value="@fromDate"></FluentDatePicker>
             <FluentDatePicker Label="To Date" Style="width:120px" @bind-Value="@toDate"></FluentDatePicker>
             <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
             <FluentButton IconStart="@(new Icons.Regular.Size20.Search())" OnClick="@LoadData">LoadData</FluentButton>
-
+             <FluentPaginator State="@pagination" />
         </FluentStack>
+
+        <FluentSplitter Style="height:100%" Orientation="Orientation.Horizontal" BarSize="6" Panel1Size="60%" Panel2Size="auto">
+        <Panel1>
 
         @if (items == null)
         {
@@ -55,8 +57,15 @@
                     HeaderCellAsButtonWithMenu="true"
                     Pagination="@pagination">
 
+                     <SelectColumn TGridItem="CaseOrder"
+                            SelectMode="@Mode"
+                            SelectFromEntireRow="true"
+                            Property="@(e => e.Selected)"                           
+                            OnSelect="@((e) =>OnSelectOrder(e.Item,e.Selected))">
+                            </SelectColumn>
+                        
                         <TemplateColumn Title="" Align="@Align.End" Width="150px">
-                            <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.EyeTracking())" OnClick="@(() => EditAsync(context))" />
+                            <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditAsync(context))" />
 
                             <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteAsync(context))" />
 
@@ -86,13 +95,19 @@
 
                 </div>
             </div>
-            <FluentPaginator State="@pagination" />
+           
 
 
         }
-
+          </Panel1>
+        <Panel2>
+            <ViewFilesPanel @ref="viewFilesPanel" Content="@SO" CurrentUser="@CurrentUser"></ViewFilesPanel>
+        </Panel2>
+ </FluentSplitter>
     </FluentStack>
 
+   
+   
 }
 else
 {
@@ -111,7 +126,7 @@ else
 
 @code {
 
-
+    DataGridSelectMode Mode = DataGridSelectMode.Single;
     bool showPrint = false;
 
     bool openActionMenu = false;
@@ -135,6 +150,7 @@ else
 
     FluentTextField txtCaseNo;
 
+    private ViewFilesPanel viewFilesPanel;
 
     string? SaleStatus = "0";
 
@@ -145,11 +161,10 @@ else
     bool ShowList = true;
     bool AutoHeight = false;
 
-    CaseOrder? SO { get; set; } = new();
+    private CaseOrder SO { get; set; } = new();
 
     bool SelectFromEntireRow = true;
 
-    DataGridSelectMode Mode = DataGridSelectMode.Multiple;
 
     int ProgressPercent = 0;
     FluentInputFileEventArgs[] Files = Array.Empty<FluentInputFileEventArgs>();
@@ -158,6 +173,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+         FontSize.WithDefault("10pt");
         fromDate = DateTime.Now.AddDays(-1);
         toDate = DateTime.Now;
 
@@ -170,13 +186,10 @@ else
 
     }
 
-
-
     private async Task LoadData()
     {
-        var loginUserUD = CurrentUser.EmplRefID;
 
-        items = (await db.GetOrders(0, "", CurrentUser!.EmplRefID, Search, fromDate, toDate, loginUserUD)).AsQueryable();
+        items = (await db.GetOrders(0, "", CurrentUser!.UserID, Search, fromDate, toDate, CurrentUser!.UserID)).AsQueryable();
     }
 
     [Parameter]
@@ -188,7 +201,7 @@ else
     private async Task AddAsync()
     {
         Content = new CaseOrder();
-        Content.UserID = CurrentUser.EmplRefID;
+        Content.UserID = CurrentUser!.UserID;
         Content.ShowImages = true;
         Content.ShowFiles = true;
 
@@ -206,7 +219,7 @@ else
         }
 
         Content = SelectedItems.FirstOrDefault();
-        Content.UserID = CurrentUser.EmplRefID;
+        Content.UserID = CurrentUser!.UserID;
         Content.ShowImages = true;
         Content.ShowFiles = true;
         Content.ReadOnly = true;
@@ -260,7 +273,7 @@ else
                 var path = @"files/" + fItem!.UserID + @"/" + fItem.UploadDate.ToString("yyyyMMdd") + "/";
                 await JS.InvokeVoidAsync("urlFileDownload", fItem.FilePath, path + fItem.FilePath);
 
-                await db.SaveDownloadStatus(fItem.OrderID, CurrentUser!.EmplRefID, fItem.RecID, 1);
+                await db.SaveDownloadStatus(fItem.OrderID, CurrentUser!.UserID, fItem.RecID, 1);
 
             }
         }
@@ -293,7 +306,7 @@ else
         }      
 
         Content = SelectedItems.FirstOrDefault();
-        Content.UserID = CurrentUser.EmplRefID;
+        Content.UserID = CurrentUser.UserID;
         Content.ShowImages = true;
         Content.ShowFiles = true;
         ShowList = false;
@@ -333,14 +346,20 @@ else
     }
 
 
-    private async Task OnSelectOrder(CaseOrder item, bool Selected)
+    private void OnSelectOrder(CaseOrder item, bool Selected)
     {
 
         if (item != null)
         {            
-            item.Selected = Selected;            
+            item.Selected = Selected;
+            SO = item;
+            
+            if (viewFilesPanel != null)
+            {
+                viewFilesPanel.LoadFiles(item.OrderID);
+            }            
+            
         }
-
 
     }
 

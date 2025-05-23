@@ -3,9 +3,9 @@
 using LabManagement.Infrastructure.IRespository;
 using LabManagement.Models;
 using LabManagement.Infrastructure.IRespository;
-using LabManagement.Models;
 using System.Data;
 using System.Reflection;
+using LabManagement.Models.SaleModels;
 
 namespace LabManagement.Infrastructure.Respository
 {

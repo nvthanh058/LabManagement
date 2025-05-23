@@ -1,4 +1,6 @@
 ﻿using LabManagement.Models;
+using LabManagement.Models.ProductionModels;
+using LabManagement.Models.SaleModels;
 
 namespace LabManagement.Components.Infrastructure.IRespository
 {

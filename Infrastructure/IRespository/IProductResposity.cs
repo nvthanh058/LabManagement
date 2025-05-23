@@ -1,4 +1,5 @@
 ﻿using LabManagement.Models;
+using LabManagement.Models.Commons;
 
 namespace LabManagement.Infrastructure.IRespository
 {
@@ -8,7 +9,9 @@ namespace LabManagement.Infrastructure.IRespository
         Task<Product> Get(int RecID);
         Task<Product> Save(Product model);       
         Task<int> Delete(int RecID);
-        
+
+        Task<List<ProductType>> GetProductTypes();
+        Task<List<ProductGroup>> GetProductGroups();
         Task<List<TablePrice>> GetAllPrice(int RecID, string PriceID, string ItemID, string Search);
         Task<TablePrice> GetPrice(int RecID);
         Task<TablePrice> SavePrice(TablePrice model);
@@ -21,5 +24,8 @@ namespace LabManagement.Infrastructure.IRespository
         Task<List<ProductUnit>> GetAllUnits(int RecID, string UnitID, string Search);
         Task<ProductUnit> SaveUnit(ProductUnit model);
         Task<int> DeleteUnit(int RecID);
+
+        Task<ProductGroup> SaveGroup(ProductGroup model);
+        Task<int> DeleteGroup(int RecID);
     }
 }

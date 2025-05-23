@@ -1,0 +1,133 @@
+﻿@implements IDialogContentComponent<OrderFile>
+@using HomagGroup.Blazor3D.Cameras
+@using HomagGroup.Blazor3D.Events
+@using HomagGroup.Blazor3D.Viewers
+@using HomagGroup.Blazor3D.Settings
+@using HomagGroup.Blazor3D.Scenes
+@using HomagGroup.Blazor3D.Lights
+@using HomagGroup.Blazor3D.Maths
+@using HomagGroup.Blazor3D.Materials
+@using HomagGroup.Blazor3D.Objects
+@using HomagGroup.Blazor3D.Geometires
+@using HomagGroup.Blazor3D.Enums
+@using LabManagement.Models.SaleModels
+@inject IWebHostEnvironment _webHost;
+@rendermode InteractiveServer
+<!-- Header -->
+<FluentDialogHeader ShowDismiss="true">
+
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size24.PersonInfo())" />
+        <FluentLabel Typo="Typography.PaneHeader">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<!-- Body -->
+<FluentDialogBody>
+
+<FluentStack Orientation="Orientation.Vertical" Width="100%">
+                  
+            <Viewer @ref="View3D2" Scene=scene />
+      
+</FluentStack>
+  </FluentDialogBody>
+
+<FluentDialogFooter>    
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+</FluentDialogFooter>
+
+@code {
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    [Parameter]
+    public OrderFile Content { get; set; } = new();
+
+  
+    private Viewer View3D2 = null!;
+    private Scene scene = new Scene();
+    private Guid loadedObjectGuid = Guid.NewGuid();
+
+    private async Task CancelAsync()
+    {
+        View3D2.ObjectLoaded -= OnObjectLoaded;
+        View3D2.JsModuleLoaded -= OnJsModuleLoaded;
+        await Dialog.CancelAsync();
+    }
+
+ 
+
+    protected override Task OnInitializedAsync()
+    {
+        scene.BackGroundColor = "#eeeeee";
+        AddLights();      
+        return base.OnInitializedAsync();
+    }
+
+    private void AddLights()
+    {
+        scene.Add(new AmbientLight());
+        scene.Add(new PointLight()
+        {
+            Intensity = 0.5f,
+            Position = new Vector3(100, 200, 100)
+        });
+        scene.Add(new PointLight()
+        {
+            Intensity = 1f,
+            Position = new Vector3(5, 5, 5)
+        });
+    }
+
+    private async Task OnJsModuleLoaded()
+    {
+
+        var path = @"files/" + Content.UserID + @"/" + Content.UploadDate.ToString("yyyyMMdd") + "/";
+
+        var FilePath = path + Content.FilePath;
+        if (FilePath != "")
+        {
+            await LoadViewFile(FilePath);
+        }
+    }
+    private Task OnObjectLoaded(Object3DArgs e)
+    {
+        // After object is loaded to component scene, you can locate it's C# clone in the scene.Children
+        // At the moment, only  Object3D.Uuid and Object3D.Type properties are syncronized.
+        foreach (var item in scene.Children)
+        {
+            if (item.Uuid == e.UUID)
+            {              
+                StateHasChanged();
+                break;
+            }
+        }
+        return Task.CompletedTask;
+    }
+
+    public async Task LoadViewFile(string Url)
+    {
+        try
+        {
+            var fileUrl = Url;
+            var settings = new ImportSettings
+            {
+                Format = Import3DFormats.Stl,
+                FileURL = fileUrl,
+            };
+            loadedObjectGuid = await View3D2.Import3DModelAsync(settings);
+            await View3D2.SetCameraPositionAsync(new Vector3(0, 70, -20), new Vector3(0, 1, 0));
+
+            StateHasChanged();            
+        }
+        catch
+        {
+            
+        }
+    }
+
+
+}

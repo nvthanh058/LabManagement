@@ -3,6 +3,7 @@
 
 @using ClosedXML.Excel
 @using LabManagement.Components.Pages.UploadFiles.Panels
+@using LabManagement.Models.SaleModels
 @using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 
 @rendermode InteractiveServer
@@ -18,6 +19,7 @@
 
 
 <FluentBreadcrumbItem Style="height:60px" Href="/casesorderadmin">
+    @if (folderUser!=null)
     @folderUser!.UserName
     <FluentIcon Value="@(new Icons.Regular.Size16.Folder())" Color="@Color.Neutral" Slot="start" />
 </FluentBreadcrumbItem>
@@ -166,7 +168,7 @@ else
     
         if (id == null || id == "")
         {
-            currentID = CurrentUser.EmplRefID;
+            currentID = CurrentUser.UserID;
         }
         else{
             currentID = id.ToString();
@@ -178,14 +180,10 @@ else
         await LoadData();
 
     }
-
-   
-
+  
     private async Task LoadData()
-    {
-        var loginUserUD = CurrentUser.EmplRefID;
-      
-        items = (await db.GetOrders(0, "", currentID, Search, fromDate, toDate, loginUserUD)).AsQueryable();
+    {        
+        items = (await db.GetOrders(0, "", currentID, Search, fromDate, toDate, CurrentUser!.UserID)).AsQueryable();
     }
 
     [Parameter]
@@ -205,7 +203,7 @@ else
     private async Task AddAsync()
     {
         Content = new CaseOrder();
-        Content.UserID = CurrentUser.EmplRefID;
+        Content.UserID = CurrentUser!.UserID;
         Content.ShowImages = true;
         Content.ShowFiles = true;
 
@@ -225,7 +223,7 @@ else
         }
 
         Content = SelectedItems.FirstOrDefault();
-        Content.UserID = CurrentUser.EmplRefID;
+        Content!.UserID = CurrentUser!.UserID;
         Content.ShowImages = true;
         Content.ShowFiles = true;
         Content.ReadOnly = true;
@@ -279,7 +277,7 @@ else
                 var path = @"files/" + fItem!.UserID + @"/" + fItem.UploadDate.ToString("yyyyMMdd") + "/";
                 await JS.InvokeVoidAsync("urlFileDownload", fItem.FilePath, path + fItem.FilePath);
 
-                await db.SaveDownloadStatus(fItem.OrderID, CurrentUser!.EmplRefID, fItem.RecID, 1);
+                await db.SaveDownloadStatus(fItem.OrderID, CurrentUser!.UserID, fItem.RecID, 1);
 
             }
         }
@@ -312,7 +310,7 @@ else
         }      
 
         Content = SelectedItems.FirstOrDefault();
-        Content.UserID = CurrentUser.EmplRefID;
+        Content!.UserID = CurrentUser!.UserID;
         Content.ShowImages = true;
         Content.ShowFiles = true;
         ShowList = false;

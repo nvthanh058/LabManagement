@@ -9,6 +9,7 @@ D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Append.Blazor.Printing.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Azure.Core.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Azure.Identity.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Blazor-ApexCharts.dll
+D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Blazor3D.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\ClosedXML.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\ClosedXML.Parser.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Dapper.dll
@@ -60,6 +61,7 @@ D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Microsoft.JSInterop.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Mscc.GenerativeAI.dll
+D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\RBush.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\SixLabors.Fonts.dll
 D:\GitLab\LabManagement\obj\Release\net8.0\PubTmp\Out\System.ClientModel.dll

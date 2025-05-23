@@ -1,4 +1,5 @@
-﻿@attribute [Authorize]
+﻿@using LabManagement.Models.ProductionModels
+@attribute [Authorize]
 @implements IDialogContentComponent<ProductionTask>
 @inject IEmployeeResposity employeeDB
 @inject IProductionResposity productionDB

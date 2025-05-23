@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using LabManagement.Infrastructure.IRespository;
-using LabManagement.Models;
+using LabManagement.Models.SaleModels;
 using System.Data;
 
 namespace LabManagement.Infrastructure.Respository

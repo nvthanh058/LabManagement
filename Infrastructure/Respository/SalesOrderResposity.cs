@@ -3,7 +3,11 @@ using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using LabManagement.Infrastructure.IRespository;
 using LabManagement.Models;
+using LabManagement.Models.ProductionModels;
+using LabManagement.Models.SaleModels;
+using Mscc.GenerativeAI;
 using System.Data;
+using System.IO.Packaging;
 using System.Reflection;
 
 namespace LabManagement.Infrastructure.Respository
@@ -410,6 +414,58 @@ namespace LabManagement.Infrastructure.Respository
             {
                
                 lst = Task.FromResult(_services.GetAll<AssignmentInfo>(query, null, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<int> SaveSalesLog(SalesLog log)
+        {
+            var res = 0;
+            try
+            {
+                var dbParams = new DynamicParameters();
+                var query = @"INSERT INTO LAB_IMPORTSALESLOG(PackageID,CaseNo,TransDate,Imported,UserID) 
+                                    values(@PackageID,@CaseNo,@TransDate,@Imported,@UserID)";
+
+                dbParams.Add("@PackageID", log.PackageID);
+                dbParams.Add("@CaseNo", log.CaseNo);
+                dbParams.Add("@TransDate", log.TransDate?.ToString("yyyy-MM-dd"));
+                dbParams.Add("@Imported", log.Imported);
+                dbParams.Add("@UserID", log.UserID);
+
+                res = Task.FromResult(_services.ExcuteScaler<SalesLog>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return res;
+        }
+
+        public async Task<List<SalesLog>> GetSalesLog(string PackageID)
+        {
+            var query = @"Select * FROM LAB_IMPORTSALESLOG WHERE PackageID=@PackageID";
+            var lst = new List<SalesLog>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@PackageID", PackageID);
+               
+                lst = Task.FromResult(_services.GetAll<SalesLog>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<List<SalesTable>> GetOrdersByPackageID(string PackageID)
+        {
+            var query = @"LAB_GetSalesTableImported";
+            var lst = new List<SalesTable>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@PackageID", PackageID);              
+                lst = Task.FromResult(_services.GetAll<SalesTable>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
             }
             catch (Exception ex) { }
             return lst;

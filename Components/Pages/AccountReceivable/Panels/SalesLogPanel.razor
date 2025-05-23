@@ -1,0 +1,79 @@
+﻿@using LabManagement.Models.SaleModels
+
+@implements IDialogContentComponent<IQueryable<SalesLog>>
+@inject ISalesOrderResposity db
+
+
+<FluentDialogHeader ShowDismiss="false">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size20.AppsListDetail())" />
+        <FluentLabel Typo="Typography.PaneHeader">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<FluentDialogBody>
+
+    <FluentStack Orientation="Orientation.Vertical">
+        <div style="display: table; table-layout: fixed; width: 100%;">
+            <div style="overflow-x: auto;">
+
+                <FluentStack Orientation="Orientation.Vertical" Width="95%">
+
+                    <FluentDataGrid Style="min-width: max-content;font-size:10pt;" RowSize="DataGridRowSize.Medium" Items="@Content"
+                                    TGridItem="SalesLog"
+                                    ResizableColumns=true                                    
+                                    AutoFit=true
+                                    ShowHover="true"
+                                    HeaderCellAsButtonWithMenu="true">
+                        
+                        <TemplateColumn Title="" Align="@Align.End" Width="120px">
+                            @if (context.Imported == true)
+                            {                                
+                                <FluentIcon Value="@(new Icons.Regular.Size24.CheckmarkCircle().WithColor("green"))" />
+                            }
+                            else
+                            {
+                                <FluentIcon Value="@(new Icons.Regular.Size16.ErrorCircle().WithColor("red"))" />
+                            }
+                        </TemplateColumn>
+
+                        <PropertyColumn Title="Package" Property="@(p => p.PackageID)" Sortable="true" />
+                        <PropertyColumn Title="CaseNo" Property="@(p => p.CaseNo)" Sortable="true" />
+                        <PropertyColumn Title="Date" Property="@(p => p.TransDate)" Sortable="true" />                    
+                        <PropertyColumn Title="Time" Property="@(p => p.CreatedDateTime)" Format="@db.DateFormat" Sortable="true" />
+                        <PropertyColumn Title="UserID" Property="@(p => p.UserID)" Sortable="true" />
+                    </FluentDataGrid>
+
+
+                </FluentStack>
+
+            </div>
+        </div>
+    </FluentStack>
+
+</FluentDialogBody>
+
+
+<FluentDialogFooter>
+
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+</FluentDialogFooter>
+@code {
+
+    [Parameter]
+    public IQueryable<SalesLog> Content { get; set; } = default!;
+ 
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+
+    private async Task CancelAsync()
+    {
+       
+        await Dialog.CancelAsync();
+    }
+
+}

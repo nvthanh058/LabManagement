@@ -17,14 +17,24 @@ wwwroot\favicon.ico
 wwwroot\files\Guest\20250310\Book2.xlsx
 wwwroot\files\Guest\20250310\Canvas-master (1).zip
 wwwroot\files\Skill Bonus - new proposal - to anh Thành (1).xlsx
+wwwroot\files\ThanhNguyen\20250521\HD.stl
+wwwroot\files\ThanhNguyen\20250521\Lower AntagonistScan.stl
+wwwroot\files\ThanhNguyen\20250521\slotted_disk.stl
+wwwroot\files\ThanhNguyen\20250521\Upper PrePreparationScan.stl
 wwwroot\images\019f64c2-b319-4d23-931b-cf5a408e7c2b_img1.png
 wwwroot\images\04d471b6-28d6-4981-8565-a1ef74d47a97_.jpg
+wwwroot\images\050ed4e6-efdb-4481-9ff1-870be324faa2_.png
 wwwroot\images\061f30b3-d497-4cbb-be6a-e47c581590bf_.jpg
 wwwroot\images\0e5e9868-ca31-4cb0-b113-90034cf59f27_.png
+wwwroot\images\0eb161d6-8792-4ce0-bd25-8a2b3fac7470_.png
+wwwroot\images\0f417a2d-6625-406c-9318-24607f99ae79_.png
+wwwroot\images\0fcd5ec5-e374-4017-b93a-ea625e31df70_.png
 wwwroot\images\103e4701-6d75-417f-9f75-77d83de16df8_.png
 wwwroot\images\1ff37708-c67b-402b-bc1d-0db5c4efc6e3_.png
 wwwroot\images\2b8ed0c2-87b6-4505-9beb-4090ceb08042_.jpg
 wwwroot\images\2f10066f-881a-443e-96e8-e29eacde7646_purchase.ico
+wwwroot\images\33230553-15f3-4d93-8a0b-0c73deaa3b92_.png
+wwwroot\images\35ad733b-32ff-4b3c-b029-f7671f29e4d3_.png
 wwwroot\images\3fd613f8-ae1b-4525-b4e0-a5d41bae4c03_doctor.png
 wwwroot\images\564ba5e2-fcf2-4129-a16a-ec52b0a51e19_.png
 wwwroot\images\604a9d44-8ff4-43fa-9206-175c2ffc4ef1_.png
@@ -35,17 +45,28 @@ wwwroot\images\76447bb9-2296-40ca-a93b-71219dacc579_img1.png
 wwwroot\images\77b295aa-0e71-4f0d-9cac-f53548419e6e_.png
 wwwroot\images\7a74d4ca-c108-4198-be60-fd3311b78aba_img1.png
 wwwroot\images\7b710a64-8744-4d01-8f99-7c86180e1baf_.jpg
+wwwroot\images\9ab58f72-330c-475e-aa11-4749e98270fa_.png
+wwwroot\images\9b7bf5c0-c89c-48af-b0e2-b6697f08d2db_.png
+wwwroot\images\9c8a98c8-71d5-4af4-a1c0-a4acd1be185a_.png
+wwwroot\images\a305c749-a29e-45de-b6d5-a0a10bd77f41_.png
 wwwroot\images\ac3a6dff-df26-4f12-9c5f-7d84e2e85055_.png
 wwwroot\images\b02f0e31-431d-43cf-bbe1-d9461e69f1f7_.png
+wwwroot\images\b941e4eb-3bee-4caa-a0a8-7e12108269c7_.jpg
 wwwroot\images\barcode.png
+wwwroot\images\bb45690a-8ed2-4ad8-b2fb-3eb93d5795f4_.png
+wwwroot\images\bb5f994a-ae25-4317-9aef-48bed6e9f085_.png
+wwwroot\images\bd4a47fa-3988-417b-9059-86b12319b497_.png
 wwwroot\images\beachogo.png
 wwwroot\images\c063f545-6e72-48d3-ab46-45644a7a939e_.jpg
+wwwroot\images\c09ea0ce-d1e1-4bd1-b98e-53ac49f5308d_.png
 wwwroot\images\c7ee5298-2d7d-44c1-a6dd-9dd450db8130_.png
 wwwroot\images\cd51994f-b800-412a-8c69-d7e29e229704_.jpg
 wwwroot\images\ceb01acb-f50e-493f-a2c0-2e7e7f1362b3_img1.png
 wwwroot\images\d13659c0-66c3-4aff-890e-3155a5777890_doctor.png
 wwwroot\images\d23d954f-181b-425e-bede-2ba086026b76_.png
+wwwroot\images\d361d10b-37a1-4ab3-94be-9aa415727f94_.jpg
 wwwroot\images\db526e28-4a31-40bc-aefd-94eac3d3e348_.png
+wwwroot\images\e080b293-d3d0-47aa-82c6-c9177ee7e492_.png
 wwwroot\images\e36fd2ff-8152-4d99-86ae-aabfac873be3_.png
 wwwroot\images\e9296d1b-3f8f-4f38-8ee9-d63a371f7ffb_.png
 wwwroot\images\easterndragonlogo.png

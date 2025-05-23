@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using LabManagement.Infrastructure.IRespository;
-using LabManagement.Models;
+using LabManagement.Models.SaleModels;
 using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.Reflection;

@@ -1,12 +1,394 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\GitLab\\LabManagement\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\pages\\accountreceivable\\possalesorderpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\pages\\accountreceivable\\possalesorderpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\layout\\homelayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\layout\\homelayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\layout\\homeappbar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\layout\\homeappbar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\layout\\headerlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\layout\\headerlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\layout\\dashboardlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\layout\\dashboardlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\pages\\access\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\pages\\access\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\pages\\categories\\productpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\pages\\categories\\productpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\pages\\categories\\unitspage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\pages\\categories\\unitspage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\pages\\categories\\productgrouppage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\pages\\categories\\productgrouppage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\pages\\commonforms\\employeepage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\pages\\commonforms\\employeepage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\infrastructure\\respository\\productresposity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:infrastructure\\respository\\productresposity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\infrastructure\\irespository\\iproductresposity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:infrastructure\\irespository\\iproductresposity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\models\\commons\\productgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:models\\commons\\productgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\models\\commons\\producttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:models\\commons\\producttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\pages\\uploadfiles\\panels\\salefilespanel.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\pages\\uploadfiles\\panels\\salefilespanel.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\pages\\accountreceivable\\salesorderpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\pages\\accountreceivable\\salesorderpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\components\\pages\\uploadfiles\\panels\\casesorderinputpanel.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:components\\pages\\uploadfiles\\panels\\casesorderinputpanel.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|d:\\gitlab\\labmanagement\\models\\purchasingmodels\\vendor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DBAF2AA-7162-D5A4-9F47-948056248D19}|LabManagement.csproj|solutionrelative:models\\purchasingmodels\\vendor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PosSalesOrderPage.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Pages\\AccountReceivable\\PosSalesOrderPage.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\AccountReceivable\\PosSalesOrderPage.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Pages\\AccountReceivable\\PosSalesOrderPage.razor",
+              "RelativeToolTip": "Components\\Pages\\AccountReceivable\\PosSalesOrderPage.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T08:34:36.573Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "Components\\Layout\\NavMenu.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "Components\\Layout\\NavMenu.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T08:32:52.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomeLayout.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Layout\\HomeLayout.razor",
+              "RelativeDocumentMoniker": "Components\\Layout\\HomeLayout.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Layout\\HomeLayout.razor",
+              "RelativeToolTip": "Components\\Layout\\HomeLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T08:30:44.543Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HomeAppBar.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Layout\\HomeAppBar.razor",
+              "RelativeDocumentMoniker": "Components\\Layout\\HomeAppBar.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Layout\\HomeAppBar.razor",
+              "RelativeToolTip": "Components\\Layout\\HomeAppBar.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T08:30:43.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HeaderLayout.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Layout\\HeaderLayout.razor",
+              "RelativeDocumentMoniker": "Components\\Layout\\HeaderLayout.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Layout\\HeaderLayout.razor",
+              "RelativeToolTip": "Components\\Layout\\HeaderLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T08:30:41.663Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Login.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Pages\\Access\\Login.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Access\\Login.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Pages\\Access\\Login.razor",
+              "RelativeToolTip": "Components\\Pages\\Access\\Login.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEsAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T08:28:39.923Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DashboardLayout.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Layout\\DashboardLayout.razor",
+              "RelativeDocumentMoniker": "Components\\Layout\\DashboardLayout.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Layout\\DashboardLayout.razor",
+              "RelativeToolTip": "Components\\Layout\\DashboardLayout.razor",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T08:27:46.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "Components\\Layout\\MainLayout.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "Components\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T08:27:24.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "EmployeePage.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Pages\\CommonForms\\EmployeePage.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\CommonForms\\EmployeePage.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Pages\\CommonForms\\EmployeePage.razor",
+              "RelativeToolTip": "Components\\Pages\\CommonForms\\EmployeePage.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T08:20:40.277Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IProductResposity.cs",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Infrastructure\\IRespository\\IProductResposity.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\IRespository\\IProductResposity.cs",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Infrastructure\\IRespository\\IProductResposity.cs",
+              "RelativeToolTip": "Infrastructure\\IRespository\\IProductResposity.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAIwBwAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T07:43:08.344Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ProductGroupPage.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Pages\\Categories\\ProductGroupPage.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Categories\\ProductGroupPage.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Pages\\Categories\\ProductGroupPage.razor",
+              "RelativeToolTip": "Components\\Pages\\Categories\\ProductGroupPage.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T07:40:28.832Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UnitsPage.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Pages\\Categories\\UnitsPage.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Categories\\UnitsPage.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Pages\\Categories\\UnitsPage.razor",
+              "RelativeToolTip": "Components\\Pages\\Categories\\UnitsPage.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T07:39:49.529Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ProductGroup.cs",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Models\\Commons\\ProductGroup.cs",
+              "RelativeDocumentMoniker": "Models\\Commons\\ProductGroup.cs",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Models\\Commons\\ProductGroup.cs",
+              "RelativeToolTip": "Models\\Commons\\ProductGroup.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T07:38:20.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ProductType.cs",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Models\\Commons\\ProductType.cs",
+              "RelativeDocumentMoniker": "Models\\Commons\\ProductType.cs",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Models\\Commons\\ProductType.cs",
+              "RelativeToolTip": "Models\\Commons\\ProductType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T07:38:01.864Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ProductPage.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Pages\\Categories\\ProductPage.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Categories\\ProductPage.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Pages\\Categories\\ProductPage.razor",
+              "RelativeToolTip": "Components\\Pages\\Categories\\ProductPage.razor",
+              "ViewState": "AgIAAJUBAAAAAAAAAAAAALIBAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T03:55:34.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Product.cs",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Models\\Product.cs",
+              "RelativeDocumentMoniker": "Models\\Product.cs",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Models\\Product.cs",
+              "RelativeToolTip": "Models\\Product.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAiwBAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T03:54:25.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ProductResposity.cs",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Infrastructure\\Respository\\ProductResposity.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Respository\\ProductResposity.cs",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Infrastructure\\Respository\\ProductResposity.cs",
+              "RelativeToolTip": "Infrastructure\\Respository\\ProductResposity.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAYwEMAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T06:11:19.051Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "SaleFilesPanel.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Pages\\UploadFiles\\Panels\\SaleFilesPanel.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\UploadFiles\\Panels\\SaleFilesPanel.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Pages\\UploadFiles\\Panels\\SaleFilesPanel.razor",
+              "RelativeToolTip": "Components\\Pages\\UploadFiles\\Panels\\SaleFilesPanel.razor",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABwAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T05:08:51.317Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\GitLab\\LabManagement\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAACIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-23T03:49:08.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Vendor.cs",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Models\\PurchasingModels\\Vendor.cs",
+              "RelativeDocumentMoniker": "Models\\PurchasingModels\\Vendor.cs",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Models\\PurchasingModels\\Vendor.cs",
+              "RelativeToolTip": "Models\\PurchasingModels\\Vendor.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAowBQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T02:56:00.571Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "CasesOrderInputPanel.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Pages\\UploadFiles\\Panels\\CasesOrderInputPanel.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\UploadFiles\\Panels\\CasesOrderInputPanel.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Pages\\UploadFiles\\Panels\\CasesOrderInputPanel.razor",
+              "RelativeToolTip": "Components\\Pages\\UploadFiles\\Panels\\CasesOrderInputPanel.razor",
+              "ViewState": "AgIAADEAAAAAAAAAAAAAAEIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-22T05:09:52.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "SalesOrderPage.razor",
+              "DocumentMoniker": "D:\\GitLab\\LabManagement\\Components\\Pages\\AccountReceivable\\SalesOrderPage.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\AccountReceivable\\SalesOrderPage.razor",
+              "ToolTip": "D:\\GitLab\\LabManagement\\Components\\Pages\\AccountReceivable\\SalesOrderPage.razor",
+              "RelativeToolTip": "Components\\Pages\\AccountReceivable\\SalesOrderPage.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-22T04:56:26.907Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

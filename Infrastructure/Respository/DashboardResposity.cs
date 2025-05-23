@@ -3,6 +3,8 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using LabManagement.Components.Infrastructure.IRespository;
 using LabManagement.Infrastructure.IRespository;
 using LabManagement.Models;
+using LabManagement.Models.ProductionModels;
+using LabManagement.Models.SaleModels;
 using System.Data;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 

@@ -89,6 +89,25 @@
           "buildMultiTargeting/Blazor-ApexCharts.props": {}
         }
       },
+      "Blazor3D/0.1.42": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "6.0.10",
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Blazor3D.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Blazor3D.dll": {}
+        },
+        "build": {
+          "buildTransitive/Blazor3D.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Blazor3D.props": {}
+        }
+      },
       "ClosedXML/0.104.2": {
         "type": "package",
         "dependencies": {
@@ -1109,6 +1128,19 @@
           }
         }
       },
+      "Newtonsoft.Json/13.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "RBush/4.0.0": {
         "type": "package",
         "compile": {
@@ -1561,6 +1593,26 @@
         "staticwebassets/locales/vi.json",
         "staticwebassets/locales/zh-cn.json",
         "staticwebassets/locales/zh-tw.json"
+      ]
+    },
+    "Blazor3D/0.1.42": {
+      "sha512": "aGi5YCR9Y5b+xUJV4k81+LLQWSmJaqPlW3ZYPUIOSXkh/RwsDyMsSW5l2rwJsSmYT73J3WWx32bnYg5/x7Lj2Q==",
+      "type": "package",
+      "path": "blazor3d/0.1.42",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "blazor3d.0.1.42.nupkg.sha512",
+        "blazor3d.nuspec",
+        "build/Blazor3D.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/Blazor3D.props",
+        "buildTransitive/Blazor3D.props",
+        "lib/net6.0/Blazor3D.dll",
+        "lib/net6.0/HomagGroup.Blazor3D.xml",
+        "staticwebassets/Blazor3D.bundle.scp.css",
+        "staticwebassets/js/bundle.js",
+        "staticwebassets/js/bundle.js.LICENSE.txt"
       ]
     },
     "ClosedXML/0.104.2": {
@@ -2989,6 +3041,33 @@
         "mscc.generativeai.nuspec"
       ]
     },
+    "Newtonsoft.Json/13.0.1": {
+      "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
+      "type": "package",
+      "path": "newtonsoft.json/13.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "newtonsoft.json.13.0.1.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
+      ]
+    },
     "RBush/4.0.0": {
       "sha512": "j3GeRxxLUQdc+UrZnvythdQxi3bd8ayn87VDjfGXrvfodF550n9wR6SgQvpo+YiAv3GJezsu6lK0l47rRqnbdg==",
       "type": "package",
@@ -3659,6 +3738,7 @@
     "net8.0": [
       "Append.Blazor.Printing >= 6.3.0",
       "Blazor-ApexCharts >= 5.1.0",
+      "Blazor3D >= 0.1.42",
       "ClosedXML >= 0.104.2",
       "Dapper >= 2.1.66",
       "Microsoft.Data.SqlClient >= 6.0.1",
@@ -3727,6 +3807,10 @@
           "Blazor-ApexCharts": {
             "target": "Package",
             "version": "[5.1.0, )"
+          },
+          "Blazor3D": {
+            "target": "Package",
+            "version": "[0.1.42, )"
           },
           "ClosedXML": {
             "target": "Package",

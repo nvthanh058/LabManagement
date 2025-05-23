@@ -22,8 +22,7 @@
 
             <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
             <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowSquareDown())">Import</FluentButton>
-            <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>
-            <FluentButton IconStart="@(new Icons.Regular.Size24.Print())">Print</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>            
             <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
         </FluentStack>
 
@@ -71,7 +70,7 @@
                             </div>
                         </ColumnOptions>
                     </PropertyColumn>
-
+                    <PropertyColumn Width="100px" Property="@(p => p.ShortName)" Sortable="true" />
                     <PropertyColumn Width="120px" Property="@(p => p.Position)" Sortable="true" />
                     <PropertyColumn Width="120px" Property="@(p => p.DeptName)" Sortable="true" />
                     <PropertyColumn Width="120px" Title="Started Date" Property="@(p => p.StartedDate)" Format="dd/MM/yyyy" Sortable="true" />
@@ -141,6 +140,7 @@ else{
                             <FluentStack Orientation="Orientation.Vertical">
                                 <FluentTextField Label="Empl ID" @bind-Value="@Content.EmplID" />
                                 <FluentTextField Label="Full Name" @bind-Value="@Content.FullName" />
+                                <FluentTextField Label="Short Name" @bind-Value="@Content.ShortName" />
                                 <FluentTextField Label="Title" @bind-Value="@Content.Position" Style="width:250px" />
 
                                 <FluentSelect TOption="Department"

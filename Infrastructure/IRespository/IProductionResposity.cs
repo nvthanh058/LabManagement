@@ -1,4 +1,5 @@
-﻿using LabManagement.Models;
+﻿using LabManagement.Models.ProductionModels;
+using LabManagement.Models.SaleModels;
 
 namespace LabManagement.Infrastructure.IRespository
 {
@@ -43,9 +44,9 @@ namespace LabManagement.Infrastructure.IRespository
         Task<List<CaseCommunicate>> GetCaseCommunicate(int RecID,string SalesID, string TransID);
         Task<CaseCommunicate> SaveCaseCommunicate(CaseCommunicate model);
         Task<int> DeleteCaseCommunicate(int RecID);
-
         Task<List<CaseStatus>> GetCaseStatus(int StatusGroup);
-
-
+        Task<int> SaveCaseResponse(CaseResponse response);
+        Task<List<CaseResponse>> GetCaseResponses(string TransID);
+        Task<int> DeleteResponse(CaseResponse response,string UserID);
     }
 }

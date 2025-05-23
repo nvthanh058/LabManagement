@@ -6,6 +6,7 @@
 @using LabManagement.Components.Pages.Categories
 @using LabManagement.Components.Pages.CommonForms.Panels
 @using LabManagement.Components.Pages.Controls
+@using LabManagement.Models.SaleModels
 @using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 
 @rendermode InteractiveServer
@@ -129,6 +130,7 @@
 
 
                             <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Sortable="true" />
+                                <PropertyColumn Title="Production" Property="@(p => p.ProdStatus)" Sortable="true" />
                             <PropertyColumn Title="PatientName" Property="@(p => p.PatientName)" Sortable="true" />                            
                             <PropertyColumn Title="PanNo" Property="@(p => p.LabpanNum)" Sortable="true"  />
                             <PropertyColumn Title="Date In" Property="@(p => p.CaseDate)" Format="@db.DateFormat" Sortable="true" />
@@ -276,6 +278,8 @@ else
 
     Customer SelectedCustomer { get; set; } = new Customer();
     PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
+
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -693,39 +697,39 @@ else
     {
         if (activePage == true)
         {
-             if (IsAllowPaste == false)
-        {
-            return;
-        }
-
-        if (StopRepeat && args.Repeat)
-        {
-
-        }
-        else
-        {
-            KeyPressed.Add((args.ToString(), args.Name));
-
-            var keyStr = "";
-            @foreach (var key in KeyPressed)
-            {
-                keyStr = key.Key;
-                if (keyStr == "Ctrl + V")
+                 if (IsAllowPaste == false)
                 {
-                    var a = key.Key;
-
-                    string s = await ClipboardService.ReadTextAsync();
-                    await ProcessImportData(s);
-                    await LoadData();
+                    return;
                 }
 
+                if (StopRepeat && args.Repeat)
+                {
+
+                }
+                else
+                {
+                    KeyPressed.Add((args.ToString(), args.Name));
+
+                    var keyStr = "";
+                    @foreach (var key in KeyPressed)
+                    {
+                        keyStr = key.Key;
+                        if (keyStr == "Ctrl + V")
+                        {
+                            var a = key.Key;
+
+                            string s = await ClipboardService.ReadTextAsync();
+                            await ProcessImportData(s);
+                            await LoadData();
+                        }
+
+                }
+
+                StateHasChanged();
             }
 
-            StateHasChanged();
         }
 
-        }
-       
 
     }
 
@@ -735,6 +739,9 @@ else
 
         List<SalesTable> data = new List<SalesTable>();
         var CountInsert = 0;
+
+        var PackageID = DateTime.Now.ToString("yyyyMMddHHmmss");
+
         foreach (string line in lines)
         {
 
@@ -763,7 +770,6 @@ else
 
                 }
 
-
                 item.PatientName = sCells[4].Trim();
 
                 var LabName = sCells[5].Trim();
@@ -787,8 +793,15 @@ else
 
                 var res = await db.SaveOrder(item);
 
+                var salesLog =new SalesLog();
+                salesLog.PackageID=PackageID;
+                salesLog.TransDate=DateTime.Now;
+                salesLog.CaseNo = item.CaseNo;
+                salesLog.UserID = CurrentUser.UserID;
+
                 if (res.RecID > 0)
                 {
+
                     CountInsert += 1;
                     var prod = (await productdb.GetAll(0, "", itemName.ToUpper())).AsQueryable().FirstOrDefault()!;
                     if (itemName.IndexOf(",") > 0)
@@ -798,6 +811,9 @@ else
 
                     if (prod != null)
                     {
+
+                        salesLog.Imported=true;
+
                         var SO = await db.GetOrderByRecID(res.RecID);
 
                         var SL = new SalesLine();
@@ -824,12 +840,46 @@ else
                         SL.DATAAREAID = SO.DATAAREAID;
 
                         await db.SaveOrderLine(SL);
+
+
+                    }
+                    else
+                    {
+                        salesLog.Imported = false;
                     }
                 }
+                else
+                {
+                    salesLog.Imported = false;
+                }
+
+                await db.SaveSalesLog(salesLog);
             }
         }
 
-         ToastService.ShowWarning("(" + CountInsert + ") Cases imported");        
+        ToastService.ShowWarning("(" + CountInsert + ") Cases imported");  
+
+        var logs = (await db.GetSalesLog(PackageID)).AsQueryable();
+
+        if (logs.FirstOrDefault() != null)
+        {
+            var parameters = new DialogParameters
+                {
+                    Title = "Import Logs",
+                    PrimaryAction = "No",
+                    PrimaryActionEnabled = false,
+                    Width = "80%",
+                    Height = "80%",
+                    Modal = false,
+                };
+
+            var dialog = await DialogService.ShowDialogAsync<SalesLogPanel>(logs, parameters);
+            var dialogResult = await dialog.Result;
+        }
+        logs = default;
+        IsAllowPaste = false;
+        orderView!.items = (await db.GetOrdersByPackageID(PackageID)).AsQueryable();
+
     }
 
     public ValueTask DisposeAsync()

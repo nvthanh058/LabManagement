@@ -5,6 +5,8 @@
 @using ClosedXML.Excel
 @using LabManagement.Components.Pages.Controls
 @using LabManagement.Components.Pages.Production.Panels
+@using LabManagement.Models.ProductionModels
+@using LabManagement.Models.SaleModels
 @using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 @inject IWebHostEnvironment _webHost;
 @inject IJSRuntime JS
@@ -59,7 +61,7 @@
             {
 
                 <div style="display: table; table-layout: fixed; width: 100%;">
-            <div style="overflow-x: auto;">
+                 <div style="overflow-x: auto;">
 
                     <FluentDataGrid Id="grid" Items="@items"
                     Style="height: 100%;min-width: max-content;font-size:10pt;"
@@ -87,9 +89,18 @@
                             <FluentButton IconEnd="@(new Icons.Regular.Size16.Image())" OnClick="@(() => ViewImageAsync(context))" />
                         </TemplateColumn>
 
+                          <TemplateColumn Title="" Align="@Align.End" Width="60px">
+                            @if (context.Response !="")
+                            {                                
+                                <FluentIcon Value="@(new Icons.Regular.Size16.CommentCheckmark().WithColor("green"))" />
+                            }
+                            else
+                            {                                
+                            }
+                        </TemplateColumn>
 
-                        <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Width="120px" Sortable="true" ></PropertyColumn>
-                        <PropertyColumn Title="Patient Name" Property="@(p => p.PatientName)" Width="200px" Sortable="true" />
+                        <PropertyColumn Title="Case No" Property="@(p => p.CaseNo)" Sortable="true" ></PropertyColumn>
+                        <PropertyColumn Title="Patient Name" Property="@(p => p.PatientName)" Sortable="true" />
                         <PropertyColumn Title="Trans Date" Property="@(p => p.TransDate)" Format="MM/dd/yyyy" Sortable="true"  />                            
                         <PropertyColumn Title="Rush Category" Property="@(p => p.RushCategory)" Sortable="true" />
                         <PropertyColumn Title="Concern Issue" Property="@(p => p.ConcernIssue)" Sortable="true"  />
@@ -130,7 +141,7 @@
                         </Header>
                         <Content>
 
-                            <CaseQuestionPanel Content="@CommunicateContent" CurrentUser="@CurrentUser"></CaseQuestionPanel>
+                            <CaseQuestionPanel @ref="caseQuestion" Content="@CommunicateContent" CurrentUser="@CurrentUser"></CaseQuestionPanel>
                         </Content>
                     </FluentTab>
                     <FluentTab Id="tab-images">
@@ -227,6 +238,8 @@
 
     public CaseCommunicate CommunicateContent { get; set; } = new();
 
+    private CaseQuestionPanel caseQuestion;
+
     IQueryable<CaseTracking>? items;
     IQueryable<LabInfo>? labs;
     IEnumerable<LabInfo> SelectedLabs = Array.Empty<LabInfo>();
@@ -261,7 +274,7 @@
     protected override async Task OnInitializedAsync()
     {
         FontSize!.WithDefault("10pt");
-        
+
         fromDate = DateTime.Now.AddDays(-30);
         toDate = DateTime.Now;
 
@@ -302,7 +315,13 @@
         if (res != null)
         {
             CommunicateContent = res;
+            if (caseQuestion != null)
+            {
+                await caseQuestion.LoadResponse(CommunicateContent.TransID);    
+            }
+
             await LoadImages(CommunicateContent.TransID);
+          
         }
         else
         {

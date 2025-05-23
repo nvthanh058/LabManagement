@@ -1,0 +1,134 @@
+﻿@implements IDisposable
+@using HomagGroup.Blazor3D.Cameras
+@using HomagGroup.Blazor3D.Events
+@using HomagGroup.Blazor3D.Viewers
+@using HomagGroup.Blazor3D.Settings
+@using HomagGroup.Blazor3D.Scenes
+@using HomagGroup.Blazor3D.Lights
+@using HomagGroup.Blazor3D.Maths
+@using HomagGroup.Blazor3D.Materials
+@using HomagGroup.Blazor3D.Objects
+@using HomagGroup.Blazor3D.Geometires
+@using HomagGroup.Blazor3D.Enums
+@inject IWebHostEnvironment _webHost;
+@rendermode InteractiveServer
+
+<FluentStack Orientation="Orientation.Vertical" Width="100%">
+           
+        <div style="width:100%;height:100%">
+            <Viewer @ref="View3D1" Scene=scene />
+        </div>                    
+</FluentStack>
+   
+@code {
+
+    [Parameter]
+    public string sFilePath { get; set; } = "";
+
+    private Viewer View3D1 = null!;
+    private Scene scene = new Scene();
+    private Guid loadedObjectGuid = Guid.NewGuid();
+
+    public void Dispose()
+    {
+        View3D1.ObjectLoaded -= OnObjectLoaded;
+        View3D1.JsModuleLoaded -= OnJsModuleLoaded;
+    }
+    private ViewerSettings settings = new ViewerSettings()
+    {
+        ContainerId = "example1",
+        CanSelect = true,// default is false
+        SelectedColor = "yellow",
+        ShowViewHelper = false,//default is true
+        WebGLRendererSettings = new WebGLRendererSettings
+        {
+            Antialias = false // if you need poor quality for some reasons
+        }
+    };
+
+    protected override Task OnInitializedAsync()
+    {
+        scene.BackGroundColor = "#eeeeee";
+        AddLights();
+
+       
+
+        return base.OnInitializedAsync();
+    }
+
+    private Camera camera = new OrthographicCamera(left: -2, right: 2, top: 2, bottom: -2, zoom: 0.5f, near: -10)
+        {
+            Position = new Vector3(1, 1, 1),
+            AnimateRotationSettings = new AnimateRotationSettings(true, 0.1, 0, 0.1, radius: 3)
+            {
+                StopAnimationOnOrbitControlMove = true
+            },
+            LookAt = new Vector3(0.5f, 0, 0)
+        };
+
+    private void AddLights()
+    {
+        scene.Add(new AmbientLight());
+        scene.Add(new PointLight()
+        {
+            Intensity = 0.5f,
+            Position = new Vector3(100, 200, 100)
+        });
+        scene.Add(new PointLight()
+        {
+            Intensity = 1f,
+            Position = new Vector3(5, 5, 5)
+        });
+    }
+
+    private async Task OnJsModuleLoaded()
+    {
+        if (sFilePath != "")
+        {
+            await LoadViewFile(sFilePath);
+        }
+    }
+    private Task OnObjectLoaded(Object3DArgs e)
+    {
+        // After object is loaded to component scene, you can locate it's C# clone in the scene.Children
+        // At the moment, only  Object3D.Uuid and Object3D.Type properties are syncronized.
+        foreach (var item in scene.Children)
+        {
+            if (item.Uuid == e.UUID)
+            {              
+                StateHasChanged();
+                break;
+            }
+        }
+        return Task.CompletedTask;
+    }
+
+    public async Task LoadViewFile(string Url)
+    {
+
+        await View3D1.ClearSceneAsync();
+        AddLights();
+        await View3D1.UpdateScene();
+
+        try
+        {
+            var fileUrl = Url;
+            var settings = new ImportSettings
+            {
+                Format = Import3DFormats.Stl,
+                FileURL = fileUrl,
+            };
+            loadedObjectGuid = await View3D1.Import3DModelAsync(settings);
+            await View3D1.SetCameraPositionAsync(new Vector3(0, 70, -20), new Vector3(0, 1, 0));
+
+            StateHasChanged();
+            await Task.Delay(200);
+        }
+        catch
+        {
+            
+        }
+    }
+
+
+}

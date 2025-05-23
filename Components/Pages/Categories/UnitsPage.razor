@@ -1,6 +1,6 @@
 ﻿@page "/units"
 
-
+@attribute [Authorize]
 @rendermode InteractiveServer
 @inject IDialogService DialogService
 @inject IProductResposity context
@@ -13,8 +13,7 @@
 
             <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
             <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowSquareDown())">Import</FluentButton>
-            <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>
-            <FluentButton IconStart="@(new Icons.Regular.Size24.Print())">Print</FluentButton>
+            <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>            
             <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
 
         </FluentStack>

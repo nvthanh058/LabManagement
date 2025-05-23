@@ -81,7 +81,9 @@
 
     [Inject]
     private BodyFont BodyFont { get; set; } = default!;
-    
+
+    [Inject]
+    private ControlCornerRadius ControlCornerRadius { get; set; } = default!;
     //public DesignThemeModes Mode { get; set; }
    // public OfficeColor? officeColor { get; set; }
 
@@ -141,6 +143,8 @@
         if (firstRender)
         {
             await BodyFont.WithDefault("Roboto");
+            await ControlCornerRadius.WithDefault(5);
+
             StateHasChanged();
         }
     }

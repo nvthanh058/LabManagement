@@ -16,6 +16,7 @@
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)microsoft.fluentui.aspnetcore.components\4.11.9\buildTransitive\Microsoft.FluentUI.AspNetCore.Components.props" Condition="Exists('$(NuGetPackageRoot)microsoft.fluentui.aspnetcore.components\4.11.9\buildTransitive\Microsoft.FluentUI.AspNetCore.Components.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\8.0.15\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\8.0.15\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props')" />
+    <Import Project="$(NuGetPackageRoot)blazor3d\0.1.42\buildTransitive\Blazor3D.props" Condition="Exists('$(NuGetPackageRoot)blazor3d\0.1.42\buildTransitive\Blazor3D.props')" />
     <Import Project="$(NuGetPackageRoot)blazor-apexcharts\5.1.0\buildTransitive\Blazor-ApexCharts.props" Condition="Exists('$(NuGetPackageRoot)blazor-apexcharts\5.1.0\buildTransitive\Blazor-ApexCharts.props')" />
     <Import Project="$(NuGetPackageRoot)append.blazor.printing\6.3.0\buildTransitive\Append.Blazor.Printing.props" Condition="Exists('$(NuGetPackageRoot)append.blazor.printing\6.3.0\buildTransitive\Append.Blazor.Printing.props')" />
   </ImportGroup>

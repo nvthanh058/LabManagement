@@ -2,6 +2,8 @@
 @using LabManagement.Components.Pages.Categories
 @using LabManagement.Components.Pages.CommonForms.Panels
 @using LabManagement.Components.Pages.Controls
+@using LabManagement.Models.ProductionModels
+@using LabManagement.Models.SaleModels
 
 
 @rendermode InteractiveServer
@@ -354,7 +356,7 @@
             }
 
         }
-     
+
         ToastService.ShowSuccess("Save Order Success");       
 
         LoadLineItems();
@@ -407,6 +409,7 @@
             if (orderLine is not null)
             {
                 await db.SaveOrderLine(orderLine);
+                
                 LoadLineItems();
             }
 
@@ -522,6 +525,8 @@
             var itemRes = result.Data as SalesLine;
                     
             await db.SaveOrderLine(itemRes);
+
+            await db.SaveProdOrder(itemRes);
         }
     }
 

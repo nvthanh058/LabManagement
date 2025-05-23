@@ -1,0 +1,113 @@
+﻿@using LabManagement.Models.SaleModels
+@rendermode InteractiveServer
+@inject IFileOrderResposity db
+@inject IUserInfoResposity userdb
+@inject IWebHostEnvironment _webHost;
+@inject IDialogService DialogService
+@inject IJSRuntime JS
+
+<FluentStack Orientation="Orientation.Vertical" VerticalGap="10">
+    
+    <FluentDataGrid Items="@fileitems"
+    style="height: 100%;width:100%"
+    TGridItem="OrderFile"
+    RowSize="DataGridRowSize.Medium"
+    ResizableColumns=true>
+
+        <TemplateColumn Title="" Align="@Align.Start" Width="70%">
+            
+           
+                <FluentStack Orientation="Orientation.Horizontal">
+                    <FluentIcon Value="@(new Icons.Regular.Size24.DocumentBulletList())" />
+                    <nobr>
+                        @context.FilePath
+                    </nobr>
+                </FluentStack>
+                          
+        </TemplateColumn>
+
+
+        <TemplateColumn Title="" Align="@Align.End" Width="30%">
+            <FluentButton IconStart="@(new Icons.Regular.Size16.Eye())" OnClick="@(() => LoadViewFile(context))" />
+            <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowCircleDown())" OnClick="@(() => DownloadItem(context))" />
+           
+        </TemplateColumn>
+        
+    </FluentDataGrid>
+
+    <File3DViewer @ref="file3DViewer" sFilePath="@FilePath"></File3DViewer>
+
+</FluentStack>
+
+@code {
+    File3DViewer file3DViewer;
+
+    private string FilePath = "";
+    IQueryable<OrderFile>? fileitems;
+
+    [Parameter]
+    public CaseOrder Content { get; set; } = new();
+
+    [Parameter]
+    public UserInfo CurrentUser { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {       
+        await LoadFiles(Content!.OrderID);
+
+    }
+    private async Task LoadViewFile(OrderFile item)
+    {
+        var path = @"files/" + item.UserID + @"/" + item.UploadDate.ToString("yyyyMMdd") + "/";
+
+        FilePath = path + item.FilePath;
+
+        if (file3DViewer != null)
+        {
+            await file3DViewer.LoadViewFile(FilePath);
+        }
+       
+
+    }
+
+    private async Task ShowFileDlg(OrderFile item)
+    {
+        var parameters = new DialogParameters
+        {
+            Title = "",
+            PrimaryAction = "No",
+            PrimaryActionEnabled = false,
+            Width = "80%",
+            Height = "80%",
+            Modal = false,
+        };
+
+        var dialog = await DialogService.ShowDialogAsync<File3DViewerDialog>(item, parameters);
+    }
+
+    public async Task LoadFiles(string OrderID)
+    {
+        fileitems = (await db.GetFiles(OrderID, 1)).AsQueryable();
+
+        if (fileitems != null)
+        {
+            var first = fileitems.FirstOrDefault();
+            if (first != null)
+            {
+                var path = @"files/" + first.UserID + @"/" + first.UploadDate.ToString("yyyyMMdd") + "/";
+                FilePath = path + first.FilePath;
+                await LoadViewFile(first);
+            }
+        }
+      
+    }
+    
+    private async Task DownloadItem(OrderFile item)
+    {
+        var path = @"files/" + item.UserID + @"/" + item.UploadDate.ToString("yyyyMMdd") + "/";
+        await JS.InvokeVoidAsync("urlFileDownload", item.FilePath, path + item.FilePath);
+        await db.SaveDownloadStatus(item.OrderID, CurrentUser!.EmplRefID, item.RecID, 1);
+    }
+
+
+}

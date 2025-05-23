@@ -11,6 +11,7 @@ namespace LabManagement.Models
         public string EmplRefID { get; set; }
         public string EmplID { get; set; } = "";
         public string FullName { get; set; } = "";
+        public string ShortName { get; set; } = "";
         public string Position { get; set; } = "";
         public string DeptID { get; set; } = "";
        

@@ -8,6 +8,9 @@ body {
     margin: 0;   
 }
 
+.rotate-table {
+    transform: rotate(90deg);
+}
 .breakhere {
     display: block;
     clear: both;

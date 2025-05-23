@@ -116,6 +116,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50UmVjZWl2YWJsZVxQYW5lbHNcU2FsZXNMaW5lUGFuZWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/GitLab/LabManagement/Components/Pages/AccountReceivable/Panels/SalesLogPanel.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50UmVjZWl2YWJsZVxQYW5lbHNcU2FsZXNMb2dQYW5lbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/GitLab/LabManagement/Components/Pages/AccountReceivable/Panels/SalesOrderInputPanel.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50UmVjZWl2YWJsZVxQYW5lbHNcU2FsZXNPcmRlcklucHV0UGFuZWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -126,6 +130,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/GitLab/LabManagement/Components/Pages/AccountReceivable/Panels/TablePricePanel.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50UmVjZWl2YWJsZVxQYW5lbHNcVGFibGVQcmljZVBhbmVsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/AccountReceivable/PosSalesOrderPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50UmVjZWl2YWJsZVxQb3NTYWxlc09yZGVyUGFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/GitLab/LabManagement/Components/Pages/AccountReceivable/SalesOrderPage.razor]
@@ -142,6 +150,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/GitLab/LabManagement/Components/Pages/Categories/Pathology.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDYXRlZ29yaWVzXFBhdGhvbG9neS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/Categories/ProductGroupPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDYXRlZ29yaWVzXFByb2R1Y3RHcm91cFBhZ2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/GitLab/LabManagement/Components/Pages/Categories/ProductPage.razor]
@@ -300,6 +312,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0aW9uXFdvcmtPcmRlclBhZ2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/GitLab/LabManagement/Components/Pages/Purchasing/VendorPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdXJjaGFzaW5nXFZlbmRvclBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/GitLab/LabManagement/Components/Pages/Reports/IncomingCasesPage.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZXBvcnRzXEluY29taW5nQ2FzZXNQYWdlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -352,6 +368,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVcGxvYWRGaWxlc1xQYW5lbHNcRG93bmxvYWRGaWxlc1BhbmVsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/GitLab/LabManagement/Components/Pages/UploadFiles/Panels/File3DViewer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVcGxvYWRGaWxlc1xQYW5lbHNcRmlsZTNEVmlld2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/UploadFiles/Panels/File3DViewerDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVcGxvYWRGaWxlc1xQYW5lbHNcRmlsZTNEVmlld2VyRGlhbG9nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/GitLab/LabManagement/Components/Pages/UploadFiles/Panels/InputOrderLinePanel.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVcGxvYWRGaWxlc1xQYW5lbHNcSW5wdXRPcmRlckxpbmVQYW5lbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -374,6 +398,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/GitLab/LabManagement/Components/Pages/UploadFiles/Panels/SaleImagesPanel.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVcGxvYWRGaWxlc1xQYW5lbHNcU2FsZUltYWdlc1BhbmVsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitLab/LabManagement/Components/Pages/UploadFiles/Panels/ViewFilesPanel.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVcGxvYWRGaWxlc1xQYW5lbHNcVmlld0ZpbGVzUGFuZWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/GitLab/LabManagement/Components/Pages/UploadFiles/UserOrdersPage.razor]

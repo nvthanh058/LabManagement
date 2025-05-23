@@ -1,22 +1,23 @@
-﻿@rendermode InteractiveServer
+﻿@using LabManagement.Models.SaleModels
+@rendermode InteractiveServer
 @inject IFileOrderResposity db
 @inject IWebHostEnvironment _webHost;
 @inject IDialogService DialogService
 @inject IJSRuntime JS
 
-<FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+<FluentStack Orientation="Orientation.Vertical" VerticalGap="5">
     <FluentLabel Typo="Typography.H5" Color="Color.Warning">@ErrorMessage</FluentLabel>
     @if(ShowUpload==true){
         <FluentStack Orientation="Orientation.Horizontal">
             <FluentInputFile Id="my-file-uploader1"
             Mode="InputFileMode.SaveToTemporaryFolder"
             Multiple="true"
-            MaximumFileCount="1"
-            MaximumFileSize="@(100*1024*1024)"
-            Accept="pdf/*"
+            MaximumFileCount="5"
+            MaximumFileSize="@(500*1024*1024)"
+            Accept="*.stl,*.dcm"
             @bind-ProgressPercent="@ProgressPercent"
             OnCompleted="@OnUploadFileCompleted"
-            Style="height: 30px;width:50px">
+            Style="height: 50px;width:50px">
                 <ChildContent>
                     <label for="my-file-uploader1">
                         <FluentIcon Value="@(new @Icons.Regular.Size24.ArrowUpload())" />
@@ -24,7 +25,7 @@
 
                 </ChildContent>
             </FluentInputFile>
-            <FluentLabel Typo="Typography.H5" Color="Color.Info">Max file size(100MB)</FluentLabel>
+            <FluentLabel Typo="Typography.H5" Color="Color.Info">Max file size(500MB)</FluentLabel>
         </FluentStack>
 
     }
@@ -35,7 +36,7 @@
     RowSize="DataGridRowSize.Medium"
     ResizableColumns=true>
 
-        <TemplateColumn Title="File Name" Width="50%">
+        <TemplateColumn Title="File Name" Width="70%">
 
             <FluentStack Orientation="Orientation.Horizontal">
                 <FluentIcon Value="@(new Icons.Regular.Size24.DocumentBulletList())" />
@@ -45,7 +46,7 @@
             </FluentStack>
         </TemplateColumn>
 
-        <TemplateColumn Align="@Align.Start" Width="20%">
+        <TemplateColumn Align="@Align.End" Width="30%">
 
             <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowCircleDown())" OnClick="@(() => DownloadItem(context))" />
             <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteFile(context))" Disabled="@((ShowUpload==true)?false:true)" />
@@ -133,7 +134,7 @@
                 }
             }
 
-            file.LocalFile?.CopyTo(filePath);
+            file.LocalFile?.CopyTo(filePath,true);
 
             if (File.Exists(filePath)==true){
 

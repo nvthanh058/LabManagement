@@ -1,4 +1,5 @@
-﻿@implements IDialogContentComponent<CaseOrder>
+﻿@using LabManagement.Models.SaleModels
+@implements IDialogContentComponent<CaseOrder>
 @rendermode InteractiveServer
 @inject IFileOrderResposity db
 @inject IUserInfoResposity userdb
@@ -13,35 +14,36 @@
     TGridItem="OrderFile"
     RowSize="DataGridRowSize.Medium"
     ResizableColumns=true>
+
         <TemplateColumn Title="" Align="@Align.Start" Width="70%">
-            
-           
+                       
                 <FluentStack Orientation="Orientation.Horizontal">
                     <FluentIcon Value="@(new Icons.Regular.Size24.DocumentBulletList())" />
                     <nobr>
                         @context.FilePath
                     </nobr>
                 </FluentStack>
-               
-           
+                          
         </TemplateColumn>
 
 
         <TemplateColumn Title="" Align="@Align.End" Width="30%">
-
+           
             <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowCircleDown())" OnClick="@(() => DownloadItem(context))" />
            
         </TemplateColumn>
         
     </FluentDataGrid>
+    
 </FluentStack>
 
 @code {
-    
+
     [CascadingParameter]
     private Task<AuthenticationState> authStateTask { get; set; }
     UserInfo? CurrentUser { get; set; } = new();
 
+    private string FilePath = "";
     IQueryable<OrderFile>? fileitems;
 
     [CascadingParameter]
@@ -60,7 +62,7 @@
         await LoadFiles(Content.OrderID);
 
     }
-
+ 
 
     private async Task LoadFiles(string OrderID)
     {

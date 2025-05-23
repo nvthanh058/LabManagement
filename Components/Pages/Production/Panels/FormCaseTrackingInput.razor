@@ -1,4 +1,6 @@
-﻿@implements IDialogContentComponent<CaseTracking>
+﻿@using LabManagement.Models.ProductionModels
+@using LabManagement.Models.SaleModels
+@implements IDialogContentComponent<CaseTracking>
 
 @inject IUserInfoResposity userDB
 @inject IProductionResposity productionDB
@@ -52,7 +54,7 @@
                     <FluentLabel Style="width:100px">Technician Suggestion</FluentLabel>
                     <FluentTextArea Style="width:90%" @bind-Value="@CommunicateContent.TechnicianSuggestion" Cols="60" Rows="4" />
                 </FluentStack>
-                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
+               @*  <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
                     <FluentLabel Style="width:100px">Response</FluentLabel>
                     <FluentTextArea Style="width:90%" @bind-Value="@CommunicateContent.Response" Cols="60" Rows="4" />
                 </FluentStack>
@@ -74,7 +76,7 @@
                     </FluentSelect>
 
                 </FluentStack>
-
+ *@
 
                 <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.Start">
                     <FluentLabel Style="width:100px">Factory Status</FluentLabel>

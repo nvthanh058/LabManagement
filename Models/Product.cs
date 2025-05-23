@@ -10,7 +10,7 @@
         public string ItemGroupID { get; set; }
 
         [ModelAttribute("NotTableField")]
-        public string ItemGroupName { get; set; }
+        public string GroupName { get; set; }
         public string ItemType { get; set; }
 
         [ModelAttribute("NotTableField")]
@@ -22,7 +22,10 @@
         public string MaterialName { get; set; }
         public string BomCode { get; set; }
         public string BomItemName { get; set; }
-
+        public double OnHand { get; set; } = 0;
+        public double UnitPrice { get; set; } = 0;
+        public double SalesPrice { get; set; } = 0;
+        public string ProductImage { get; set; } = "";
         public string DATAAREAID { get; set; }
         [ModelAttribute("NotTableField")]
         public bool Selected { get; set; } = false;

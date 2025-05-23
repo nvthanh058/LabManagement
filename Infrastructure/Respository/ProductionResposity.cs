@@ -2,6 +2,8 @@
 using Dapper;
 using LabManagement.Infrastructure.IRespository;
 using LabManagement.Models;
+using LabManagement.Models.ProductionModels;
+using LabManagement.Models.SaleModels;
 using System.Data;
 using System.Reflection;
 
@@ -639,6 +641,60 @@ namespace LabManagement.Infrastructure.Respository
             }
             catch (Exception ex) { }
             return model;
+        }
+
+        public async Task<int> SaveCaseResponse(CaseResponse response)
+        {
+            var res = 0;
+            try
+            {
+                var dbParams = new DynamicParameters();
+                var query = @"INSERT INTO LAB_CasesResponse(TransRefID,Response,ResponseDate,LabStatus,UserID) 
+                                    values(@TransRefID,@Response,@ResponseDate,@LabStatus,@UserID)";
+
+                dbParams.Add("@TransRefID", response.TransRefID);
+                dbParams.Add("@Response", response.Response);
+                dbParams.Add("@ResponseDate", response.ResponseDate?.ToString("yyyy-MM-dd"));
+                dbParams.Add("@LabStatus", response.LabStatus);
+                dbParams.Add("@UserID", response.UserID);
+
+                res = Task.FromResult(_services.ExcuteScaler<CaseResponse>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return res;
+        }
+
+        public async Task<List<CaseResponse>> GetCaseResponses(string TransID)
+        {
+            var query = @"Select * FROM LAB_CasesResponse WHERE TransRefID=@TransID";
+            var lst = new List<CaseResponse>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@TransID", TransID);
+
+                lst = Task.FromResult(_services.GetAll<CaseResponse>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<int> DeleteResponse(CaseResponse response, string UserID)
+        {
+            var res = 0;
+            try
+            {
+                var dbParams = new DynamicParameters();
+                var query = "DELETE FROM LAB_CasesResponse WHERE RecID=@RecID And UserID=@UserID";
+
+                dbParams.Add("@RecID", response.RecID);
+                dbParams.Add("@UserID", UserID);
+
+                res = Task.FromResult(_services.ExcuteScaler<CaseResponse>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return res;
         }
     }
 }

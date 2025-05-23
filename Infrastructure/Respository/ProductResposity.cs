@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml.Office2010.Excel;
 using LabManagement.Infrastructure.IRespository;
 using LabManagement.Models;
+using LabManagement.Models.Commons;
 using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.Reflection;
@@ -58,34 +59,23 @@ namespace LabManagement.Infrastructure.Respository
         {            
             try
             {
-                model.DATAAREAID = _services!.DATAAREAID();
-
                 var dbParams = new DynamicParameters();
-                Type classType = typeof(Product);
-                
-                PropertyInfo[] propertyInfos = classType.GetProperties();
-
-                var fieldList = "";
-                var fieldData = "";
-                foreach (PropertyInfo propertyInfo in propertyInfos)
-                {
-                    var type = propertyInfo.PropertyType.Name;
-                    var fieldName = propertyInfo.Name;
-                    var attribute = (ModelAttribute)propertyInfo.GetCustomAttribute(typeof(ModelAttribute));
-
-                    var fieldDesc = "";
-                    if (attribute != null)
-                    {
-                        fieldDesc = attribute.Description;
-                    }
-
-                    if (!fieldDesc.Equals("NotTableField"))
-                    {                       
-                        fieldList += "" + fieldName + ",";
-                        fieldData += "@" + fieldName + ",";                      
-                        dbParams.Add("@" + fieldName, propertyInfo.GetValue(model));
-                    }
-                }
+                dbParams.Add("@RecID", model.RecID);
+                dbParams.Add("@ItemID", model.ItemID);
+                dbParams.Add("@ItemCode", model.ItemCode);
+                dbParams.Add("@ItemName", model.ItemName);
+                dbParams.Add("@NameAlias", model.NameAlias);
+                dbParams.Add("@ItemGroupID", model.ItemGroupID);
+                dbParams.Add("@ItemType", model.ItemType);
+                dbParams.Add("@UnitID", model.UnitID);
+                dbParams.Add("@PackagingGroup ", model.PackagingGroup);
+                dbParams.Add("@DimGroupID", model.DimGroupID);
+                dbParams.Add("@MaterialName", model.MaterialName);
+                dbParams.Add("@UnitPrice", model.UnitPrice);
+                dbParams.Add("@SalesPrice", model.SalesPrice);
+                dbParams.Add("@ProductImage", model.ProductImage);
+                dbParams.Add("@OnHand", model.OnHand);
+                dbParams.Add("@DATAAREAID", _services!.DATAAREAID());
 
                 var query = @"LAB_SaveProducts";
                 model.RecID = Task.FromResult(_services.ExcuteScaler<Product>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
@@ -312,6 +302,81 @@ namespace LabManagement.Infrastructure.Respository
                 dbParams.Add("@RecID", RecID);
                
                 res = Task.FromResult(_services.ExcuteScaler<ProductUnit>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return res;
+        }
+
+        public async Task<List<ProductType>> GetProductTypes()
+        {
+            var query = @"Select * FROM LAB_ProductTypes";
+            var lst = new List<ProductType>();
+
+            try
+            {
+               
+                lst = Task.FromResult(_services.GetAll<ProductType>(query, null, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<List<ProductGroup>> GetProductGroups()
+        {
+            var query = @"Select * FROM LAB_ProductGroups";
+            var lst = new List<ProductGroup>();
+
+            try
+            {
+
+                lst = Task.FromResult(_services.GetAll<ProductGroup>(query, null, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<ProductGroup> SaveGroup(ProductGroup model)
+        {
+            var query = "";
+            var dbParams = new DynamicParameters();
+            if (model.RecID == 0)
+            {                
+                query = " INSERT INTO LAB_ProductGroups(GroupID,GroupName) OUTPUT INSERTED.RecID VALUES(NewID(),@GroupName)";
+                dbParams.Add("@GroupName", model.GroupName);
+            }
+            else
+            {
+                query = "UPDATE LAB_ProductGroups SET GroupName=@GroupName WHERE RecID=@RecID";
+                dbParams.Add("@RecID", model.RecID);
+                dbParams.Add("@GroupName", model.GroupName);
+            }
+
+                        
+            
+
+            var RecID = Task.FromResult(_services.ExcuteScalerObject<ProductUnit>(query, dbParams, commandType: CommandType.Text)).Result;
+            if (RecID != null)
+            {
+                model.RecID = int.Parse(RecID.ToString()!);
+            }
+            return model;
+        }
+
+        public async Task<int> DeleteGroup(int RecID)
+        {
+            var res = 0;
+            try
+            {
+                var dbParams = new DynamicParameters();
+
+                var query = @"IF NOT EXISTS(
+                               Select ItemID FROM LAB_Products WHERE ItemGroupID IN(SELECT GroupID FROM LAB_ProductGroups WHERE RecID=@RecID)
+                            )";
+                query += "DELETE FROM LAB_ProductGroups WHERE RecID=@RecID";
+
+                dbParams.Add("@RecID", RecID);
+
+                res = Task.FromResult(_services.ExcuteScaler<ProductGroup>(query, dbParams, commandType: CommandType.Text)).Result;
             }
             catch (Exception ex) { }
             return res;

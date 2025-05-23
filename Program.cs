@@ -51,13 +51,14 @@ builder.Services.AddTransient<IProductionResposity, ProductionResposity>();
 builder.Services.AddTransient<ISystemResposity, SystemResposity>();
 builder.Services.AddTransient<IDashboardResposity, DashboardResposity>();
 builder.Services.AddTransient<IFileOrderResposity, FileOrderResposity>();
+builder.Services.AddTransient<IPurchasingResposity, PurchasingResposity>();
 
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option => {
         option.Cookie.Name = "auth_labmanagement";
         option.LoginPath = "/login";
-        option.Cookie.MaxAge = TimeSpan.FromMinutes(20);
+        option.Cookie.MaxAge = TimeSpan.FromHours(8);
         //option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         option.AccessDeniedPath = "/access-denied";
     });

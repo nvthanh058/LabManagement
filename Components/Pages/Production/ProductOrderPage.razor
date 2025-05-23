@@ -2,9 +2,11 @@
 @attribute [Authorize]
 @using ClosedXML.Excel
 @using LabManagement.Components.Pages.AccountReceivable.Panels
+@using LabManagement.Components.Pages.CommonForms.Panels
 @using LabManagement.Components.Pages.Controls
 @using LabManagement.Components.Pages.Production.Panels
-@using LabManagement.Components.Pages.CommonForms.Panels
+@using LabManagement.Models.ProductionModels
+@using LabManagement.Models.SaleModels
 @using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 @rendermode InteractiveServer
 @inject IDialogService DialogService
@@ -88,7 +90,7 @@
                     OnOptionsSearch="OnSearchCases"
                     Placeholder="Select Cases"
                     MaximumOptionsSearch="int.MaxValue"
-                    MaximumSelectedOptions="5"
+                    MaximumSelectedOptions="20"
                     Virtualize="true"
                     OptionText="@(item => $"{item.CaseNo}")"
                     @bind-SelectedOptions="@SelectedSearchCases"/>
@@ -155,11 +157,8 @@
         {
 
             <FluentButton Appearance="Appearance.Outline" OnClick="@CancelAsync">Back To List</FluentButton>
-
             <ProductOrderPanel Content="@Content"></ProductOrderPanel>
-
         }
-
       
     </Panel1>
     <Panel2>
@@ -218,7 +217,7 @@
                             </Header>
                             <Content>
 
-                                <CaseQuestionPanel Content="@CommunicateContent" CurrentUser="@CurrentUser"></CaseQuestionPanel>
+                                <CaseQuestionPanel @ref="caseQuestion" Content="@CommunicateContent" CurrentUser="@CurrentUser"></CaseQuestionPanel>
                             </Content>
                         </FluentTab>
                         <FluentTab Id="tab-images">
@@ -378,6 +377,8 @@
 
     public ProdTable Content { get; set; } = default!;
     public CaseCommunicate CommunicateContent { get; set; } = new();
+    private CaseQuestionPanel caseQuestion;
+
     public CaseTracking TrackingContent { get; set; } = new();
 
     public Employee SelectedEmployee { get; set; } = default!;
@@ -839,6 +840,11 @@
     {      
         CommunicateContent = (await productionDB.GetCaseCommunicate(0, SalesID, "")).AsQueryable().FirstOrDefault()!;       
         await LoadImages(CommunicateContent.TransID);
+        if (caseQuestion != null)
+        {
+            await caseQuestion.LoadResponse(CommunicateContent.TransID);
+        }
+
     }
 
     private async Task SaveCommunicate(ChangeEventArgs e,string FieldName)

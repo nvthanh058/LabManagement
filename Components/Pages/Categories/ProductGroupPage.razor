@@ -1,0 +1,170 @@
+﻿@page "/productgroup"
+@attribute [Authorize]
+@using LabManagement.Models.Commons
+
+@rendermode InteractiveServer
+@inject IDialogService DialogService
+@inject IProductResposity context
+@inject IJSRuntime JSRuntime
+@inject IToastService ToastService
+
+    <FluentStack Orientation="Orientation.Vertical" Width="100%">
+
+        <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+
+            <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>        
+            <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
+
+        </FluentStack>
+
+        @if (items == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {           
+                <FluentDataGrid Items="@items"
+                TGridItem="ProductGroup"
+                ResizableColumns=true
+                Style="font-size:10pt;"
+                ShowHover="true"
+                AutoFit="true"
+                           RowStyle="@rowStyle"
+                HeaderCellAsButtonWithMenu="true"
+                RowSize="DataGridRowSize.Medium"
+                Pagination="@pagination">
+
+                    <PropertyColumn Title="" Width="0px" Property="@(p => p.RecID)" Sortable="true" IsDefaultSortColumn="true" Style="display:none" />
+                    
+                    <TemplateColumn Title="Group Name" Width="300px">
+                        @if(context.IsUpdate==true)
+                        {
+                            <FluentTextField AutoComplete="off" @bind-Value="@context.GroupName" Style="width:300px"></FluentTextField>
+                        }
+                        else{
+                            <FluentLabel Style="width:300px">@context.GroupName</FluentLabel>
+                        }
+                    </TemplateColumn>
+
+                    
+                   
+
+                   
+                    <TemplateColumn Title="Actions" Align="@Align.End" Width="120px">
+
+                        @if(context.IsUpdate==true){
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Save())" OnClick="@(() => SaveLineAsync(context))" />
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowStepBack())" OnClick="@(() => CancelLineUpdate(context))" />  
+                        }  
+                        else{
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineAsync(context))" />
+                            <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineAsync(context))" />  
+                        }                     
+
+                    </TemplateColumn>
+
+                </FluentDataGrid>
+            
+            <FluentPaginator State="@pagination" />
+        }
+    </FluentStack>
+
+@code {
+   
+    FluentTextField ? txtGroupID;
+    bool ShowList = true;
+    IQueryable<ProductGroup>? items;
+    // IQueryable<Department>? departmentItems;
+    
+    string Search = "";
+
+    bool SelectFromEntireRow = true;
+    DataGridSelectMode Mode = DataGridSelectMode.Single;
+    Func<ProductGroup, string?> rowStyle = x => x.IsUpdate == true ? "background-color: #f9eda9" : null;
+    PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
+
+    [Parameter]
+    public ProductGroup Content { get; set; } = default!;
+   
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+        LoadData();
+    }
+    private async void LoadData()
+    {      
+        items = (await context.GetProductGroups()).AsQueryable();
+    }
+    
+    private async Task AddAsync()
+    {
+        Content = new ProductGroup();
+        //ShowList = false;
+        List<ProductGroup> newList =new List<ProductGroup>();
+            newList.Add(Content);
+        
+        Content.IsUpdate=true;
+        items = items!.ToList().Concat(newList).AsQueryable();
+    }
+
+    private async Task EditLineAsync(ProductGroup item)
+    {
+        foreach(var line in items)
+        {
+            if (line.IsUpdate == true) return;
+        }
+        //Content = item;
+        //ShowList = false;
+        item.IsUpdate = true;
+    }
+
+    private async Task SaveLineAsync(ProductGroup item)
+    {
+               
+        await context.SaveGroup(item);
+        LoadData();
+        item.IsUpdate = false;
+    }
+
+    private async Task CancelLineUpdate(ProductGroup item)
+    {        
+        item.IsUpdate = false;
+        LoadData();
+    }
+
+    private async Task DeleteLineAsync(ProductGroup item)
+    {
+
+        if (item is null)
+        {
+            return;
+        }
+
+        var dialogParameters = new DialogParameters
+            {
+                Title = "Delete Item",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true
+            };
+
+        // var dialog = await dialogService.ShowDialogAsync<ConfirmationPanel>(dialogParameters);
+        var dialog = await DialogService.ShowConfirmationAsync(
+            "Are you sure you want to delete selected item?",
+            "Yes",
+            "No",
+            "Delete Item?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            var res = await context.DeleteUnit(item.RecID);
+            LoadData();
+        }
+
+    }
+
+
+
+
+
+}
+
