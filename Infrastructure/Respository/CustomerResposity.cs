@@ -72,7 +72,7 @@ namespace LabManagement.Infrastructure.Respository
 
                 dbParams.Add("@RecID", Id);
 
-                res = Task.FromResult(_services.ExcuteScaler<Employee>(query, dbParams, commandType: CommandType.Text)).Result;
+                res = Task.FromResult(_services.ExcuteScaler<Customer>(query, dbParams, commandType: CommandType.Text)).Result;
             }
             catch (Exception ex) { }
 
@@ -99,6 +99,59 @@ namespace LabManagement.Infrastructure.Respository
             return lst;
         }
 
+        public async Task<Customer> GetByCode(string CustomerCode)
+        {
+             var query = @"Select * FROM LAB_Customers where CustomerCode=@CustomerCode";            
+            var model = new Customer();
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@CustomerCode", CustomerCode);                
+
+                model = Task.FromResult(_services.Get<Customer>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return model;
+        }
+
+        public async Task<Customer> GetByRecID(int RecID)
+        {
+             var query = @"Select * FROM LAB_Customers where RecID=@RecID";            
+            var model = new Customer();
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@RecID", RecID);                
+
+                model = Task.FromResult(_services.Get<Customer>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return model;
+        }
+
+        public async  Task<Customer> SaveCustomer(Customer model)
+        {
+             try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@RecID", model.RecID);
+                dbParams.Add("@CustomerCode", model.CustomerCode);
+                dbParams.Add("@CustomerName", model.CustomerName);
+                dbParams.Add("@NameAlias", model.NameAlias);
+                dbParams.Add("@Address", model.Address);
+                dbParams.Add("@Phone", model.Phone);
+                dbParams.Add("@EmailAddress", model.EmailAddress);
+
+                var query = @"LAB_SaveCustomer";
+                var res = Task.FromResult(_services.ExcuteScalerObject<Customer>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+
+                if (res != null)
+                model.RecID = Int32.Parse(res.ToString());
+            }
+            catch (Exception ex) { }
+
+            return model;
+        }
 
         public async Task<Customer> Update(Customer model)
         {

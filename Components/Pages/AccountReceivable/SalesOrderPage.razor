@@ -803,10 +803,10 @@ else
                 {
 
                     CountInsert += 1;
-                    var prod = (await productdb.GetAll(0, "", itemName.ToUpper())).AsQueryable().FirstOrDefault()!;
+                    var prod = (await productdb.GetProducts(0, "","", itemName.ToUpper())).AsQueryable().FirstOrDefault()!;
                     if (itemName.IndexOf(",") > 0)
                     {
-                        prod = (await productdb.GetAll(0, "", "COMBO")).AsQueryable().FirstOrDefault()!;
+                        prod = (await productdb.GetProducts(0, "","", "COMBO")).AsQueryable().FirstOrDefault()!;
                     } 
 
                     if (prod != null)

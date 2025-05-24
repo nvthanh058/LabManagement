@@ -3,7 +3,7 @@
     public class POSSaleLine
     {
         public int RecID { get; set; } = 0;
-        public string OrderID { get; set; } = "";
+        public string SalesID { get; set; } = "";
         public string TransID { get; set; } = "";
         public string ItemID { get; set; } = "";
         public string ItemCode { get; set; } = "";

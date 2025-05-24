@@ -470,5 +470,149 @@ namespace LabManagement.Infrastructure.Respository
             catch (Exception ex) { }
             return lst;
         }
+
+        public async Task<POSSaleOrder> POSSaveSaleOrder(POSSaleOrder model)
+        {
+             try
+            {
+                var dbParams = new DynamicParameters();
+               
+                dbParams.Add("@RecID", model.RecID);
+                dbParams.Add("@SalesID", model.SalesID);
+                dbParams.Add("@InvoiceID", model.InvoiceID);
+                dbParams.Add("@TransDate", model.TransDate?.ToString("yyyy-MM-dd"));
+                dbParams.Add("@CustomerID", model.CustomerID);
+                dbParams.Add("@TotalAmount", model.TotalAmount);
+                dbParams.Add("@DiscountPercent", model.DiscountPercent);
+                dbParams.Add("@DiscountAmount", model.DiscountAmount);
+                dbParams.Add("@TotalCharge", model.TotalCharge);
+                dbParams.Add("@UserID", model.UserID);
+              
+
+                var query = @"POS_SaveSaleOrder";
+                var res = Task.FromResult(_services.ExcuteScalerObject<POSSaleOrder>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+
+                if (res != null)
+                model.RecID = Int32.Parse(res.ToString());
+            }
+            catch (Exception ex) { }
+
+            return model;
+        }
+
+        public async Task<POSSaleLine> POSSaveSaleLine(POSSaleLine model)
+        {
+             try
+            {
+                var dbParams = new DynamicParameters();
+               
+                dbParams.Add("@RecID", model.RecID);
+                dbParams.Add("@SalesID", model.SalesID);
+                dbParams.Add("@ItemID", model.ItemID);
+                dbParams.Add("@ItemCode", model.ItemCode);
+                dbParams.Add("@ItemName", model.ItemName);
+                dbParams.Add("@SalesQty", model.SalesQty);
+                dbParams.Add("@SalesUnit", model.SalesUnit);
+                dbParams.Add("@SalesPrice", model.SalesPrice);
+                dbParams.Add("@LineAmount", model.LineAmount);
+                dbParams.Add("@DiscountPercent", model.DiscountPercent);
+                dbParams.Add("@DiscountAmount", model.DiscountAmount);
+                dbParams.Add("@TotalAmount", model.TotalAmount);
+              
+
+                var query = @"POS_SaveSaleLine";
+                var res = Task.FromResult(_services.ExcuteScalerObject<POSSaleLine>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+
+                if (res != null)
+                model.RecID = Int32.Parse(res.ToString());
+            }
+            catch (Exception ex) { }
+
+            return model;
+        }
+
+        public async Task<List<POSSaleOrder>> GetPOSSaleOrders(int RecID, DateTime? FromDate, DateTime? ToDate, string SalesID, string CustomerID, string Search)
+        {
+             var query = @"POS_GetSaleOrders";
+            var lst = new List<POSSaleOrder>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@RecID", RecID);  
+                dbParams.Add("@FromDate", FromDate?.ToString("yyyy-MM-dd"));             
+                dbParams.Add("@ToDate", ToDate?.ToString("yyyy-MM-dd"));             
+                dbParams.Add("@SalesID", SalesID);             
+                dbParams.Add("@CustomerID", CustomerID);             
+                dbParams.Add("@Search", Search);                         
+                lst = Task.FromResult(_services.GetAll<POSSaleOrder>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<List<POSSaleLine>> GetPOSSaleLines(int RecID, string SalesID)
+        {
+             var query = @"POS_GetSaleLines";
+            var lst = new List<POSSaleLine>();
+
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@RecID", RecID);               
+                dbParams.Add("@SalesID", SalesID);             
+                                       
+                lst = Task.FromResult(_services.GetAll<POSSaleLine>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+            }
+            catch (Exception ex) { }
+            return lst;
+        }
+
+        public async Task<int> DeletePOSSaleOrder(int RecID)
+        {
+           var res = 0;
+            try
+            {
+                var dbParams = new DynamicParameters();
+                var query = "DELETE FROM POS_SaleOrders WHERE RecID=@RecID";
+                
+                dbParams.Add("@RecID", RecID);
+                
+                res = Task.FromResult(_services.ExcuteScaler<POSSaleLine>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return res;
+        }
+
+        public async Task<int> DeletePOSSaleLine(int RecID)
+        {
+             var res = 0;
+            try
+            {
+                var dbParams = new DynamicParameters();
+                var query = "DELETE FROM POS_SaleLines WHERE RecID=@RecID";
+                
+                dbParams.Add("@RecID", RecID);
+                
+                res = Task.FromResult(_services.ExcuteScaler<POSSaleLine>(query, dbParams, commandType: CommandType.Text)).Result;
+            }
+            catch (Exception ex) { }
+            return res;
+        }
+
+        public  async Task<POSSaleOrder> GetPOSSaleOrderByRecID(int RecID)
+        {
+             var query = @"POS_GetSaleOrderByRecID";            
+            var model = new POSSaleOrder();
+            try
+            {
+                var dbParams = new DynamicParameters();
+                dbParams.Add("@RecID", RecID);                
+
+                model = Task.FromResult(_services.Get<POSSaleOrder>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
+            }
+            catch (Exception ex) { }
+            return model;
+        }
     }
 }

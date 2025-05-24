@@ -5,7 +5,7 @@ namespace LabManagement.Infrastructure.IRespository
 {
     public interface IProductResposity
     {
-        Task<List<Product>> GetAll(int RecID, string ItemID, string Search);
+        Task<List<Product>> GetProducts(int RecID, string ItemID,string GroupID, string Search);
         Task<Product> Get(int RecID);
         Task<Product> Save(Product model);       
         Task<int> Delete(int RecID);

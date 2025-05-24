@@ -20,7 +20,7 @@
             <FluentButton IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddAsync">New</FluentButton>
             <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowSquareDown())">Import</FluentButton>
             <FluentButton IconStart="@(new Icons.Regular.Size24.TableArrowUp())">Export</FluentButton>
-            <FluentButton IconStart="@(new Icons.Regular.Size24.Print())" OnClick="PrintOrder">Print</FluentButton>
+          
             <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadData></FluentSearch>
 
         </FluentStack>
@@ -83,7 +83,7 @@ else{
             <FluentStack Orientation="Orientation.Horizontal">
 
                 <FluentStack Orientation="Orientation.Vertical">
-                    <FluentTextField Label="Customer Code" @bind-Value="@Content.CustomerCode" ReadOnly="@((Content.RecID>0)?true:false)" />
+                    <FluentTextField Label="Customer Code" @bind-Value="@Content.CustomerCode" ReadOnly="true" />
                     <FluentTextField Label="Customer Name" @bind-Value="@Content.CustomerName" Style="width:250px" />
                     <FluentTextField Label="Name Alias" @bind-Value="@Content.NameAlias" Style="width:250px" />
                     
@@ -103,13 +103,6 @@ else{
         </FluentStack>
     </div>
 }
-
-<div id="printing" name="printing" class="printing">
-    @*  <SalesPrintViewPanel Content="@SO"></SalesPrintViewPanel>
- *@
-    <PrintViewSample></PrintViewSample>
-</div>
-
 
 
 @code {
@@ -170,15 +163,7 @@ else{
     private async Task SaveAsync()
     {
         await Task.Delay(500);
-        if (Content.RecID != 0)
-        {
-            await context.Update(Content);
-        }
-        else
-        {
-            await context.Add(Content);
-        }
-
+        context.SaveCustomer(Content);
         ShowList = true;
         LoadData();
     }
@@ -215,20 +200,12 @@ else{
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-            //var res = await context.DeleteCustomer(item.UserID);            
+            var res = await context.Delete(item.RecID);            
             LoadData();
         }
 
     }
 
-    private async Task PrintOrder()
-    {
-
-        await Task.Delay(500);
-        await JSRuntime.InvokeVoidAsync("printComponent", "#printing","");
-
-       
-    }
 
     public class StringLengthComparer : IComparer<string>
     {

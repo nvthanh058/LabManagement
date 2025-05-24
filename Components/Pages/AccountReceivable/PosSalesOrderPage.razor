@@ -1,24 +1,102 @@
 ﻿@page "/pos"
 
 @using LabManagement.Components.Pages.Categories.Controls
+@using LabManagement.Components.Pages.CommonForms.Panels
 @using LabManagement.Models.Commons
 @using LabManagement.Models.SaleModels
 @using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 @rendermode InteractiveServer
 @inject IDialogService DialogService
-@inject IProductResposity context
+@inject IProductResposity productDB
+@inject ISalesOrderResposity db
+@inject ICustomerResposity customerDB
 @inject ExportService exportService
 @inject IJSRuntime JSRuntime
-@inject IWebHostEnvironment _webHost;
+@inject IWebHostEnvironment _webHost
 @inject TypeRampBaseFontSize FontSize
 
+@if(ShowList==true)
+{
+       <FluentStack Orientation="Orientation.Vertical" Width="95%">
+
+                <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                        <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size24.FormNew())" OnClick="@ShowSaleView">
+                                Bán hàng
+                        </FluentButton>
+                        <FluentPaginator State="@pagination" /> 
+                </FluentStack>
+                   <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End" Width="100%" Style="height:30px">
+                       <FluentLabel>Doanh thu: </FluentLabel>
+                        <FluentLabel Typo="Typography.H4">@String.Format("{0:#,###,##0}",@TotalSales)</FluentLabel> 
+                    </FluentStack>
+                    
+               
+                        @if(salesList!=null){
+                        <FluentDataGrid Style="min-width: max-content;font-size:10pt;width:100%" RowSize="DataGridRowSize.Medium" Items="@salesList"                        
+                        TGridItem="POSSaleOrder"                                    
+                        ResizableColumns=true
+                        AutoFit=true                                
+                        ShowHover="true"            
+                        HeaderCellAsButtonWithMenu="true"
+                        Pagination="@pagination">
+
+                            <SelectColumn TGridItem="POSSaleOrder"
+                            SelectMode="@Mode"
+                            SelectFromEntireRow="true"
+                            Property="@(e => e.Selected)"
+                            SelectAll="@(salesList.All(e => e.Selected))"
+                            SelectAllChanged="@(all => salesList.ToList().ForEach(p => p.Selected = (all == true)))"
+                            OnSelect="@((e) =>OnSelectOrder(e.Item,e.Selected))">
+                            </SelectColumn>
+
+                            <TemplateColumn Title="" Align="@Align.End" Width="120px">
+                                <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditOrderAsync(context))" />
+                                <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteOrderAsync(context))" />
+
+                            </TemplateColumn>
 
 
-<FluentGrid Spacing="@Spacing" OnBreakpointEnter="@OnBreakpointEnterHandler" AdaptiveRendering="true" Justify="@Justification">
-    <FluentGridItem xs="12" sm="6">
+                            <PropertyColumn Title="Tên" Property="@(p => p.CustomerName)" Sortable="true" />
+                                <PropertyColumn Title="Điện thoại" Property="@(p => p.Phone)" Sortable="true" />
+                            <PropertyColumn Title="Ngày" Property="@(p => p.TransDate)" Format="@db.DateFormat" Sortable="true" />
+                            <PropertyColumn Title="Thành tiền" Property="@(p => p.TotalCharge)" Align="Align.End" Sortable="true"  />
+
+                        </FluentDataGrid>
+
+                }
+        </FluentStack>
+
+}
+else
+{
+    <FluentGrid Spacing="@Spacing" OnBreakpointEnter="@OnBreakpointEnterHandler" AdaptiveRendering="true" Justify="@Justification">
+        <FluentGridItem xs="12" sm="6">
 
          <FluentCard>
         <FluentStack Orientation="Orientation.Vertical" VerticalGap="10" Width="100%">
+            <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size24.Grid())" OnClick="@ShowListView">
+                        Chi tiết
+                    </FluentButton>
+                    
+                 </FluentStack>
+            <FluentHorizontalScroll Speed="600" Easing="ScrollEasing.EaseInOut">
+                @if(groupItems!=null){
+                    foreach(var item in groupItems)
+                    {
+                             <FluentCard @onclick="@(() => LoadProductsByGroup(item.GroupID))" Style="background-color: bisque;width: 200px;">
+                                <FluentStack Orientation="Orientation.Vertical">
+                                        <FluentLabel Typo="Typography.H4">@item.GroupName</FluentLabel>
+                                
+                                
+                                </FluentStack>
+                                
+                             </FluentCard>
+                    }
+                }
+               
+            </FluentHorizontalScroll>
+
             <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadProducts></FluentSearch>
 
             @if (productItems != null)
@@ -26,13 +104,13 @@
                 <FluentStack Wrap=true>
                     @foreach (var item in productItems)
                     {
-                        <FluentCard Width="220px" Height="250px">
+                        <FluentCard Width="200px" Height="250px">
 
                             <FluentStack Orientation="Orientation.Vertical" Style="width:200px">
                                 <img style='display:block; height:120px'
                                      src='@item.ProductImage' />
-                                <FluentLabel>@item.ItemName</FluentLabel>
-                                <FluentLabel>Price: @String.Format("{0:#,###,##0}", @item.SalesPrice)</FluentLabel>
+                                <FluentLabel Style="font-weight:bold">@item.ItemName</FluentLabel>
+                                <FluentLabel>Price: <span style="font-weight:bold">@String.Format("{0:#,###,##0}", @item.SalesPrice)</span> </FluentLabel>
                                 <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End" Style="width:180px;height:30px">
                                     <FluentNumberField @bind-Value="item.AddQty"></FluentNumberField>
                                     <FluentButton IconStart="@(new Icons.Regular.Size16.AddCircle())" OnClick="@(() => AddItemAsync(item))" />
@@ -53,8 +131,21 @@
 
         
             <FluentStack Orientation="Orientation.Vertical" Width="100%" VerticalGap="20">
-                <FluentButton IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddNewSale">New</FluentButton>
-                <FluentDataGrid Items="@salesOrder.lineItems.AsQueryable()"
+                 <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size24.AddSquare())" OnClick="@AddNewSale">Thêm mới</FluentButton>
+                    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size24.Print())" OnClick="@AddNewSale">Thanh toán</FluentButton>
+
+                 </FluentStack>
+                
+                 <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                                    <FluentLabel Style="width:100px">KH:</FluentLabel>
+                                    <FluentLabel >@salesOrder.CustomerName</FluentLabel>
+                                    <FluentLabel >@salesOrder.Phone</FluentLabel>
+                                    <FluentButton Appearance="Appearance.Neutral" OnClick="@SelectCustomer" IconStart="@(new Icons.Regular.Size20.Grid())"></FluentButton>
+                                    <FluentButton Appearance="Appearance.Neutral" OnClick="@AddCustomer" IconStart="@(new Icons.Regular.Size20.Add())"></FluentButton>
+                                </FluentStack>
+
+                <FluentDataGrid Items="@lineItems"
                         TGridItem="POSSaleLine"
                         ResizableColumns=true
                         ShowHover="true"
@@ -81,7 +172,9 @@
                              <TemplateColumn Title="SL">
                                 @if(context.IsUpdate==true)
                                 {
-                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesQty" Style="width:60px"></FluentNumberField>
+                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesQty" @onchange="@((e) => UpdateOrderAmount(e))" Style="width:60px">
+
+                                    </FluentNumberField>
                                 }
                                 else{
                                     <FluentLabel>@context.SalesQty</FluentLabel>
@@ -104,7 +197,7 @@
                              <TemplateColumn Title="Giá bán" Style="text-align:end" >
                                 @if(context.IsUpdate==true)
                                 {
-                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesPrice" Style="width:100px"></FluentNumberField>
+                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesPrice" @onchange="@((e) => UpdateOrderAmount(e))" Style="width:100px"></FluentNumberField>
                                 }
                                 else{
                                     <FluentLabel >@String.Format("{0:#,###,##0}",@context.SalesPrice)</FluentLabel>
@@ -146,46 +239,124 @@
     </FluentGridItem>
  </FluentGrid>
 
-      
+}
    
 @code {
-
+  PaginationState pagination = new PaginationState { ItemsPerPage = 20 };
     JustifyContent Justification = JustifyContent.FlexStart;
+    DataGridSelectMode Mode = DataGridSelectMode.Single;
     int Spacing = 1;
 
     string Search = "";
+    string GroupID ="";
     bool ShowList = false;
+    private double TotalSales=0;
+
     IQueryable<Product>? productItems;
+         IQueryable<ProductGroup>? groupItems;
+
+    IQueryable<POSSaleOrder> ? salesList;    
+        
+    IQueryable<POSSaleLine>? lineItems = default!;
+    
     private POSSaleOrder salesOrder=new();
 
     protected override async Task OnInitializedAsync()
     {
 
         FontSize.WithDefault("10pt");
-
+        groupItems  =(await productDB.GetProductGroups()).AsQueryable();    
         await LoadProducts();
     }
     private async Task LoadProducts()
     {
-        productItems = (await context.GetAll(0, "", Search)).AsQueryable();
+        productItems = (await productDB.GetProducts(0, "", GroupID, Search)).AsQueryable();
 
     }
+
+    private async Task LoadData()
+    {
+       salesList = (await db.GetPOSSaleOrders(0,DateTime.Now,DateTime.Now, "", "", Search)).AsQueryable();
+    }
+
+    private async Task OnSelectOrder(POSSaleOrder item, bool Selected)
+    {       
+        if (item != null)
+        {
+            item.Selected = Selected;
+            
+        }
+
+    }
+
+    private async Task LoadProductsByGroup(string group)
+    {
+        GroupID =group;
+       await LoadProducts();
+    }
+
     private async Task AddNewSale()
     {
+        var item =new POSSaleOrder();
+        lineItems =default!;
+
+        var cust = await customerDB.GetByCode("C000001");
+        if(cust!=null)
+        {
+            item.CustomerID = cust.CustomerID;
+            item.CustomerName = cust.CustomerName;
+            item.Phone = cust.Phone;
+
+            var res = await db.POSSaveSaleOrder(item);
+            if(res!=null)
+            {
+                salesOrder = await db.GetPOSSaleOrderByRecID(res.RecID);
+                StateHasChanged();
+            } 
+        }
 
     }
     private async Task AddItemAsync(Product item)
     {
-        var lineItem =new POSSaleLine();
-        lineItem.ItemID = item.ItemID;
-        lineItem.ItemCode =item.ItemCode;
-        lineItem.ItemName =item.ItemName;
-        lineItem.SalesQty =item.AddQty;
-        lineItem.SalesPrice = item.SalesPrice;
+        if(salesOrder.RecID > 0)
+        {
+            var lineItem =new POSSaleLine();
+            lineItem.SalesID= salesOrder.SalesID;
+            lineItem.ItemID = item.ItemID;
+            lineItem.ItemCode =item.ItemCode;
+            lineItem.ItemName =item.ItemName;
+            lineItem.SalesQty =item.AddQty;
+            lineItem.SalesPrice = item.SalesPrice;
+            
 
-        salesOrder.lineItems.Add(lineItem);
-        StateHasChanged();
+            await db.POSSaveSaleLine(lineItem);
+            lineItems = (await db.GetPOSSaleLines(0,salesOrder.SalesID)).AsQueryable();
+
+
+            CalculateAmount();
+            
+            var res = await db.POSSaveSaleOrder(salesOrder);
+
+            StateHasChanged();
+        }
+        
     }
+    private void CalculateAmount()
+    {
+        if(lineItems!=null){
+            salesOrder.TotalAmount= lineItems.Sum(x=>x.TotalAmount);
+            salesOrder.TotalCharge = salesOrder.TotalAmount - salesOrder.DiscountAmount;
+        }
+    }
+    
+    private void UpdateOrderAmount(ChangeEventArgs e)
+    {
+         if(lineItems!=null){
+            salesOrder.TotalAmount= lineItems.Sum(x=>x.TotalAmount);
+            salesOrder.TotalCharge = salesOrder.TotalAmount - salesOrder.DiscountAmount;
+        }
+    }
+
     void OnBreakpointEnterHandler(GridItemSize size)
     {
        
@@ -227,7 +398,7 @@
 
      private async Task EditLineAsync(POSSaleLine item)
     {
-        foreach(var line in salesOrder.lineItems)
+        foreach(var line in lineItems)
         {
             if (line.IsUpdate == true) return;
         }
@@ -236,10 +407,24 @@
         item.IsUpdate = true;
     }
 
+    private async Task ShowListView()
+    {
+       
+        ShowList =true;
+        await LoadData();
+       
+    }
+     private async Task ShowSaleView()
+    {
+       
+        ShowList =false;
+       
+    }
     private async Task SaveLineAsync(POSSaleLine item)
     {
        
-        //await context.Save(item);
+        await db.POSSaveSaleLine(item);
+        await db.POSSaveSaleOrder(salesOrder);
         item.IsUpdate = false;
        
     }
@@ -274,8 +459,111 @@
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-            var res = await context.Delete(item.RecID);
+            var res = await db.DeletePOSSaleLine(item.RecID);
            
+        }
+
+    }
+
+
+    private async Task SelectCustomer()
+    {
+        var item = new Customer();
+
+        var parameters = new DialogParameters
+            {
+                Title = "Select Customer",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,                
+                Width = "700px",
+                Height = "600px",                
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<CustomerPanel>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await SelectCustomerResult(dialogResult);
+    }
+    private async Task SelectCustomerResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var SelectedCustomer = result.Data as Customer;
+            salesOrder.CustomerID = SelectedCustomer.CustomerID;
+            salesOrder.CustomerName = SelectedCustomer.CustomerName;
+            salesOrder.Phone =SelectedCustomer.Phone;
+        }
+    }
+
+
+    private async Task AddCustomer()
+    {
+        var item = new Customer();
+
+        var parameters = new DialogParameters
+            {
+                Title = "Thêm Khách hàng mới",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,                
+                Width = "700px",
+                Height = "600px",                
+                Modal = false,
+            };
+
+        var dialog = await DialogService.ShowDialogAsync<AddCustomerDialog>(item, parameters);
+        var dialogResult = await dialog.Result;
+        await AddCustomerResult(dialogResult);
+    }
+    private async Task AddCustomerResult(DialogResult result)
+    {
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }
+
+        if (result.Data is not null)
+        {
+            var item = result.Data as Customer;
+            
+            var res = await customerDB.SaveCustomer(item);
+
+            var SelectedCustomer = await customerDB.GetByRecID(res.RecID);
+            if(SelectedCustomer!=null){
+                salesOrder.CustomerID = SelectedCustomer.CustomerID;
+                salesOrder.CustomerName = SelectedCustomer.CustomerName;
+                salesOrder.Phone =SelectedCustomer.Phone;
+
+                await db.POSSaveSaleOrder(salesOrder);
+                StateHasChanged();
+            }
+        }
+    }
+
+    private async Task EditOrderAsync(POSSaleOrder item)
+    {
+
+        ShowList = false;
+        salesOrder =item;
+
+        lineItems =(await db.GetPOSSaleLines(0,item.SalesID)).AsQueryable(); 
+    }
+
+    private async Task DeleteOrderAsync(POSSaleOrder item)
+    {
+
+        var dialog = await DialogService.ShowConfirmationAsync("Do you sure to delete selected orders?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            var res = await db.DeletePOSSaleOrder(item.RecID);
+            await LoadData();
         }
 
     }

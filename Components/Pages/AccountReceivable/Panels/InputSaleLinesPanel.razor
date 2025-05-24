@@ -426,7 +426,7 @@
     protected override async Task OnInitializedAsync()
     {
 
-        products = (await productDB.GetAll(0,"", "")).AsQueryable();
+        products = (await productDB.GetProducts(0,"","", "")).AsQueryable();
 
         OldContent = new SalesLine();
 

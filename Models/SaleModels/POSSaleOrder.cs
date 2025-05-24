@@ -7,41 +7,16 @@
         public string InvoiceID { get; set; } = DateTime.Now.ToString("yyMMddHHmmssfff");
         public DateTime? TransDate { get; set; } = DateTime.Now;
         public string CustomerID { get; set; } = "";
-
-        public double TotalAmount {
-            get
-            {
-                return lineItems==null ? 0 : lineItems.Sum(x=>x.TotalAmount);
-            }
-            set
-            {
-                TotalAmount = value;
-            }
-        }
-
+        public string CustomerName { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public double TotalAmount {get; set; } = 0;
         public double DiscountPercent { get; set; } = 0.0;
 
-        public double DiscountAmount {
-            get
-            {
-                return Math.Round(TotalAmount*DiscountPercent * 1.0 /100,0);
-            }
-            set
-            {
-                DiscountAmount = value;
-            }
-        }
-        public double TotalCharge { get {
-                return (TotalAmount - DiscountAmount);
-            }
-            set
-            {
-                TotalCharge = value;
-            }
-        }
+        public double DiscountAmount{  get; set; } = 0.0;
+        public double TotalCharge {  get; set; } = 0.0;
         public string UserID { get; set; } = "";
 
-        public List<POSSaleLine> lineItems { get; set; } = new List<POSSaleLine>();
+        public bool Selected { get; set; } = false;  
 
     }
 

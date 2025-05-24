@@ -7,8 +7,8 @@ namespace LabManagement.Infrastructure.IRespository
     public interface ISalesOrderResposity
     {
         string DateFormat { get; }
-        Task<List<SalesTable>> GetOrders(int RecID, string SalesID,string CustomerID, string Search, 
-            DateTime ? FromDate, DateTime ? ToDate, string LabID);
+        Task<List<SalesTable>> GetOrders(int RecID, string SalesID, string CustomerID, string Search,
+            DateTime? FromDate, DateTime? ToDate, string LabID);
 
         Task<List<SalesTable>> GetOrdersByPackageID(string PackageID);
 
@@ -26,14 +26,14 @@ namespace LabManagement.Infrastructure.IRespository
 
         Task<ProdTable> UpdateProdOrder(ProdTable model);
 
-        Task<List<ProdTable>> GetProdOrders(int RecID,string SalesID,string LabID, string FromDate,string ToDate,string Search);
+        Task<List<ProdTable>> GetProdOrders(int RecID, string SalesID, string LabID, string FromDate, string ToDate, string Search);
 
         Task<int> DeleteOrderLine(int RecID);
 
         Task<int> DeleteProdOrder(int RecID);
-       
-        Task<List<OrderFile>> GetFiles(string OrderID,int FileType);
-        Task<int> AddFile(string OrderID,string PicturePath,int FileType);
+
+        Task<List<OrderFile>> GetFiles(string OrderID, int FileType);
+        Task<int> AddFile(string OrderID, string PicturePath, int FileType);
         Task<int> DeleteFile(int RecID);
         Task<SequenceInfo> GetSequenceNum(string SeqID);
 
@@ -41,6 +41,14 @@ namespace LabManagement.Infrastructure.IRespository
         Task<int> SaveSalesLog(SalesLog log);
         Task<List<SalesLog>> GetSalesLog(string PackageID);
 
+        Task<POSSaleOrder> POSSaveSaleOrder(POSSaleOrder model);
+        Task<POSSaleLine> POSSaveSaleLine(POSSaleLine model);
 
+        Task<List<POSSaleOrder>> GetPOSSaleOrders(int RecID, DateTime? FromDate, DateTime? ToDate, string SalesID, string CustomerID, string Search);
+        Task<List<POSSaleLine>> GetPOSSaleLines(int RecID, string SalesID);
+
+        Task<int> DeletePOSSaleOrder(int RecID);
+        Task<int> DeletePOSSaleLine(int RecID);
+        Task<POSSaleOrder> GetPOSSaleOrderByRecID(int RecID);
     }
 }

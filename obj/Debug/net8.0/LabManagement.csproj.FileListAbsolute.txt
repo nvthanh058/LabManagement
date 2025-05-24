@@ -222,7 +222,6 @@ D:\GitLab\LabManagement\obj\Debug\net8.0\refint\LabManagement.dll
 D:\GitLab\LabManagement\obj\Debug\net8.0\LabManagement.pdb
 D:\GitLab\LabManagement\obj\Debug\net8.0\LabManagement.genruntimeconfig.cache
 D:\GitLab\LabManagement\obj\Debug\net8.0\ref\LabManagement.dll
-D:\GitLab\LabManagement\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\GitLab\LabManagement\bin\Debug\net8.0\Humanizer.dll
 D:\GitLab\LabManagement\bin\Debug\net8.0\Json.More.dll
 D:\GitLab\LabManagement\bin\Debug\net8.0\JsonPointer.Net.dll

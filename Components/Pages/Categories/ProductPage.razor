@@ -333,7 +333,7 @@ else
     }
     private async void LoadData()
     {        
-        items = (await context.GetAll(0,"", Search)).AsQueryable();
+        items = (await context.GetProducts(0,"","", Search)).AsQueryable();
 
     }
 

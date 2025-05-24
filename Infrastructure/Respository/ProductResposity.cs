@@ -36,7 +36,7 @@ namespace LabManagement.Infrastructure.Respository
             return model;
         }
 
-        public async Task<List<Product>> GetAll(int RecID, string ItemID, string Search)
+        public async Task<List<Product>> GetProducts(int RecID, string ItemID,string GroupID, string Search)
         {
             var query = @"LAB_GetProducts";
             var lst = new List<Product>();
@@ -46,9 +46,9 @@ namespace LabManagement.Infrastructure.Respository
                 var dbParams = new DynamicParameters();
                 dbParams.Add("@RecID", RecID);
                 dbParams.Add("@ItemID", ItemID);
+                dbParams.Add("@GroupID", GroupID);
                 dbParams.Add("@Search", Search);
-                dbParams.Add("@DATAAREAID", _services!.DATAAREAID());
-
+                
                 lst = Task.FromResult(_services.GetAll<Product>(query, dbParams, commandType: CommandType.StoredProcedure)).Result;
             }
             catch (Exception ex) { }

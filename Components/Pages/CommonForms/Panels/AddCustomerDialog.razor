@@ -1,0 +1,74 @@
+﻿@using LabManagement.Models.SaleModels
+@implements IDialogContentComponent<Customer>
+@inject ICustomerResposity context
+
+<FluentDialogHeader ShowDismiss="false">
+    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Regular.Size20.AlbumAdd())" />
+        <FluentLabel Typo="Typography.H5">
+            @Dialog.Instance.Parameters.Title
+        </FluentLabel>
+    </FluentStack>
+</FluentDialogHeader>
+
+<FluentDialogBody>
+
+     <FluentStack Orientation="Orientation.Vertical" VerticalGap="20">
+            <FluentStack VerticalAlignment="VerticalAlignment.Center" Width="100%">
+                <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Save())" OnClick="@SaveAsync">Save</FluentButton>
+                <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+                
+            </FluentStack>
+            <FluentStack Orientation="Orientation.Horizontal">
+
+                <FluentStack Orientation="Orientation.Vertical">
+                    <FluentTextField Label="Customer Code" @bind-Value="@Content.CustomerCode" ReadOnly="true" />
+                    <FluentTextField Label="Customer Name" @bind-Value="@Content.CustomerName" Style="width:250px" />
+                    <FluentTextField Label="Name Alias" @bind-Value="@Content.NameAlias" Style="width:250px" />
+                    
+                </FluentStack>
+
+                <FluentStack Orientation="Orientation.Vertical">
+                                      
+                    <FluentTextField Label="Address" @bind-Value="@Content.Address" />
+                    <FluentTextField Label="Phone" @bind-Value="@Content.Phone"></FluentTextField>
+                    <FluentTextField Label="Email Address" @bind-Value="@Content.EmailAddress"></FluentTextField>
+                    
+                </FluentStack>
+            </FluentStack>
+
+          
+
+        </FluentStack>
+
+</FluentDialogBody>
+
+<FluentDialogFooter>
+   
+    <FluentButton Appearance="Appearance.Accent" IconStart="@(new Icons.Regular.Size20.Checkmark())" OnClick="@SaveAsync">OK</FluentButton>
+    <FluentButton Appearance="Appearance.Neutral" OnClick="@CancelAsync">Cancel</FluentButton>
+</FluentDialogFooter>
+
+@code {
+
+    [Parameter]
+    public Customer Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+       
+    }
+
+    private async Task SaveAsync()
+    {
+        await Dialog.CloseAsync(Content);
+    }
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+}
