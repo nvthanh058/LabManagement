@@ -32,7 +32,7 @@
                     
                
                         @if(salesList!=null){
-                        <FluentDataGrid Style="min-width: max-content;font-size:10pt;width:100%" RowSize="DataGridRowSize.Medium" Items="@salesList"                        
+                        <FluentDataGrid Style="min-width: max-content;width:100%" RowSize="DataGridRowSize.Medium" Items="@salesList"                        
                         TGridItem="POSSaleOrder"                                    
                         ResizableColumns=true
                         AutoFit=true                                
@@ -50,8 +50,8 @@
                             </SelectColumn>
 
                             <TemplateColumn Title="" Align="@Align.End" Width="120px">
-                                <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditOrderAsync(context))" />
-                                <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteOrderAsync(context))" />
+                                <FluentButton IconStart="@(new Icons.Regular.Size24.Edit())" OnClick="@(() => EditOrderAsync(context))" />
+                                <FluentButton IconStart="@(new Icons.Regular.Size24.Delete())" OnClick="@(() => DeleteOrderAsync(context))" />
 
                             </TemplateColumn>
 
@@ -59,7 +59,7 @@
                             <PropertyColumn Title="Tên" Property="@(p => p.CustomerName)" Sortable="true" />
                                 <PropertyColumn Title="Điện thoại" Property="@(p => p.Phone)" Sortable="true" />
                             <PropertyColumn Title="Ngày" Property="@(p => p.TransDate)" Format="@db.DateFormat" Sortable="true" />
-                            <PropertyColumn Title="Thành tiền" Property="@(p => p.TotalCharge)" Align="Align.End" Sortable="true"  />
+                            <PropertyColumn Title="Thành tiền" Property="@(p => p.TotalCharge)" Format="#,###,##0" Align="Align.End" Sortable="true"  />
 
                         </FluentDataGrid>
 
@@ -80,22 +80,25 @@ else
                     </FluentButton>
                     
                  </FluentStack>
-            <FluentHorizontalScroll Speed="600" Easing="ScrollEasing.EaseInOut">
-                @if(groupItems!=null){
-                    foreach(var item in groupItems)
-                    {
-                             <FluentCard @onclick="@(() => LoadProductsByGroup(item.GroupID))" Style="background-color: bisque;width: 200px;">
-                                <FluentStack Orientation="Orientation.Vertical">
-                                        <FluentLabel Typo="Typography.H4">@item.GroupName</FluentLabel>
-                                
-                                
-                                </FluentStack>
-                                
-                             </FluentCard>
-                    }
-                }
-               
-            </FluentHorizontalScroll>
+                 <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center" Width="98%" Style="height:50px">
+                            <FluentHorizontalScroll Speed="600" Easing="ScrollEasing.EaseInOut" Style="width:90%">
+                            @if(groupItems!=null){
+                                foreach(var item in groupItems)
+                                {
+                                        <FluentCard @onclick="@(() => LoadProductsByGroup(item.GroupID))" Style="background-color: bisque;width: 200px;">
+                                            <FluentStack Orientation="Orientation.Vertical">
+                                                    <FluentLabel Typo="Typography.H4">@item.GroupName</FluentLabel>
+                                            
+                                            
+                                            </FluentStack>
+                                            
+                                        </FluentCard>
+                                }
+                            }
+                        
+                        </FluentHorizontalScroll>
+                 </FluentStack>
+            
 
             <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadProducts></FluentSearch>
 
@@ -112,7 +115,7 @@ else
                                 <FluentLabel Style="font-weight:bold">@item.ItemName</FluentLabel>
                                 <FluentLabel>Price: <span style="font-weight:bold">@String.Format("{0:#,###,##0}", @item.SalesPrice)</span> </FluentLabel>
                                 <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End" Style="width:180px;height:30px">
-                                    <FluentNumberField @bind-Value="item.AddQty"></FluentNumberField>
+                                    <FluentNumberField @bind-Value="item.AddQty" Style="width:60px"></FluentNumberField>
                                     <FluentButton IconStart="@(new Icons.Regular.Size16.AddCircle())" OnClick="@(() => AddItemAsync(item))" />
 
                                 </FluentStack>
@@ -149,19 +152,19 @@ else
                         TGridItem="POSSaleLine"
                         ResizableColumns=true
                         ShowHover="true"
-                        Style="font-size:10pt;width:100%"
+                        Style="width:100%"
                           AutoFit ="true"   
                         HeaderCellAsButtonWithMenu="true"
                         RowSize="DataGridRowSize.Medium"
                         >
                             <TemplateColumn Title="" Align="@Align.Start">
                                 @if(context.IsUpdate==true){
-                                    <FluentButton IconStart="@(new Icons.Regular.Size16.Save())" OnClick="@(() => SaveLineAsync(context))" />
-                                    <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowStepBack())" OnClick="@(() => CancelLineUpdate(context))" />  
+                                    <FluentButton IconStart="@(new Icons.Regular.Size24.Save())" OnClick="@(() => SaveLineAsync(context))" />
+                                    <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowExit())" OnClick="@(() => CancelLineUpdate(context))" />  
                                 }  
                                 else{
-                                    <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineAsync(context))" />
-                                    <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineAsync(context))" />  
+                                    <FluentButton IconStart="@(new Icons.Regular.Size24.Edit())" OnClick="@(() => EditLineAsync(context))" />
+                                    <FluentButton IconStart="@(new Icons.Regular.Size24.Delete())" OnClick="@(() => DeleteLineAsync(context))" />  
                                 }                     
 
                             </TemplateColumn>
@@ -172,7 +175,7 @@ else
                              <TemplateColumn Title="SL">
                                 @if(context.IsUpdate==true)
                                 {
-                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesQty" @onchange="@((e) => UpdateOrderAmount(e))" Style="width:60px">
+                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesQty" @bind-Value:after ="@UpdateOrderAmount" Style="width:60px">
 
                                     </FluentNumberField>
                                 }
@@ -197,7 +200,7 @@ else
                              <TemplateColumn Title="Giá bán" Style="text-align:end" >
                                 @if(context.IsUpdate==true)
                                 {
-                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesPrice" @onchange="@((e) => UpdateOrderAmount(e))" Style="width:100px"></FluentNumberField>
+                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesPrice" @bind-Value:after ="@UpdateOrderAmount" Style="width:100px"></FluentNumberField>
                                 }
                                 else{
                                     <FluentLabel >@String.Format("{0:#,###,##0}",@context.SalesPrice)</FluentLabel>
@@ -217,13 +220,13 @@ else
 
                           <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End">
                             <FluentLabel>CK %: </FluentLabel>
-                            <FluentNumberField @bind-Value="salesOrder.DiscountPercent"></FluentNumberField>
+                            <FluentNumberField @bind-Value="salesOrder.DiscountPercent" @bind-Value:after ="@UpdateOrderAmount"></FluentNumberField>
                             
                         </FluentStack>
 
                           <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End">
                             <FluentLabel>Tiền CK: </FluentLabel>
-                            <FluentNumberField @bind-Value="salesOrder.DiscountAmount"></FluentNumberField>
+                            <FluentNumberField @bind-Value="salesOrder.DiscountAmount" @bind-Value:after ="@UpdateOrderAmount"></FluentNumberField>
                             
                         </FluentStack>
 
@@ -264,7 +267,7 @@ else
     protected override async Task OnInitializedAsync()
     {
 
-        FontSize.WithDefault("10pt");
+        FontSize.WithDefault("14pt");
         groupItems  =(await productDB.GetProductGroups()).AsQueryable();    
         await LoadProducts();
     }
@@ -277,6 +280,7 @@ else
     private async Task LoadData()
     {
        salesList = (await db.GetPOSSaleOrders(0,DateTime.Now,DateTime.Now, "", "", Search)).AsQueryable();
+       TotalSales = salesList.Sum(x=>x.TotalCharge);
     }
 
     private async Task OnSelectOrder(POSSaleOrder item, bool Selected)
@@ -327,8 +331,8 @@ else
             lineItem.ItemName =item.ItemName;
             lineItem.SalesQty =item.AddQty;
             lineItem.SalesPrice = item.SalesPrice;
+            lineItem.SalesUnit = item.UnitID;
             
-
             await db.POSSaveSaleLine(lineItem);
             lineItems = (await db.GetPOSSaleLines(0,salesOrder.SalesID)).AsQueryable();
 
@@ -345,16 +349,20 @@ else
     {
         if(lineItems!=null){
             salesOrder.TotalAmount= lineItems.Sum(x=>x.TotalAmount);
+            if(salesOrder.DiscountPercent>0){
+                salesOrder.DiscountAmount = Math.Round(salesOrder.TotalAmount * salesOrder.DiscountPercent * 1.0 /100,0);
+            }
+
             salesOrder.TotalCharge = salesOrder.TotalAmount - salesOrder.DiscountAmount;
+           
         }
     }
     
-    private void UpdateOrderAmount(ChangeEventArgs e)
+    private async Task UpdateOrderAmount()
     {
-         if(lineItems!=null){
-            salesOrder.TotalAmount= lineItems.Sum(x=>x.TotalAmount);
-            salesOrder.TotalCharge = salesOrder.TotalAmount - salesOrder.DiscountAmount;
-        }
+        
+         CalculateAmount();
+         
     }
 
     void OnBreakpointEnterHandler(GridItemSize size)
@@ -432,7 +440,8 @@ else
     private async Task CancelLineUpdate(POSSaleLine item)
     {        
         item.IsUpdate = false;
-      
+        lineItems = (await db.GetPOSSaleLines(0,salesOrder.SalesID)).AsQueryable();
+        CalculateAmount();
     }
 
     private async Task DeleteLineAsync(POSSaleLine item)
