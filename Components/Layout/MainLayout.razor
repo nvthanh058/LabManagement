@@ -8,11 +8,11 @@
 <FluentDesignTheme Mode="DesignThemeModes.Light" OfficeColor="OfficeColor.Excel" />
 
 <FluentLayout>
-
+    <AuthorizeView>
+        <Authorized>
     <FluentHeader Style="height:64px;padding:2px;background-color:#fff">
 
-        <AuthorizeView>
-            <Authorized>
+       
                 <FluentStack Orientation="Orientation.Horizontal" Style="margin-left:2px;width:100%" VerticalAlignment="VerticalAlignment.Bottom" HorizontalAlignment="@HorizontalAlignment.Left" HorizontalGap="0">
                     <img src="images/Hogan.png" width="167" height="60" style="margin-left:2px;" />
                     @if (CurrentUser != null)
@@ -34,12 +34,12 @@
                 <UserProfile CurrentUser="@CurrentUser"></UserProfile>
 
             </FluentStack>
-
+            </FluentHeader>
         </Authorized>
 
     </AuthorizeView>
 
-</FluentHeader>
+
     <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
         <AuthorizeView>
              <Authorized>

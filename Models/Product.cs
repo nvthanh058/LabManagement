@@ -25,6 +25,8 @@
         public double OnHand { get; set; } = 0;
         public double UnitPrice { get; set; } = 0;
         public double SalesPrice { get; set; } = 0;
+        [ModelAttribute("NotTableField")]
+        public double AddQty { get; set; } = 1.0;
         public string ProductImage { get; set; } = "";
         public string DATAAREAID { get; set; }
         [ModelAttribute("NotTableField")]

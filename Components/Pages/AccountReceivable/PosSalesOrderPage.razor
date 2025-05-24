@@ -1,7 +1,8 @@
 ﻿@page "/pos"
-@attribute [Authorize]
+
 @using LabManagement.Components.Pages.Categories.Controls
 @using LabManagement.Models.Commons
+@using LabManagement.Models.SaleModels
 @using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 @rendermode InteractiveServer
 @inject IDialogService DialogService
@@ -12,9 +13,271 @@
 @inject TypeRampBaseFontSize FontSize
 
 
+
+<FluentGrid Spacing="@Spacing" OnBreakpointEnter="@OnBreakpointEnterHandler" AdaptiveRendering="true" Justify="@Justification">
+    <FluentGridItem xs="12" sm="6">
+
+         <FluentCard>
+        <FluentStack Orientation="Orientation.Vertical" VerticalGap="10" Width="100%">
+            <FluentSearch @bind-Value=Search Style="width:200px" @bind-Value:after=LoadProducts></FluentSearch>
+
+            @if (productItems != null)
+            {
+                <FluentStack Wrap=true>
+                    @foreach (var item in productItems)
+                    {
+                        <FluentCard Width="220px" Height="250px">
+
+                            <FluentStack Orientation="Orientation.Vertical" Style="width:200px">
+                                <img style='display:block; height:120px'
+                                     src='@item.ProductImage' />
+                                <FluentLabel>@item.ItemName</FluentLabel>
+                                <FluentLabel>Price: @String.Format("{0:#,###,##0}", @item.SalesPrice)</FluentLabel>
+                                <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End" Style="width:180px;height:30px">
+                                    <FluentNumberField @bind-Value="item.AddQty"></FluentNumberField>
+                                    <FluentButton IconStart="@(new Icons.Regular.Size16.AddCircle())" OnClick="@(() => AddItemAsync(item))" />
+
+                                </FluentStack>
+                            </FluentStack>
+
+
+                        </FluentCard>
+                    }
+
+                </FluentStack>
+            }
+        </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="12" sm="6">
+
+        
+            <FluentStack Orientation="Orientation.Vertical" Width="100%" VerticalGap="20">
+                <FluentButton IconStart="@(new Icons.Regular.Size20.AddSquare())" OnClick="@AddNewSale">New</FluentButton>
+                <FluentDataGrid Items="@salesOrder.lineItems.AsQueryable()"
+                        TGridItem="POSSaleLine"
+                        ResizableColumns=true
+                        ShowHover="true"
+                        Style="font-size:10pt;width:100%"
+                          AutoFit ="true"   
+                        HeaderCellAsButtonWithMenu="true"
+                        RowSize="DataGridRowSize.Medium"
+                        >
+                            <TemplateColumn Title="" Align="@Align.Start">
+                                @if(context.IsUpdate==true){
+                                    <FluentButton IconStart="@(new Icons.Regular.Size16.Save())" OnClick="@(() => SaveLineAsync(context))" />
+                                    <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowStepBack())" OnClick="@(() => CancelLineUpdate(context))" />  
+                                }  
+                                else{
+                                    <FluentButton IconStart="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => EditLineAsync(context))" />
+                                    <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteLineAsync(context))" />  
+                                }                     
+
+                            </TemplateColumn>
+                            <PropertyColumn Title="Tên SP" Property="@(p => p.ItemName)" Sortable="true" />
+                            
+                            
+                  
+                             <TemplateColumn Title="SL">
+                                @if(context.IsUpdate==true)
+                                {
+                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesQty" Style="width:60px"></FluentNumberField>
+                                }
+                                else{
+                                    <FluentLabel>@context.SalesQty</FluentLabel>
+                                }
+                            </TemplateColumn>
+                             <TemplateColumn Title="DVT" Width="60">
+                                @if(context.IsUpdate==true)
+                                {
+                          
+                                    <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
+                                        <FluentLabel Style="width:60px">@context.SalesUnit</FluentLabel>
+                                        <FluentButton IconStart="@(new Icons.Regular.Size16.TriangleDown())" OnClick="@(() => SelectUnit(context))" ></FluentButton>
+                                    </FluentStack>
+                          
+                                }
+                                else{
+                                    <FluentLabel Style="width:60px">@context.SalesUnit</FluentLabel>
+                                }
+                            </TemplateColumn>
+                             <TemplateColumn Title="Giá bán" Style="text-align:end" >
+                                @if(context.IsUpdate==true)
+                                {
+                                    <FluentNumberField AutoComplete="off" @bind-Value="@context.SalesPrice" Style="width:100px"></FluentNumberField>
+                                }
+                                else{
+                                    <FluentLabel >@String.Format("{0:#,###,##0}",@context.SalesPrice)</FluentLabel>
+                                }
+                            </TemplateColumn>                   
+                             <PropertyColumn Title="TT" Style="text-align:end"  Property="@(p => p.TotalAmount)" Format="#,###,##0" Sortable="true" />
+                            
+                            
+                      
+
+                        </FluentDataGrid>
+
+                        <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End">
+                            <FluentLabel>Thành tiền: </FluentLabel>
+                            <FluentLabel Typo="Typography.H2">@String.Format("{0:#,###,##0}",salesOrder.TotalAmount)</FluentLabel>
+                        </FluentStack>
+
+                          <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End">
+                            <FluentLabel>CK %: </FluentLabel>
+                            <FluentNumberField @bind-Value="salesOrder.DiscountPercent"></FluentNumberField>
+                            
+                        </FluentStack>
+
+                          <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End">
+                            <FluentLabel>Tiền CK: </FluentLabel>
+                            <FluentNumberField @bind-Value="salesOrder.DiscountAmount"></FluentNumberField>
+                            
+                        </FluentStack>
+
+                        <FluentStack Orientation="Orientation.Horizontal" HorizontalAlignment="HorizontalAlignment.End">
+                            <FluentLabel>Tổng thành tiền: </FluentLabel>
+                            <FluentLabel Typo="Typography.H2">@String.Format("{0:#,###,##0}",salesOrder.TotalCharge)</FluentLabel>
+                        </FluentStack>
+                        
+            </FluentStack>
+
+       
+
+    </FluentGridItem>
+ </FluentGrid>
+
+      
+   
 @code {
 
-    bool ShowList = false;
+    JustifyContent Justification = JustifyContent.FlexStart;
+    int Spacing = 1;
 
+    string Search = "";
+    bool ShowList = false;
+    IQueryable<Product>? productItems;
+    private POSSaleOrder salesOrder=new();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        FontSize.WithDefault("10pt");
+
+        await LoadProducts();
+    }
+    private async Task LoadProducts()
+    {
+        productItems = (await context.GetAll(0, "", Search)).AsQueryable();
+
+    }
+    private async Task AddNewSale()
+    {
+
+    }
+    private async Task AddItemAsync(Product item)
+    {
+        var lineItem =new POSSaleLine();
+        lineItem.ItemID = item.ItemID;
+        lineItem.ItemCode =item.ItemCode;
+        lineItem.ItemName =item.ItemName;
+        lineItem.SalesQty =item.AddQty;
+        lineItem.SalesPrice = item.SalesPrice;
+
+        salesOrder.lineItems.Add(lineItem);
+        StateHasChanged();
+    }
+    void OnBreakpointEnterHandler(GridItemSize size)
+    {
+       
+    }
+
+     private async Task SelectUnit(POSSaleLine item)
+    {
+        var parameters = new DialogParameters
+            {
+                Title = "Select Unit",
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = true,    
+                Width = "500px",
+                Height = "500px",               
+                Modal = false,
+            };
+
+        var unitItem = new ProductUnit();
+
+        var dialog = await DialogService.ShowDialogAsync<UnitDialog>(unitItem, parameters);
+        var dialogResult = await dialog.Result;
+        await OnSelectUnitComplete(item,dialogResult);
+    }
+
+    private async Task OnSelectUnitComplete(POSSaleLine item,DialogResult result)
+    {        
+        await Task.Delay(500);
+        if (result.Cancelled)
+        {
+            return;
+        }        
+
+        if (result.Data is not null)
+        {
+            var itemRes = result.Data as ProductUnit;
+            item.SalesUnit = itemRes!.UnitID;
+        }        
+    }
+
+     private async Task EditLineAsync(POSSaleLine item)
+    {
+        foreach(var line in salesOrder.lineItems)
+        {
+            if (line.IsUpdate == true) return;
+        }
+        //Content = item;
+        //ShowList = false;
+        item.IsUpdate = true;
+    }
+
+    private async Task SaveLineAsync(POSSaleLine item)
+    {
+       
+        //await context.Save(item);
+        item.IsUpdate = false;
+       
+    }
+
+    private async Task CancelLineUpdate(POSSaleLine item)
+    {        
+        item.IsUpdate = false;
+      
+    }
+
+    private async Task DeleteLineAsync(POSSaleLine item)
+    {
+
+        if (item is null)
+        {
+            return;
+        }
+
+        var dialogParameters = new DialogParameters
+            {
+                Title = "Delete Item",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true
+            };
+
+        // var dialog = await dialogService.ShowDialogAsync<ConfirmationPanel>(dialogParameters);
+        var dialog = await DialogService.ShowConfirmationAsync(
+            "Are you sure you want to delete selected item?",
+            "Yes",
+            "No",
+            "Delete Item?");
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            var res = await context.Delete(item.RecID);
+           
+        }
+
+    }
 
 }
